@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260219</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">222</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">29</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">10</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">16</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · FEB · 19</strong>
+        Reporte N° 20260219<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_14a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-13)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-13)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="top3-title">VIOLENCIA DURANTE EL CARNAVAL</div>
+<div class="top3-body">Reportes del Carnaval en Bolivia incluyen 33-39 fallecidos en hechos de tránsito a nivel nacional y en La Paz, cientos de denuncias por violencia de género, arrestos de pandillas y menores ebrios en Sucre y Santa Cruz, y otros hechos violentos.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-13)">28</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-13)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_16')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-11)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-11)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="top3-title">EVALUACIONES DE LOS 100 DIAS</div>
+<div class="top3-body">Varios actores, incluyendo Iván Arias, analistas e Iglesia Católica, evalúan positivamente los primeros 100 días de gestión del Gobierno de Rodrigo Paz, destacando logros y desafíos. También se menciona el manejo de la urgencia económica, cambios en la visión internacional y desafíos en la ALP.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">17</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_14e')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-07)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-07)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="top3-title">FEMINICIDIOS EN EL PAÍS</div>
+<div class="top3-body">Se registran entre 11 y 12 feminicidios en Bolivia en lo que va del 2026, la mayoría en La Paz, incluyendo el primer caso en Beni y un presunto feminicidio en Charazani, además de la búsqueda de autores de un caso en El Alto.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">14</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-13)"></div>
+<div class="cat-name">CARNAVAL</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-13)"></div></div>
+<div class="cat-n">59</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:63%;background:var(--c-11)"></div></div>
+<div class="cat-n">37</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">ELECCIONES SUBNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:49%;background:var(--c-10)"></div></div>
+<div class="cat-n">29</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:47%;background:var(--c-07)"></div></div>
+<div class="cat-n">28</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:39%;background:var(--c-09)"></div></div>
+<div class="cat-n">23</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:29%;background:var(--c-18)"></div></div>
+<div class="cat-n">17</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-14)"></div>
+<div class="cat-name">TRANSPORTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:19%;background:var(--c-14)"></div></div>
+<div class="cat-n">11</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">CORRUPCIÓN</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-21)"></div></div>
+<div class="cat-n">7</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-19)"></div>
+<div class="cat-name">SALUD</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-19)"></div></div>
+<div class="cat-n">7</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:7%;background:var(--c-17)"></div></div>
+<div class="cat-n">4</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">carnaval</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">46</td>
+</tr>
+<tr>
+<td class="freq-word">santa cruz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">13</td>
+</tr>
+<tr>
+<td class="freq-word">detención preventiva</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">exgerente de ypfb</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">mario cossío</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:24%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">josé maría balcázar</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:21%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">tse acepta recusación</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:18%"></div>
+</div>
+</td>
+<td class="freq-count">4</td>
+</tr>
+<tr>
+<td class="freq-word">sala plena</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:21%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">plena del tse</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:21%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">rodrigo paz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:21%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">VIOLENCIA DURANTE EL CARNAVAL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">28</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">EVALUACIONES DE LOS 100 DIAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:60.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">17</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">FEMINICIDIOS EN EL PAÍS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:50.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">14</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INCAUTACIÓN DE DROGAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:42.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">12</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CALENDARIO ELECTORAL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:42.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">12</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">EXGERENTE DE YPFB</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:42.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">12</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">SUMINISTRO DE GASOLINA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:39.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">11</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">REAPARICIÓN DE EVO MORALES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">10</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LEYES ECONÓMICAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:32.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">9</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MIERCOLES DE CENIZA Y OTRAS FECHAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:32.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">9</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">PRESIDENCIA DE PERÚ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">8</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CASO FONDO INDIGENA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">RECURSO CONTRA GUSTAVO ÁVILA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CASOS DE CHIKUNGUNYA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-19))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CONTROVERSIA ENTRE TUTO Y ESPINOZA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">AGENDA BOLIVIA-CHILE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">6</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">RESTRICCIONES EN VIA CBBA-ORURO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-14))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">"GOBERNABILIDAD LEGISLATIVA"</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MOVIMIENTO ECONOMICO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LITIO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ATAQUE A PERIODISTA EN EL ALTO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INFANTICIDIO EN SANTA CRUZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ACCIDENTES DE TRÁNSITO EN LA PAZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-14))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ESTAFA EN CARNAVAL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">REUNIÓN PAZ-LULA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">BOLIVIANO EN EEUU</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CORSO DE CORSOS EN CBBA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">RED FERROVIARIA EN TARIJA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-14))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ASALTO EN SANTA CRUZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">INCAUTACIÓN DE DROGAS</div>
+<div class="topic-body">Operativos del 'Plan Carnaval' de la FELCN resultaron en la incautación de más de 4,7 toneladas de marihuana y 79 kilos de cocaína, con la detención de 43 personas, en un golpe significativo al narcotráfico.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_12a')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">CALENDARIO ELECTORAL</div>
+<div class="topic-body">Se informa sobre la importancia de la semana actual y las fechas clave restantes en el calendario electoral de cara a las elecciones subnacionales de marzo, detallando las etapas relevantes para los votantes.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">EXGERENTE DE YPFB</div>
+<div class="topic-body">La justicia boliviana dictamina 90 días de detención preventiva en la cárcel de Palmasola para la exgerenta de YPFB Gabriela Delgadillo, investigada por presunta usurpación de funciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1a')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">SUMINISTRO DE GASOLINA</div>
+<div class="topic-body">YPFB descarga gasolina importada y despacha 2 millones de litros para abastecer Santa Cruz, en respuesta a la situación de filas y necesidad de suministro en la región. Asimismo, se  programa el despacho de 140.000 litros de gasolina especial para Beni y Trinidad, asegurando el suministro de combustibles tras reclamos y protestas en la región.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">REAPARICIÓN DE EVO MORALES</div>
+<div class="topic-body">El candidato Loza anunció la reaparición de Evo Morales este 19 de febrero (jueves) en Chimoré, en el Chapare, para dirigir un acto de proclamación y presentación de candidatos a alcaldes y gobernadores. La noticia ha generado expectativas y comentarios sobre el evento.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">GOBIERNO</div>
+<div class="topic-title">LEYES ECONÓMICAS</div>
+<div class="topic-body">El Gobierno de Rodrigo Paz alista y presenta un paquete de leyes económicas "estructurales" para reactivar la economía y atraer inversiones, incluyendo una ley de fomento y protección de inversiones impulsada también por los industriales, y espera su pronta aprobación en el Legislativo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14d')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">MIERCOLES DE CENIZA Y OTRAS FECHAS</div>
+<div class="topic-body">Bolivia despide el Carnaval, dando paso al Miércoles de Ceniza y el inicio de la Cuaresma, a la vez que se discute sobre los próximos feriados nacionales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">PRESIDENCIA DE PERÚ</div>
+<div class="topic-body">El Congreso de Perú eligió a José María Balcázar, político izquierdista, como el nuevo presidente interino de la República, en el que es el cuarto mandatario en cinco años para el país vecino.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">CORRUPCIÓN</div>
+<div class="topic-title">CASO FONDO INDIGENA</div>
+<div class="topic-body">Nemesia Achacollo faltó por segunda vez a su declaración fiscal en el caso Fondo Indígena, alegando problemas de salud y solicitando un examen cardiológico. La Fiscalía evalúa su estado antes de reprogramar la citación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">RECURSO CONTRA GUSTAVO ÁVILA</div>
+<div class="topic-body">La Sala Plena del Tribunal Supremo Electoral (TSE) aceptó la recusación contra su presidente, Gustavo Ávila, apartándolo de la revisión de un recurso clave sobre la candidatura de Mario Cossío, ratificada para la gobernación de Tarija.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_9a')" role="button" style="border-top:2px solid var(--c-19)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-19)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-19)">SALUD</div>
+<div class="topic-title">CASOS DE CHIKUNGUNYA</div>
+<div class="topic-body">El departamento de Santa Cruz de la Sierra se mantiene en alerta roja sanitaria debido al incremento de casos de chikungunya, que ya registra 2.913 infectados y tres fallecidos, provocando largas filas en centros médicos. En  La Paz se confirma el primer caso, mientras se reporta un aumento de los casos de malaria e influenza en la región.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">GOBIERNO</div>
+<div class="topic-title">CONTROVERSIA ENTRE TUTO Y ESPINOZA</div>
+<div class="topic-body">El Ministro de Economía, Espinoza, respondió enérgicamente a Jorge “Tuto” Quiroga, acusándolo de intentar desestabilizar al Gobierno y al país con sus críticas a los 100 días del presidente Paz. Espinoza afirmó que el ciclo político de Quiroga ha concluido y que nunca ganó una elección.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14g')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">AGENDA BOLIVIA-CHILE</div>
+<div class="topic-body">Bolivia y Chile proyectan una agenda de nueve puntos a activarse tras la asunción presidencial de Kast, con la presencia boliviana perfilada como histórica y la posible designación de Flavio Escobar como cónsul.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_13b')" role="button" style="border-top:2px solid var(--c-14)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-14)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-14)">TRANSPORTE</div>
+<div class="topic-title">RESTRICCIONES EN VIA CBBA-ORURO</div>
+<div class="topic-body">La Administradora Boliviana de Carreteras (ABC) anuncia y aplica restricciones al paso vehicular en la vía Cochabamba-Oruro, programadas desde el 19 de febrero hasta el 30 de abril, afectando la circulación en la importante ruta.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_11a')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">GOBIERNO</div>
+<div class="topic-title">"GOBERNABILIDAD LEGISLATIVA"</div>
+<div class="topic-body">Se reporta una delicada situación de gobernabilidad legislativa, señalando que el Presidente Paz no controla la Asamblea y el Vicepresidente Lara pierde credibilidad por falta de coordinación en el Legislativo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14b')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">MOVIMIENTO ECONOMICO</div>
+<div class="topic-body">El sector turístico evaluó positivamente el Carnaval. El Gobierno proyecta publicar resultados económicos, mientras la Alcaldía de Oruro calificó de positivo su evento, que movió más de Bs 100 millones en La Paz.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMIA</div>
+<div class="topic-title">LITIO</div>
+<div class="topic-body">Bolivia avanza en la industria del litio con la firma de un acuerdo de negociación entre YLB y el consorcio australiano-alemán EAU Lithium.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">ATAQUE A PERIODISTA EN EL ALTO</div>
+<div class="topic-body">La Fiscalía y Policía aclaran que periodista de El Alto fue víctima de un asalto, desvirtuando la versión de corte de lengua.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14f')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">INFANTICIDIO EN SANTA CRUZ</div>
+<div class="topic-body">Un bebé de ocho meses falleció en Santa Cruz con signos de violencia, lo que llevó a la detención y envío a la cárcel del padre, investigado por presunto infanticidio.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_13a')" role="button" style="border-top:2px solid var(--c-14)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-14)">23</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-14)">TRANSPORTE</div>
+<div class="topic-title">ACCIDENTES DE TRÁNSITO EN LA PAZ</div>
+<div class="topic-body">Varios hechos de tránsito, incluyendo un bus impactando con un divisor de carril y el choque entre un bus y un taxi, se registran en la autopista La Paz-El Alto, involucrando a diferentes vehículos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14c')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">24</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">ESTAFA EN CARNAVAL</div>
+<div class="topic-body">Tres personas fueron enviadas a la cárcel en Oruro por estafa millonaria y reventa de graderías durante los festejos de Carnaval.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14h')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">25</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">REUNIÓN PAZ-LULA</div>
+<div class="topic-body">El Ministro de Agricultura de Brasil se encuentra en Bolivia para coordinar detalles y la agenda para un eventual encuentro entre los presidentes Rodrigo Paz y Lula da Silva.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">26</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">BOLIVIANO EN EEUU</div>
+<div class="topic-body">Capturan en EEUU a un ciudadano boliviano por distribuir material de abuso sexual infantil.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">27</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">CORSO DE CORSOS EN CBBA</div>
+<div class="topic-body">Cochabamba se prepara para el Corso de Corsos con la participación de más de 90 fraternidades.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N005')" role="button" style="border-top:2px solid var(--c-14)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-14)">28</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-14)">TRANSPORTE</div>
+<div class="topic-title">RED FERROVIARIA EN TARIJA</div>
+<div class="topic-body">El Gobierno proyecta la unión de las redes ferroviarias oriental y andina a través de Tarija.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14i')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">29</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">ASALTO EN SANTA CRUZ</div>
+<div class="topic-body">Una tienda de anime en el centro cruceño fue asaltada a punta de arma y a plena luz del día. Los delincuentes robaron objetos de valor, mientras testigos relatan momentos de terror.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/justicia/presidente-del-colegio-de-abogados-de-la-paz-hay-autoridades-judiciales-que-tienen-tarifas-para-resoluciones" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Presidente del Colegio de Abogados de La Paz: “Hay autoridades judiciales que tienen tarifas para resoluciones”</a></div>
+<div class="emergente-sum">El Colegio de Abogados de La Paz denuncia la existencia de tarifas para resoluciones judiciales.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/ministro-defensa-solo-operan-dos-35-helicopteros-esto-apenas-punta-iceberg_1771411328" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Ministro de Defensa: “Solo operan dos de 35 helicópteros y esto es apenas la punta del iceberg”</a></div>
+<div class="emergente-sum">El Ministro de Defensa alerta que solo dos de 35 helicópteros militares están operativos, señalando una situación crítica.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/documentos-filtrados-sacuden-a-ypfb-diputado-alarcon-exige-aclarar-contrato-con-trafigura-pte-ltd/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Documentos filtrados sacuden a YPFB: diputado Alarcón exige aclarar contrato con Trafigura Pte. Ltd.</a></div>
+<div class="emergente-sum">Documentos filtrados sobre un contrato de YPFB con Trafigura Pte. Ltd. generan demanda de aclaración por parte de legisladores.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/02/18/ante-el-colapso-del-sistema-penal-boliviano-urge-reforma-estructural/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Ante el colapso del sistema penal boliviano, urge reforma estructural</a></div>
+<div class="emergente-sum">Se advierte sobre el colapso del sistema penal boliviano y la urgente necesidad de una reforma estructural.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/politica/legisladores-esperan-un-pge-reformulado-con-reduccion-de-funcionarios-y-sueldos-en-el-aparato-estatal" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Legisladores esperan un PGE reformulado con reducción de funcionarios y sueldos en el aparato estatal</a></div>
+<div class="emergente-sum">Legisladores piden una reformulación del PGE que contemple la reducción de funcionarios y sueldos estatales.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260219 · 2026-02-19</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 222 titulares · 29 temas · 10 categorías · 16 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_14a">
+<div class="modal-backdrop" onclick="closeModal('modal_14a')"></div>
+<div aria-label="VIOLENCIA DURANTE EL CARNAVAL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">VIOLENCIA DURANTE EL CARNAVAL</div>
+<div class="modal-sum">Reportes del Carnaval en Bolivia incluyen 33-39 fallecidos en hechos de tránsito a nivel nacional y en La Paz, cientos de denuncias por violencia de género, arrestos de pandillas y menores ebrios en Sucre y Santa Cruz, y otros hechos violentos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">28</strong> titulares</span>
+<span><strong style="color:var(--c-13)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/carnaval-en-la-paz-deja-39-fallecidos-y-89-hechos-de-transito" rel="noopener noreferrer" target="_blank">Carnaval en La Paz deja 39 fallecidos y 89 hechos de tránsito</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/carnaval-en-la-paz-deja-672-denuncias-la-mayoria-por-violencia-de-genero" rel="noopener noreferrer" target="_blank">Carnaval en La Paz deja 672 denuncias, la mayoría por violencia de género</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/policia-identifica-10-pandillas-y-arresta-a-140-personas-durante-carnaval-en-sucre" rel="noopener noreferrer" target="_blank">Policía identifica 10 pandillas y arresta a 140 personas durante Carnaval en Sucre</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/tres-personas-fallecieron-en-tarija-durante-el-feriado-de-carnaval" rel="noopener noreferrer" target="_blank">Tres personas fallecieron en Tarija durante el feriado de Carnaval</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/comando-departamental-reporta-48-arrestos-y-cinco-fallecidos-durante-carnaval" rel="noopener noreferrer" target="_blank">Comando Departamental reporta 48 arrestos y cinco fallecidos durante Carnaval</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/reportan-disminucion-del-40-en-denuncias-durante-las-fiestas-de-carnaval" rel="noopener noreferrer" target="_blank">Reportan disminución del 40% en denuncias durante las fiestas de Carnaval</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/santa-cruz-infanticidio-289-denuncias-registraron-carnaval_1771453644" rel="noopener noreferrer" target="_blank">Santa Cruz: un infanticidio y 289 denuncias se registraron en Carnaval</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-carnaval-deja-39-fallecidos-accidentes-transito_1771447121" rel="noopener noreferrer" target="_blank">La Paz: Carnaval deja 39 fallecidos en accidentes de tránsito</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/hechos-de-transito-dejaron-33-fallecidos-durante-el-carnaval-a-nivel-nacional.html" rel="noopener noreferrer" target="_blank">Hechos de tránsito dejaron 33 fallecidos durante el Carnaval a nivel nacional</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/carnaval-deja-un-saldo-de-seis-muertes-por-crimenes-violentos-en-departamento-de-la-paz.html" rel="noopener noreferrer" target="_blank">Carnaval deja un saldo de seis muertes por crímenes violentos en departamento de La Paz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/carnaval-sin-incidentes-en-carceles-de-bolivia/" rel="noopener noreferrer" target="_blank">Carnaval sin incidentes en cárceles de Bolivia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_carnaval-en-sucre-73-menores-edad-fueron-detenidos-en-estado-de-ebriedad.html" rel="noopener noreferrer" target="_blank">Carnaval en Sucre: 73 menores edad fueron detenidos en estado de ebriedad</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_dos-jovenes-se-quitan-la-vida-en-las-ultimas-horas-del-carnaval-en-sucre.html" rel="noopener noreferrer" target="_blank">Dos jóvenes se quitan la vida en las últimas horas del Carnaval en Sucre</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/18/policia-reporta-5-muertos-y-101-arrestos-en-el-carnaval-de-santa-cruz/" rel="noopener noreferrer" target="_blank">Policía reporta 5 muertos y 101 arrestos en el Carnaval de Santa Cruz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/02/18/carnaval-hubo-33-muertos-y-278-heridos-en-accidentes-de-transito/" rel="noopener noreferrer" target="_blank">Carnaval: Hubo 33 muertos y 278 heridos en accidentes de tránsito</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/02/18/fiscalia-reporta-un-infanticidio-en-santa-cruz-durante-el-carnaval/" rel="noopener noreferrer" target="_blank">Fiscalía reporta un infanticidio en Santa Cruz durante el Carnaval</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/carnaval-bolivia-deja-33-fallecidos-hechos-transito/20260218170201988782.html" rel="noopener noreferrer" target="_blank">Carnaval en Bolivia deja 33 fallecidos por hechos de tránsito</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/defensoria-atendio-a-72-adolescentes-hallados-en-estado-de-ebriedad-en-sucre" rel="noopener noreferrer" target="_blank">Defensoría atendió a 72 adolescentes hallados en estado de ebriedad en Sucre</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/carnaval-en-santa-cruz-deja-91-accidentes-67-heridos-y-cinco-fallecidos" rel="noopener noreferrer" target="_blank">Carnaval en Santa Cruz deja 91 accidentes, 67 heridos y cinco fallecidos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/carnaval-cierra-con-39-fallecidos-y-mas-de-100-accidentes-vinculados-al-consumo-de-alcohol-en-la-paz-2026218121529" rel="noopener noreferrer" target="_blank">Carnaval cierra con 39 fallecidos y más de 100 accidentes vinculados al consumo de alcohol en La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/dos-mujeres-atacadas-y-una-adolescente-abusada-durante-carnaval-en-la-paz-2026218133644" rel="noopener noreferrer" target="_blank">Dos mujeres atacadas y una adolescente abusada durante Carnaval en La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/oruro-fiscalia-reporta-4-fallecidos-y-97-hechos-violentos-en-carnaval-2026218162717" rel="noopener noreferrer" target="_blank">Oruro: Fiscalía reporta 4 fallecidos y 97 hechos violentos en Carnaval</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/la-paz-policia-reporta-39-fallecidos-en-las-fiestas-de-carnavales-202621817746" rel="noopener noreferrer" target="_blank">La Paz: Policía reporta 39 fallecidos en las fiestas de Carnavales</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/33-muertos-y-278-heridos-en-365-accidentes-durante-el-carnaval-en-bolivia-2026218174546" rel="noopener noreferrer" target="_blank">33 muertos y 278 heridos en 365 accidentes durante el Carnaval en Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/plan-3000-24-casos-de-violencia-y-17-arrestados-en-peleas-de-pandillas-marcan-los-dias-de-carnaval-2026218215313" rel="noopener noreferrer" target="_blank">Plan 3000: 24 casos de violencia y 17 arrestados en peleas de pandillas marcan los días de Carnaval</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/mujer-es-herida-de-bala-por-su-esposo-durante-carnaval-en-la-paz-reporta-la-policia-KK19310039" rel="noopener noreferrer" target="_blank">Mujer es herida de bala por su esposo durante Carnaval en La Paz, reporta la Policía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-registro-cinco-asesinatos-y-14-violaciones-en-santa-cruz-durante-los-dias-de-carnaval-IL19309177" rel="noopener noreferrer" target="_blank">Fiscalía registró cinco asesinatos y 14 violaciones en Santa Cruz durante los días de Carnaval</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-carnaval-en-la-paz-dej%C3%B3-un-saldo-de-16-fallecidos-y-73-personas-heridas" rel="noopener noreferrer" target="_blank">El Carnaval en La Paz dejó un saldo de 16 fallecidos y 73 personas heridas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="EVALUACIONES DE LOS 100 DIAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="modal-title">EVALUACIONES DE LOS 100 DIAS</div>
+<div class="modal-sum">Varios actores, incluyendo Iván Arias, analistas e Iglesia Católica, evalúan positivamente los primeros 100 días de gestión del Gobierno de Rodrigo Paz, destacando logros y desafíos. También se menciona el manejo de la urgencia económica, cambios en la visión internacional y desafíos en la ALP.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">17</strong> titulares</span>
+<span><strong style="color:var(--c-11)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/ivan-arias-califica-de-positivos-los-primeros-100-dias-de-gobierno-de-paz" rel="noopener noreferrer" target="_blank">Iván Arias califica de positivos los primeros 100 días de gobierno de Paz</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/no-podemos-ser-simples-administradores-de-la-pobreza-otto-ritter-ve-luces-y-sombras-en-los-primeros-100-dias-del-gobierno-de-paz/" rel="noopener noreferrer" target="_blank">“No podemos ser simples administradores de la pobreza”: Otto Ritter ve ‘luces y sombras’ en los primeros 100 días del gobierno de Paz</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/arias-califica-como-positivos-los-100-d%C3%ADas-de-gobierno-y-advierte-riesgos-del-decreto-para" rel="noopener noreferrer" target="_blank">Arias califica como positivos los 100 días de Gobierno y advierte riesgos del decreto para gobernar a distancia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/18/gobierno-destaca-al-agro-como-motor-economico-en-100-dias/" rel="noopener noreferrer" target="_blank">Gobierno destaca al agro como motor económico en 100 días</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/arias-plantea-como-desafio-para-el-gobierno-implementar-el-trabajo-por-horas/" rel="noopener noreferrer" target="_blank">Arias plantea como desafío para el Gobierno implementar el trabajo por horas</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Diputada-respalda-gestion-de-rodrigo-paz-tras-criticas" rel="noopener noreferrer" target="_blank">Diputada respalda gestión de Rodrigo Paz tras críticas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/analistas-evaluan-los-100-dias-del-gobierno-de-rodrigo-paz-2026218195050" rel="noopener noreferrer" target="_blank">Analistas evalúan los 100 días del gobierno de Rodrigo Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/conozca-los-logros-mas-importantes-de-la-gestion-de-rodrigo-paz-en-sus-primeros-100-dias-2026218205222" rel="noopener noreferrer" target="_blank">Conozca los logros más importantes del gobierno de Rodrigo Paz en sus primeros 100 días</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/iglesia-catolica-califica-de-positivos-los-primeros-100-dias-de-gestion-del-gobierno-de-rodrigo-paz-HL19304542" rel="noopener noreferrer" target="_blank">Iglesia Católica califica de ‘positivos’ los primeros 100 días de gestión del Gobierno de Rodrigo Paz</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/samuel-eval%C3%BAa-los-100-d%C3%ADas-del-gobierno-y-destaca-que-la-crisis-est%C3%A1-resuelta-en-60" rel="noopener noreferrer" target="_blank">Samuel evalúa los 100 días del Gobierno y destaca que la crisis está resuelta en 60%</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/a-100-dias-de-gestion-de-paz-samuel-percibe-la-crisis-resuelta-en-un-60/" rel="noopener noreferrer" target="_blank">A 100 días de gestión de Paz, Samuel ve la crisis resuelta en un 60%</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/samuel-aprueba-los-primeros-100-dias-del-gobierno-y-dice-que-la-crisis-esta-resuelta-en-un-60/" rel="noopener noreferrer" target="_blank">Samuel “aprueba” los primeros 100 días del Gobierno y dice que la crisis “está resuelta en un 60%”</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/entre-respaldo-y-criticas-asi-se-evaluan-los-primeros-100-dias-de-paz" rel="noopener noreferrer" target="_blank">Entre respaldo y críticas, así se evalúan los primeros 100 días de Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/aramayo-no-existieron-100-dias-la-situacion-exigio-respuestas-inmediatas/" rel="noopener noreferrer" target="_blank">Aramayo: No existieron 100 días, la situación exigió respuestas inmediatas</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ministro-dice-que-por-la-coyuntura-la-alp-trata-pocas-leyes-pide-aprobar-100-del-credito-fiscal-en-combustibles-y-la-eliminacion-del-itf-BL19301110" rel="noopener noreferrer" target="_blank">Ministro dice que por la coyuntura la ALP “trata pocas leyes”; pide aprobar 100% del crédito fiscal en combustibles y la eliminación del ITF</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/en-100-d%C3%ADas-paz-cambi%C3%B3-la-visi%C3%B3n-internacional-de-bolivia-y-logr%C3%B3-tranquilidad-y-debe-hacer" rel="noopener noreferrer" target="_blank">En 100 días, Paz cambió la visión internacional de Bolivia y logró tranquilidad, y debe hacer correcciones</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/en-100-d%C3%ADas-paz-lidi%C3%B3-con-la-urgencia-econ%C3%B3mica-pero-tropieza-con-falta-de-cohesi%C3%B3n-en-la" rel="noopener noreferrer" target="_blank">En 100 días, Paz lidió con la urgencia económica, pero tropieza con falta de cohesión en la ALP</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14e">
+<div class="modal-backdrop" onclick="closeModal('modal_14e')"></div>
+<div aria-label="FEMINICIDIOS EN EL PAÍS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">FEMINICIDIOS EN EL PAÍS</div>
+<div class="modal-sum">Se registran entre 11 y 12 feminicidios en Bolivia en lo que va del 2026, la mayoría en La Paz, incluyendo el primer caso en Beni y un presunto feminicidio en Charazani, además de la búsqueda de autores de un caso en El Alto.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">14</strong> titulares</span>
+<span><strong style="color:var(--c-07)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14e')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/derechos-humanos/once-feminicidios-registrados-en-2026-la-mayoria-en-la-paz" rel="noopener noreferrer" target="_blank">Once feminicidios registrados en 2026, la mayoría en La Paz</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/felcv-reporta-82-casos-de-violencia-y-dos-intentos-de-feminicidio" rel="noopener noreferrer" target="_blank">FELCV reporta 82 casos de violencia y dos intentos de feminicidio</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/primer-caso-de-feminicidio-en-beni-autopsia-revela-que-la-victima-murio-de-manera-violenta" rel="noopener noreferrer" target="_blank">Primer caso de feminicidio en Beni: autopsia revela que la víctima murió de manera violenta</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/quinto-feminicidio-paz-buscan-autores-mujer-estrangulada-alto_1771454814" rel="noopener noreferrer" target="_blank">Quinto feminicidio en La Paz: buscan a autores de mujer estrangulada en El Alto</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/hay-11-feminicidios-en-lo-trascurrido-del-2026/" rel="noopener noreferrer" target="_blank">Hay 11 feminicidios en lo trascurrido del 2026</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/18/los-feminicidios-se-casi-duplican-en-febrero-la-nueva-victima-es-ivonne/" rel="noopener noreferrer" target="_blank">Los feminicidios se casi duplican en febrero, la nueva víctima es Ivonne</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/02/18/defensoria-del-pueblo-exige-medidas-urgentes-ante-ola-de-feminicidios/" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo exige medidas urgentes ante ola de feminicidios</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/bolivia-sigue-sumando-casos-feminicidio-llega-12-2026-ultimo-ocurrio-alto/20260218190651988790.html" rel="noopener noreferrer" target="_blank">Bolivia suma 12 feminicidios en lo que va del año, la mayor cantidad en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/beni-suma-su-primer-feminicidio-y-ya-son-11-casos-a-nivel-nacional-en-lo-que-va-del-2026/" rel="noopener noreferrer" target="_blank">Beni suma su primer feminicidio y ya son 11 casos a nivel nacional en lo que va del 2026</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/bolivia-sigue-sumando-casos-de-feminicidio-y-ya-llega-a-12-el-2026-el-ultimo-ocurrio-en-el-alto/" rel="noopener noreferrer" target="_blank">Bolivia sigue sumando casos de feminicidio y ya llega a 12 el 2026; el último ocurrió en El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/aprehenden-a-hombre-acusado-de-disparar-a-su-esposa-en-la-paz-2026218114949" rel="noopener noreferrer" target="_blank">Aprehenden a hombre acusado de disparar a su esposa en La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/investigan-feminicidio-en-la-paz-su-familia-ya-la-habia-enterrado-202621813137" rel="noopener noreferrer" target="_blank">Investigan presunto feminicidio en Charazani; su familia ya había enterrado el cuerpo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/hallan-el-cuerpo-de-una-mujer-sin-vida-en-el-alto-aun-no-fue-identificada-2026218141629" rel="noopener noreferrer" target="_blank">Hallan el cuerpo de una mujer sin vida en El Alto; aún no fue identificada</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/mujer-es-hallada-muerta-con-una-herida-en-el-cuello-en-el-alto-la-policia-sospecha-que-estaba-en-una-fiesta-patronal-LL19309389" rel="noopener noreferrer" target="_blank">Mujer es hallada muerta con una herida en el cuello en El Alto; la Policía sospecha que estaba en una fiesta patronal</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="INCAUTACIÓN DE DROGAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">INCAUTACIÓN DE DROGAS</div>
+<div class="modal-sum">Operativos del 'Plan Carnaval' de la FELCN resultaron en la incautación de más de 4,7 toneladas de marihuana y 79 kilos de cocaína, con la detención de 43 personas, en un golpe significativo al narcotráfico.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">12</strong> titulares</span>
+<span><strong style="color:var(--c-13)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/detienen-43-personas-secuestran-4-7-toneladas-marihuana-79-kilos-cocaina_1771434140" rel="noopener noreferrer" target="_blank">Detienen a 43 personas y secuestran 4,7 toneladas de marihuana y 79 kilos de cocaína</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/incautan-mas-de-47-toneladas-de-marihuana-y-79-kilos-de-cocaina-durante-plan-carnaval.html" rel="noopener noreferrer" target="_blank">Incautan más de 4,7 toneladas de marihuana y 79 kilos de cocaína durante Plan Carnaval</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/tres-jovenes-caen-con-32-toneladas-de-marihuana/" rel="noopener noreferrer" target="_blank">Tres jóvenes caen con 3,2 toneladas de marihuana</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/gobierno-secuestra-mas-de-47-toneladas-de-marihuana-y-79-kilos-de-cocaina/" rel="noopener noreferrer" target="_blank">Gobierno secuestra más de 4,7 toneladas de marihuana y 79 kilos de cocaína</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/incautan-mas-47-toneladas-marihuana-79-kilos-cocaina-operativos-carnaval/20260218191444988792.html" rel="noopener noreferrer" target="_blank">Carnaval: Incautan más de 4.7 toneladas de marihuana y 79 kilos de cocaína en operativos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/plan-carnaval-concluye-47-toneladas-marihuana-79-kilos-cocaina-incautadas/20260218135458988774.html" rel="noopener noreferrer" target="_blank">Plan Carnaval concluye con 4.7 toneladas de marihuana y 79 kilos de cocaína incautada</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/golpe-al-narcotrafico-43-detenidos-y-4-7-toneladas-de-droga-incautadas-en-carnaval" rel="noopener noreferrer" target="_blank">Golpe al narcotráfico: 43 detenidos y 4,7 toneladas de droga incautadas en Carnaval</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/felcn-decomisa-4-7-toneladas-de-marihuana-y-79-kilos-de-cocaina-durante-carnaval-2026218123459" rel="noopener noreferrer" target="_blank">Felcn decomisa 4,7 toneladas de marihuana y 79 kilos de cocaína durante Carnaval</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/felcn-incauto-4-7-toneladas-de-droga-en-operativos-de-carnaval-2026218203648" rel="noopener noreferrer" target="_blank">Felcn incautó 4,7 toneladas de droga en operativos de Carnaval</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/felcn-cerca-de-48-toneladas-de-drogas-fueron-decomisadas-en-operativos-durante-carnaval-DL19309846" rel="noopener noreferrer" target="_blank">Felcn: Cerca de 4,8 toneladas de drogas fueron decomisadas en operativos durante Carnaval</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/incautan-m%C3%A1s-de-47-toneladas-de-marihuana-y-79-kilos-de-coca%C3%ADna-en-operativos-por-carnaval" rel="noopener noreferrer" target="_blank">Incautan más de 4,7 toneladas de marihuana y 79 kilos de cocaína en operativos por Carnaval</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40139-carnaval-incautan-4_7-toneladas-de-marihuana-y-79-kilos-de-cocaina" rel="noopener noreferrer" target="_blank">Carnaval: incautan 4,7 toneladas de marihuana y 79 kilos de cocaína</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12a">
+<div class="modal-backdrop" onclick="closeModal('modal_12a')"></div>
+<div aria-label="CALENDARIO ELECTORAL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">CALENDARIO ELECTORAL</div>
+<div class="modal-sum">Se informa sobre la importancia de la semana actual y las fechas clave restantes en el calendario electoral de cara a las elecciones subnacionales de marzo, detallando las etapas relevantes para los votantes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">12</strong> titulares</span>
+<span><strong style="color:var(--c-10)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/habilitan-a-18-341-candidatos-de-181-organizaciones-politicas-para-elecciones-subnacionales" rel="noopener noreferrer" target="_blank">Habilitan a 18.341 candidatos de 181 organizaciones políticas para elecciones subnacionales</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/este-viernes-se-sortearan-jurados-electorales-para-las-subnacionales" rel="noopener noreferrer" target="_blank">Este viernes se sortearán jurados electorales para las subnacionales</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/elecciones-subnacionales-esta-semana-clave-votantes_1771419705" rel="noopener noreferrer" target="_blank">Elecciones subnacionales: ¿Por qué esta semana es clave para los votantes?</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/verifique-si-esta-habilitado-para-votar-en-las-elecciones-subnacionales.html" rel="noopener noreferrer" target="_blank">Verifique si está habilitado para votar en las elecciones subnacionales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/oruro-hablita-a-1-353-candidaturas-para-las-subnacionales/" rel="noopener noreferrer" target="_blank">Oruro hablita a 1.353 candidaturas para las Subnacionales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/fiscalia-impulsa-coordinacion-interinstitucional-de-cara-a-las-subnacionales/" rel="noopener noreferrer" target="_blank">Fiscalía impulsa coordinación interinstitucional de cara a las subnacionales</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/rumbo-subnacionales-fechas-clave-calendario-electoral/20260218150734988776.html" rel="noopener noreferrer" target="_blank">Rumbo a las subnacionales de marzo, las fechas clave del calendario electoral</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/conoce-las-fechas-clave-del-calendario-electoral-rumbo-las-subnacionales" rel="noopener noreferrer" target="_blank">Conoce las fechas clave del calendario electoral rumbo a las subnacionales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40119-conozca-las-etapas-que-aun-quedan-para-las-elecciones-subnacionales" rel="noopener noreferrer" target="_blank">Conozca las etapas que aún quedan para las elecciones subnacionales</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/este-viernes-se-sortean-los-jurados-electorales/" rel="noopener noreferrer" target="_blank">Este viernes se sortean los jurados electorales</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/sorteo-de-los-jurados-electorales-sera-el-20/" rel="noopener noreferrer" target="_blank">Sorteo de los jurados electorales será el 20</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/potosi-consolida-datos-de-candidaturas-y-anuncia-sorteo-publico-de-jurados/" rel="noopener noreferrer" target="_blank">Potosí consolida datos de candidaturas y anuncia sorteo público de jurados</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="EXGERENTE DE YPFB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">EXGERENTE DE YPFB</div>
+<div class="modal-sum">La justicia boliviana dictamina 90 días de detención preventiva en la cárcel de Palmasola para la exgerenta de YPFB Gabriela Delgadillo, investigada por presunta usurpación de funciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">12</strong> titulares</span>
+<span><strong style="color:var(--c-09)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/justicia-ordena-90-dias-detencion-preventiva-palmasola-exgerente-ypfb/20260218171309988784.html" rel="noopener noreferrer" target="_blank">Justicia ordena 90 días de detención preventiva en Palmasola para exgerente de YPFB</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ordenan-90-dias-detencion-preventiva-carcel-exgerente-ypfb_1771446150" rel="noopener noreferrer" target="_blank">Ordenan 90 días de detención preventiva en la cárcel para exgerente de YPFB</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/envian-a-palmasola-a-exejecutiva-de-ypfb-por-presunta-usurpacion-de-funciones.html" rel="noopener noreferrer" target="_blank">Envían a Palmasola a exejecutiva de YPFB por presunta usurpación de funciones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/exejecutiva-de-ypfb-es-enviada-la-c%C3%A1rcel-de-palmasola-por-presunta-usurpaci%C3%B3n-de-funciones" rel="noopener noreferrer" target="_blank">Exejecutiva de YPFB es enviada a la cárcel de Palmasola por presunta usurpación de funciones</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dictan-90-dias-de-detencion-preventiva-para-exgerente-de-ypfb/" rel="noopener noreferrer" target="_blank">Dictan 90 días de detención preventiva para exgerente de YPFB</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/fiscalia-solicita-150-dias-de-detencion-preventiva-para-la-exgerenta-de-ypfb-gabriela-delgadillo" rel="noopener noreferrer" target="_blank">Fiscalía solicita 150 días de detención preventiva para la exgerenta de YPFB Gabriela Delgadillo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/dictan-90-dias-de-detencion-en-palmasola-para-exgerenta-de-ypfb-2026218161311" rel="noopener noreferrer" target="_blank">Dictan 90 días de detención en Palmasola para exgerenta de YPFB</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/justicia-determina-90-d%C3%ADas-de-detenci%C3%B3n-preventiva-para-exgerente-de-ypfb" rel="noopener noreferrer" target="_blank">Justicia determina 90 días de detención preventiva para exgerente de YPFB</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/fiscalia-pide-detencion-preventiva-exgerente-ypfb-presunta-usurpacion-funciones_1771430946" rel="noopener noreferrer" target="_blank">Fiscalía pide detención preventiva de exgerente de YPFB por presunta usurpación de funciones</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ministerio-publico-pedira-4-meses-detencion-preventiva-exgerente-ypfb/20260218142822988775.html" rel="noopener noreferrer" target="_blank">Ministerio Público pedirá 4 meses de detención preventiva para exgerente de YPFB</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Fiscalia-pide-detencion-preventiva-de-exgerente-de-ypfb" rel="noopener noreferrer" target="_blank">Fiscalía pide detención preventiva de exgerente de YPFB</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fiscalia-pedira-detencion-preventiva-de-exgerente-de-ypfb-202621811492" rel="noopener noreferrer" target="_blank">Fiscalía pedirá detención preventiva de exgerente de YPFB</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="SUMINISTRO DE GASOLINA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">SUMINISTRO DE GASOLINA</div>
+<div class="modal-sum">YPFB descarga gasolina importada y despacha 2 millones de litros para abastecer Santa Cruz, en respuesta a la situación de filas y necesidad de suministro en la región. Asimismo, se  programa el despacho de 140.000 litros de gasolina especial para Beni y Trinidad, asegurando el suministro de combustibles tras reclamos y protestas en la región.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">11</strong> titulares</span>
+<span><strong style="color:var(--c-09)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/filas-700-cisternas-frenan-descarga-gasolina-agravan-logistica-abastecimiento_1771465254" rel="noopener noreferrer" target="_blank">Filas de hasta 700 cisternas frenan la descarga de gasolina y agravan la logística de abastecimiento</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-descarga-gasolina-importada-programa-despacho-2-millones-litros-santa-cruz_1771433844" rel="noopener noreferrer" target="_blank">YPFB descarga gasolina importada y programa el despacho de 2 millones de litros en Santa Cruz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/ypfb-descarga-combustible-y-despacha-2-millones-de-litros/" rel="noopener noreferrer" target="_blank">YPFB descarga combustible y despacha 2 millones de litros</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/ypfb-despacha-2-millones-de-litros-de-gasolina-para-abastecer-santa-cruz/" rel="noopener noreferrer" target="_blank">YPFB despacha 2 millones de litros de gasolina para abastecer Santa Cruz</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/filas-ypfb-manda-gasolina-santa-cruz/20260218000050988757.html" rel="noopener noreferrer" target="_blank">Ante filas, YPFB manda gasolina a Santa Cruz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-garantiza-suministro-gasolina-trinidad-despacho-140-mil-litros_1771458985" rel="noopener noreferrer" target="_blank">YPFB garantiza suministro de gasolina en Trinidad con despacho de 140 mil litros</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/en-medio-de-protestas-ypfb-garantiza-abastecimiento-de-combustibles-con-normalidad-en-trinidad/" rel="noopener noreferrer" target="_blank">En medio de protestas, YPFB garantiza abastecimiento de combustibles con normalidad en Trinidad</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ante-reclamos-en-beni-ypfb-programa-despacho-de-140000-litros-de-gasolina-y-dice-cumplir-con-especificaciones-tecnicas-BK19310504" rel="noopener noreferrer" target="_blank">Ante reclamos en Beni, YPFB programa despacho de 140.000 litros de gasolina y dice cumplir con especificaciones técnicas</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ypfb-programa-despacho-de-140000-litros-de-gasolina-especial-para-beni" rel="noopener noreferrer" target="_blank">YPFB programa despacho de 140.000 litros de Gasolina Especial para Beni</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40138-civicos-de-beni-declaran-paro-para-el-viernes-rechazan-venta-de-gasolina-mezclada-con-etanol-y-escasez" rel="noopener noreferrer" target="_blank">Cívicos de Beni declaran paro para el viernes; rechazan venta de gasolina mezclada con etanol y escasez</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40151-ypfb-asegura-abastecimiento-normal-de-combustibles-en-trinidad-tras-protestas" rel="noopener noreferrer" target="_blank">YPFB asegura abastecimiento normal de combustibles en Trinidad tras protestas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="REAPARICIÓN DE EVO MORALES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">REAPARICIÓN DE EVO MORALES</div>
+<div class="modal-sum">El candidato Loza anunció la reaparición de Evo Morales este 19 de febrero (jueves) en Chimoré, en el Chapare, para dirigir un acto de proclamación y presentación de candidatos a alcaldes y gobernadores. La noticia ha generado expectativas y comentarios sobre el evento.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">10</strong> titulares</span>
+<span><strong style="color:var(--c-10)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/loza-anuncia-que-evo-reaparecera-en-chimore-y-diputado-de-libre-exige-que-el-gobierno-lo-detenga" rel="noopener noreferrer" target="_blank">Loza anuncia que Evo reaparecerá en Chimoré y diputado de Libre exige que el Gobierno lo detenga</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/loza-afirma-que-evo-morales-reaparecera-este-19-de-febrero-para-la-proclamacion-de-candidatos-en-chimore/" rel="noopener noreferrer" target="_blank">Loza afirma que Evo Morales reaparecerá este 19 de febrero para la proclamación de candidatos en Chimoré</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/reaparicion-evo-esta-prevista-jueves-loza_1771438103" rel="noopener noreferrer" target="_blank">La reaparición de Evo está prevista para el jueves, según Loza</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/loza-prev%C3%A9-que-evo-reaparezca-en-su-proclamaci%C3%B3n-y-dice-%E2%80%9Cojal%C3%A1-no-pase-nada%E2%80%9D" rel="noopener noreferrer" target="_blank">Loza prevé que Evo reaparezca en su proclamación y dice “ojalá no pase nada”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/loza-dice-que-morales-reaparecer-este-jueves-en-chimore/" rel="noopener noreferrer" target="_blank">Loza dice que Morales reaparecerá este jueves en Chimoré</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/loza-preve-que-evo-reaparezca-proclamacion-dice-ojala-pase-nada/20260218160557988778.html" rel="noopener noreferrer" target="_blank">Loza prevé que Evo reaparezca en acto de proclamación: ‘Ojalá no pase nada’</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/loza-afirma-que-por-ahora-evo-reaparecera-el-19-de-febrero-en-el-acto-de-proclamacion-de-candidatos-en-chimore/" rel="noopener noreferrer" target="_blank">Loza afirma que “por ahora” Evo reaparecerá el 19 de febrero en el acto de proclamación de candidatos en Chimoré</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/expectativa-por-posible-reaparicion-de-evo-morales-en-concentracion-de-evo-pueblo-en-chimore" rel="noopener noreferrer" target="_blank">Expectativa por posible reaparición de Evo Morales en concentración de Evo Pueblo en Chimoré</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/anuncian-que-evo-dirigir%C3%A1-en-chimor%C3%A9-la-presentaci%C3%B3n-de-candidatos-alcaldes-y-gobernadores" rel="noopener noreferrer" target="_blank">Anuncian que Evo dirigirá en Chimoré la presentación de candidatos a alcaldes y gobernadores</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40137-candidato-loza-asegura-que-evo-morales-reaparecera-este-jueves-en-un-acto-publico-en-el-chapare" rel="noopener noreferrer" target="_blank">Candidato Loza asegura que Evo Morales reaparecerá este jueves en un acto público en el Chapare</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="LEYES ECONÓMICAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="modal-title">LEYES ECONÓMICAS</div>
+<div class="modal-sum">El Gobierno de Rodrigo Paz alista y presenta un paquete de leyes económicas "estructurales" para reactivar la economía y atraer inversiones, incluyendo una ley de fomento y protección de inversiones impulsada también por los industriales, y espera su pronta aprobación en el Legislativo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">9</strong> titulares</span>
+<span><strong style="color:var(--c-11)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-espera-aval-legislativo-paquete-economico-reducir-costos-reactivar-economia_1771426724" rel="noopener noreferrer" target="_blank">Gobierno espera aval del Legislativo a paquete económico para reducir costos y reactivar la economía</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/economia/ejecutivo-preve-que-el-legislativo-apruebe-al-menos-tres-proyectos-de-ley-en-estos-dias.html" rel="noopener noreferrer" target="_blank">Ejecutivo prevé que el Legislativo apruebe al menos tres proyectos de ley en estos días</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_gobierno-espera-aprobacion-de-leyes-y-avanza-en-propuestas-sobre-hidrocarburos-y-agro.html" rel="noopener noreferrer" target="_blank">Gobierno espera aprobación de leyes y avanza en propuestas sobre hidrocarburos y agro</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/industriales-entregan-proyecto-de-ley-para-el-fomento-y-la-protecci%C3%B3n-de-inversiones" rel="noopener noreferrer" target="_blank">Industriales entregan proyecto de ley para el fomento y la protección de inversiones</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ejecutivo-preve-que-legislativo-apruebe-menos-3-proyectos-ley-dias/20260218130638988772.html" rel="noopener noreferrer" target="_blank">Ejecutivo prevé que el Legislativo apruebe al menos 3 proyectos de ley estos días</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-perfila-presentar-el-paquete-de-leyes-estructurales-economicas-el-primer-semestre-de-2026/" rel="noopener noreferrer" target="_blank">El Gobierno perfila presentar el paquete de “leyes estructurales” económicas el primer semestre de 2026</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/industriales-presentan-proyecto-de-ley-de-fomento-y-proteccion-de-inversiones-ante-la-camara-de-diputados/" rel="noopener noreferrer" target="_blank">Industriales presentan Proyecto de Ley de Fomento y Protección de Inversiones ante la Cámara de Diputados</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-dice-que-afina-ley-para-atraer-inversiones-extranjeras-y-avanza-en-paquete-de-normas-estructurales-para-enviar-al-legislativo-BL19300809" rel="noopener noreferrer" target="_blank">Gobierno dice que afina ley para atraer inversiones extranjeras y avanza en paquete de normas “estructurales” para enviar al Legislativo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40126-gobierno-afina-ley-de-atraccion-y-proteccion-de-inversiones-en-medio-de-un-legislativo-fraccionado" rel="noopener noreferrer" target="_blank">Gobierno afina ley de atracción y protección de inversiones en medio de un Legislativo fraccionado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14d">
+<div class="modal-backdrop" onclick="closeModal('modal_14d')"></div>
+<div aria-label="MIERCOLES DE CENIZA Y OTRAS FECHAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">MIERCOLES DE CENIZA Y OTRAS FECHAS</div>
+<div class="modal-sum">Bolivia despide el Carnaval, dando paso al Miércoles de Ceniza y el inicio de la Cuaresma, a la vez que se discute sobre los próximos feriados nacionales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">9</strong> titulares</span>
+<span><strong style="color:var(--c-13)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14d')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/inicia-la-cuaresma-con-el-miercoles-de-ceniza.html" rel="noopener noreferrer" target="_blank">Inicia la Cuaresma con el Miércoles de Ceniza</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/la-iglesia-invita-a-escuchar-a-dios-y-a-la-conversion-en-la-cuaresma.html" rel="noopener noreferrer" target="_blank">La iglesia invita a escuchar a Dios y a la conversión en la Cuaresma</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/bolivia-despide-el-carnaval/" rel="noopener noreferrer" target="_blank">Bolivia despide el Carnaval</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_la-iglesia-catolica-invita-a-escuchar-a-dios-y-a-la-conversion-en-la-cuaresma.html" rel="noopener noreferrer" target="_blank">La iglesia Católica invita a escuchar a Dios y a la conversión en la Cuaresma</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/en-tiempo-de-cuaresma-obispo-de-el-alto-pide-di%C3%A1logo-y-no-confrontaci%C3%B3n-entre-las" rel="noopener noreferrer" target="_blank">En tiempo de Cuaresma, obispo de El Alto pide diálogo y no confrontación entre las autoridades</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/martes-ch-alla-cierra-agua-q-oa-diversion/20260218000051988759.html" rel="noopener noreferrer" target="_blank">El Martes de Ch’alla cierra con agua, q’oa y diversión</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tras-el-carnaval-bolivia-vive-el-miercoles-de-ceniza-y-el-inicio-de-la-cuaresma-20262187252" rel="noopener noreferrer" target="_blank">Tras el Carnaval, Bolivia vive el Miércoles de Ceniza y el inicio de la Cuaresma</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/despues-de-carnaval-cual-es-el-siguiente-feriado-en-bolivia-20262188115" rel="noopener noreferrer" target="_blank">Después de Carnaval, ¿cuál es el siguiente feriado en Bolivia?</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/tras-el-feriado-los-viajes-se-normalizan-aunque-con-mensajes-de-precaucion-por-el-estado-de-las-carreteras-EL19300703" rel="noopener noreferrer" target="_blank">Tras el feriado, los viajes se normalizan, aunque con mensajes de precaución por el estado de las carreteras</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="PRESIDENCIA DE PERÚ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">PRESIDENCIA DE PERÚ</div>
+<div class="modal-sum">El Congreso de Perú eligió a José María Balcázar, político izquierdista, como el nuevo presidente interino de la República, en el que es el cuarto mandatario en cinco años para el país vecino.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">8</strong> titulares</span>
+<span><strong style="color:var(--c-18)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/el-izquierdista-jose-maria-balcazar-nuevo-presidente-interino-de-peru" rel="noopener noreferrer" target="_blank">El izquierdista José María Balcázar, nuevo presidente interino de Perú</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/congreso-de-peru-elige-hoy-nuevo-presidente/" rel="noopener noreferrer" target="_blank">Congreso de Perú elige hoy nuevo presidente</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/mundo/jos%C3%A9-mar%C3%ADa-balc%C3%A1zar-es-el-nuevo-presidente-interino-de-per%C3%BA" rel="noopener noreferrer" target="_blank">José María Balcázar es el nuevo presidente interino de Perú</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/diputados-confian-en-que-peru-supere-la-crisis-politica/" rel="noopener noreferrer" target="_blank">Diputados confían en que Perú supere la crisis política</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/jose-maria-balcazar-es-electo-titular-del-congreso-y-asume-la-presidencia-del-peru/" rel="noopener noreferrer" target="_blank">José María Balcázar es elegido titular del Congreso y es el nuevo Presidente del Perú</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-congreso-del-per%C3%BA-elige-hoy-al-cuarto-presidente-de-la-rep%C3%BAblica-en-cinco-a%C3%B1os" rel="noopener noreferrer" target="_blank">El Congreso del Perú elige hoy al cuarto presidente de la República en cinco años</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40166-maria-del-carmen-alva-y-jose-maria-balcazar-disputaran-la-presidencia-de-peru-en-una-segunda-vuelta" rel="noopener noreferrer" target="_blank">María del Carmen Alva y José María Balcázar disputarán la Presidencia de Perú en una segunda vuelta</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40170-el-octogenario-izquierdista-jose-maria-balcazar-es-el-nuevo-presidente-interino-de-peru" rel="noopener noreferrer" target="_blank">El octogenario izquierdista José María Balcázar es el nuevo presidente interino de Perú</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="CASO FONDO INDIGENA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">CORRUPCIÓN</div>
+<div class="modal-title">CASO FONDO INDIGENA</div>
+<div class="modal-sum">Nemesia Achacollo faltó por segunda vez a su declaración fiscal en el caso Fondo Indígena, alegando problemas de salud y solicitando un examen cardiológico. La Fiscalía evalúa su estado antes de reprogramar la citación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">7</strong> titulares</span>
+<span><strong style="color:var(--c-21)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/fiscalia-evalua-estado-de-salud-de-nemesia-achacollo-antes-de-reprogramar-su-declaracion" rel="noopener noreferrer" target="_blank">Fiscalía evalúa estado de salud de Nemesia Achacollo antes de reprogramar su declaración</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/achacollo-falta-nueva-convocatoria-fiscal-pide-examen-cardiologico_1771458046" rel="noopener noreferrer" target="_blank">Achacollo falta a nueva convocatoria fiscal y pide examen cardiológico</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/por-segunda-vez-achacollo-no-se-presenta-a-declarar-por-el-caso-del-fondo-indigena.html" rel="noopener noreferrer" target="_blank">Por segunda vez, Achacollo no se presenta a declarar por el caso del Fondo Indígena</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/fondioc-achacollo-ausente-de-nuevo-y-pide-evaluacion-cardiologica/" rel="noopener noreferrer" target="_blank">Fondioc: Achacollo ausente de nuevo y pide evaluación cardiológica</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/achacollo-presenta-segunda-vez-declarar-defensa-solicita-valoracion-medica/20260218190121988789.html" rel="noopener noreferrer" target="_blank">Achacollo falta por segunda vez a declarar; su defensa alega problemas de salud</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/caso-fondo-indigena-achacollo-no-acude-a-declarar-por-segunda-vez-y-la-fiscalia-analizara-su-estado-de-salud/" rel="noopener noreferrer" target="_blank">Caso Fondo Indígena: Achacollo no acude a declarar por segunda vez y la Fiscalía analizará su estado de salud</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/achacollo-falta-nuevamente-a-su-citacion-fiscal-por-problemas-de-salud-2026218161655" rel="noopener noreferrer" target="_blank">Achacollo falta nuevamente a su citación fiscal por problemas de salud</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="RECURSO CONTRA GUSTAVO ÁVILA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">RECURSO CONTRA GUSTAVO ÁVILA</div>
+<div class="modal-sum">La Sala Plena del Tribunal Supremo Electoral (TSE) aceptó la recusación contra su presidente, Gustavo Ávila, apartándolo de la revisión de un recurso clave sobre la candidatura de Mario Cossío, ratificada para la gobernación de Tarija.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/sala-plena-del-tse-acepta-recusar-a-presidente-avila-en-el-caso-de-recurso-contra-mario-cossio.html" rel="noopener noreferrer" target="_blank">Sala Plena del TSE acepta recusar a presidente Ávila en el caso de recurso contra Mario Cossío</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_reportan-que-vocales-del-tse-aceptaron-una-recusacion-contra-gustavo-avila-por-el-caso-mario-cossio.html" rel="noopener noreferrer" target="_blank">Reportan que vocales del TSE aceptaron una recusación contra Gustavo Ávila por el caso Mario Cossío</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/caso-cossio-sala-plena-del-tse-admite-recusacion-contra-vocal-avila/" rel="noopener noreferrer" target="_blank">Caso Cossío: Sala plena del TSE admite recusación contra vocal Ávila</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/caso-mario-cossio-sala-plena-tse-acepta-recusacion-avila/20260218113244988771.html" rel="noopener noreferrer" target="_blank">Caso Mario Cossío: Sala Plena del TSE acepta recusación contra Ávila</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/sala-plena-del-tse-acepta-recusacion-y-su-presidente-no-tratara-el-recurso-contra-la-candidatura-de-mario-cossio/" rel="noopener noreferrer" target="_blank">Sala Plena del TSE acepta recusación y su Presidente no tratará el recurso contra la candidatura de Mario Cossío</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/sala-plena-del-tse-acepta-recusaci%C3%B3n-contra-%C3%A1vila-en-el-caso-mario-coss%C3%ADo" rel="noopener noreferrer" target="_blank">Sala Plena del TSE acepta recusación contra Ávila en el caso Mario Cossío</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40133-tse-aparta-a-su-presidente-de-la-revision-del-fallo-que-ratifica-candidatura-de-mario-cossio-a-la-gobernacion-de-tarija" rel="noopener noreferrer" target="_blank">TSE aparta a su presidente de la revisión del fallo que ratifica candidatura de Mario Cossío a la gobernación de Tarija</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9a">
+<div class="modal-backdrop" onclick="closeModal('modal_9a')"></div>
+<div aria-label="CASOS DE CHIKUNGUNYA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-19)">SALUD</div>
+<div class="modal-title">CASOS DE CHIKUNGUNYA</div>
+<div class="modal-sum">El departamento de Santa Cruz de la Sierra se mantiene en alerta roja sanitaria debido al incremento de casos de chikungunya, que ya registra 2.913 infectados y tres fallecidos, provocando largas filas en centros médicos. En  La Paz se confirma el primer caso, mientras se reporta un aumento de los casos de malaria e influenza en la región.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-19)">7</strong> titulares</span>
+<span><strong style="color:var(--c-19)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/tres-fallecidos-y-2-913-infectados-por-chikungunya-en-santa-cruz" rel="noopener noreferrer" target="_blank">Tres fallecidos y 2.913 infectados por chikungunya en Santa Cruz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/02/18/alerta-roja-en-santa-cruz-de-la-sierra-por-incremento-de-chikungunya/" rel="noopener noreferrer" target="_blank">Alerta roja en Santa Cruz de la Sierra por incremento de chikungunya</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/alerta-roja-sanitaria-sigue-vigente-en-santa-cruz-por-aumento-de-casos-de-chikungunya" rel="noopener noreferrer" target="_blank">Alerta roja sanitaria sigue vigente en Santa Cruz por aumento de casos de chikungunya</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Crecen-filas-en-centros-medicos-por-brote-de-chikungunya" rel="noopener noreferrer" target="_blank">Crecen filas en centros médicos por brote de chikungunya</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-confirma-primer-caso-chikunguna-suben-malaria-influenza_1771466470" rel="noopener noreferrer" target="_blank">La Paz confirma primer caso de chikunguña y suben los de malaria e influenza</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/el-departamento-de-la-paz-registra-un-caso-de-chikungunya-y-43-de-malaria" rel="noopener noreferrer" target="_blank">El departamento de La Paz registra un caso de chikungunya y 43 de malaria</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-paz-confirman-primer-caso-de-chikungunya-y-reportan-aumento-de-malaria-e-influenza/" rel="noopener noreferrer" target="_blank">La Paz: Confirman primer caso de chikungunya y reportan aumento de malaria e influenza</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="CONTROVERSIA ENTRE TUTO Y ESPINOZA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="modal-title">CONTROVERSIA ENTRE TUTO Y ESPINOZA</div>
+<div class="modal-sum">El Ministro de Economía, Espinoza, respondió enérgicamente a Jorge “Tuto” Quiroga, acusándolo de intentar desestabilizar al Gobierno y al país con sus críticas a los 100 días del presidente Paz. Espinoza afirmó que el ciclo político de Quiroga ha concluido y que nunca ganó una elección.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">6</strong> titulares</span>
+<span><strong style="color:var(--c-11)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/su-ciclo-politico-ha-concluido-ministro-de-economia-acusa-a-tuto-de-intentar-desestabilizar-al-gobierno" rel="noopener noreferrer" target="_blank">“Su ciclo político ha concluido”: Ministro de Economía acusa a Tuto de intentar desestabilizar al Gobierno</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/espinoza-responde-tuto-no-entiendo-insistencia-intentar-desestabilizar-gobierno_1771417063" rel="noopener noreferrer" target="_blank">Espinoza responde a Tuto: “No entiendo la insistencia en intentar desestabilizar al Gobierno”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/ministro-espinoza-responde-a-tuto-su-ciclo-politico-ha-concluido-nunca-ha-ganado-una-eleccion.html" rel="noopener noreferrer" target="_blank">Ministro Espinoza responde a Tuto: “su ciclo político ha concluido”, “nunca ha ganado una elección”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_espinoza-acusa-a-jorge-quiroga-de-intentar-desestabilizar-el-pais-por-criticas-a-los-100-dias-de-paz.html" rel="noopener noreferrer" target="_blank">Espinoza acusa a Jorge Quiroga de intentar desestabilizar el país por críticas a los 100 días de Paz</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/senador-de-libre-exige-al-ministro-de-econom%C3%ADa-%E2%80%9Cm%C3%A1s-respeto%E2%80%9D-hacia-tuto-quiroga" rel="noopener noreferrer" target="_blank">Senador de Libre exige al Ministro de Economía “más respeto” hacia Tuto Quiroga</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40116-ministro-espinoza-defiende-medidas-economicas-y-le-dice-a-quiroga-que-su-ciclo-termino-y-nunca-gano-una-eleccion" rel="noopener noreferrer" target="_blank">Ministro Espinoza defiende medidas económicas y le dice a Quiroga que su ciclo terminó y nunca ganó una elección</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14g">
+<div class="modal-backdrop" onclick="closeModal('modal_14g')"></div>
+<div aria-label="AGENDA BOLIVIA-CHILE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">AGENDA BOLIVIA-CHILE</div>
+<div class="modal-sum">Bolivia y Chile proyectan una agenda de nueve puntos a activarse tras la asunción presidencial de Kast, con la presencia boliviana perfilada como histórica y la posible designación de Flavio Escobar como cónsul.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">6</strong> titulares</span>
+<span><strong style="color:var(--c-18)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14g')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-chile-proyectan-agenda-nueve-puntos-activara-asuncion-kast_1771431605" rel="noopener noreferrer" target="_blank">Bolivia y Chile proyectan agenda de nueve puntos que se activará tras la asunción de Kast</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/paz-confirma-asistencia-a-la-investidura-de-kast/" rel="noopener noreferrer" target="_blank">Paz confirma asistencia a la investidura de Kast</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/flavio-escobar-se-perfila-como-futuro-consul-boliviano-en-chile/" rel="noopener noreferrer" target="_blank">Flavio Escobar se perfila como futuro cónsul boliviano en Chile</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/paz-anuncia-viaje-a-chile-para-investidura-de-kast/" rel="noopener noreferrer" target="_blank">Paz anuncia viaje a Chile para investidura de Kast</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/%f0%9d%97%94%f0%9d%97%b3%f0%9d%97%b6%f0%9d%97%bf%f0%9d%97%ba%f0%9d%97%ae%f0%9d%97%bb-%f0%9d%97%be%f0%9d%98%82%f0%9d%97%b2-%f0%9d%97%bd%f0%9d%97%bf%f0%9d%97%b2%f0%9d%98%80%f0%9d%97%b2%f0%9d%97%bb/" rel="noopener noreferrer" target="_blank">𝗔𝗳𝗶𝗿𝗺𝗮𝗻 𝗾𝘂𝗲 𝗽𝗿𝗲𝘀𝗲𝗻𝗰𝗶𝗮 𝗯𝗼𝗹𝗶𝘃𝗶𝗮𝗻𝗮 𝗲𝗻 𝗽𝗼𝘀𝗲𝘀𝗶𝗼́𝗻 𝗱𝗲 𝗞𝗮𝘀𝘁 𝘀𝗲𝗿𝗮́ 𝗵𝗶𝘀𝘁𝗼́𝗿𝗶𝗰𝗮</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/18/bolivia-y-chile-abordaran-agenda-de-nueve-puntos-tras-posesion-de-kast/" rel="noopener noreferrer" target="_blank">Bolivia y Chile abordarán agenda de nueve puntos tras posesión de Kast</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13b">
+<div class="modal-backdrop" onclick="closeModal('modal_13b')"></div>
+<div aria-label="RESTRICCIONES EN VIA CBBA-ORURO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-14)">TRANSPORTE</div>
+<div class="modal-title">RESTRICCIONES EN VIA CBBA-ORURO</div>
+<div class="modal-sum">La Administradora Boliviana de Carreteras (ABC) anuncia y aplica restricciones al paso vehicular en la vía Cochabamba-Oruro, programadas desde el 19 de febrero hasta el 30 de abril, afectando la circulación en la importante ruta.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-14)">5</strong> titulares</span>
+<span><strong style="color:var(--c-14)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/restringen-paso-vehicular-carretera-cochabamba-oruro_1771425394" rel="noopener noreferrer" target="_blank">Restringen el paso vehicular en la carretera Cochabamba - Oruro</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_abc-pide-transitar-con-precaucion-y-respetar-la-senalizacion-en-vias-afectadas-por-derrumbes.html" rel="noopener noreferrer" target="_blank">ABC pide transitar con precaución y respetar la señalización en vías afectadas por derrumbes</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/ABC-aplicara-restriccion-en-la-via-cochabamba-oruro" rel="noopener noreferrer" target="_blank">ABC aplicará restricción en la vía Cochabamba Oruro</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/atencion-conductores-abc-anuncia-restriccion-en-la-carretera-cochabamba-oruro-2026218102815" rel="noopener noreferrer" target="_blank">¡Atención, conductores! ABC anuncia restricción en la carretera Cochabamba–Oruro</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/anuncian-restricci%C3%B3n-vehicular-en-la-v%C3%ADa-cochabamba-oruro-desde-el-19-de-febrero-hasta-el-30" rel="noopener noreferrer" target="_blank">Anuncian restricción vehicular en la vía Cochabamba-Oruro desde el 19 de febrero hasta el 30 de abril</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11a">
+<div class="modal-backdrop" onclick="closeModal('modal_11a')"></div>
+<div aria-label='"GOBERNABILIDAD LEGISLATIVA"' aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="modal-title">"GOBERNABILIDAD LEGISLATIVA"</div>
+<div class="modal-sum">Se reporta una delicada situación de gobernabilidad legislativa, señalando que el Presidente Paz no controla la Asamblea y el Vicepresidente Lara pierde credibilidad por falta de coordinación en el Legislativo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">5</strong> titulares</span>
+<span><strong style="color:var(--c-11)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gonzalo-chavez-implementar-politicas-publicas-necesita-construir-andamiaje-gobernabilidad-asamblea_1771470581" rel="noopener noreferrer" target="_blank">Gonzalo Chávez: “Para implementar políticas públicas se necesita construir un andamiaje de gobernabilidad en la Asamblea”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/gobernabilidad-legislativa-delicada-hay-una-asamblea-que-paz-no-controla-y-lara-pierde-credibilidad.html" rel="noopener noreferrer" target="_blank">Gobernabilidad legislativa delicada: “Hay una Asamblea que Paz no controla y Lara pierde credibilidad”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/reyes-senala-a-lara-por-falta-de-coordinacion-en-legislativo/" rel="noopener noreferrer" target="_blank">Reyes señala a Lara por falta de coordinación en Legislativo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-gobierno-envi%C3%B3-dos-proyectos-la-asamblea-que-a%C3%BAn-no-los-trata-y-en-dos-semanas-uno" rel="noopener noreferrer" target="_blank">El Gobierno envió dos proyectos a la Asamblea que aún no los trata y en dos semanas, uno estratégico</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobernabilidad-legislativa-delicada-hay-una-asamblea-que-paz-no-controla-y-lara-pierde" rel="noopener noreferrer" target="_blank">Gobernabilidad legislativa delicada: "Hay una Asamblea que Paz no controla y Lara pierde credibilidad"</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14b">
+<div class="modal-backdrop" onclick="closeModal('modal_14b')"></div>
+<div aria-label="MOVIMIENTO ECONOMICO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">MOVIMIENTO ECONOMICO</div>
+<div class="modal-sum">El sector turístico evaluó positivamente el Carnaval. El Gobierno proyecta publicar resultados económicos, mientras la Alcaldía de Oruro calificó de positivo su evento, que movió más de Bs 100 millones en La Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">4</strong> titulares</span>
+<span><strong style="color:var(--c-13)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/sector-turistico-evalua-positivamente-carnaval-pese-bloqueos-conflictividad-inicio-ano_1771448778" rel="noopener noreferrer" target="_blank">Sector turístico evalúa positivamente el Carnaval pese a bloqueos y conflictividad al inicio del año</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_gobierno-proyecta-publicar-resultados-del-movimiento-generado-por-los-carnavales.html" rel="noopener noreferrer" target="_blank">Gobierno proyecta publicar resultados del movimiento generado por los carnavales</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/m%C3%A1s-de-60-mil-devotos-y-15-mil-m%C3%BAsicos-alcald%C3%ADa-de-oruro-califica-de-positivo-el-carnaval" rel="noopener noreferrer" target="_blank">Más de 60 mil devotos y 15 mil músicos: Alcaldía de Oruro califica de positivo el Carnaval</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40125-festejos-por-carnaval-en-la-paz-movieron-mas-de-bs-100-millones-solo-el-corso-infantil-genero-bs-40-millones" rel="noopener noreferrer" target="_blank">Festejos por Carnaval en La Paz movieron más de Bs 100 millones, solo el Corso Infantil generó Bs 40 millones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="LITIO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMIA</div>
+<div class="modal-title">LITIO</div>
+<div class="modal-sum">Bolivia avanza en la industria del litio con la firma de un acuerdo de negociación entre YLB y el consorcio australiano-alemán EAU Lithium.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">4</strong> titulares</span>
+<span><strong style="color:var(--c-17)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/empresa-australiana-eau-lithium-firma-acuerdo-negociacion-ylb-avanzar-proyectos-litio_1771445765" rel="noopener noreferrer" target="_blank">Empresa australiana EAU Lithium firma acuerdo de negociación con YLB para avanzar en proyectos de litio</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/economia/litio-consorcio-australiano-aleman-reporta-la-firma-de-un-acuerdo-de-negociacion-con-bolivia.html" rel="noopener noreferrer" target="_blank">Litio: Consorcio australiano-alemán reporta la firma de un Acuerdo de Negociación con Bolivia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_gobierno-informa-que-bolivia-avanza-en-alianzas-para-fortalecer-la-industria-del-litio.html" rel="noopener noreferrer" target="_blank">Gobierno informa que Bolivia avanza en alianzas para fortalecer la industria del litio</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-consorcio-australiano-aleman-eau-lithium-anuncia-acuerdo-de-negociacion-con-ylb-para-explorar-un-contrato-sobre-litio-PL19301482" rel="noopener noreferrer" target="_blank">El consorcio australiano-alemán EAU Lithium anuncia “acuerdo de negociación” con YLB para explorar un contrato sobre litio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="ATAQUE A PERIODISTA EN EL ALTO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">ATAQUE A PERIODISTA EN EL ALTO</div>
+<div class="modal-sum">La Fiscalía y Policía aclaran que periodista de El Alto fue víctima de un asalto, desvirtuando la versión de corte de lengua.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/fiscalia-aclara-que-periodista-de-el-alto-sufrio-un-asalto-y-niega-que-le-hayan-cortado-la-lengua.html" rel="noopener noreferrer" target="_blank">Fiscalía aclara que periodista de El Alto sufrió un asalto y niega que le hayan cortado la lengua</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/investigaci%C3%B3n-apunta-que-periodista-de-el-alto-fue-v%C3%ADctima-de-robo-y-no-de-represalia" rel="noopener noreferrer" target="_blank">Investigación apunta a que periodista de El Alto fue víctima de robo y no de represalia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/no-le-cortaron-la-lengua-policia-aclara-caso-de-periodista-en-el-alto-20262181300" rel="noopener noreferrer" target="_blank">“No le cortaron la lengua”: Policía aclara caso de periodista en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/18/40136-el-ministerio-publico-descarta-el-secuestro-y-la-tortura-de-periodista-y-desvirtua-la-version-inicial-que-circulo" rel="noopener noreferrer" target="_blank">El Ministerio Público descarta el secuestro y la tortura de periodista y desvirtúa la versión inicial que circuló</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14f">
+<div class="modal-backdrop" onclick="closeModal('modal_14f')"></div>
+<div aria-label="INFANTICIDIO EN SANTA CRUZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">INFANTICIDIO EN SANTA CRUZ</div>
+<div class="modal-sum">Un bebé de ocho meses falleció en Santa Cruz con signos de violencia, lo que llevó a la detención y envío a la cárcel del padre, investigado por presunto infanticidio.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14f')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/bebe-de-ocho-meses-muere-tras-sufrir-golpes-padre-es-detenido-en-santa-cruz" rel="noopener noreferrer" target="_blank">Bebé de ocho meses muere tras sufrir golpes; padre es detenido en Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bebe-de-ocho-meses-muere-con-signos-de-violencia-investigan-presunto-infanticidio-en-los-lotes-202621812147" rel="noopener noreferrer" target="_blank">Bebé de ocho meses muere con signos de violencia; investigan presunto infanticidio en Los Lotes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/culparon-a-su-hijo-de-5-anos-revelan-datos-del-supuesto-infanticidio-en-los-lotes-2026218174318" rel="noopener noreferrer" target="_blank">Culparon a su hijo de 5 años: Revelan datos del supuesto infanticidio en Los Lotes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/padre-enviado-a-la-carcel-por-presunto-infanticidio-de-su-bebe-de-ocho-meses-2026218224148" rel="noopener noreferrer" target="_blank">Padre enviado a la cárcel por presunto infanticidio de su bebé de ocho meses</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13a">
+<div class="modal-backdrop" onclick="closeModal('modal_13a')"></div>
+<div aria-label="ACCIDENTES DE TRÁNSITO EN LA PAZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-14)">TRANSPORTE</div>
+<div class="modal-title">ACCIDENTES DE TRÁNSITO EN LA PAZ</div>
+<div class="modal-sum">Varios hechos de tránsito, incluyendo un bus impactando con un divisor de carril y el choque entre un bus y un taxi, se registran en la autopista La Paz-El Alto, involucrando a diferentes vehículos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-14)">3</strong> titulares</span>
+<span><strong style="color:var(--c-14)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/18/bus-impacta-con-un-divisor-de-carril-en-la-autopista-la-paz-el-alto" rel="noopener noreferrer" target="_blank">Bus impacta con un divisor de carril en la autopista La Paz- El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_un-bus-y-un-taxi-protagonizan-accidente-en-la-autopista-la-paz-el-alto.html" rel="noopener noreferrer" target="_blank">Un bus y un taxi protagonizan accidente en la autopista La Paz - El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/dos-veh%C3%ADculos-protagonizan-hecho-de-tr%C3%A1nsito-en-la-autopista-la-paz-el-alto" rel="noopener noreferrer" target="_blank">Dos vehículos protagonizan hecho de tránsito en la autopista La Paz-El Alto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14c">
+<div class="modal-backdrop" onclick="closeModal('modal_14c')"></div>
+<div aria-label="ESTAFA EN CARNAVAL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">ESTAFA EN CARNAVAL</div>
+<div class="modal-sum">Tres personas fueron enviadas a la cárcel en Oruro por estafa millonaria y reventa de graderías durante los festejos de Carnaval.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">3</strong> titulares</span>
+<span><strong style="color:var(--c-13)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/carcel-tres-implicados-estafa-millonaria-carnaval-oruro_1771467241" rel="noopener noreferrer" target="_blank">Cárcel para tres implicados en estafa millonaria en Carnaval de Oruro</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_oruro-envian-a-la-carcel-a-tres-personas-por-reventa-de-graderias-en-carnaval.html" rel="noopener noreferrer" target="_blank">Oruro: Envían a la cárcel a tres personas por reventa de graderías en Carnaval</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/estafa-en-carnaval-env%C3%ADan-la-c%C3%A1rcel-tres-personas-por-reventa-de-grader%C3%ADas-en-oruro" rel="noopener noreferrer" target="_blank">Estafa en Carnaval: envían a la cárcel a tres personas por reventa de graderías en Oruro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14h">
+<div class="modal-backdrop" onclick="closeModal('modal_14h')"></div>
+<div aria-label="REUNIÓN PAZ-LULA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">REUNIÓN PAZ-LULA</div>
+<div class="modal-sum">El Ministro de Agricultura de Brasil se encuentra en Bolivia para coordinar detalles y la agenda para un eventual encuentro entre los presidentes Rodrigo Paz y Lula da Silva.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">3</strong> titulares</span>
+<span><strong style="color:var(--c-18)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14h')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/politica/ministro-de-agricultura-de-brasil-esta-en-bolivia-para-ajustar-detalles-del-encuentro-entre-lula-y-paz.html" rel="noopener noreferrer" target="_blank">Ministro de Agricultura de Brasil está en Bolivia para ajustar detalles del encuentro entre Lula y Paz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/18/ministro-de-agricultura-de-brasil-llega-a-bolivia/" rel="noopener noreferrer" target="_blank">Ministro de Agricultura de Brasil llega a Bolivia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ministros-de-bolivia-y-brasil-coordinan-agenda-para-eventual-encuentro-entre-rodrigo-paz-y-lula-da-silva/" rel="noopener noreferrer" target="_blank">Ministros de Bolivia y Brasil coordinan agenda para eventual encuentro entre Rodrigo Paz y Lula da Silva</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="BOLIVIANO EN EEUU" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">BOLIVIANO EN EEUU</div>
+<div class="modal-sum">Capturan en EEUU a un ciudadano boliviano por distribuir material de abuso sexual infantil.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/capturan-en-eeuu-un-boliviano-acusado-de-distribuir-material-de-abuso-sexual-infantil" rel="noopener noreferrer" target="_blank">Capturan en EEUU a un boliviano acusado de distribuir material de abuso sexual infantil</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/boliviano-arrestado-ee-uu-acusado-distribuir-material-abuso-sexual-infantil_1771427759" rel="noopener noreferrer" target="_blank">Un boliviano es arrestado en EE.UU. por “distribuir material de abuso sexual infantil”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_boliviano-acusado-de-distribuir-videos-ilegales-es-detenido-en-eeuu.html" rel="noopener noreferrer" target="_blank">Boliviano acusado de distribuir videos ilegales es detenido en EEUU</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="CORSO DE CORSOS EN CBBA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">CORSO DE CORSOS EN CBBA</div>
+<div class="modal-sum">Cochabamba se prepara para el Corso de Corsos con la participación de más de 90 fraternidades.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">3</strong> titulares</span>
+<span><strong style="color:var(--c-13)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cochabamba-recibira-90-fraternidades-corso-corsos_1771445369" rel="noopener noreferrer" target="_blank">Cochabamba recibirá a 90 fraternidades en el Corso de Corsos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-18/pais/mas-de-90-fraternidades-participaran-del-corso-de-corsos-de-cochabamba-este-sabado.html" rel="noopener noreferrer" target="_blank">Más de 90 fraternidades participarán del Corso de Corsos de Cochabamba este sábado</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Instalan-graderias-para-el-corso-de-corsos-en-cochabamba" rel="noopener noreferrer" target="_blank">Instalan graderías para el Corso de Corsos en Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N005">
+<div class="modal-backdrop" onclick="closeModal('modal_N005')"></div>
+<div aria-label="RED FERROVIARIA EN TARIJA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-14)">TRANSPORTE</div>
+<div class="modal-title">RED FERROVIARIA EN TARIJA</div>
+<div class="modal-sum">El Gobierno proyecta la unión de las redes ferroviarias oriental y andina a través de Tarija.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-14)">3</strong> titulares</span>
+<span><strong style="color:var(--c-14)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N005')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-proyecta-unir-redes-ferroviarias-oriental-andina-traves-tarija_1771425561" rel="noopener noreferrer" target="_blank">Gobierno proyecta unir las redes ferroviarias Oriental y Andina a través de Tarija</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260218_gobierno-proyecta-unir-las-redes-ferroviarias-oriental-y-occidental-por-tarija.html" rel="noopener noreferrer" target="_blank">Gobierno proyecta unir las redes ferroviarias oriental y occidental por Tarija</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/obras-publicas-proyecta-unir-las-redes-ferroviarias-oriental-y-occidental-por-tarija/" rel="noopener noreferrer" target="_blank">Obras Públicas proyecta unir las redes ferroviarias oriental y occidental por Tarija</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14i">
+<div class="modal-backdrop" onclick="closeModal('modal_14i')"></div>
+<div aria-label="ASALTO EN SANTA CRUZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">ASALTO EN SANTA CRUZ</div>
+<div class="modal-sum">Una tienda de anime en el centro cruceño fue asaltada a punta de arma y a plena luz del día. Los delincuentes robaron objetos de valor, mientras testigos relatan momentos de terror.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14i')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/les-quitaron-hasta-los-zapatos-a-las-trabajadoras-atracan-una-tienda-de-anime-en-pleno-centro-cruceno-2026218185830" rel="noopener noreferrer" target="_blank">Les quitaron hasta los zapatos a las trabajadoras: Atracan una tienda de anime en pleno centro cruceño</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/mostraron-su-arma-y-se-fueron-corriendo-testigo-relata-los-momentos-de-terror-durante-el-atraco-a-tienda-anime-2026218193922" rel="noopener noreferrer" target="_blank">"Mostraron su arma y se fueron corriendo": Testigo relata los momentos de terror durante el atraco a tienda anime</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/te-voy-a-matar-asaltan-a-punta-de-arma-y-a-plena-luz-del-dia-en-una-tienda-de-anime-en-santa-cruz-NK19311084" rel="noopener noreferrer" target="_blank">“Te voy a matar”: Asaltan a punta de arma y a plena luz del día en una tienda de anime en Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
