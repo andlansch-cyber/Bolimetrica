@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260220</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">251</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">18</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · FEB · 20</strong>
+        Reporte N° 20260220<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_20')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-04)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-04)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="top3-title">PRIMEROS 100 DÍAS DE GOBIERNO</div>
+<div class="top3-body">El Gobierno del presidente Rodrigo Paz cumplió sus primeros 100 días de gestión. Se presentaron las frases más destacadas del mensaje presidencial y el Ministerio de Gobierno dio un balance de este período. Se generaron diferentes coberturas y reacciones al mensaje y balance de los 100 días de gestión</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">35</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">12</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_17')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-04)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-04)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="top3-title">DECLARACIONES DE VICEMINISTRA BARRIENTOS</div>
+<div class="top3-body">Las declaraciones de la viceministra Barrientos sobre el plan 50/50 generaron una fuerte controversia, llevando al Gobierno a aclarar que se trató de un “error de comunicación” que no refleja la posición oficial. Ante esto, el gobernador de Santa Cruz, Camacho exigió un informe a la Presidencia y criticó las palabras de la autoridad. Posteriormente Barrientos pidió disculpas públicas por sus declaraciones.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">28</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_14a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-10)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-10)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="top3-title">HABILITACIONES E INABILITACIONES</div>
+<div class="top3-body">El Tribunal Supremo Electoral ratifica la habilitación de Manfred Reyes Villa para las elecciones subnacionales, mientras inhabilita a varios candidatos como Mario Cossío, Yerko Núñez, Moisés Shriqui y Edgar Bazán.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-10)">21</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-10)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-04)"></div></div>
+<div class="cat-n">81</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:54%;background:var(--c-15)"></div></div>
+<div class="cat-n">44</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:40%;background:var(--c-17)"></div></div>
+<div class="cat-n">32</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:38%;background:var(--c-09)"></div></div>
+<div class="cat-n">31</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">ELECCIONES SUBNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:36%;background:var(--c-10)"></div></div>
+<div class="cat-n">29</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-29)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:17%;background:var(--c-29)"></div></div>
+<div class="cat-n">14</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:17%;background:var(--c-18)"></div></div>
+<div class="cat-n">14</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:7%;background:var(--c-07)"></div></div>
+<div class="cat-n">6</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">48</td>
+</tr>
+<tr>
+<td class="freq-word">orden de aprehensión</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:70%"></div>
+</div>
+</td>
+<td class="freq-count">29</td>
+</tr>
+<tr>
+<td class="freq-word">barrientos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:58%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">rodrigo paz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">evo morales</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">arancel cero</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:36%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr>
+<tr>
+<td class="freq-word">donald trump</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:33%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">gasolina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:33%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">viru viru</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:31%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">proyecto de ley</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:31%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">PRIMEROS 100 DÍAS DE GOBIERNO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">35</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DECLARACIONES DE VICEMINISTRA BARRIENTOS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:80.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">28</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">HABILITACIONES E INABILITACIONES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:60.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">21</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:57.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">20</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ORDEN DE APREHENSIÓN CONTRA NEMESIA ACHACHOLLO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:54.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">19</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">REAPARICIÓN DE EVO MORALES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:51.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">18</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">REUNIÓN PAZ-TRUMP</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:40.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">14</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MARIHUANA LÍQUIDA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:40.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">14</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">SUMINISTRO Y CALIDAD DE COMBUSTIBLE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:40.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">14</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">IMPORTACIÓN DIRECTA DE COMBUSTIBLE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:37.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">13</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ARANCEL CERO PARA SOYA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:34.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">12</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ORDEN DE APREHENSIÓN CONTRA EVO MORALES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:31.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">11</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ORDEN DE APREHENSIÓN CONTRA EXPRESIDENTA DE ADUANA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">VIOLENCIA EN CARNAVAL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ENCUESTA DE UNITEL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DETENCIÓN PREVENTIVA PARA UN JUEZ EN EL ALTO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DETENCIÓN DE EXGERENTE DE YPFB</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INICIO DE DIFUSIÓN DE PROPAGANDA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CASO PASTOR EVANGÉLICO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_4a')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMIA</div>
+<div class="topic-title">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="topic-body">El Gobierno, a través del presidente Rodrigo Paz, mediante proyectos remitidos a la ALP, impulsa una nueva Ley de Transparencia y Alivio Tributario, que incluye la condonación de deudas, ajuste del IVA y creación de un régimen especial para fomentar la formalidad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>20</strong> titulares</div>
+<div class="topic-stat"><strong>13</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_13')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">ORDEN DE APREHENSIÓN CONTRA NEMESIA ACHACHOLLO</div>
+<div class="topic-body">La Fiscalía emite y confirma una orden de aprehensión contra la exministra Nemesia Achacollo por el caso Fondo Indígena, tras no acudir a declarar. Se activa una alerta migratoria en su contra mientras se indaga su paradero y su situación judicial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>19</strong> titulares</div>
+<div class="topic-stat"><strong>13</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_19')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">REAPARICIÓN DE EVO MORALES</div>
+<div class="topic-body">Evo Morales reapareció públicamente en Chimoré, su bastión político, tras más de un mes de ausencia, para la proclamación de candidatos a las elecciones subnacionales. Durante el evento, criticó al gobierno de Rodrigo Paz, calificándolo de “accidente político”.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>18</strong> titulares</div>
+<div class="topic-stat"><strong>12</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">REUNIÓN PAZ-TRUMP</div>
+<div class="topic-body">El presidente Rodrigo Paz confirmó una reunión con Donald Trump en Estados Unidos el 7 de marzo, como parte de su agenda internacional, que también incluye un posible viaje a Europa y la asistencia a una cumbre en Miami.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>14</strong> titulares</div>
+<div class="topic-stat"><strong>12</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">MARIHUANA LÍQUIDA</div>
+<div class="topic-body">Incautan entre 350 y 365 kilos de marihuana líquida en el aeropuerto de Viru Viru, Santa Cruz, que llegó oculta en equipos electrónicos desde EE.UU. La FELCN investiga el caso y se prevé cooperación internacional de EEUU y Uruguay, sospechando que Bolivia es país de tránsito.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>14</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">SUMINISTRO Y CALIDAD DE COMBUSTIBLE</div>
+<div class="topic-body">Cívicos del Beni anuncian un paro de 24 horas, bloqueos y medidas adicionales por la mala calidad y distribución irregular de la gasolina. En Cochabamba, el sector de transporte rompió el diálogo con el Gobierno y dio un ultimátum por la gasolina "desestabilizada". Minentras la empresa estatal ratifica que la gasolina distribuida cumple con todos los controles de calidad y es confiable para los consumidores.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>14</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3a')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">IMPORTACIÓN DIRECTA DE COMBUSTIBLE</div>
+<div class="topic-body">El presidente Rodrigo Paz promulgó un decreto que autoriza a YPFB y a las refinerías nacionales a importar petróleo crudo del exterior. La medida busca reforzar la producción de combustibles, garantizar el abastecimiento en el mercado interno y optimizar costos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>13</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMIA</div>
+<div class="topic-title">ARANCEL CERO PARA SOYA</div>
+<div class="topic-body">El Gobierno boliviano oficializó el arancel cero para la importación de grano de soya, con vigencia hasta fin de año o diciembre de 2026, con el objetivo de apuntalar la industria nacional. Productores soyeros, representados por Anapo, consideran la medida innecesaria y demandan la liberación plena</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_16')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">ORDEN DE APREHENSIÓN CONTRA EVO MORALES</div>
+<div class="topic-body">La Policía Boliviana afirmó que ejecutará la orden de aprehensión contra Evo Morales "en el momento oportuno", evaluando las condiciones para su cumplimiento. Una viceministra, sin embargo, exigió la ejecución inmediata de dicha orden, relacionada a un caso de trata.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">ORDEN DE APREHENSIÓN CONTRA EXPRESIDENTA DE ADUANA</div>
+<div class="topic-body">La Fiscalía y el Ministerio Público emitieron una orden de aprehensión contra Karina Serrudo, expresidenta de la Aduana Nacional durante el Gobierno de Arce, por presuntos sobreprecios detectados en la entidad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">VIOLENCIA EN CARNAVAL</div>
+<div class="topic-body">Autoridades reportan el balance de incidentes durante las festividades de Carnaval, incluyendo 33 fallecidos, hechos de tránsito, consumo de drogas y cerca de 280 casos de violencia contra la mujer a nivel nacional, con detalles específicos en Potosí.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_22a')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">ENCUESTA DE UNITEL</div>
+<div class="topic-body">Encuesta de Unitel revela la intención de voto para gobernaciones en La Paz, Cochabamba y Santa Cruz, donde Revilla (junto a Patzi en La Paz), Loza y Camacho respectivamente, lideran la preferencia electoral en sus regiones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1a')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">DETENCIÓN PREVENTIVA PARA UN JUEZ EN EL ALTO</div>
+<div class="topic-body">Se dicta detención preventiva y se envía a la cárcel a un juez de El Alto, quien es procesado por la Magistratura debido a retardación de justicia.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1b')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">DETENCIÓN DE EXGERENTE DE YPFB</div>
+<div class="topic-body">Dictan 90 días de detención preventiva para la exgerenta de YPFB. Posteriormente, se allana su domicilio en Santa Cruz, donde se secuestra documentación relevante.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">INICIO DE DIFUSIÓN DE PROPAGANDA</div>
+<div class="topic-body">El Tribunal Supremo Electoral (TSE) autoriza el inicio de la difusión de propaganda electoral en medios de comunicación para las elecciones subnacionales, efectiva desde el 20 de febrero.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1c')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">CASO PASTOR EVANGÉLICO</div>
+<div class="topic-body">Dentro del caso contra el pastor evangélico, éste afronta audiencias cautelares y recibe 60 días de prisión por presunto estupro y violencia familiar en Santa Cruz, donde la justicia denegó la extinción de su proceso.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/economia/investigador-revela-que-petropar-compro-el-mismo-combustible-que-ypfb-pero-a-un-precio-tres-veces-mas-barato" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Investigador revela que Petropar compró el mismo combustible que YPFB, pero a un precio tres veces más barato</a></div>
+<div class="emergente-sum">Una investigación expone que Petropar compró el mismo combustible a un precio tres veces menor que YPFB, lo que podría indicar corrupción o ineficiencia masiva en la gestión de recursos estatales.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/seguridad/2026/02/19/ya-suman-13-feminicidios-coordinadora-de-la-mujer-denuncia-violencia-estructural-y-sistematica-57417" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Ya suman 13 feminicidios: la Coordinadora de la Mujer denuncia violencia estructural y sistemática</a></div>
+<div class="emergente-sum">Con 13 feminicidios registrados, la Coordinadora de la Mujer alerta sobre una violencia estructural y sistemática que persiste en el país, exigiendo respuestas contundentes de las autoridades.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/02/19/casos-de-chikundunya-suben-a-3-000-y-hay-tres-muertos-en-santa-cruz/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Casos de chikundunya suben a 3.000 y hay tres muertos en Santa Cruz</a></div>
+<div class="emergente-sum">Santa Cruz enfrenta una emergencia sanitaria por chikungunya con 3.000 casos y tres fallecidos, generando una seria preocupación por la salud pública en la región.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/defensa-busca-ffaa-apoyen-policia-nuevo-rol-menciona-cambio-lofa_1771554181" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Defensa busca que FFAA apoyen a la Policía con nuevo rol y menciona cambio de LOFA</a></div>
+<div class="emergente-sum">El Ministerio de Defensa impulsa un nuevo rol para las Fuerzas Armadas en apoyo a la Policía, lo que implicaría cambios a la Ley Orgánica de las FFAA y redefiniría las estrategias de seguridad nacional.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/nacional/2026/02/19/lupo-reporta-us-8-000-mm-drenados-y-340-denuncias-de-corrupcion/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Lupo reporta $us 8.000 MM drenados y 340 denuncias de corrupción</a></div>
+<div class="emergente-sum">Se denuncia que $us 8.000 millones han sido 'drenados' por corrupción, con 340 casos ya registrados, señalando un problema sistémico de gran envergadura y consecuencias para el Estado.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260220 · 2026-02-20</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 251 titulares · 19 temas · 8 categorías · 18 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_20">
+<div class="modal-backdrop" onclick="closeModal('modal_20')"></div>
+<div aria-label="PRIMEROS 100 DÍAS DE GOBIERNO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">PRIMEROS 100 DÍAS DE GOBIERNO</div>
+<div class="modal-sum">El Gobierno del presidente Rodrigo Paz cumplió sus primeros 100 días de gestión. Se presentaron las frases más destacadas del mensaje presidencial y el Ministerio de Gobierno dio un balance de este período. Se generaron diferentes coberturas y reacciones al mensaje y balance de los 100 días de gestión</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">35</strong> titulares</span>
+<span><strong style="color:var(--c-04)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/a-100-dias-paz-insiste-que-esta-poco-tiempo-en-el-gobierno-y-asegura-que-empezo-a-quitar-a-los-corruptos" rel="noopener noreferrer" target="_blank">A 100 días, Paz insiste que está poco tiempo en el Gobierno y asegura que empezó a quitar a los corruptos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/rodrigo-paz-lanza-otros-cuatro-decretos-al-cumplir-sus-100-dias-de-gobierno" rel="noopener noreferrer" target="_blank">Rodrigo Paz lanza otros cuatro decretos al cumplir sus 100 días de gobierno</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/100-dias-del-gobierno-orden-crecimiento-y-apertura-las-20-frases-que-resumen-el-mensaje-presidencial.html" rel="noopener noreferrer" target="_blank">100 días del Gobierno: Orden, crecimiento y apertura; las 20 frases que resumen el mensaje presidencial</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/a-100-dias-de-gestion-paz-afirma-que-estabilizo-el-barco-y-anuncia-leyes-decretos-y-acuerdos.html" rel="noopener noreferrer" target="_blank">A 100 días de gestión, Paz afirma que estabilizó el “barco” y anuncia leyes, decretos y acuerdos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/19/aduana-destaca-modernizacion-y-cooperacion-en-sus-100-dias/" rel="noopener noreferrer" target="_blank">Aduana destaca modernización y cooperación en sus 100 días</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/ministerio-de-gobierno-destaca-cuatro-pilares-en-materia-de-seguridad/" rel="noopener noreferrer" target="_blank">Ministerio de Gobierno destaca cuatro pilares en materia de seguridad</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/lea-las-frases-destacas-del-mensaje-presidencial-por-100-dias-de-gobierno/" rel="noopener noreferrer" target="_blank">Lea las frases destacas del mensaje presidencial por 100 días de Gobierno</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/mira-todos-los-videos-publicados-por-el-presidente-y-los-ministros-por-sus-100-dias-de-gestion/" rel="noopener noreferrer" target="_blank">Mira todos los videos publicados por el Presidente y los ministros por sus 100 días de gestión</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Ministerio de Gobierno presenta balance de los primeros 100 días de gestión de Rodrigo Paz</span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/este-barco-estaba-hundido-las-10-frases-mas-destacadas-del-mensaje-de-rodrigo-paz-en-sus-primeros-100-dias-de-gestion-20262197450" rel="noopener noreferrer" target="_blank">“Este barco estaba hundido”: Las 10 frases más destacadas del mensaje de Rodrigo Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-destaca-avances-y-austeridad-en-sus-primeros-100-dias-de-gestion-2026219212623" rel="noopener noreferrer" target="_blank">Gobierno destaca avances y austeridad en sus primeros 100 días</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/100-dias-en-el-gobierno-estas-son-las-10-frases-del-mensaje-de-rodrigo-paz-IK19313391" rel="noopener noreferrer" target="_blank">100 días en el Gobierno: Estas son las 10 frases del mensaje de Rodrigo Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/100-d%C3%ADas-paz-dice-que-hoy-el-barco-est%C3%A1-flotando-y-que-el-2026-es-para-ordenar-la-casa" rel="noopener noreferrer" target="_blank">100 días: Paz dice que hoy 'el barco está flotando' y que el 2026 es 'para ordenar la casa'</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/100-d%C3%ADas-medinacelli-destaca-la-normalizaci%C3%B3n-en-la-provisi%C3%B3n-de-carburantes-y-lucha-al" rel="noopener noreferrer" target="_blank">100 días: Medinacelli destaca la normalización en la provisión de carburantes y lucha al contrabando</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/100-d%C3%ADas" rel="noopener noreferrer" target="_blank">100 días</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40213-100-dias-ministros-de-paz-revelan-como-recibieron-sus-despachos-y-dan-a-conocer-sus-principales-logros" rel="noopener noreferrer" target="_blank">100 días: ministros de Paz revelan cómo recibieron sus despachos y dan a conocer sus principales logros</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40218-ministro-de-la-presidencia-en-los-primeros-100-dias-de-gobierno-340-denuncias-de-corrupcion-son-investigadas" rel="noopener noreferrer" target="_blank">Ministro de la Presidencia: en los primeros 100 días de gobierno, 340 denuncias de corrupción son investigadas</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/rodrigo-paz-los-extremos-no-quieren-que-bolivia-tenga-tranquilidad" rel="noopener noreferrer" target="_blank">Rodrigo Paz: “Los extremos no quieren que Bolivia tenga tranquilidad”</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/51-sobre-100-la-nota-del-presidente-de-las-juntas-vecinales-de-bolivia-a-la-administracion-de-paz" rel="noopener noreferrer" target="_blank">51 sobre 100: la nota de las Juntas Vecinales de Bolivia a la administración de Paz</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/federacion-sindical-de-trabajadores-mineros-de-bolivia-observa-el-mensaje-de-los-100-dias-de-gobierno" rel="noopener noreferrer" target="_blank">Federación Sindical de Trabajadores Mineros de Bolivia observa el mensaje de los 100 días de Gobierno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/19/cien-dias-de-paz-oficialismo-destaca-estabilidad-y-oposicion-cuestiona-lentitud-y-decretos-57419" rel="noopener noreferrer" target="_blank">Cien días de Paz: oficialismo destaca estabilidad y oposición cuestiona lentitud y decretos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-rodrigo-paz-ve-bolivia-ha-despertado-queda-aun-largo-camino_1771480786" rel="noopener noreferrer" target="_blank">El presidente Rodrigo Paz ve que Bolivia "ha despertado", pero queda aún "un largo camino"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/vi-alguien-rasgarse-vestiduras-paz-responde-criticas-insta-no-caer-demagogia_1771524508" rel="noopener noreferrer" target="_blank">“Vi a alguien rasgarse las vestiduras”: Paz responde a críticas e insta a no caer en la demagogia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/100-dias-paz-respaldan-fin-subvencion-exigen-cerrar-empresas-inservibles_1771496642" rel="noopener noreferrer" target="_blank">100 días de Paz: respaldan fin a subvención y exigen cerrar las empresas “inservibles”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/paz-estamos-entrando-a-los-ministerios-y-a-mas-de-100-empresas-a-poner-orden/" rel="noopener noreferrer" target="_blank">Paz: ‘Estamos entrando a los ministerios y a más de 100 empresas a poner orden’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/bolivia-ha-despertado-paz-resalta-avances-economicos-y-dice-que-aun-hay-tareas-por-hacer/" rel="noopener noreferrer" target="_blank">‘Bolivia ha despertado’: Paz resalta avances económicos y dice que aún hay tareas por hacer</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-dio-un-mensaje-en-la-madrugada-afirma-que-en-100-dias-estabilizo-el-pais-y-anuncia-nuevas-leyes/" rel="noopener noreferrer" target="_blank">Paz dio un mensaje en la madrugada, afirma que en 100 días estabilizó el país y anuncia nuevas leyes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-paz-propone-modernizar-la-ley-del-trabajo-ante-la-cod-en-cochabamba-2026219114135" rel="noopener noreferrer" target="_blank">Presidente Paz propone modernizar la Ley del Trabajo ante la COD en Cochabamba</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/paz-dice-que-se-estabilizo-la-economia-pero-reconoce-que-queda-mucho-por-hacer-IK19312903" rel="noopener noreferrer" target="_blank">Paz dice que se estabilizó la economía, pero reconoce que “queda mucho por hacer”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/espinoza-sobre-los-100-dias-se-freno-el-incremento-de-los-precios-y-hoy-la-gente-sabe-cuanto-va-a-gastar-en-el-mercado-HK19313646" rel="noopener noreferrer" target="_blank">Espinoza sobre los 100 días: Se frenó el incremento de los precios y hoy la gente sabe cuánto va a gastar en el mercado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40177-paz-asegura-que-en-100-dias-logro-estabilizar-bolivia-y-denuncia-trabas-de-sectores-que-no-quieren-que-avancemos" rel="noopener noreferrer" target="_blank">Paz asegura que en 100 días logró estabilizar Bolivia y denuncia trabas de sectores que “no quieren que avancemos”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40179-paz-se-traza-para-este-2026-la-construccion-de-la-base-legal-del-nuevo-modelo-economico" rel="noopener noreferrer" target="_blank">Paz se traza para este 2026 la construcción de la base legal del nuevo modelo económico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40189-a-100-dias-se-abren-al-menos-tres-frentes-de-conflicto-para-el-gobierno-de-rodrigo-paz" rel="noopener noreferrer" target="_blank">A 100 días, se abren al menos tres frentes de conflicto para el gobierno de Rodrigo Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40190-tras-87-anos-de-vigencia-paz-plantea-ante-dirigentes-sindicales-modificar-y-actualizar-la-ley-general-del-trabajo" rel="noopener noreferrer" target="_blank">Tras 87 años de vigencia, Paz plantea ante dirigentes sindicales modificar y actualizar la Ley General del Trabajo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40204-luces-y-sombras-oficialismo-y-oposicion-confrontan-visiones-sobre-los-100-dias-de-paz" rel="noopener noreferrer" target="_blank">“Luces y sombras”: oficialismo y oposición confrontan visiones sobre los 100 días de Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="DECLARACIONES DE VICEMINISTRA BARRIENTOS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">DECLARACIONES DE VICEMINISTRA BARRIENTOS</div>
+<div class="modal-sum">Las declaraciones de la viceministra Barrientos sobre el plan 50/50 generaron una fuerte controversia, llevando al Gobierno a aclarar que se trató de un “error de comunicación” que no refleja la posición oficial. Ante esto, el gobernador de Santa Cruz, Camacho exigió un informe a la Presidencia y criticó las palabras de la autoridad. Posteriormente Barrientos pidió disculpas públicas por sus declaraciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">28</strong> titulares</span>
+<span><strong style="color:var(--c-04)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/camacho-plantea-peticion-de-informe-a-presidencia-por-error-de-barrientos-sobre-50-50" rel="noopener noreferrer" target="_blank">Camacho plantea petición de informe a Presidencia por “error” de Barrientos sobre 50/50</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/camacho-impulsa-peticion-de-informe-a-la-presidencia" rel="noopener noreferrer" target="_blank">Camacho impulsa petición de informe a la Presidencia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/viceministra-tuvo-error-comunicacion-gobierno-aclara-posicion-50-50_1771537328" rel="noopener noreferrer" target="_blank">"La viceministra tuvo un error de comunicación": Gobierno aclara su posición sobre el 50/50</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/camacho-candidatos-y-civicos-critican-a-barrientos-por-polemicas-declaraciones-sobre-el-50-50.html" rel="noopener noreferrer" target="_blank">Camacho, candidatos y cívicos critican a Barrientos por polémicas declaraciones sobre el 50-50.</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/barrientos-dice-que-cometio-un-error-de-comunicacion-en-sus-declaraciones-sobre-el-plan-50-50.html" rel="noopener noreferrer" target="_blank">Barrientos dice que cometió un “error de comunicación” en sus declaraciones sobre el plan 50-50</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/c%C3%ADvicos-cruce%C3%B1os-piden-la-renuncia-de-andrea-barrientos-por-dichos-sobre-autonom%C3%ADas" rel="noopener noreferrer" target="_blank">Cívicos cruceños piden la renuncia de Andrea Barrientos por dichos sobre autonomías</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/declaraciones-de-la-viceministra-barrientos-generan-controversia-sobre-autonom%C3%ADa-y-el-5050" rel="noopener noreferrer" target="_blank">Declaraciones de la viceministra Barrientos generan controversia sobre autonomía y el 50/50</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/civicos-exigen-renuncia-de-viceministra-barrientos-por-polemica-declaracion/" rel="noopener noreferrer" target="_blank">Cívicos exigen renuncia de viceministra Barrientos por polémica declaración</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/gobierno-aclara-dichos-de-viceministra-sobre-el-50-50/" rel="noopener noreferrer" target="_blank">Gobierno aclara dichos de viceministra sobre el 50-50</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/camacho-critica-a-la-viceministra-barrientos-y-exige-al-gobierno-cumplir-su-promesa-electoral-del-50-50/" rel="noopener noreferrer" target="_blank">Camacho critica a la viceministra Barrientos y exige al Gobierno cumplir su promesa electoral del “50/50”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/50-50-presidencia-dice-que-barrientos-cometio-un-error-de-comunicacion-que-no-refleja-la-posicion-del-gobierno/" rel="noopener noreferrer" target="_blank">50-50: Presidencia dice que Barrientos cometió un “error de comunicación” que no refleja la posición del Gobierno</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-aclara-que-viceministra-cometio-error-de-comunicacion-2026219162030" rel="noopener noreferrer" target="_blank">Gobierno aclara que viceministra cometió “error de comunicación”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/camacho-pide-informe-al-gobierno-tras-declaraciones-de-viceministra-2026219224153" rel="noopener noreferrer" target="_blank">"Santa Cruz no pide favores, exige lo que es suyo": Camacho pide informe al Gobierno tras declaraciones de viceministra</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/jp-velasco-a-barrientos-como-es-posible-que-nos-quieran-decir-que-hacer-con-lo-que-nos-corresponde-HK19313721" rel="noopener noreferrer" target="_blank">JP Velasco a Barrientos: “¿Cómo es posible que nos quieran decir qué hacer con lo que nos corresponde?”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/camacho-a-barrientos-el-contenido-y-el-tono-de-sus-palabras-nos-hace-recordar-lo-peor-de-la-burocracia-centralista-BK19313534" rel="noopener noreferrer" target="_blank">Camacho a Barrientos: “El contenido y el tono de sus palabras nos hace recordar lo peor de la burocracia centralista”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/presidencia-dice-que-barrientos-cometi%C3%B3-un-%E2%80%9Cerror-de-comunicaci%C3%B3n%E2%80%9D-camacho-pedir%C3%A1-informe" rel="noopener noreferrer" target="_blank">Presidencia dice que Barrientos cometió un “error de comunicación”; Camacho pedirá informe</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/5050-ni-cheques-en-blanco-ni-%C3%A9picas-inventadas" rel="noopener noreferrer" target="_blank">50/50: Ni cheques en blanco ni épicas inventadas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40186-viceministra-barrientos-desata-criticas-al-gobierno-por-el-5050-camacho-exige-a-su-aliado-hacer-realidad-la-propuesta-electoral" rel="noopener noreferrer" target="_blank">Viceministra Barrientos desata críticas al Gobierno por el 50/50; Camacho exige a su aliado hacer realidad la propuesta electoral</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/andrea-barrientos-se-retracta-tras-polemica-por-el-50-50" rel="noopener noreferrer" target="_blank">Andrea Barrientos se retracta tras polémica por el “50-50”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cometi-error-barrientos-pide-disculpas-dichos-50-50_1771514266" rel="noopener noreferrer" target="_blank">“Cometí un error”: Barrientos pide disculpas por sus dichos del “50/50”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260219/cometi-error-barrientos-pide-disculpas-sus-declaraciones-5050" rel="noopener noreferrer" target="_blank">"Cometí un error": Barrientos pide disculpas por sus declaraciones sobre el 50/50</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/dichos-barrientos-plan-50-50-desata-terremoto-politico-ella-disculpa/20260219162424988852.html" rel="noopener noreferrer" target="_blank">Dichos de Barrientos sobre el plan 50/50 desatan terremoto político y ella se disculpa</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/barrientos-se-disculpa-por-sus-dichos-del-50-50-y-dice-el-gobierno-trabaja-para-el-desarrollo-de-las-regiones/" rel="noopener noreferrer" target="_blank">Barrientos se disculpa por sus dichos del “50-50” y dice el Gobierno trabaja para el desarrollo de las regiones</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/viceministra-barrientos-brinda-disculpa-por-declaraciones-sobre-el-plan-50-50-202621918480" rel="noopener noreferrer" target="_blank">Viceministra Barrientos brinda disculpa por declaraciones sobre el plan 50/50</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/cometi-un-error-barrientos-pide-disculpas-por-sus-declaraciones-sobre-el-50-50-LK19313998" rel="noopener noreferrer" target="_blank">“Cometí un error”: Barrientos pide disculpas por sus declaraciones sobre el 50/50</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/un-esbozo-de-barrientos-sobre-el-plan-5050-desata-un-terremoto-pol%C3%ADtico-y-ella-se-disculpa" rel="noopener noreferrer" target="_blank">Un esbozo de Barrientos sobre el plan 50/50 desata un terremoto político y ella se disculpa</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/agamdepaz-rechaza-dichos-de-barrientos-y-exige-coordinaci%C3%B3n-para-cumplir-promesa-del-5050" rel="noopener noreferrer" target="_blank">Agamdepaz rechaza dichos de Barrientos y exige coordinación para cumplir promesa del 50/50</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40194-viceministra-barrientos-pide-disculpas-y-dice-que-se-trabaja-por-un-5050-que-sea-real" rel="noopener noreferrer" target="_blank">Viceministra Barrientos pide disculpas y dice que se trabaja por un "50/50 que sea real”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14a">
+<div class="modal-backdrop" onclick="closeModal('modal_14a')"></div>
+<div aria-label="HABILITACIONES E INABILITACIONES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">HABILITACIONES E INABILITACIONES</div>
+<div class="modal-sum">El Tribunal Supremo Electoral ratifica la habilitación de Manfred Reyes Villa para las elecciones subnacionales, mientras inhabilita a varios candidatos como Mario Cossío, Yerko Núñez, Moisés Shriqui y Edgar Bazán.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">21</strong> titulares</span>
+<span><strong style="color:var(--c-10)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/manfred-reyes-villa-afirma-que-su-candidatura-nunca-estuvo-en-riesgo-tras-resolucion-del-tse" rel="noopener noreferrer" target="_blank">Manfred Reyes Villa afirma que su candidatura “nunca estuvo en riesgo” tras resolución del TSE</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/manfred-reyes-villa-queda-habilitado-como-candidato-aun-se-analizan-apelaciones-contra-otros-postulantes" rel="noopener noreferrer" target="_blank">Manfred Reyes Villa queda habilitado como candidato; aún se analizan apelaciones contra otros postulantes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/19/subnacionales-el-tse-deja-fuera-a-cossio-shiriqui-y-bazan-y-confirma-a-manfred-57421" rel="noopener noreferrer" target="_blank">Subnacionales: el TSE deja fuera a Cossío, Shiriqui y Bazán, y confirma a Manfred</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/tse-ratifica-habilitaci%C3%B3n-de-reyes-villa-mientras-coss%C3%ADo-baz%C3%A1n-y-n%C3%BA%C3%B1ez-quedan-fuera-de-las" rel="noopener noreferrer" target="_blank">TSE ratifica habilitación de Reyes Villa, mientras Cossío, Bazán y Núñez quedan fuera de las subnacionales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/tse-confirma-inhabilitacion-de-nunez-y-shriqui-en-beni/" rel="noopener noreferrer" target="_blank">TSE confirma inhabilitación de Núñez y Shriqui en Beni</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/tse-ratifica-habilitacion-de-manfred-para-las-subnacionales/" rel="noopener noreferrer" target="_blank">TSE ratifica habilitación de Manfred para las subnacionales</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260219/tse-confirma-habilitacion-plena-manfred-reyes-villa" rel="noopener noreferrer" target="_blank">TSE confirma la habilitación plena de Manfred Reyes Villa</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/cochabamba/subnacionales-concejal-mas-pide-inhabilitar-manfred-ted-admite-demanda/20260219135915988849.html" rel="noopener noreferrer" target="_blank">Subnacionales: concejal del MAS pide inhabilitar a Manfred y TED admite la demanda</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/subnacionales-el-tse-confirma-habilitacion-de-manfred-en-cochabamba-e-inhabilita-a-mario-cossio-en-tarija/" rel="noopener noreferrer" target="_blank">Subnacionales: El TSE confirma habilitación de Manfred en Cochabamba e inhabilita a Mario Cossio en Tarija</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40227-subnacionales-2026-tse-deja-fuera-a-yerko-nunez-moises-shriqui-mario-cossio-y-edgar-bazan-entre-otros" rel="noopener noreferrer" target="_blank">Subnacionales 2026: TSE deja fuera a Yerko Núñez, Moisés Shriqui, Mario Cossío y Edgar Bazán, entre otros</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/tse-inhabilita-a-candidatos-en-tarija-oruro-y-beni" rel="noopener noreferrer" target="_blank">TSE inhabilita a candidatos en Tarija, Oruro y Beni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tse-decide-inhabilitar-nunez-shriqui-cossio-zamora-bazan-elecciones-subnacionales_1771540746" rel="noopener noreferrer" target="_blank">TSE decide inhabilitar a Núñez, Shriqui, Cossío, Zamora y Bazán para las elecciones subnacionales</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/elecciones-subnacionales-tse-inhabilita-a-mario-cossio-y-mantiene-en-carrera-a-manfred-reyes-villa.html" rel="noopener noreferrer" target="_blank">Elecciones subnacionales: TSE inhabilita a Mario Cossío y mantiene en carrera a Manfred Reyes Villa</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/sala-plena-del-tse-acepta-recusacion-contra-su-presidente-en-el-caso-de-mario-cossio/" rel="noopener noreferrer" target="_blank">Sala Plena del TSE acepta recusación contra su presidente en el caso de Mario Cossío</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_zamora-y-cossio-esperan-fallo-por-sus-candidaturas.html" rel="noopener noreferrer" target="_blank">Zamora y Cossío esperan fallo por sus candidaturas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/cossio-anuncia-acciones-legales-tras-su-inhabilitacion/" rel="noopener noreferrer" target="_blank">Cossío anuncia acciones legales tras su inhabilitación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/cossio-queda-inhabilitado-para-las-subnacionales-2026/" rel="noopener noreferrer" target="_blank">Cossío queda inhabilitado para las subnacionales 2026</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/tse-resolvio-13-de-15-apelaciones-y-definio-casos-clave-en-subnacionales/" rel="noopener noreferrer" target="_blank">TSE resolvió 13 de 15 apelaciones y definió casos clave en subnacionales</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/tse-inhabilita-candidatos-mario-cossio-yerko-nunez/20260219182427988858.html" rel="noopener noreferrer" target="_blank">TSE inhabilita a los candidatos Mario Cossío y Yerko Núñez</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-tse-inhabilita-en-%C3%BAltima-instancia-los-candidatos-mario-coss%C3%ADo-y-yerko-n%C3%BA%C3%B1ez" rel="noopener noreferrer" target="_blank">El TSE inhabilita en última instancia a los candidatos Mario Cossío y Yerko Núñez</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40193-mario-cossio-denuncia-que-alianza-patria-busca-su-inhabilitacion-de-las-elecciones-de-marzo" rel="noopener noreferrer" target="_blank">Mario Cossío denuncia que alianza Patria busca su inhabilitación de las elecciones de marzo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="LEY DE ALIVIO TRIBUTARIO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMIA</div>
+<div class="modal-title">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="modal-sum">El Gobierno, a través del presidente Rodrigo Paz, mediante proyectos remitidos a la ALP, impulsa una nueva Ley de Transparencia y Alivio Tributario, que incluye la condonación de deudas, ajuste del IVA y creación de un régimen especial para fomentar la formalidad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">20</strong> titulares</span>
+<span><strong style="color:var(--c-17)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/el-gobierno-anuncia-nueva-ley-tributaria-que-incluira-regimen-para-emprendedores-y-condonaciones-hasta-2017" rel="noopener noreferrer" target="_blank">El Gobierno anuncia nueva ley tributaria que incluirá régimen para emprendedores y condonaciones hasta 2017</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/legisladores-respaldan-reforma-tributaria-y-anuncian-debate" rel="noopener noreferrer" target="_blank">Legisladores respaldan reforma tributaria y anuncian debate</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/19/gobierno-remite-a-la-alp-proyecto-de-ley-con-5-medidas-impositivas-entre-ellas-ajuste-del-iva-y-eliminacion-de-multas-57407" rel="noopener noreferrer" target="_blank">Gobierno remite a la ALP proyecto de ley con 5 medidas impositivas, entre ellas ajuste del IVA y eliminación de multas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-envia-asamblea-ambicioso-paquete-tributario-empezar-nuevo-sistema-fiscal_1771519864" rel="noopener noreferrer" target="_blank">Gobierno envía a la Asamblea un ambicioso paquete tributario para “empezar de nuevo” el sistema fiscal</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/conozca-quienes-beneficiaran-ley-transparencia-alivio-tributario-propuesta-asamblea_1771530048" rel="noopener noreferrer" target="_blank">Conozca quiénes se beneficiarán con la Ley de Transparencia y Alivio Tributario propuesta a la Asamblea</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/economia/el-gobierno-envia-proyecto-de-ley-que-condona-deudas-tributarias-y-crea-regimen-impositivo-especial.html" rel="noopener noreferrer" target="_blank">El gobierno envía proyecto de ley que condona deudas tributarias y crea régimen impositivo especial</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/gobierno-presenta-proyecto-de-ley-que-crea-un-r%C3%A9gimen-tributario-especial-y-alivia-deudas" rel="noopener noreferrer" target="_blank">Gobierno presenta proyecto de ley que crea un régimen tributario especial y alivia deudas impositivas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260219/gobierno-anuncia-condonacion-deudas-tributarias-ajustes-al-iva-traves" rel="noopener noreferrer" target="_blank">Gobierno anuncia condonación de deudas tributarias y ajustes al IVA a través de un proyecto de ley</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/gobierno-presenta-proyecto-ley-que-crea-regimen-tributario-especial-alivia-deudas-impositivas/20260219144205988850.html" rel="noopener noreferrer" target="_blank">Gobierno presenta proyecto de ley que crea régimen tributario especial y alivia deudas impositivas</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-envia-a-la-alp-proyecto-de-ley-con-5-medidas-para-un-alivio-tributario-hacia-adelante/" rel="noopener noreferrer" target="_blank">El Gobierno envía a la ALP proyecto de Ley con medidas para un “alivio tributario hacia adelante”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/habra-una-variacion-del-iva-en-bolivia-esto-explica-el-ministerio-de-economia-DK19317554" rel="noopener noreferrer" target="_blank">¿Habrá una variación del IVA en Bolivia? Esto explica el Ministerio de Economía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-gobierno-anuncia-un-paquete-de-medidas-que-incluye-la-condonacion-de-deudas-tributarias-y-el-ajuste-del-iva-EK19314761" rel="noopener noreferrer" target="_blank">El Gobierno anuncia un paquete de medidas que incluye la condonación de deudas tributarias y el ajuste del IVA</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/espinoza-presenta-proyecto-de-ley-para-prescribir-condonar-y-regularizar-impuestos-impagos" rel="noopener noreferrer" target="_blank">Espinoza presenta proyecto de ley para prescribir, condonar y regularizar impuestos impagos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40199-proyecto-de-ley-crea-regimen-especial-para-ampliar-base-de-contribuyentes-y-condona-deudas-tributarias" rel="noopener noreferrer" target="_blank">Proyecto de ley crea régimen especial para ampliar base de contribuyentes y condona deudas tributarias</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40236-paz-presenta-proyecto-de-ley-de-transparencia-y-alivio-tributario-para-reordenar-el-sistema-fiscal-y-fomentar-la-formalidad" rel="noopener noreferrer" target="_blank">Paz presenta Proyecto de Ley de Transparencia y Alivio Tributario para reordenar el sistema fiscal y fomentar la formalidad</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/experto-de-jubileo-asegura-que-el-decreto-de-paz-sobre-energias-renovables-solo-es-un-parche" rel="noopener noreferrer" target="_blank">Experto de Jubileo asegura que el decreto de Paz sobre energías renovables sólo es "un parche"</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/cuatro-decretos-estrategicos-son-publicados-en-la-gaceta-oficial" rel="noopener noreferrer" target="_blank">Cuatro decretos estratégicos son publicados en la Gaceta Oficial</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/economia/paz-promulga-decreto-que-impulsa-la-generacion-distribuida-y-refuerza-la-transicion-energetica.html" rel="noopener noreferrer" target="_blank">Paz promulga decreto que impulsa la generación distribuida y refuerza la transición energética</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/uno-a-uno-los-ultimos-cuatro-decretos-aprobados-por-el-presidente-que-implican-y-que-impacto-tienen-202621911340" rel="noopener noreferrer" target="_blank">Uno a uno: los últimos cuatro decretos aprobados por el Presidente, qué implican y qué impacto tienen</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/paz-modifica-la-normativa-sobre-generacion-de-energia-renovable-para-fomentar-el-mercado-electrico-EK19313061" rel="noopener noreferrer" target="_blank">Paz modifica la normativa sobre generación de energía renovable para fomentar el mercado eléctrico</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="ORDEN DE APREHENSIÓN CONTRA NEMESIA ACHACHOLLO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">ORDEN DE APREHENSIÓN CONTRA NEMESIA ACHACHOLLO</div>
+<div class="modal-sum">La Fiscalía emite y confirma una orden de aprehensión contra la exministra Nemesia Achacollo por el caso Fondo Indígena, tras no acudir a declarar. Se activa una alerta migratoria en su contra mientras se indaga su paradero y su situación judicial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">19</strong> titulares</span>
+<span><strong style="color:var(--c-15)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/19/fiscalia-emite-orden-de-aprehension-contra-exministra-achacollo-por-el-caso-fondo-indigena-57405" rel="noopener noreferrer" target="_blank">Fiscalía emite orden de aprehensión contra exministra Achacollo por el caso Fondo Indígena</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/emiten-orden-de-aprehension-contra-nemesia-achacollo-2026219121556" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra Nemecia Achacollo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/emiten-orden-de-aprehension-contra-nemesia-achacollo-parte-denunciante-advierte-presuntas-irregularidades" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra Nemesia Achacollo; parte denunciante advierte presuntas irregularidades</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/fiscalia-confirma-orden-de-aprehension-contra-achacollo" rel="noopener noreferrer" target="_blank">Fiscalía confirma orden de aprehensión contra Achacollo</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/orden-de-aprehension-contra-nemecia-achacollo-por-caso-fondo-indigena" rel="noopener noreferrer" target="_blank">Orden de aprehensión contra Nemecia Achacollo por caso Fondo Indígena</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fiscalia-ordena-aprehension-nemesia-achacollo-caso-fondo-indigena_1771518405" rel="noopener noreferrer" target="_blank">Fiscalía ordena aprehensión de Nemesia Achacollo por caso Fondo Indígena</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/orden-aprehension-fiscalia-confirma-alerta-migratoria-achacollo_1771550312" rel="noopener noreferrer" target="_blank">Tras la orden de aprehensión, Fiscalía confirma alerta migratoria para Achacollo</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/achacollo-no-se-presento-a-declarar-por-segunda-vez/" rel="noopener noreferrer" target="_blank">Achacollo no se presentó a declarar por segunda vez</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_fiscalia-emite-orden-de-aprehension-contra-la-exministra-achacollo.html" rel="noopener noreferrer" target="_blank">Fiscalía emite orden de aprehensión contra la exministra Achacollo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/fiscalia-emite-alerta-migratoria-contra-achacollo-tras-orden-de-aprehension/" rel="noopener noreferrer" target="_blank">Fiscalía emite alerta migratoria contra Achacollo tras orden de aprehensión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/fondo-indigena-emiten-orden-de-aprehension-contra-nemecia-achacollo/" rel="noopener noreferrer" target="_blank">Fondo Indígena: Emiten orden de aprehensión contra Nemecia Achacollo</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/fondo-indigena-fiscalia-emite-orden-aprehension-achacollo/20260219124907988846.html" rel="noopener noreferrer" target="_blank">Fondo Indígena: Fiscalía emite orden de aprehensión contra Achacollo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-fiscalia-ordena-la-aprehension-de-nemesia-achacollo-por-el-caso-fondo-indigena/" rel="noopener noreferrer" target="_blank">La Fiscalía ordena la aprehensión de Nemesia Achacollo por el caso Fondo Indígena</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Emiten orden de aprehensión contra exministra por el caso Fondo Indígena</span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nemesia-achacollo-debera-declarar-en-la-paz-tras-orden-de-aprehension-en-su-contra-2026219134633" rel="noopener noreferrer" target="_blank">Nemesia Achacollo deberá declarar en La Paz tras orden de aprehensión en su contra</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/donde-se-encuentra-nemesia-achacollo-fiscal-general-brinda-detalles-sobre-la-orden-de-aprehension-2026219203050" rel="noopener noreferrer" target="_blank">¿Dónde se encuentra Nemesia Achacollo? Fiscal general brinda detalles sobre la orden de aprehensión</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/emiten-alerta-migratoria-contra-nemesia-achacollo-tras-activarse-la-orden-de-aprehension-segun-fiscalia-MK19317579" rel="noopener noreferrer" target="_blank">Emiten alerta migratoria contra Nemesia Achacollo tras activarse la orden de aprehensión, según Fiscalía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/emiten-orden-de-aprehension-contra-nemesia-achacollo-por-el-caso-fondo-indigena-EK19314981" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra Nemesia Achacollo por el caso Fondo Indígena</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40197-fiscalia-ordena-aprehension-de-la-exministra-nemesia-achacollo-no-acudio-a-declarar-y-se-encuentra-desaparecida" rel="noopener noreferrer" target="_blank">Fiscalía ordena aprehensión de la exministra Nemesia Achacollo: no acudió a declarar y se encuentra desaparecida</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_19">
+<div class="modal-backdrop" onclick="closeModal('modal_19')"></div>
+<div aria-label="REAPARICIÓN DE EVO MORALES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">REAPARICIÓN DE EVO MORALES</div>
+<div class="modal-sum">Evo Morales reapareció públicamente en Chimoré, su bastión político, tras más de un mes de ausencia, para la proclamación de candidatos a las elecciones subnacionales. Durante el evento, criticó al gobierno de Rodrigo Paz, calificándolo de “accidente político”.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">18</strong> titulares</span>
+<span><strong style="color:var(--c-04)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_19')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/evo-reaparece-y-dice-que-rodrigo-paz-llego-a-la-presidencia-por-un-accidente-politico" rel="noopener noreferrer" target="_blank">Evo reaparece y dice que Rodrigo Paz llegó a la presidencia por un “accidente político”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/evo-morales-reaparece-bastion-mes-ausencia-actos-publicos_1771515231" rel="noopener noreferrer" target="_blank">Evo Morales reaparece en su bastión tras más de un mes de ausencia en actos públicos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/morales-reaparece-y-asiste-a-la-proclamacion-de-candidatos-de-evo-pueblo-en-el-estadio-de-chimore.html" rel="noopener noreferrer" target="_blank">Morales reaparece y asiste a la proclamación de candidatos de Evo Pueblo en el estadio de Chimoré</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/nos-vemos-en-chimore-evo-confirma-que-estara-en-la-presentacion-de-candidatos-evistas.html" rel="noopener noreferrer" target="_blank">“Nos vemos en Chimoré”: Evo confirma que estará en la presentación de candidatos evistas</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_evo-morales-reaparece-en-un-acto-proselitista-junto-a-leonardo-loza.html" rel="noopener noreferrer" target="_blank">Evo Morales reaparece en un acto proselitista junto a Leonardo Loza</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/evo-reaparece-y-dice-que-se-salv%C3%B3-de-la-chikungu%C3%B1a-%E2%80%9Cgrav%C3%ADsimo-me-ha-sorprendido%E2%80%9D" rel="noopener noreferrer" target="_blank">Evo reaparece y dice que se salvó de la chikunguña: “gravísimo, me ha sorprendido”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/evo-reaparece-en-persona-al-lado-de-loza-para-la-campa%C3%B1a-electoral" rel="noopener noreferrer" target="_blank">Evo reaparece en persona al lado de Loza para la campaña electoral</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/tras-mas-de-un-mes-evo-morales-reaparece-en-un-acto-publico/" rel="noopener noreferrer" target="_blank">Tras más de un mes, Evo Morales reaparece en un acto público</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/evo-confirma-que-estara-acto-presentacion-candidatos-nos-vemos-chimore/20260219103434988845.html" rel="noopener noreferrer" target="_blank">Evo confirma que estará en acto de presentación de candidatos: ‘Nos vemos en Chimoré’</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-reaparece-publicamente-en-chimore-para-acto-de-proclamacion-de-candidatos-de-cara-a-las-subnacionales/" rel="noopener noreferrer" target="_blank">Evo reaparece públicamente en Chimoré para acto de proclamación de candidatos de cara a las Subnacionales</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-califica-a-paz-de-accidente-politico-y-dice-que-gano-las-elecciones-gracias-a-edmand-lara/" rel="noopener noreferrer" target="_blank">Evo califica a Paz de “accidente político” y dice que ganó las elecciones gracias a Edmand Lara</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Evo Morales reaparece en Chimoré para proclamar candidatos a elecciones subnacionales</span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/morales-califica-a-rodrigo-paz-de-accidente-politico-y-critica-la-gestion-del-gobierno-PJ19320843" rel="noopener noreferrer" target="_blank">Morales califica a Rodrigo Paz de “accidente político” y critica la gestión del Gobierno</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/evo-reaparece-con-la-meta-de-que-leonardo-loza-gane-la-gobernaci%C3%B3n-de-cochabamba" rel="noopener noreferrer" target="_blank">Evo reaparece con la meta de que Leonardo Loza gane la Gobernación de Cochabamba</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40180-este-jueves-el-evismo-lanza-a-sus-candidatos-en-medio-de-expectativa-por-la-eventual-reaparicion-de-evo" rel="noopener noreferrer" target="_blank">Este jueves, el evismo lanza a sus candidatos en medio de expectativa por la eventual reaparición de Evo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40187-evo-morales-reaparece-en-el-tropico-y-asiste-a-la-proclamacion-de-candidatos-evistas" rel="noopener noreferrer" target="_blank">Evo Morales reaparece en el Trópico y asiste a la proclamación de candidatos evistas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40195-evo-morales-reaparece-en-su-bastion-politico-arremete-contra-el-gobierno-de-paz-y-dice-que-no-se-ira" rel="noopener noreferrer" target="_blank">Evo Morales reaparece en su bastión político: arremete contra el gobierno de Paz y dice que no se irá</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40211-evo-morales-y-edmand-lara-apoyan-al-candidato-de-la-alianza-todos-miguel-cadima-a-la-gobernacion-de-santa-cruz" rel="noopener noreferrer" target="_blank">Evo Morales y Edmand Lara apoyan al candidato de la alianza Todos, Miguel Cadima, a la Gobernación de Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="REUNIÓN PAZ-TRUMP" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">REUNIÓN PAZ-TRUMP</div>
+<div class="modal-sum">El presidente Rodrigo Paz confirmó una reunión con Donald Trump en Estados Unidos el 7 de marzo, como parte de su agenda internacional, que también incluye un posible viaje a Europa y la asistencia a una cumbre en Miami.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">14</strong> titulares</span>
+<span><strong style="color:var(--c-18)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/rodrigo-paz-confirma-reunion-donald-trump-7-marzo_1771519635" rel="noopener noreferrer" target="_blank">Rodrigo Paz confirma reunión con Donald Trump el 7 de marzo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/inversion-tecnologia-ejes-encuentro-presidentes-rodrigo-paz-donald-trump_1771540091" rel="noopener noreferrer" target="_blank">Inversión y tecnología: ejes del encuentro entre los presidentes Rodrigo Paz y Donald Trump</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260219/presidente-rodrigo-paz-confirma-reunion-donald-trump-anuncia-viaje-europa" rel="noopener noreferrer" target="_blank">Presidente Rodrigo Paz confirma reunión con Donald Trump y anuncia viaje a Europa</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/donald-trump-rodrigo-paz-sostendran-encuentro-7-marzo/20260219131452988847.html" rel="noopener noreferrer" target="_blank">Donald Trump y Rodrigo Paz sostendrán encuentro el 7 de marzo</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Rodrigo Paz Pereira proyecta agenda internacional y posible reunión con Donald Trump</span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Presidente Paz se reunirá con Donald Trump en Miami</span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-proyecta-agenda-internacional-y-posible-reunion-con-donald-trump-2026219113149" rel="noopener noreferrer" target="_blank">Paz proyecta agenda internacional y posible reunión con Donald Trump</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/rodrigo-paz-acepta-invitacion-de-donald-trump-para-reunirse-el-7-de-marzo-en-estados-unidos-JK19314296" rel="noopener noreferrer" target="_blank">Rodrigo Paz acepta invitación de Donald Trump para reunirse el 7 de marzo en Estados Unidos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40215-rodrigo-paz-anuncia-que-estara-con-donald-trump-y-confirma-invitacion-a-cumbre-en-miami" rel="noopener noreferrer" target="_blank">Rodrigo Paz anuncia que estará con Donald Trump y confirma invitación a cumbre en Miami</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/paz-confirma-que-asistira-a-la-cumbre-convocada-por-trump" rel="noopener noreferrer" target="_blank">Paz confirma que asistirá a la cumbre convocada por Trump</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/politica/paz-confirma-su-intencion-de-ir-a-la-cumbre-presidencial-de-trump-en-eeuu.html" rel="noopener noreferrer" target="_blank">Paz confirma su intención de ir a la cumbre presidencial de Trump en EEUU</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_presidente-paz-anuncia-que-asistira-a-cumbre-convocada-por-trump-en-eeuu.html" rel="noopener noreferrer" target="_blank">Presidente Paz anuncia que asistirá a cumbre convocada por Trump en EEUU</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/paz-asistira-a-cumbre-convocada-por-trump-y-anuncia-gira-europea/" rel="noopener noreferrer" target="_blank">Paz asistirá a cumbre convocada por Trump y anuncia gira europea</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-anuncia-su-intencion-de-asistir-a-la-cumbre-convocada-por-eeuu-y-habla-de-reunirse-con-donald-trump/" rel="noopener noreferrer" target="_blank">Paz anuncia su intención de asistir a la Cumbre convocada por EEUU y habla de reunirse con Donald Trump</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="MARIHUANA LÍQUIDA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">MARIHUANA LÍQUIDA</div>
+<div class="modal-sum">Incautan entre 350 y 365 kilos de marihuana líquida en el aeropuerto de Viru Viru, Santa Cruz, que llegó oculta en equipos electrónicos desde EE.UU. La FELCN investiga el caso y se prevé cooperación internacional de EEUU y Uruguay, sospechando que Bolivia es país de tránsito.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">14</strong> titulares</span>
+<span><strong style="color:var(--c-29)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/incautan-356-kilos-de-marihuana-en-el-aeropuerto-de-viru-viru-la-droga-provenia-de-ee-uu" rel="noopener noreferrer" target="_blank">Incautan 356 kilos de marihuana en el aeropuerto de Viru Viru; la droga provenía de EE.UU.</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/incautan-mas-de-356-kilos-de-marihuana-en-operativo-conjunto-en-el-aeropuerto-viru-viru" rel="noopener noreferrer" target="_blank">Incautan más de 356 kilos de marihuana en operativo conjunto en el aeropuerto Viru Viru</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/19/confiscan-356-k-de-marihuana-liquida-ocultos-en-dispositivos-electricos-en-viru-viru-57395" rel="noopener noreferrer" target="_blank">Confiscan 356 k de marihuana líquida ocultos en dispositivos eléctricos en Viru Viru</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/356-kilos-de-marihuana-liquida-desde-miami-droga-valuada-mas-que-cocaina-llego-en-vuelo-del-tab-y-casi-pasa-como-electrodomesticos/" rel="noopener noreferrer" target="_blank">356 kilos de MARIHUANA líquida desde MIAMI: droga valuada más que cocaína llegó en vuelo del TAB y CASI PASA como ELECTRODOMÉSTICOS</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/marihuana-liquida-que-llego-de-ee-uu-vale-mas-que-la-cocaina-sospechan-que-bolivia-es-un-pais-de-transito/" rel="noopener noreferrer" target="_blank">Marihuana líquida que llegó de EE.UU. vale más que la cocaina, sospechan que Bolivia es un país de tránsito</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/eeuu-uruguay-cooperaran-bolivia-investigacion-droga-liquida_1771550746" rel="noopener noreferrer" target="_blank">EEUU y Uruguay cooperarán con Bolivia en la investigación por la droga líquida</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/incautan-356-kilos-marihuana-liquida-ocultos-equipos-electronicos-importados-ee-uu_1771505530" rel="noopener noreferrer" target="_blank">Incautan más de 356 kilos de marihuana líquida ocultos en equipos electrónicos importados de EE.UU.</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_felcn-incauto-356-kilos-de-sustancias-en-el-aeropuerto-de-viru-viru.html" rel="noopener noreferrer" target="_blank">FELCN incautó 356 kilos de sustancias en el aeropuerto de Viru Viru</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/encuentran-en-viru-viru-365-kilos-de-marihuana-procedentes-de-miami" rel="noopener noreferrer" target="_blank">Encuentran en Viru Viru 365 kilos de marihuana procedentes de Miami</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/viru-viru-decomisan-mas-de-356-kilos-de-marihuana-proveniente-de-eeuu/" rel="noopener noreferrer" target="_blank">Viru Viru: Decomisan más de 356 kilos de marihuana proveniente de EEUU</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/esto-es-lo-que-se-sabe-sobre-la-incautacion-de-356-kilos-de-marihuana-en-viru-viru-la-felcn-revela-detalles-2026219162746" rel="noopener noreferrer" target="_blank">Esto es lo que se sabe sobre la incautación de 356 kilos de marihuana en Viru Viru: la Felcn revela detalles</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/investigan-350-kilos-de-sustancias-controladas-en-el-aeropuerto-viru-viru-2026219212548" rel="noopener noreferrer" target="_blank">Investigan 350 kilos de sustancias controladas en el aeropuerto Viru Viru</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/detectan-356-kilos-de-marihuana-en-encomiendas-en-viru-viru-provenientes-de-estados-unidos-KK19313779" rel="noopener noreferrer" target="_blank">Detectan 356 kilos de marihuana en encomiendas en Viru Viru provenientes de Estados Unidos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-felcn-confisca-m%C3%A1s-de-350-kilos-de-marihuana-en-estado-h%C3%BAmedo-enviados-desde-eeuu" rel="noopener noreferrer" target="_blank">La FELCN confisca más de 350 kilos de marihuana en estado húmedo enviados desde EEUU</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="SUMINISTRO Y CALIDAD DE COMBUSTIBLE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">SUMINISTRO Y CALIDAD DE COMBUSTIBLE</div>
+<div class="modal-sum">Cívicos del Beni anuncian un paro de 24 horas, bloqueos y medidas adicionales por la mala calidad y distribución irregular de la gasolina. En Cochabamba, el sector de transporte rompió el diálogo con el Gobierno y dio un ultimátum por la gasolina "desestabilizada". Minentras la empresa estatal ratifica que la gasolina distribuida cumple con todos los controles de calidad y es confiable para los consumidores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">14</strong> titulares</span>
+<span><strong style="color:var(--c-09)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/civicos-beni-van-paro-24-horas-cuestionada-calidad-gasolina_1771511609" rel="noopener noreferrer" target="_blank">Cívicos de Beni anuncian paro de 24 horas por la cuestionada calidad de la gasolina</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/anuncian-llegada-comision-hablar-gasolina-trinidad-antesala-paro-civico_1771513973" rel="noopener noreferrer" target="_blank">Anuncian llegada de una comisión para hablar de la gasolina en Trinidad, en la antesala del paro cívico</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/cisterneros-exigen-ypfb-explicar-no-descarga-20-millones-litros-gasolina-palmasola_1771539087" rel="noopener noreferrer" target="_blank">Cisterneros exigen a YPFB explicar por qué no descarga 20 millones de litros de gasolina en Palmasola</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/pais/paro-civico-en-beni-este-viernes-por-la-mala-calidad-de-la-gasolina-y-distribucion-irregular.html" rel="noopener noreferrer" target="_blank">Paro cívico en Beni este viernes por la mala calidad de la gasolina y distribución irregular</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/mala-calidad-de-combustible-c%C3%ADvicos-del-beni-van-al-paro-y-en-cochabamba-dan-ultim%C3%A1tum-al" rel="noopener noreferrer" target="_blank">Mala calidad de combustible: cívicos del Beni van al paro y en Cochabamba dan ultimátum al Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/19/unas-700-cisternas-con-combustible-siguen-varadas-en-palmasola/" rel="noopener noreferrer" target="_blank">Unas 700 cisternas con combustible siguen varadas en Palmasola</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Cochabamba: Transporte rompe diálogo con el Gobierno y da ultimátum para retiro de gasolina “desestabilizada”</span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/paro-civico-en-beni-anuncian-bloqueos-y-no-se-descartan-medidas-adicionales-ante-problemas-con-la-gasolina-LK19318113" rel="noopener noreferrer" target="_blank">Paro cívico en Beni: Anuncian bloqueos y no se descartan medidas adicionales ante problemas con la gasolina</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/anuncio-paro-beni-ypfb-refuerza-provision-gasolina-1-2-millones-litros-esta-semana_1771542727" rel="noopener noreferrer" target="_blank">Ante anuncio de paro en Beni, YPFB “refuerza” provisión de gasolina, de 1,2 millones de litros esta semana</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/ypfb-despacha-140-000-litros-de-gasolina-para-asegurar-el-abastecimiento-en-trinidad/" rel="noopener noreferrer" target="_blank">YPFB despacha 140.000 litros de gasolina para asegurar el abastecimiento en Trinidad</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40205-para-esta-semana-ypfb-refuerza-la-provision-de-gasolina-en-trinidad-y-despacha-1200000-litros-de-gasolina" rel="noopener noreferrer" target="_blank">Para esta semana, YPFB refuerza la provisión de gasolina en Trinidad y despacha 1.200.000 litros de gasolina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/19/ypfb-garantiza-calidad-del-combustible-en-el-mercado-nacional/" rel="noopener noreferrer" target="_blank">YPFB garantiza calidad del combustible en el mercado nacional</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ypfb-ratifica-que-combustible-comercializado-mercado-interno-es-confiable-calidad/20260219215627988874.html" rel="noopener noreferrer" target="_blank">YPFB ratifica que combustible comercializado en el mercado interno es "confiable y de calidad"</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ante-reclamos-de-choferes-ypfb-asegura-que-la-gasolina-que-se-distribuye-cumple-con-los-controles-de-calidad-GK19316066" rel="noopener noreferrer" target="_blank">Ante reclamos de choferes, YPFB asegura que la gasolina que se distribuye cumple con los controles de calidad</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="IMPORTACIÓN DIRECTA DE COMBUSTIBLE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">IMPORTACIÓN DIRECTA DE COMBUSTIBLE</div>
+<div class="modal-sum">El presidente Rodrigo Paz promulgó un decreto que autoriza a YPFB y a las refinerías nacionales a importar petróleo crudo del exterior. La medida busca reforzar la producción de combustibles, garantizar el abastecimiento en el mercado interno y optimizar costos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">13</strong> titulares</span>
+<span><strong style="color:var(--c-09)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/gobierno-habilita-la-compra-de-crudo-del-exterior-para-reforzar-la-produccion-de-combustibles" rel="noopener noreferrer" target="_blank">Gobierno habilita la compra de crudo del exterior para reforzar la producción de combustibles</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/19/decreto-autoriza-a-ypfb-y-a-las-refinerias-importar-petroleo-57386" rel="noopener noreferrer" target="_blank">Decreto autoriza a YPFB y a las refinerías importar petróleo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-autoriza-ypfb-firmar-contratos-refinerias-importen-petroleo_1771506661" rel="noopener noreferrer" target="_blank">Gobierno autoriza a YPFB firmar contratos con refinerías para que importen petróleo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ds-5547-abre-paso-mayor-importacion-petroleo-uso-refinerias-ministro-espinoza_1771553887" rel="noopener noreferrer" target="_blank">El DS 5547 abre paso a mayor importación de petróleo y uso de refinerías, según el ministro Espinoza</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_autorizan-a-ypfb-importar-petroleo-en-busca-de-garantizar-el-abastecimiento-de-combustibles.html" rel="noopener noreferrer" target="_blank">Autorizan a YPFB importar petróleo en busca de garantizar el abastecimiento de combustibles</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/decreto-autoriza-la-importaci%C3%B3n-de-petr%C3%B3leo-con-miras-producir-y-garantizar-combustible" rel="noopener noreferrer" target="_blank">Decreto autoriza la importación de petróleo con miras a producir y garantizar combustible</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/gobierno-da-luz-verde-importacion-crudo-producir-garantizar-combustible/20260219093153988841.html" rel="noopener noreferrer" target="_blank">Gobierno autoriza importación de crudo para producir y garantizar combustible</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/mediante-decreto-autorizan-a-ypfb-importar-petroleo-para-garantizar-el-abastecimiento-de-combustibles/" rel="noopener noreferrer" target="_blank">Mediante decreto, autorizan a YPFB importar petróleo para garantizar el abastecimiento de combustibles</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Decreto autoriza importación de petróleo para garantizar combustibles</span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/para-garantizar-el-suministro-de-combustibles-el-gobierno-autoriza-a-ypfb-y-las-refinerias-importar-petroleo-HK19313127" rel="noopener noreferrer" target="_blank">Para garantizar el suministro de combustibles, el Gobierno autoriza a YPFB y las refinerías importar petróleo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-promulga-decreto-que-autoriza-ypfb-y-refiner%C3%ADas-importar-petr%C3%B3leo" rel="noopener noreferrer" target="_blank">Paz promulga decreto que autoriza a YPFB y a refinerías importar petróleo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40181-gobierno-autoriza-a-ypfb-y-refinerias-importar-crudo-para-producir-combustibles-y-bajar-costos-de-importacion" rel="noopener noreferrer" target="_blank">Gobierno autoriza a YPFB y refinerías importar crudo para producir combustibles y bajar costos de importación</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40234-expertos-en-hidrocarburos-califican-como-positivo-el-ds-5548-que-autoriza-a-ypfb-y-a-las-refinerias-a-importar-petroleo" rel="noopener noreferrer" target="_blank">Expertos en hidrocarburos califican como positivo el DS 5548, que autoriza a YPFB y a las refinerías a importar petróleo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="ARANCEL CERO PARA SOYA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMIA</div>
+<div class="modal-title">ARANCEL CERO PARA SOYA</div>
+<div class="modal-sum">El Gobierno boliviano oficializó el arancel cero para la importación de grano de soya, con vigencia hasta fin de año o diciembre de 2026, con el objetivo de apuntalar la industria nacional. Productores soyeros, representados por Anapo, consideran la medida innecesaria y demandan la liberación plena</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">12</strong> titulares</span>
+<span><strong style="color:var(--c-17)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/gustavo-serrano-destaca-impacto-del-arancel-cero-para-importacion-de-soya" rel="noopener noreferrer" target="_blank">Gustavo Serrano destaca impacto del arancel cero para importación de soya</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/arancel-cero-para-la-soya-hasta-2026-gobierno-busca-apuntalar-la-industria-nacional" rel="noopener noreferrer" target="_blank">Arancel cero para la soya hasta 2026: Gobierno busca apuntalar la industria nacional</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/19/gobierno-fija-arancel-cero-para-la-importacion-de-soya-57390" rel="noopener noreferrer" target="_blank">Gobierno fija arancel cero para la importación de soya</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/anapo-ve-innecesario-arancel-cero-importaciones-soya-propone-liberacion-plena-exportar_1771538219" rel="noopener noreferrer" target="_blank">Anapo ve “innecesario” arancel cero para importaciones de soya y propone liberación plena para exportar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-oficializa-arancel-cero-importacion-soya-fin-ano_1771505610" rel="noopener noreferrer" target="_blank">Gobierno oficializa arancel cero para la importación de soya hasta fin de año</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/economia/gobierno-aprueba-arancel-cero-para-la-importacion-de-grano-de-soya.html" rel="noopener noreferrer" target="_blank">Gobierno aprueba arancel cero para la importación de grano de soya</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit">Gobierno elimina arancel a la importación de grano de soya hasta diciembre de 2026</span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/soyeros-ven-innecesario-el-arancel-cero-para-la-importacion-e-insisten-en-la-liberacion-plena-para-exportar-el-grano-AK19316655" rel="noopener noreferrer" target="_blank">Soyeros ven innecesario el arancel cero para la importación e insisten en la liberación plena para exportar el grano</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-aprueba-arancel-cero-para-la-importacion-de-soya-hasta-el-31-de-diciembre-de-este-ano-JK19313039" rel="noopener noreferrer" target="_blank">Gobierno aprueba arancel cero para la importación de soya hasta el 31 de diciembre de este año</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-establece-arancel-cero-para-la-importaci%C3%B3n-de-grano-de-soya" rel="noopener noreferrer" target="_blank">Gobierno establece arancel cero para la importación de grano de soya</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40182-gobierno-autoriza-importar-soya-con-arancel-cero-en-medio-del-incremento-de-la-produccion-nacional" rel="noopener noreferrer" target="_blank">Gobierno autoriza importar soya con arancel cero en medio del incremento de la producción nacional</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40225-aduana-nacional-refuerza-controles-para-garantizar-arancel-cero-en-la-importacion-de-grano-de-soya" rel="noopener noreferrer" target="_blank">Aduana Nacional refuerza controles para garantizar arancel cero en la importación de grano de soya</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="ORDEN DE APREHENSIÓN CONTRA EVO MORALES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">ORDEN DE APREHENSIÓN CONTRA EVO MORALES</div>
+<div class="modal-sum">La Policía Boliviana afirmó que ejecutará la orden de aprehensión contra Evo Morales "en el momento oportuno", evaluando las condiciones para su cumplimiento. Una viceministra, sin embargo, exigió la ejecución inmediata de dicha orden, relacionada a un caso de trata.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">11</strong> titulares</span>
+<span><strong style="color:var(--c-15)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/policia-admite-que-debe-cumplir-la-orden-de-aprehension-contra-evo-morales-pero-afirma-que-no-existen-las-condiciones" rel="noopener noreferrer" target="_blank">Policía admite que debe cumplir la orden de aprehensión contra Evo Morales, pero afirma que no existen las condiciones</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/rafael-quispe-critica-demora-en-cumplimiento-de-orden-de-aprehension" rel="noopener noreferrer" target="_blank">Rafael Quispe critica demora en cumplimiento de orden de aprehensión</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_la-policia-de-bolivia-dice-que-detendra-a-evo-morales-en-el-momento-oportuno-por-el-caso-de-trata.html" rel="noopener noreferrer" target="_blank">La Policía de Bolivia dice que detendrá a Evo Morales «en el momento oportuno» por el caso de trata</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/echeverria-pide-cumplir-de-inmediato-orden-de-captura-contra-evo/" rel="noopener noreferrer" target="_blank">Echeverría pide cumplir de inmediato orden de captura contra Evo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/policia-evalua-condiciones-para-ejecutar-orden-contra-evo-morales/" rel="noopener noreferrer" target="_blank">Policía evalúa condiciones para ejecutar orden contra Evo Morales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/gobierno-alega-razones-estrategicas-y-de-seguridad-para-no-ejecutar-aprehension-de-evo/" rel="noopener noreferrer" target="_blank">Gobierno alega ‘razones de seguridad’ para no ejecutar aprehensión de Evo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-asegura-que-no-dejara-el-pais-y-relata-que-una-junta-medica-privada-le-salvo-la-vida/" rel="noopener noreferrer" target="_blank">Evo asegura que no dejará el país y relata que una junta médica privada le salvó la vida</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-y-la-policia-alegan-razones-estrategicas-y-de-seguridad-para-no-aprehender-a-evo/" rel="noopener noreferrer" target="_blank">El Gobierno y la Policía alegan razones estratégicas y de seguridad para no aprehender a Evo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/viceministra-exige-ejecucion-inmediata-de-orden-de-aprehension-contra-evo-morales-2026219133455" rel="noopener noreferrer" target="_blank">Viceministra exige ejecución inmediata de orden de aprehensión contra Evo Morales</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/que-paso-con-la-orden-de-aprehension-contra-evo-morales-esto-dice-la-policia-LK19316814" rel="noopener noreferrer" target="_blank">¿Qué pasó con la orden de aprehensión contra Evo Morales? Esto dice la Policía</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40210-la-policia-de-bolivia-dice-que-detendra-a-evo-morales-en-el-momento-oportuno-por-el-caso-de-trata" rel="noopener noreferrer" target="_blank">La Policía de Bolivia dice que detendrá a Evo Morales "en el momento oportuno" por el caso de trata</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="ORDEN DE APREHENSIÓN CONTRA EXPRESIDENTA DE ADUANA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">ORDEN DE APREHENSIÓN CONTRA EXPRESIDENTA DE ADUANA</div>
+<div class="modal-sum">La Fiscalía y el Ministerio Público emitieron una orden de aprehensión contra Karina Serrudo, expresidenta de la Aduana Nacional durante el Gobierno de Arce, por presuntos sobreprecios detectados en la entidad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">7</strong> titulares</span>
+<span><strong style="color:var(--c-15)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/emiten-orden-de-aprehensi%C3%B3n-contra-la-expresidenta-de-aduana-karina-serrudo%C2%A0" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra la expresidenta de Aduana Karina Serrudo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ordenan-aprehension-karina-serrudo-expresidenta-aduana-nacional-gobierno-arce_1771546435" rel="noopener noreferrer" target="_blank">Ordenan aprehensión de Karina Serrudo, expresidenta de la Aduana Nacional en el Gobierno de Arce</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-19/pais/fiscalia-emite-orden-de-aprehension-contra-karina-serrudo-expresidenta-de-la-aduana.html" rel="noopener noreferrer" target="_blank">Fiscalía emite orden de aprehensión contra Karina Serrudo, expresidenta de la Aduana</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/19/fiscalia-ordena-aprehension-de-karina-serrudo-expresidente-de-aduana/" rel="noopener noreferrer" target="_blank">Fiscalía ordena aprehensión de Karina Serrudo, expresidenta de Aduana</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-fiscalia-emite-orden-de-aprehension-contra-karina-serrudo-expresidenta-de-la-aduana/" rel="noopener noreferrer" target="_blank">La Fiscalía emite orden de aprehensión contra Karina Serrudo, expresidenta de la Aduana</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/emiten-orden-de-aprehension-contra-karina-serrudo-expresidenta-de-la-aduana-nacional-DJ19320571" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra Karina Serrudo, expresidenta de la Aduana Nacional</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40235-ministerio-publico-emite-orden-de-aprehension-contra-karina-serrudo-por-presuntos-sobreprecios-en-la-aduana" rel="noopener noreferrer" target="_blank">Ministerio Público emite orden de aprehensión contra Karina Serrudo por presuntos sobreprecios en la Aduana</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="VIOLENCIA EN CARNAVAL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">VIOLENCIA EN CARNAVAL</div>
+<div class="modal-sum">Autoridades reportan el balance de incidentes durante las festividades de Carnaval, incluyendo 33 fallecidos, hechos de tránsito, consumo de drogas y cerca de 280 casos de violencia contra la mujer a nivel nacional, con detalles específicos en Potosí.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">6</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/envian-a-prision-preventiva-a-hombre-acusado-de-intentar-matar-a-su-pareja-durante-el-carnaval" rel="noopener noreferrer" target="_blank">Envían a prisión preventiva a hombre acusado de intentar matar a su pareja durante el Carnaval</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/toneladas-droga-fallecidos-heridos-saldo-fiestas-carnaval_1771497761" rel="noopener noreferrer" target="_blank">Toneladas de droga, fallecidos y heridos, saldo de fiestas en carnaval</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/33-personas-fallecidas-335-hechos-de-transito-y-278-heridos-en-carnaval/" rel="noopener noreferrer" target="_blank">33 personas fallecidas, 335 hechos de tránsito y 278 heridos en Carnaval</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/19/durante-el-carnaval-se-registraron-279-hechos-de-violencia-contra-la-mujer/" rel="noopener noreferrer" target="_blank">Durante el Carnaval se registraron 279 hechos de violencia contra mujeres</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fiscalia-reporta-51-hechos-delictivos-y-siete-fallecidos-durante-el-carnaval-en-potosi-2026219113327" rel="noopener noreferrer" target="_blank">Fiscalía reporta 51 hechos delictivos y siete fallecidos durante el Carnaval en Potosí</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/en-los-cuatro-dias-de-carnaval-se-registraron-dos-parricidios-un-feminicidio-y-casi-280-casos-de-violencia-contra-la-mujer-EK19317704" rel="noopener noreferrer" target="_blank">En los cuatro días de Carnaval se registraron dos parricidios, un feminicidio y casi 280 casos de violencia contra la mujer</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_22a">
+<div class="modal-backdrop" onclick="closeModal('modal_22a')"></div>
+<div aria-label="ENCUESTA DE UNITEL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">ENCUESTA DE UNITEL</div>
+<div class="modal-sum">Encuesta de Unitel revela la intención de voto para gobernaciones en La Paz, Cochabamba y Santa Cruz, donde Revilla (junto a Patzi en La Paz), Loza y Camacho respectivamente, lideran la preferencia electoral en sus regiones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_22a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/19/luis-revilla-presenta-su-plan-para-la-gobernacion-de-la-paz-rumbo-a-2026" rel="noopener noreferrer" target="_blank">Luis Revilla presenta su plan para la Gobernación de La Paz rumbo a 2026</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/19/revilla-loza-y-camacho-lideran-intencion-de-voto-en-la-paz-cochabamba-y-santa-cruz-57426" rel="noopener noreferrer" target="_blank">Revilla, Loza y Camacho lideran intención de voto en La Paz, Cochabamba y Santa Cruz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/19/mamen-y-manfred-arrasan-en-santa-cruz-y-cochabamba-en-la-paz-y-el-alto-hay-dispersion-57425" rel="noopener noreferrer" target="_blank">Mamen y Manfred arrasan en Santa Cruz y Cochabamba; en La Paz y El Alto hay dispersión</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/encuesta-unitel-gobernadores-revilla-lidera-en-la-paz-loza-en-cochabamba-y-camacho-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Encuesta Unitel- Gobernadores: Revilla lidera en La Paz, Loza en Cochabamba y Camacho en Santa Cruz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/19/40241-encuesta-de-unitel-para-gobernaciones-revilla-y-patzi-lideran-en-la-paz-loza-encabeza-en-cochabamba-y-camacho-domina-en-santa-cruz" rel="noopener noreferrer" target="_blank">Encuesta de Unitel para gobernaciones: Revilla y Patzi lideran en La Paz, Loza encabeza en Cochabamba y Camacho domina en Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="DETENCIÓN PREVENTIVA PARA UN JUEZ EN EL ALTO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">DETENCIÓN PREVENTIVA PARA UN JUEZ EN EL ALTO</div>
+<div class="modal-sum">Se dicta detención preventiva y se envía a la cárcel a un juez de El Alto, quien es procesado por la Magistratura debido a retardación de justicia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">4</strong> titulares</span>
+<span><strong style="color:var(--c-15)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/60-dias-carcel-juez-alto-acusado-retardacion-justicia_1771555694" rel="noopener noreferrer" target="_blank">60 días de cárcel para juez de El Alto acusado de retardación de justicia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_dictan-60-dias-de-detencion-preventiva-para-juez-de-el-alto-investigado-por-retardacion-de-justicia.html" rel="noopener noreferrer" target="_blank">Dictan 60 días de detención preventiva para juez de El Alto investigado por retardación de justicia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/env%C3%ADan-la-c%C3%A1rcel-un-juez-de-el-alto-procesado-por-retardaci%C3%B3n-de-justicia" rel="noopener noreferrer" target="_blank">Envían a la cárcel a un juez de El Alto procesado por retardación de justicia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/magistratura-impulsa-proceso-penal-contra-juez-de-el-alto-por-retardacion/" rel="noopener noreferrer" target="_blank">Magistratura impulsa proceso penal contra juez de El Alto por retardación</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1b">
+<div class="modal-backdrop" onclick="closeModal('modal_1b')"></div>
+<div aria-label="DETENCIÓN DE EXGERENTE DE YPFB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">DETENCIÓN DE EXGERENTE DE YPFB</div>
+<div class="modal-sum">Dictan 90 días de detención preventiva para la exgerenta de YPFB. Posteriormente, se allana su domicilio en Santa Cruz, donde se secuestra documentación relevante.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">4</strong> titulares</span>
+<span><strong style="color:var(--c-09)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/dictan-90-dias-de-detencion-preventiva-para-exgerenta-de-ypfb/" rel="noopener noreferrer" target="_blank">Dictan 90 días de detención preventiva para exgerenta de YPFB</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_dictan-90-dias-de-carcel-para-exgerente-de-ypfb.html" rel="noopener noreferrer" target="_blank">Dictan 90 días de cárcel para exgerente de YPFB</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tras-dictarse-detencion-preventiva-allanan-casa-de-exgerente-de-ypfb-en-santa-cruz-202621912217" rel="noopener noreferrer" target="_blank">Tras dictarse detención preventiva, allanan casa de exgerente de YPFB en Santa Cruz</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tras-allanamiento-secuestran-documentacion-del-inmueble-donde-vivia-la-exgerente-de-ypfb-CK19317072" rel="noopener noreferrer" target="_blank">Tras allanamiento, secuestran documentación del inmueble donde vivía la exgerente de YPFB</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="INICIO DE DIFUSIÓN DE PROPAGANDA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">INICIO DE DIFUSIÓN DE PROPAGANDA</div>
+<div class="modal-sum">El Tribunal Supremo Electoral (TSE) autoriza el inicio de la difusión de propaganda electoral en medios de comunicación para las elecciones subnacionales, efectiva desde el 20 de febrero.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">3</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/19/autorizan-difusion-de-propaganda-electoral-en-medios-desde-hoy/" rel="noopener noreferrer" target="_blank">Autorizan difusión de propaganda electoral en medios desde hoy</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260219_subnacionales-tse-autoriza-difusion-de-propaganda-electoral-en-medios-desde-el-20-de-febrero.html" rel="noopener noreferrer" target="_blank">Subnacionales: TSE autoriza difusión de propaganda electoral en medios desde el 20 de febrero</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/19/difusion-de-propaganda-electoral-en-medios-inicia-desde-el-viernes/" rel="noopener noreferrer" target="_blank">Difusión de propaganda electoral en medios inicia desde el viernes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1c">
+<div class="modal-backdrop" onclick="closeModal('modal_1c')"></div>
+<div aria-label="CASO PASTOR EVANGÉLICO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">CASO PASTOR EVANGÉLICO</div>
+<div class="modal-sum">Dentro del caso contra el pastor evangélico, éste afronta audiencias cautelares y recibe 60 días de prisión por presunto estupro y violencia familiar en Santa Cruz, donde la justicia denegó la extinción de su proceso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/pastor-peruano-afronta-segunda-audiencia-cautelar-por-presunto-estupro-y-violencia-familiar-2026219164538" rel="noopener noreferrer" target="_blank">Pastor peruano afronta segunda audiencia cautelar por presunto estupro y violencia familiar</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/justicia-dicta-60-dias-de-prision-para-pastor-por-violencia-familiar-y-domestica-20262192129" rel="noopener noreferrer" target="_blank">Justicia dicta 60 días de prisión para pastor por violencia familiar y doméstica</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/santa-cruz-justicia-deniega-extincion-de-proceso-contra-pastor-evangelico-por-presunto-estupro-BK19319923" rel="noopener noreferrer" target="_blank">Santa Cruz: Justicia deniega extinción de proceso contra pastor evangélico por presunto estupro</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
