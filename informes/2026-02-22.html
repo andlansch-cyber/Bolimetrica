@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260222</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">123</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">12</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">7</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">16</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · FEB · 22</strong>
+        Reporte N° 20260222<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_9a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-gob)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-gob)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-gob)">SOCIEDAD</div>
+<div class="top3-title">DAVID SANTALLA</div>
+<div class="top3-body">Bolivia lamenta el fallecimiento del reconocido comediante y actor David Santalla a los 86 años en Sucre, siendo velado en la Gobernación de Chuquisaca. Autoridades como el presidente Rodrigo Paz y artistas expresan su luto y destacan su legado. Sus restos serán trasladados a La Paz.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-gob)">21</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-gob)">8</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_7a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-04)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-04)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="top3-title">REESTRUCTURACIÓN DE LA VICEPRESIDENCIA</div>
+<div class="top3-body">El presidente Rodrigo Paz emite el Decreto Supremo 5552 que reestructura la Vicepresidencia, reduciendo sus funciones, presupuesto y subordinándola al Ministerio de la Presidencia. El vicepresidente Edmand Lara acusa a Paz de 'destrozar la democracia' y califica la medida como un 'duro golpe'.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">18</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_8')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-04)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-04)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="top3-title">CONMEMORACIÓN DEL 21F</div>
+<div class="top3-body">Líderes políticos, expresidentes y activistas conmemoraron en Bolivia el décimo aniversario del referéndum del 21F, destacando su rol en la defensa del voto y cómo ese evento marcó un antes y un después en el destino político de Evo Morales, con el presidente Paz afirmando que abrió un nuevo horizonte para la democrácia.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">15</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">10</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-04)"></div></div>
+<div class="cat-n">39</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-gob)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:54%;background:var(--c-gob)"></div></div>
+<div class="cat-n">21</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:51%;background:var(--c-07)"></div></div>
+<div class="cat-n">20</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:38%;background:var(--c-09)"></div></div>
+<div class="cat-n">15</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-29)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:38%;background:var(--c-29)"></div></div>
+<div class="cat-n">15</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-13)"></div>
+<div class="cat-name">CARNAVAL</div>
+<div class="cat-track"><div class="cat-fill" style="width:18%;background:var(--c-13)"></div></div>
+<div class="cat-n">7</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:15%;background:var(--c-17)"></div></div>
+<div class="cat-n">6</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">santalla</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">21</td>
+</tr>
+<tr>
+<td class="freq-word">yuvinka</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:83%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">vicepresidencia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:64%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">villa tunari</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">calidad</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">combustible</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">presunto autor</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">empresas</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">viru viru</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:37%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">DAVID SANTALLA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-gob))">21</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">REESTRUCTURACIÓN DE LA VICEPRESIDENCIA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:85.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">18</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CONMEMORACIÓN DEL 21F</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:71.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">15</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CALIDAD DE COMBUSTIBLES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:57.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">12</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">APREHENSIÓN EN EL CASO YUVINKA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:57.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">12</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INCAUTACIÓN DE COCAÍNA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:47.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">10</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LIBERACIÓN DE ALEX MAMANI (CASO YUVINKA)</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">8</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CORSO DE CORSOS EN CBBA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-13))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">EMPRESAS ESTATALES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ACCION DE PROTECCION DE PRIVACIDAD (LARA VS. SOLIZ)</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MARIHUANA LÍQUIDA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ENTREGA DE B-SISA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">CALIDAD DE COMBUSTIBLES</div>
+<div class="topic-body">YPFB adopta una serie de medidas para asegurar y verificar la calidad de los combustibles que comercializa, incluyendo la importación de gasolina y la atención a índices de goma superiores al permitido, atribuyendo parte de los problemas a fallas arrastradas desde 2025.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">APREHENSIÓN EN EL CASO YUVINKA</div>
+<div class="topic-body">Se aprehende al tío político de Yuvinka como presunto autor del infanticidio, dictándosele detención preventiva en Palmasola. La Fiscalía reveló detalles de la identificación y las pruebas forenses, mientras la madre de la víctima pide justicia.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">INCAUTACIÓN DE COCAÍNA</div>
+<div class="topic-body">La FELCN incauta aproximadamente 840 a 895 kilogramos de cocaína en una pista clandestina en Villa Tunari (Chapare) tras un tiroteo, con un valor superior a $us 2 millones y relacionada a la producción de 185 hectáreas de coca.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5b')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">LIBERACIÓN DE ALEX MAMANI (CASO YUVINKA)</div>
+<div class="topic-body">Álex Mamani, previamente acusado y detenido en el caso Yuvinka, es liberado tras la captura del verdadero presunto autor. El cuñado de la víctima pide limpiar su nombre, resarcimiento y expresa su deseo de retomar una vida normal, describiendo su detención como una tortura.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-13)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-13)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-13)">CARNAVAL</div>
+<div class="topic-title">CORSO DE CORSOS EN CBBA</div>
+<div class="topic-body">Cochabamba celebra el Corso de Corsos 2026 con la participación de casi 100 fraternidades, marcando el cierre de las festividades de Carnaval con gran tradición y alegría.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMÍA</div>
+<div class="topic-title">EMPRESAS ESTATALES</div>
+<div class="topic-body">El Gobierno revela que 64 de las 67 empresas públicas operan con pérdidas económicas, identificando situaciones de quiebra en 14 de ellas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7b')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">ACCION DE PROTECCION DE PRIVACIDAD (LARA VS. SOLIZ)</div>
+<div class="topic-body">El vicepresidente Edmand Lara presenta una acción constitucional de protección y privacidad contra Jaime Soliz y Cárdenas por difundir videos y dichos. Soliz responde denunciando que la demanda busca silenciarlo y acallar a millones de voces que se expresan en las redes sociales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">MARIHUANA LÍQUIDA</div>
+<div class="topic-body">En el aeropuerto Viru Viru, se incautan 356 kilogramos de marihuana líquida en las bodegas de la Aduana, iniciándose una investigación sobre su ruta de envío desde Miami.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1a')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">ENTREGA DE B-SISA</div>
+<div class="topic-body">La ANH implementa un nuevo sistema de reservas y un código QR para facilitar el etiquetado y la entrega del B-SISA, buscando evitar filas y agilizar el proceso.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260221_activan-plan-de-defensa-de-evo-en-el-tropico.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Activan plan de defensa de Evo en el Trópico</a></div>
+<div class="emergente-sum">Simpatizantes de Evo Morales activan un plan de defensa y anuncian movilizaciones ante supuesta amenaza de captura, elevando la polarización política.</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.atb.com.bo/2026/02/21/tse-publica-resoluciones-sobre-apelaciones-en-demandas-de-inhabilitacion-para-las-subnacionales-2026" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">TSE publica resoluciones sobre apelaciones en demandas de inhabilitación para las subnacionales 2026</a></div>
+<div class="emergente-sum">El Tribunal Supremo Electoral publica resoluciones clave sobre la inhabilitación de candidatos, marcando la recta final hacia las elecciones subnacionales.</div>
+<div class="emergente-source">Fuente: ATB Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.atb.com.bo/2026/02/21/activan-sello-rojo-contra-rafael-arce" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Activan sello rojo contra Rafael Arce</a></div>
+<div class="emergente-sum">La Fiscalía activa un sello rojo internacional para la búsqueda de Rafael Arce Mosqueira, investigado por presunto enriquecimiento ilícito.</div>
+<div class="emergente-source">Fuente: ATB Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260221_caso-maletas-comision-del-legislativo-viajara-a-eeuu-para-investigar.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Caso Maletas: Comisión del Legislativo viajará a EEUU para investigar</a></div>
+<div class="emergente-sum">Una comisión legislativa boliviana se prepara para viajar a Estados Unidos con el fin de investigar a fondo el "Caso Maletas".</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/deslizamiento-paz-activa-alerta-preventiva-evacuan-seis-viviendas_1771698677" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Deslizamiento en La Paz activa alerta preventiva y evacuan seis viviendas</a></div>
+<div class="emergente-sum">Un deslizamiento en La Paz activa alerta preventiva y fuerza la evacuación de viviendas, destacando la vulnerabilidad de zonas urbanas.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260222 · 2026-02-22</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 123 titulares · 12 temas · 7 categorías · 16 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_9a">
+<div class="modal-backdrop" onclick="closeModal('modal_9a')"></div>
+<div aria-label="DAVID SANTALLA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-gob)">SOCIEDAD</div>
+<div class="modal-title">DAVID SANTALLA</div>
+<div class="modal-sum">Bolivia lamenta el fallecimiento del reconocido comediante y actor David Santalla a los 86 años en Sucre, siendo velado en la Gobernación de Chuquisaca. Autoridades como el presidente Rodrigo Paz y artistas expresan su luto y destacan su legado. Sus restos serán trasladados a La Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-gob)">21</strong> titulares</span>
+<span><strong style="color:var(--c-gob)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/21/paz-lamenta-la-muerte-de-santalla-y-lo-recuerda-como-un-genio-del-escenario-57496" rel="noopener noreferrer" target="_blank">Paz lamenta la muerte de Santalla y lo recuerda como un "genio del escenario"</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/21/sucre-despide-a-david-santalla-en-el-historico-salon-de-los-espejos-de-la-gobernacion-57504" rel="noopener noreferrer" target="_blank">Sucre despide a David Santalla en el histórico salón de los Espejos de la gobernación</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/21/david-santalla-fallece-en-sucre-a-los-86-anos-57483" rel="noopener noreferrer" target="_blank">David Santalla fallece en Sucre a los 86 años</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cuerpo-david-santalla-sera-trasladado-domingo-paz_1771727975" rel="noopener noreferrer" target="_blank">El cuerpo de David Santalla será trasladado el domingo a La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/santalla-velado-gobernacion-chuquisaca-piden-traslado-cuerpo-paz_1771722766" rel="noopener noreferrer" target="_blank">Santalla es velado en la Gobernación de Chuquisaca; piden el traslado de su cuerpo a La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-lamenta-muerte-santalla-fue-espejo-donde-nos-miramos-ternura-orgullo_1771712206" rel="noopener noreferrer" target="_blank">Paz lamenta la muerte de Santalla: “Fue el espejo donde nos miramos con ternura y orgullo”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/emotivos-mensajes-artistas-politicos-despiden-david-santalla_1771726079" rel="noopener noreferrer" target="_blank">Con emotivos mensajes, artistas y políticos se despiden de David Santalla</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/trasladar%C3%A1n-los-restos-de-david-santalla-la-paz-cumpliendo-su-%C3%BAltima-voluntad" rel="noopener noreferrer" target="_blank">Trasladarán los restos de David Santalla a La Paz, cumpliendo su última voluntad</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/fallece-david-santalla-emblem%C3%A1tica-figura-del-humor-y-teatro-popular" rel="noopener noreferrer" target="_blank">Fallece David Santalla, emblemática figura del humor y teatro popular</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/cultura/luto-bolivia-fallece-comediante-boliviano-david-santalla-sucre/20260221160326988941.html" rel="noopener noreferrer" target="_blank">Luto en Bolivia: fallece el comediante David Santalla</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/luto-en-bolivia-david-santalla-fallecio-a-los-86-anos-de-edad-y-deja-un-vacio-en-la-cultura-nacional/" rel="noopener noreferrer" target="_blank">Luto en Bolivia: David Santalla falleció a los 86 años de edad y deja un vacío en la cultura nacional</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fallece-el-comediante-boliviano-david-santalla-2026221155352" rel="noopener noreferrer" target="_blank">Fallece el comediante boliviano David Santalla</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rodrigo-paz-rinde-homenaje-a-santalla-supo-leer-el-alma-a-traves-de-la-risa-202622117540" rel="noopener noreferrer" target="_blank">Rodrigo Paz rinde homenaje a Santalla: “Supo leer el alma a través de la risa”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-comediante-boliviano-david-santalla-falleci%C3%B3-la-tarde-de-este-s%C3%A1bado-en-sucre" rel="noopener noreferrer" target="_blank">El comediante boliviano David Santalla falleció la tarde de este sábado en Sucre</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40325-bolivia-esta-de-luto-se-apaga-la-vida-de-david-santalla" rel="noopener noreferrer" target="_blank">Bolivia está de luto: se apaga la vida de David Santalla</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/21/estado-de-salud-de-david-santalla-se-deteriora-esposa-agradece-la-preocupacion-de-la-gente-57482" rel="noopener noreferrer" target="_blank">Estado de salud de David Santalla se deteriora; esposa agradece la preocupación de la gente</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/david-santalla-se-encuentra-en-estado-critico-y-su-esposa-pide-llamarlo-para-que-no-se-sienta-olvidado/" rel="noopener noreferrer" target="_blank">David Santalla se encuentra en estado crítico y su esposa pide llamarlo para que no se sienta olvidado</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/david-santalla-permanece-internado-y-bajo-observacion-constante-en-sucre-2026221152625" rel="noopener noreferrer" target="_blank">David Santalla permanece internado y bajo observación constante en Sucre</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/aqui-estoy-como-te-lo-prometi-el-conmovedor-mensaje-de-la-esposa-de-david-santalla-202622116200" rel="noopener noreferrer" target="_blank">“Aquí estoy, como te lo prometí”: el conmovedor mensaje de la esposa de David Santalla</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-comediante-david-santalla-est%C3%A1-en-una-situaci%C3%B3n-cr%C3%ADtica-internado-en-sucre" rel="noopener noreferrer" target="_blank">El comediante David Santalla está en una situación crítica, internado en Sucre</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40348-david-santalla-el-iconico-actor-que-no-queria-que-lo-olviden" rel="noopener noreferrer" target="_blank">David Santalla, el icónico actor que no quería que lo olviden</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="REESTRUCTURACIÓN DE LA VICEPRESIDENCIA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">REESTRUCTURACIÓN DE LA VICEPRESIDENCIA</div>
+<div class="modal-sum">El presidente Rodrigo Paz emite el Decreto Supremo 5552 que reestructura la Vicepresidencia, reduciendo sus funciones, presupuesto y subordinándola al Ministerio de la Presidencia. El vicepresidente Edmand Lara acusa a Paz de 'destrozar la democracia' y califica la medida como un 'duro golpe'.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">18</strong> titulares</span>
+<span><strong style="color:var(--c-04)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/lara-acusa-a-paz-de-destrozar-la-democracia-y-le-recuerda-que-nadie-esta-por-encima-de-la-constitucion" rel="noopener noreferrer" target="_blank">Lara acusa a Paz de destrozar la democracia y le recuerda que nadie está por encima de la Constitución</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/gobierno-mediante-decreto-quita-presupuesto-responsabilidades-administrativas-y-juridicas-a-la-vicepresidencia" rel="noopener noreferrer" target="_blank">Gobierno mediante decreto quita presupuesto, responsabilidades administrativas y jurídicas a la Vicepresidencia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/21/mediante-decreto-el-gobierno-desmantela-a-la-vicepresidencia-le-quita-responsabilidades-y-presupuesto-57478" rel="noopener noreferrer" target="_blank">Mediante decreto, el gobierno desmantela a la Vicepresidencia, le quita responsabilidades y presupuesto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/21/lara-se-queja-y-reconoce-que-ds-lo-pone-bajo-dependencia-del-ministro-de-la-presidencia-57488" rel="noopener noreferrer" target="_blank">Lara se queja y reconoce que DS lo pone "bajo dependencia del ministro de la Presidencia"</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/21/gobierno-fusiona-las-oficina-de-comunicacion-y-voceria-y-las-traslada-a-la-presidencia-57492" rel="noopener noreferrer" target="_blank">Gobierno fusiona las oficinas de Comunicación y Vocería y las traslada a la Presidencia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/disponen-cambios-vicepresidencia-estado-mediante-decreto-supremo_1771699542" rel="noopener noreferrer" target="_blank">El presidente Paz dispone cambios en la Vicepresidencia mediante decretos</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/paz-pide-respaldo-de-la-alp-y-enterrar-diablos/" rel="noopener noreferrer" target="_blank">Paz pide respaldo de la ALP y “enterrar diablos”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_edmand-lara-acusa-a-rodrigo-paz-de-destrozar-la-vicepresidencia.html" rel="noopener noreferrer" target="_blank">Edmand Lara acusa a Rodrigo Paz de destrozar la Vicepresidencia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/sobre-ds-5552-lara-acusa-paz-de-destrozar-la-vicepresidencia-y-asestar-un-%E2%80%9Cduro-golpe-la" rel="noopener noreferrer" target="_blank">Sobre DS 5552: Lara acusa a Paz de destrozar la Vicepresidencia y asestar un “duro golpe a la democracia”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/decreto-desarma-la-vicepresidencia-y-pone-lara-bajo-dependencia-administrativa-del-palacio" rel="noopener noreferrer" target="_blank">Decreto desarma la Vicepresidencia y pone a Lara bajo dependencia administrativa del Palacio</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/21/lara-sobre-decreto-que-restringe-sus-funciones-la-dictadura-querra-imponerse/" rel="noopener noreferrer" target="_blank">Lara sobre decreto que restringe sus funciones: La dictadura querrá imponerse</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/21/paz-reestructura-la-vicepresidencia-y-redistribuye-sus-funciones-y-presupuesto/" rel="noopener noreferrer" target="_blank">Paz reestructura la Vicepresidencia y redistribuye funciones y presupuesto</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/decreto-quita-atribuciones-a-la-vicepresidencia-y-lara-afirma-es-un-duro-golpea-la-democracia/" rel="noopener noreferrer" target="_blank">Decreto quita atribuciones a la Vicepresidencia y Lara afirma es un “duro golpe a la democracia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/hoy-relegan-al-vicepresidente-a-la-ultima-expresion-responde-lara-sobre-decreto-5552-que-reestructura-la-vicepresidencia-OI19336091" rel="noopener noreferrer" target="_blank">“Hoy relegan al vicepresidente a la última expresión”, responde Lara sobre Decreto 5552 que reestructura la Vicepresidencia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/mediante-decreto-rodrigo-paz-reestructura-la-vicepresidencia-para-que-sus-unidades-dependan-del-ministerio-de-presidencia-AI19335317" rel="noopener noreferrer" target="_blank">Mediante decreto, Rodrigo Paz reestructura la Vicepresidencia para que sus Unidades dependan del Ministerio de Presidencia</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/un-decreto-de-paz-reduce-el-campo-de-acci%C3%B3n-del-vicepresidente-cuyo-personal-depender%C3%A1-del" rel="noopener noreferrer" target="_blank">Un decreto de Paz reduce el campo de acción del Vicepresidente, cuyo personal dependerá del Ejecutivo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40334-via-decreto-el-gobierno-reestructura-la-vicepresidencia-reduce-su-autonomia-y-transfiere-su-presupuesto" rel="noopener noreferrer" target="_blank">Vía decreto, el Gobierno reestructura la Vicepresidencia, reduce su autonomía y transfiere su presupuesto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40343-lara-ve-que-decreto-de-paz-es-un-duro-golpe-a-la-democracia-y-denuncia-que-lo-relegaron-a-la-ultima-expresion" rel="noopener noreferrer" target="_blank">Lara ve que decreto de Paz es un “duro golpe a la democracia” y denuncia que lo relegaron a la “última expresión”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="CONMEMORACIÓN DEL 21F" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">CONMEMORACIÓN DEL 21F</div>
+<div class="modal-sum">Líderes políticos, expresidentes y activistas conmemoraron en Bolivia el décimo aniversario del referéndum del 21F, destacando su rol en la defensa del voto y cómo ese evento marcó un antes y un después en el destino político de Evo Morales, con el presidente Paz afirmando que abrió un nuevo horizonte para la democrácia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">15</strong> titulares</span>
+<span><strong style="color:var(--c-04)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/politicos-coinciden-que-el-21f-puso-fin-al-autoritarismo-del-mas-e-inicio-con-su-declive" rel="noopener noreferrer" target="_blank">Políticos coinciden que el 21F puso fin al autoritarismo del MAS e inició con su declive</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/21/analisisdiez-anos-del-no-como-el-21f-cambio-el-destino-de-evo-moralesraul-penaranda-u-57485" rel="noopener noreferrer" target="_blank">|ANÁLISIS|Diez años del No: cómo el 21F cambió el destino de Evo Morales|Raúl Peñaranda U.|</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/21/a-diez-anos-del-21f-lideres-politicos-destacan-la-defensa-del-voto-57477" rel="noopener noreferrer" target="_blank">A diez años del 21F, líderes políticos destacan la defensa del voto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/diez-anos-21f-debate-respeto-voto-centra-denuncias-impunidad_1771693306" rel="noopener noreferrer" target="_blank">A diez años del 21F, el debate sobre el respeto al voto se centra en denuncias de impunidad</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/voto-sagrado-paz-afirma-21f-abrio-nuevo-horizonte-democracia_1771728968" rel="noopener noreferrer" target="_blank">“El voto es sagrado”: Paz afirma que el 21F abrió un nuevo horizonte para la democracia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/viceministro-justiniano-asegura-evo-morales-dejo-narcocracia-pais_1771709665" rel="noopener noreferrer" target="_blank">Viceministro Justiniano asegura que Evo Morales dejó la “narcocracia” en el país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/justicia-argentina-cita-20-policias-testigos-caso-evo-morales_1771686353" rel="noopener noreferrer" target="_blank">Justicia de Argentina cita a más de 20 policías como testigos en caso de Evo Morales</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/expresidentes-recuerdan-10-anos-referendum-nego-reeleccion-evo-morales_1771717502" rel="noopener noreferrer" target="_blank">Expresidentes recuerdan los 10 años del referéndum que negó la reelección a Evo Morales</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/mentiras-de-morales-sobre-politica-antidrogas-buscan-desviar-atencion/" rel="noopener noreferrer" target="_blank">Mentiras de Morales sobre política antidrogas buscan desviar atención</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_lideres-politicos-recuerdan-10-anos-del-21f.html" rel="noopener noreferrer" target="_blank">Líderes políticos recuerdan 10 años del 21F</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/l%C3%ADderes-pol%C3%ADticos-recuerdan-10-a%C3%B1os-del-21f-el-inicio-del-fin-de-evo-morales-en-el-poder" rel="noopener noreferrer" target="_blank">Líderes políticos recuerdan 10 años del 21F: el inicio del fin de Evo Morales en el poder</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/21/a-10-anos-del-21f-politicos-recuerdan-el-historico-referendo/" rel="noopener noreferrer" target="_blank">A 10 años del 21F políticos recuerdan el ‘histórico referendo’</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/activistas-conmemoraron-una-decada-del-referendum-del-21f-en-la-plaza-24-de-septiembre-202622118612" rel="noopener noreferrer" target="_blank">Activistas conmemoraron una década del referéndum del 21F en la plaza 24 de Septiembre</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/10-a%C3%B1os-despu%C3%A9s-del-21-f-hay-voces-para-que-evo-sea-juzgado" rel="noopener noreferrer" target="_blank">10 años después del 21-F, hay voces para que Evo sea juzgado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40319-una-decada-del-21f-el-referendo-que-le-dio-un-reves-a-evo-y-marco-el-inicio-del-declive-del-mas-en-el-poder" rel="noopener noreferrer" target="_blank">Una década del 21F, el referendo que le dio un revés a Evo y marcó el inicio del declive del MAS en el poder</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="CALIDAD DE COMBUSTIBLES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">CALIDAD DE COMBUSTIBLES</div>
+<div class="modal-sum">YPFB adopta una serie de medidas para asegurar y verificar la calidad de los combustibles que comercializa, incluyendo la importación de gasolina y la atención a índices de goma superiores al permitido, atribuyendo parte de los problemas a fallas arrastradas desde 2025.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">12</strong> titulares</span>
+<span><strong style="color:var(--c-09)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/ministro-de-hidrocarburos-afirma-que-gasolina-importada-llego-con-indices-de-goma-superior-al-permitido" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos afirma que gasolina importada llegó con índices de goma superior al permitido</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/21/ypfb-aclara-que-son-300-cisternas-varadas-en-palmasola" rel="noopener noreferrer" target="_blank">YPFB aclara que son 300 cisternas varadas en Palmasola</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/21/ypfb-verifica-calidad-y-volumen-de-combustibles" rel="noopener noreferrer" target="_blank">YPFB verifica calidad y volumen de combustibles</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-asume-cinco-medidas-resguardar-calidad-combustibles-comercializa_1771703909" rel="noopener noreferrer" target="_blank">YPFB asume cinco medidas para resguardar calidad de los combustibles que comercializa</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-atribuye-crisis-calidad-combustible-fallas-arrastradas-2025_1771688286" rel="noopener noreferrer" target="_blank">YPFB atribuye crisis de calidad del combustible a fallas arrastradas desde 2025</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/ypfb-adopta-seis-medidas-para-importar-gasolina-de-mejor-calidad/" rel="noopener noreferrer" target="_blank">YPFB adopta seis medidas para importar gasolina de mejor calidad</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/cisterneros-y-ypfb-acuerdan-la-primera-descarga-de-combustible/" rel="noopener noreferrer" target="_blank">Cisterneros y YPFB acuerdan la primera descarga de combustible</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/ypfb-invita-a-transportistas-a-conformar-comision-de-control/" rel="noopener noreferrer" target="_blank">YPFB invita a transportistas a conformar comisión de control</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/ejecutivo-recurre-al-crudo-importado-por-desabastecimiento-de-carburantes/" rel="noopener noreferrer" target="_blank">Ejecutivo recurre al crudo importado por desabastecimiento de carburantes</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_ypfb-aclara-que-el-color-de-la-gasolina-no-tiene-ninguna-relacion-con-la-calidad-del-combustible.html" rel="noopener noreferrer" target="_blank">YPFB aclara que “el color de la gasolina no tiene ninguna relación con la calidad” del combustible</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/21/ypfb-asume-cinco-medidas-para-resguardar-calidad-de-combustibles/" rel="noopener noreferrer" target="_blank">YPFB asume cinco medidas para resguardar calidad de combustibles</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/estas-son-las-5-medidas-que-adopt%C3%B3-ypfb-para-garantizar-una-mejor-calidad-del-combustible" rel="noopener noreferrer" target="_blank">Estas son las 5 medidas que adoptó YPFB para garantizar una mejor calidad del combustible</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="APREHENSIÓN EN EL CASO YUVINKA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">APREHENSIÓN EN EL CASO YUVINKA</div>
+<div class="modal-sum">Se aprehende al tío político de Yuvinka como presunto autor del infanticidio, dictándosele detención preventiva en Palmasola. La Fiscalía reveló detalles de la identificación y las pruebas forenses, mientras la madre de la víctima pide justicia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">12</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/21/gobierno-condena-muerte-de-yuvinka-y-dice-que-su-memoria-exige-justicia-57480" rel="noopener noreferrer" target="_blank">Gobierno condena muerte de Yuvinka y dice que su memoria “exige justicia”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/21/dictan-detencion-preventiva-para-tio-de-yuvinka-por-infanticidio-57501" rel="noopener noreferrer" target="_blank">Dictan detención preventiva para tío de Yuvinka por infanticidio</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/21/aprehenden-a-presunto-autor-de-infanticidio-de-yuvinka-57473" rel="noopener noreferrer" target="_blank">Aprehenden a presunto autor de infanticidio de Yuvinka</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_aprehenden-al-presunto-autor-del-deceso-de-la-nina-yuvinka.html" rel="noopener noreferrer" target="_blank">Aprehenden al presunto autor del deceso de la niña Yuvinka</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presunto-autor-del-infanticidio-de-yuvinka-se-abstiene-de-declarar-y-espera-audiencia-cautelar-202622181222" rel="noopener noreferrer" target="_blank">Presunto autor del infanticidio de Yuvinka se abstiene de declarar y espera audiencia cautelar</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/pericia-cientifica-confirma-la-autoria-afirma-la-policia-tras-analisis-de-sangre-en-la-polera-del-tio-de-yuvinka-202622184347" rel="noopener noreferrer" target="_blank">Policía confirma autoría tras análisis de sangre en la polera del tío de Yuvinka</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cronologia-de-los-hechos-esto-es-lo-que-se-conoce-del-infanticidio-de-yuvinka-tras-la-aprehension-de-su-tio-202622110022" rel="noopener noreferrer" target="_blank">El caso Yuvinka, paso a paso: así avanzó la investigación hasta la captura del presunto autor</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/como-se-identifico-al-tio-politico-de-yuvinka-como-el-verdadero-asesino-esto-revelo-la-fiscalia-20262211469" rel="noopener noreferrer" target="_blank">¿Cómo se identificó al tío político de Yuvinka como el verdadero asesino? Esto reveló la Fiscalía</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/detencion-preventiva-en-palmasola-para-tio-politico-de-yuvinka-por-infanticidio-2026221183140" rel="noopener noreferrer" target="_blank">Detención preventiva en Palmasola para el tío político de Yuvinka por infanticidio</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/dictan-detencion-preventiva-para-el-tio-politico-de-yuvinca-senalado-por-pruebas-forenses-como-autor-del-infanticidio-DI19336959" rel="noopener noreferrer" target="_blank">Dictan detención preventiva para el tío político de Yuvinca, señalado por pruebas forenses como autor del infanticidio</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/infanticidio-de-yuvinca-cuales-fueron-las-pruebas-que-dieron-con-la-captura-del-presunto-autor-del-crimen-GI19334992" rel="noopener noreferrer" target="_blank">Infanticidio de Yuvinca: ¿Cuáles fueron las pruebas que dieron con la captura del presunto autor del crimen?</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/caso-yuvinca-mama-pide-justicia-y-revela-que-el-tio-acusado-del-crimen-participo-en-la-busqueda-de-la-nina-JI19334793" rel="noopener noreferrer" target="_blank">Caso Yuvinca: Mamá pide justicia y revela que el tío acusado del crimen participó en la búsqueda de la niña</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="INCAUTACIÓN DE COCAÍNA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">INCAUTACIÓN DE COCAÍNA</div>
+<div class="modal-sum">La FELCN incauta aproximadamente 840 a 895 kilogramos de cocaína en una pista clandestina en Villa Tunari (Chapare) tras un tiroteo, con un valor superior a $us 2 millones y relacionada a la producción de 185 hectáreas de coca.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">10</strong> titulares</span>
+<span><strong style="color:var(--c-29)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/felcn-secuestra-840-kilos-de-cocaina-en-villa-tunari-valuada-en-mas-de-us-2-millones" rel="noopener noreferrer" target="_blank">FELCN secuestra 840 kilos de cocaína en Villa Tunari valuada en más de $us 2 millones</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/21/operativos-antidroga-sacan-de-circulacion-mas-de-una-tonelada-de-cocaina-en-el-chapare-57494" rel="noopener noreferrer" target="_blank">Operativos antidroga afectan con 3,5 millones de dólares al narcotráfico</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/secuestran-casi-840-kilos-droga-villa-tunari_1771699722" rel="noopener noreferrer" target="_blank">Secuestran casi 840 kilos de droga en Villa Tunari</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-21/pais/incautan-840-kilos-de-clorhidrato-de-cocaina-en-pista-clandestina-de-villa-tunari.html" rel="noopener noreferrer" target="_blank">Incautan 840 kilos de clorhidrato de cocaína en pista clandestina de Villa Tunari</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/21/felcn-secuestra-895-kilos-de-droga-en-pista-clandestina-en-villa-tunari/" rel="noopener noreferrer" target="_blank">FELCN secuestra 895 kilos de droga en pista clandestina en Villa Tunari</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260221/tiroteo-incautan-840-kilos-cocaina-chimore" rel="noopener noreferrer" target="_blank">Tras tiroteo incautan 840 kilos de cocaína en Chimoré</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tiroteo-en-pista-clandestina-incautan-840-kilos-de-cocaina-en-villa-tunari-2026221131647" rel="noopener noreferrer" target="_blank">Tiroteo en pista clandestina: incautan 840 kilos de cocaína en Villa Tunari</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/golpe-de-us-2-millones-al-narcotrafico-185-hectareas-de-coca-para-una-sola-carga-202622113400" rel="noopener noreferrer" target="_blank">Golpe de $us 2 millones al narcotráfico: 185 hectáreas de coca para una sola carga</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/villa-tunari-felcn-secuestra-casi-una-tonelada-droga-y-deja-una-afectacion-de-dos-millones-de-dolares-al-narcotrafico-EI19335166" rel="noopener noreferrer" target="_blank">Villa Tunari: Felcn secuestra casi una tonelada droga y deja una afectación de dos millones de dólares al narcotráfico</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-felcn-incauta-840-kilos-de-droga-en-villa-tunari-el-coraz%C3%B3n-del-chapare" rel="noopener noreferrer" target="_blank">La FELCN incauta 840 kilos de droga en Villa Tunari, el corazón del Chapare</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5b">
+<div class="modal-backdrop" onclick="closeModal('modal_5b')"></div>
+<div aria-label="LIBERACIÓN DE ALEX MAMANI (CASO YUVINKA)" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">LIBERACIÓN DE ALEX MAMANI (CASO YUVINKA)</div>
+<div class="modal-sum">Álex Mamani, previamente acusado y detenido en el caso Yuvinka, es liberado tras la captura del verdadero presunto autor. El cuñado de la víctima pide limpiar su nombre, resarcimiento y expresa su deseo de retomar una vida normal, describiendo su detención como una tortura.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">8</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/21/defensa-de-alex-mamani-pide-limpiar-su-nombre-en-caso-yuvinka" rel="noopener noreferrer" target="_blank">Defensa de Álex Mamani pide limpiar su nombre en caso Yuvinka</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/21/acusado-injustamente-por-el-crimen-de-yuvinka-recupera-su-libertad/" rel="noopener noreferrer" target="_blank">Acusado injustamente por el crimen de Yuvinka recupera su libertad</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/siempre-dije-que-era-inocente-el-testimonio-de-alex-mamani-tras-ser-liberado-en-el-caso-yuvinka-202622111320" rel="noopener noreferrer" target="_blank">“Siempre dije que era inocente”: el testimonio de Alex Mamani tras ser liberado en el caso Yuvinka</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/caso-yuvinka-liberan-al-cunado-tras-la-captura-del-presunto-autor-material-202622111260" rel="noopener noreferrer" target="_blank">Caso Yuvinka: Liberan al cuñado tras la captura del presunto autor material</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/solo-quiero-continuar-con-mi-vida-el-clamor-del-cunado-de-yuvinka-tras-ser-liberado-2026221114740" rel="noopener noreferrer" target="_blank">"Solo quiero continuar con mi vida": El clamor del cuñado de Yuvinka tras ser liberado</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fue-una-tortura-habla-el-cunado-de-yuvinka-tras-ser-liberado-de-palmasola-2026221142830" rel="noopener noreferrer" target="_blank">"Fue una tortura": Habla el cuñado de Yuvinka tras dejar la cárcel de Palmasola</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-limpien-mi-nombre-cunado-de-yuvinka-pide-resarcimiento-tras-ser-liberado-2026221202610" rel="noopener noreferrer" target="_blank">"Que limpien mi nombre”: Cuñado de Yuvinka pide resarcimiento tras ser liberado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/lo-unico-que-quiero-es-continuar-con-mi-vida-el-cunado-de-yuvinca-se-pronuncia-tras-conocerse-las-pericias-EI19333645" rel="noopener noreferrer" target="_blank">“Lo único que quiero es continuar con mi vida”, el cuñado de Yuvinca se pronuncia tras conocerse las pericias</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="CORSO DE CORSOS EN CBBA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-13)">CARNAVAL</div>
+<div class="modal-title">CORSO DE CORSOS EN CBBA</div>
+<div class="modal-sum">Cochabamba celebra el Corso de Corsos 2026 con la participación de casi 100 fraternidades, marcando el cierre de las festividades de Carnaval con gran tradición y alegría.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-13)">7</strong> titulares</span>
+<span><strong style="color:var(--c-13)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/21/fiscalia-activa-turnos-permanentes-por-el-corso-de-corsos-para-reforzar-la-atencion-ante-hechos-delictivos" rel="noopener noreferrer" target="_blank">Fiscalía activa turnos permanentes por el Corso de Corsos para reforzar la atención ante hechos delictivos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cochabamba-paz-santa-cruz-cierran-carnaval-este-fin-semana_1771678144" rel="noopener noreferrer" target="_blank">Cochabamba, La Paz y Santa Cruz cierran el Carnaval este fin de semana</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/el-diario-publicara-fotos-del-corso-infantil/" rel="noopener noreferrer" target="_blank">EL DIARIO publicará fotos del Corso Infantil</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/cochabamba/20260221/gran-corso-corsos-cochabamba-se-vivira-este-sabado-tiempos" rel="noopener noreferrer" target="_blank">El Corso de Corsos se vivirá este sábado por Los Tiempos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260221/vivo-i-corso-corsos-2026-se-vive-grande" rel="noopener noreferrer" target="_blank">EN VIVO I ¡El Corso de Corsos 2026 se vive a lo grande!</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/cochabamba/20260221/cochabamba-desborda-tradicion-alegria-corso-corsos-2026" rel="noopener noreferrer" target="_blank">Cochabamba desborda tradición y alegría en el Corso de Corsos 2026</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/casi-100-fraternidades-disfrutan-del-corso-de-corsos-y-despiden-el-carnaval-en-cochabamba" rel="noopener noreferrer" target="_blank">Casi 100 fraternidades disfrutan del corso de corsos y despiden el carnaval en Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="EMPRESAS ESTATALES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMÍA</div>
+<div class="modal-title">EMPRESAS ESTATALES</div>
+<div class="modal-sum">El Gobierno revela que 64 de las 67 empresas públicas operan con pérdidas económicas, identificando situaciones de quiebra en 14 de ellas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">6</strong> titulares</span>
+<span><strong style="color:var(--c-17)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/21/64-de-67-empresas-publicas-opera-con-perdidas-economicas-segun-el-gobierno-57471" rel="noopener noreferrer" target="_blank">64 de 67 empresas públicas opera con pérdidas económicas, según el gobierno</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/empresas-estatales-lupa-64-67-operan-perdidas-gestion_1771680909" rel="noopener noreferrer" target="_blank">Empresas estatales bajo la lupa: 64 de 67 operan con pérdidas tras gestión del MAS</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/gobierno-encara-el-desafio-de-ajustar-planilla-y-cerrar-empresas-deficitarias/" rel="noopener noreferrer" target="_blank">Gobierno encara el desafío de ajustar planilla y cerrar empresas deficitarias</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_gobierno-identifica-perdidas-millonarias-en-64-de-67-empresas-estatales.html" rel="noopener noreferrer" target="_blank">Gobierno identifica pérdidas millonarias en 64 de 67 empresas estatales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/21/identifican-perdidas-millonarias-en-64-de-67-empresas-estatales-14-estan-en-quiebra/" rel="noopener noreferrer" target="_blank">Identifican pérdidas millonarias en 64 de 67 empresas estatales, 14 están en quiebra</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/64-de-67-empresas-estatales-sufren-p%C3%A9rdidas-millonarias-y-a%C3%BAn-las-mantienen-operando" rel="noopener noreferrer" target="_blank">64 de 67 empresas estatales sufren pérdidas millonarias y aún las mantienen operando</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7b">
+<div class="modal-backdrop" onclick="closeModal('modal_7b')"></div>
+<div aria-label="ACCION DE PROTECCION DE PRIVACIDAD (LARA VS. SOLIZ)" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">ACCION DE PROTECCION DE PRIVACIDAD (LARA VS. SOLIZ)</div>
+<div class="modal-sum">El vicepresidente Edmand Lara presenta una acción constitucional de protección y privacidad contra Jaime Soliz y Cárdenas por difundir videos y dichos. Soliz responde denunciando que la demanda busca silenciarlo y acallar a millones de voces que se expresan en las redes sociales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">6</strong> titulares</span>
+<span><strong style="color:var(--c-04)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/lara-demanda-a-soliz-y-cardenas-con-una-accion-de-proteccion-por-difundir-videos-en-su-contra" rel="noopener noreferrer" target="_blank">Lara demanda a Soliz y Cárdenas con una acción de protección por difundir videos en su contra</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-21/politica/un-abogado-denuncia-que-el-vicepresidente-intenta-coartar-su-libertad-de-expresion.html" rel="noopener noreferrer" target="_blank">Un abogado denuncia que el Vicepresidente intenta coartar su libertad de expresión</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-21/politica/lara-activa-recurso-legal-para-defender-su-privacidad-frente-a-dichos-de-jaime-soliz.html" rel="noopener noreferrer" target="_blank">Lara activa recurso legal para defender su privacidad frente a dichos de Jaime Soliz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/plataformas-de-redes-sociales-enfrentan-procesos-judiciales/" rel="noopener noreferrer" target="_blank">Plataformas de redes sociales enfrentan procesos judiciales</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/soliz-denuncia-que-lara-busca-callarlo-mediante-una-demanda-de-privacidad-constitucional-EI19334066" rel="noopener noreferrer" target="_blank">Soliz denuncia que Lara busca “callarlo” mediante una demanda de privacidad constitucional</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/21/40313-lara-presenta-accion-contra-soliz-y-este-ve-una-estrategia-para-acallar-a-millones-de-voces-que-se-expresan-en-las-rrss-como-el" rel="noopener noreferrer" target="_blank">Lara presenta acción contra Soliz y este ve una estrategia para acallar a millones de voces que se expresan en las RRSS como él</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="MARIHUANA LÍQUIDA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">MARIHUANA LÍQUIDA</div>
+<div class="modal-sum">En el aeropuerto Viru Viru, se incautan 356 kilogramos de marihuana líquida en las bodegas de la Aduana, iniciándose una investigación sobre su ruta de envío desde Miami.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">5</strong> titulares</span>
+<span><strong style="color:var(--c-29)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/incautan-356-kilos-de-marihuana-liquida-en-aeropuerto-viru-viru/" rel="noopener noreferrer" target="_blank">Incautan 356 kilos de marihuana líquida en aeropuerto Viru Viru</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/21/detectan-nuevo-paquete-de-droga-humeda-en-viru-viru/" rel="noopener noreferrer" target="_blank">Detectan nuevo paquete de droga húmeda en Viru Viru</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_investigan-ruta-de-marihuana-enviada-desde-miami-a-viru-viru.html" rel="noopener noreferrer" target="_blank">Investigan ruta de marihuana enviada desde Miami a Viru Viru</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/incautan-356-kilos-marihuana-liquida-viru-viru-operativo-bodegas-aduana/20260221071514988932.html" rel="noopener noreferrer" target="_blank">Viru Viru: Incautan 356 kilos de marihuana líquida en bodegas de la Aduana</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-citara-a-funcionarios-de-viru-viru-que-trabajaban-cuando-llego-cargamento-con-droga-II19336709" rel="noopener noreferrer" target="_blank">Fiscalía citará a funcionarios de Viru Viru que trabajaban cuando llegó cargamento con droga</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="ENTREGA DE B-SISA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">ENTREGA DE B-SISA</div>
+<div class="modal-sum">La ANH implementa un nuevo sistema de reservas y un código QR para facilitar el etiquetado y la entrega del B-SISA, buscando evitar filas y agilizar el proceso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">3</strong> titulares</span>
+<span><strong style="color:var(--c-09)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260221_anh-informa-que-entrega-del-b-sisa-se-hara-mediante-reserva.html" rel="noopener noreferrer" target="_blank">ANH informa que entrega del B-SISA se hará mediante reserva</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/anh-implementa-sistema-de-reservas-para-el-etiquetado-y-entrega-del-b-sisa-2026221202854" rel="noopener noreferrer" target="_blank">ANH implementa sistema de reservas para el etiquetado y entrega del B-SISA</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/anh-habilita-un-qr-para-la-entrega-de-b-sisa-y-evitar-las-filas-NI19337219" rel="noopener noreferrer" target="_blank">ANH habilita un QR para la entrega de B-SISA y evitar las filas</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
