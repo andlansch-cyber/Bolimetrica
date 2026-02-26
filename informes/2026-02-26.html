@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260226</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">212</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">24</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">9</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">18</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · FEB · 26</strong>
+        Reporte N° 20260226<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_17')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-15)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-15)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="top3-title">DETENCIÓN PREVENTIVA PARA JHONNY FERNÁNDEZ</div>
+<div class="top3-body">El alcalde de Santa Cruz, Jhonny Fernández, fue aprehendido y trasladado a celdas de la FELCC por el caso “pavimento”. La Fiscalía lo imputó por dos delitos y pidió 180 días de detención preventiva en Palmasola. Su audiencia cautelar fue fijada para este jueves, mientras su defensa denuncia arbitrariedades.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-15)">35</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-15)">15</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_20')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-09)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-09)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="top3-title">LARA VS. MINISTRO DE HIDROCARBUROS Y PRESIDENTE DE YPFB</div>
+<div class="top3-body">El vicepresidente Edmand Lara exige reunión y explicaciones al presidente de YPFB y encara al ministro de Hidrocarburos por calidad del combustible; denuncia que no se cambió a funcionarios “corruptos” y difunde video desde la refinería de Palmasola. Convoca a la ALP a interpelar a Medinaceli, pero el presidente del Senado dice que no tendrá efecto sin nueva ley.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">33</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">12</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_18b')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-09)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-09)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="top3-title">CALIDAD DEL COMBUSTIBLE</div>
+<div class="top3-body">Se investiga a 12 funcionarios de YPFB por el ingreso de gasolina “desestabilizada” entre diciembre y febrero, cuya cantidad es aún desconocida, y YPFB reconoce la llegada de combustible de mala calidad. A la vez, la empresa estatal  presenta y habilita una plataforma digital (SREC) para que los ciudadanos puedan tramitar reportes, evaluar y gestionar la compensación de daños a vehículos.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">17</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-09)"></div></div>
+<div class="cat-n">80</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:60%;background:var(--c-15)"></div></div>
+<div class="cat-n">48</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:34%;background:var(--c-07)"></div></div>
+<div class="cat-n">27</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:22%;background:var(--c-04)"></div></div>
+<div class="cat-n">18</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-29)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:15%;background:var(--c-29)"></div></div>
+<div class="cat-n">12</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-17)"></div></div>
+<div class="cat-n">10</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">ELECCIONES SUBNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-10)"></div></div>
+<div class="cat-n">9</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-19)"></div>
+<div class="cat-name">SALUD</div>
+<div class="cat-track"><div class="cat-fill" style="width:6%;background:var(--c-19)"></div></div>
+<div class="cat-n">5</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-18)"></div></div>
+<div class="cat-n">3</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">fernández</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">29</td>
+</tr>
+<tr>
+<td class="freq-word">jhonny</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:95%"></div>
+</div>
+</td>
+<td class="freq-count">27</td>
+</tr>
+<tr>
+<td class="freq-word">presidente</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:95%"></div>
+</div>
+</td>
+<td class="freq-count">27</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:74%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:69%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">ministro de hidrocarburos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:60%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">rafael arce</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:37%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">saldos de harina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">rodrigo paz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">lara anuncia interpelación</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">4</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">DETENCIÓN PREVENTIVA PARA JHONNY FERNÁNDEZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">35</div>
+</div>
+<div class="chart-medios">15 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LARA VS. MINISTRO DE HIDROCARBUROS Y PRESIDENTE DE YPFB</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:94.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">33</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CALIDAD DEL COMBUSTIBLE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:48.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">17</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CHOFERES ABANDONAN DIALOGO POR TEMA COMBUSTIBLE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:45.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">16</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MÚLTIPLES INVESTIGACIONES CONTRA YPFB</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:40.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">14</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DOLARES FALSOS EN OPERATIVO ANTIDROGAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">SITUACIÓN DE RAFAEL ARCE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">8</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">PRESIDENTE DE LA CAF EN BOLIVIA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">8</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">COMPENSACIÓN DE EMAPA A PANIFICADORES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DECRETOS DE RODRÍGO PAZ EN 100 DÍAS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DERRUMBE EN RUTA TARIJA-ENTRE RÍOS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MORTALIDAD MATERNA EN BOLIVIA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-19))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">CAPACITACIONES, DEBATES Y MONITOREO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">APREHENSIÓN DE EXGERENTE DE B-AGRO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ATAQUE A TAXISTA EN CBBA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LIBERACIÓN DE CHOFER (ACCIDENTE EN PLAN TRES MIL)</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">5</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">OPERATIVO EN BERMEJO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DEMANDA DE INHABILITACIÓN CONTRA LUIS REVILLA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DESAPARECE PÁGINA OFICIAL DE PAZ EN FACEBOOK</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">FALLECCE UN JOVEN EN SUCRE POR INFLUENZA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MUJER CAE DE UN EDIFICIO JUDICIAL EN CBBA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">EXPLOSIÓN DE UN CALEFÓN EN LA PAZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">BOLIVIA ASUME PRESIDENCIA DE CLASI</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_21a')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">CHOFERES ABANDONAN DIALOGO POR TEMA COMBUSTIBLE</div>
+<div class="topic-body">Choferes de transporte público abandonan el diálogo con el Gobierno por el conflicto de la gasolina defectuosa, advirtiendo con retomar o intensificar medidas de presión ante la falta de acuerdos. En La Paz, choferes bloquearon vías en el centro exigiendo una reunión con el Gobierno para abordar la problemática de la calidad de la gasolina.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>12</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_18a')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">MÚLTIPLES INVESTIGACIONES CONTRA YPFB</div>
+<div class="topic-body">Una comisión legislativa y la ANH inician por separado investigaciones y verificaciones sobre la calidad de la gasolina y el cumplimiento de la normativa, así como contratos de YPFB. Paralelamente, YPFB entrega a la Contraloría y a la Comisión de la Verdad cerca de 800 folios de documentación sobre contrataciones y provisión de crudo y combustible, dando inicio a auditorías.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>14</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_16')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">DOLARES FALSOS EN OPERATIVO ANTIDROGAS</div>
+<div class="topic-body">Autoridades incautan 100.000 dólares americanos falsos en Cochabamba y aprehenden a una mujer, identificada como ciudadana peruana con antecedentes. Los billetes, que podrían pasar por circulación, habrían sido destinados al pago de sustancias ilícitas, según reportes, y fueron hallados durante un c</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_11a')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">SITUACIÓN DE RAFAEL ARCE</div>
+<div class="topic-body">Rafael Arce, hijo del expresidente, es declarado rebelde. La Fiscalía amplía la investigación, y pesan sobre él tres procesos activos en La Paz, cuyo estado es objeto de seguimiento. Mientras sus bienes, incluyendo un penthouse, pasan a ser administrados por Dircabi y quedan bajo tutela judicial con anotaciones preventivas y secuestro de inmueble.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14a')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">PRESIDENTE DE LA CAF EN BOLIVIA</div>
+<div class="topic-body">El presidente ejecutivo de la CAF, Sergio Díaz-Granados, llegó a Bolivia para una visita oficial, reuniéndose con el presidente Paz y abordando temas de financiamiento, cooperación y proyectos por más de 3.100 millones de dólares.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMÍA</div>
+<div class="topic-title">COMPENSACIÓN DE EMAPA A PANIFICADORES</div>
+<div class="topic-body">EMAPA propone devolver 16 millones de bolivianos en efectivo a panificadores por saldos de harina subvencionada, tras una reunión con el sector.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">DECRETOS DE RODRÍGO PAZ EN 100 DÍAS</div>
+<div class="topic-body">El Gobierno y el Centro de Gobierno destacan que Rodrigo Paz, en sus primeros 100 días de presidencia, emitió 60 decretos, una cifra significativamente menor a la de gestiones anteriores, como parte de su estrategia de gobernar.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_8a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">DERRUMBE EN RUTA TARIJA-ENTRE RÍOS</div>
+<div class="topic-body">Un derrumbe impactó un bus o flota en el tramo Tarija-Entre Ríos, dejando siete pasajeros heridos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-19)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-19)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-19)">SALUD</div>
+<div class="topic-title">MORTALIDAD MATERNA EN BOLIVIA</div>
+<div class="topic-body">Bolivia registra una de las tasas de mortalidad materna más altas de la región, posicionándose como el tercer peor país. Ante esta situación, la ONU y otros actores plantean estrategias y desafíos para reducir estos índices.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">CAPACITACIONES, DEBATES Y MONITOREO</div>
+<div class="topic-body">El Órgano Electoral Plurinacional realiza diferentes actividades en el marco de los preparativos para las próximas elecciones subnacionaless: capacitaciones a notarios en Cochabamba, anuncia debates para candidatos a alcaldes y gobernadores, y el TED de La Paz monitorea a candidatos en medios y redes sociales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">APREHENSIÓN DE EXGERENTE DE B-AGRO</div>
+<div class="topic-body">El exgerente de la empresa estatal B-Agro fue aprehendido por presuntas irregularidades, corrupción y un supuesto desfalco de 500 millones de bolivianos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">ATAQUE A TAXISTA EN CBBA</div>
+<div class="topic-body">Un taxista atracado y brutalmente agredido en Cochabamba lucha por su vida en terapia intensiva tras cirugía; los atacantes fueron golpeados por una turba y recibieron detención preventiva.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">LIBERACIÓN DE CHOFER (ACCIDENTE EN PLAN TRES MIL)</div>
+<div class="topic-body">El chofer que atropelló y causó la muerte de una adolescente en Santa Cruz, en el Plan Tres Mil, fue liberado con medidas cautelares, generando el bloqueo de vecinos en la zona.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14c')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">OPERATIVO EN BERMEJO</div>
+<div class="topic-body">Un operativo conjunto en Bermejo y Tarija resultó en la captura de alias ‘Conde’, el sexto narcotrafficante más buscado de Argentina, por delitos relacionados con el narcotráfico.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">DEMANDA DE INHABILITACIÓN CONTRA LUIS REVILLA</div>
+<div class="topic-body">El Tribunal Electoral Departamental de La Paz admite una demanda de inhabilitación contra Luis Revilla por requisito de residencia, otorgándole 48 horas para presentar sus descargos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">DESAPARECE PÁGINA OFICIAL DE PAZ EN FACEBOOK</div>
+<div class="topic-body">Desaparece la página oficial de Facebook del presidente Rodrigo Paz, generando incertidumbre sobre su presencia en redes sociales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">FALLECCE UN JOVEN EN SUCRE POR INFLUENZA</div>
+<div class="topic-body">Un joven de 19 años fallece en Sucre a causa de influenza A H3N2, generando preocupación por la salud pública.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">MUJER CAE DE UN EDIFICIO JUDICIAL EN CBBA</div>
+<div class="topic-body">Una mujer fallece en Cochabamba tras caer de un edificio judicial, lo que ha puesto en marcha una investigación policial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">EXPLOSIÓN DE UN CALEFÓN EN LA PAZ</div>
+<div class="topic-body">Explosión de un calefón en un edificio céntrico de La Paz provoca deflagración que afecta a varios departamentos, dejando al menos cuatro dañados.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14b')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">23</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">BOLIVIA ASUME PRESIDENCIA DE CLASI</div>
+<div class="topic-body">Bolivia asumirá la presidencia del Comité Latinoamericano de Seguridad Interior (CLASI), con el objetivo de fortalecer la coordinación regional y la cooperación en la lucha contra el crimen organizado.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4a')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">24</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMÍA</div>
+<div class="topic-title">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="topic-body">El Gobierno y el sector privado continúan el debate sobre una política fiscal y un proyecto de alivio tributario, cuya propuesta aún no llega a comisión.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/vivimos-en-un-narcoestado-viru-viru-se-ha-convertido-en-patio-de-narcotraficantes-y-aduana-en-deposito-traficantes/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">“Vivimos en un narcoestado; Viru Viru se ha convertido en patio de narcotraficantes y aduana en depósito traficantes”</a></div>
+<div class="emergente-sum">Una alarmante denuncia apunta a Bolivia como un 'narcoestado', implicando al aeropuerto Viru Viru y las aduanas como puntos clave del narcotráfico.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/cartel-jalisco-proveia-mercurio-bolivia-peru-colombia-mineria-ilegal_1772030673" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">El Cartel Jalisco proveía mercurio a Bolivia, Perú y Colombia para la minería ilegal</a></div>
+<div class="emergente-sum">Se expone la conexión del Cártel Jalisco con el suministro de mercurio para la minería ilegal en Bolivia y países vecinos, destapando una compleja red criminal.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.atb.com.bo/2026/02/25/diez-municipios-se-declaran-en-emergencia-por-sequia-que-afecta-miles-de-hectareas" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Diez municipios se declaran en emergencia por sequía que afecta miles de hectáreas</a></div>
+<div class="emergente-sum">Diez municipios se declaran en emergencia por una sequía que ya afecta a miles de hectáreas, amenazando la producción agrícola y el sustento rural.</div>
+<div class="emergente-source">Fuente: ATB Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/seguridad/2026/02/25/asambleistas-exigen-investigacion-sobre-presunta-injerencia-rusa-tras-el-26-j-57656" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Asambleístas exigen investigación sobre presunta injerencia rusa tras el 26-J</a></div>
+<div class="emergente-sum">Asambleístas solicitan una investigación ante las sospechas de injerencia rusa en los asuntos políticos internos de Bolivia relacionados al presunto "Golpe de Estado" del 26 de junio.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldia.com.bo/2026-02-25/pais/otro-posible-caso-de-corrupcion-bs-74-millones-invertidos-en-planta-piscicola-que-no-opera.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Otro posible caso de corrupción: Bs 74 millones invertidos en planta piscícola que no opera</a></div>
+<div class="emergente-sum">Un nuevo posible caso de corrupción emerge por la inversión de Bs 74 millones en una planta piscícola que, hasta la fecha, se encuentra inoperativa.</div>
+<div class="emergente-source">Fuente: El Día</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260226 · 2026-02-26</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 212 titulares · 24 temas · 9 categorías · 18 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="DETENCIÓN PREVENTIVA PARA JHONNY FERNÁNDEZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">DETENCIÓN PREVENTIVA PARA JHONNY FERNÁNDEZ</div>
+<div class="modal-sum">El alcalde de Santa Cruz, Jhonny Fernández, fue aprehendido y trasladado a celdas de la FELCC por el caso “pavimento”. La Fiscalía lo imputó por dos delitos y pidió 180 días de detención preventiva en Palmasola. Su audiencia cautelar fue fijada para este jueves, mientras su defensa denuncia arbitrariedades.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">35</strong> titulares</span>
+<span><strong style="color:var(--c-15)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/diputada-aguilera-dice-que-el-hijo-de-jhonny-fernandez-podria-asumir-el-cargo-de-alcalde" rel="noopener noreferrer" target="_blank">Diputada Aguilera dice que el hijo de Jhonny Fernández podría asumir el cargo de alcalde</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/diputado-anuncia-seguimiento-a-investigacion-y-pide-auditoria-por-proyecto-de-pavimento" rel="noopener noreferrer" target="_blank">Diputado anuncia seguimiento a investigación y pide auditoría por proyecto de pavimento</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/alcalde-jhonny-fernandez-fue-dado-de-alta-y-trasladado-a-dependencias-policiales" rel="noopener noreferrer" target="_blank">Alcalde Jhonny Fernández fue dado de alta y trasladado a dependencias policiales</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/25/jhonny-fernandez-se-encuentra-en-la-felcc-en-espera-de-audiencia-de-medidas-cautelares-57620" rel="noopener noreferrer" target="_blank">Jhonny Fernández se encuentra en la FELCC en espera de audiencia de medidas cautelares</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/25/fiscalia-pedira-180-dias-de-detencion-preventiva-para-fernandez-57625" rel="noopener noreferrer" target="_blank">Fiscalía pedirá 180 días de detención preventiva para Fernández</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/mas-de-120-procesos-rodean-la-gestion-de-jhonny-fernandez-advierten-desde-el-concejo-municipal/" rel="noopener noreferrer" target="_blank">Más de 120 PROCESOS rodean la gestión de Jhonny Fernández, advierten desde el Concejo municipal</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/denuncia-contra-jhonny-por-el-caso-pavimento-suma-a-concejales-un-diputado-el-gobierno-y-la-propia-alcaldia/" rel="noopener noreferrer" target="_blank">DENUNCIA contra JHONNY por el caso “pavimento” suma a concejales, un diputado, el Gobierno y la PROPIA ALCALDÍA</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/aprehenden-al-alcalde-fernandez-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Aprehenden al alcalde Fernández en Santa Cruz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_defensa-de-jhonny-fernandez-ve-arbitraria-la-aprehension.html" rel="noopener noreferrer" target="_blank">Defensa de Jhonny Fernández ve arbitraria la aprehensión</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_fiscalia-quiere-a-jhonny-fernandez-en-la-carcel-por-seis-meses.html" rel="noopener noreferrer" target="_blank">Fiscalía quiere a Jhonny Fernández en la cárcel por seis meses</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_santa-cruz-fiscalia-pide-la-detencion-preventiva-de-jhonny-fernandez.html" rel="noopener noreferrer" target="_blank">Santa Cruz: Fiscalía pide la detención preventiva de Jhonny Fernández</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/defensa-de-jhonny-fern%C3%A1ndez-ve-arbitraria-la-aprehensi%C3%B3n-y-cuestiona-que-se-use-en-su" rel="noopener noreferrer" target="_blank">Defensa de Jhonny Fernández ve arbitraria la aprehensión y cuestiona que se use en su contra un informe de hace tres años</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/25/tsj-garantiza-imparcialidad-de-la-justicia-en-proceso-contra-fernandez/" rel="noopener noreferrer" target="_blank">TSJ garantiza imparcialidad de la justicia en proceso contra Fernández</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/25/la-fiscalia-imputa-al-alcalde-cruceno-y-fija-su-audiencia-cautelar/" rel="noopener noreferrer" target="_blank">La Fiscalía imputa al alcalde cruceño y fija su audiencia cautelar</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/jhonny-fernandez-paso-noche-felcc-policia-saco-clinica" rel="noopener noreferrer" target="_blank">Jhonny Fernández pasó la noche en la Felcc, policía lo sacó de la clínica</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/que-es-caso-pavimento-que-fiscalia-pide-carcel-jhonny-fernandez" rel="noopener noreferrer" target="_blank">¿Qué es el caso pavimento y por qué la Fiscalía pide cárcel para Jhonny Fernández?</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/fiscalia-pedira-180-dias-detencion-preventiva-alcalde-jhonny-fernandez" rel="noopener noreferrer" target="_blank">Fiscalía pedirá 180 días de detención preventiva para el alcalde Jhonny Fernández</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/caso-pavimento-audiencia-jhonny-fernandez-realizara-jueves/20260225194630989183.html" rel="noopener noreferrer" target="_blank">Audiencia de Jhonny Fernández se realizará este jueves por el caso denominado pavimento</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/jhonny-fernandez-es-trasladado-celdas-policiales-espera-audiencia-cautelar/20260225110129989163.html" rel="noopener noreferrer" target="_blank">Jhonny Fernández es trasladado a celdas policiales en espera de su audiencia cautelar</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/fiscalia-imputa-a-jhonny-fernandez-por-dos-delitos-y-pide-su-detencion-preventiva-en-palmasola/" rel="noopener noreferrer" target="_blank">Fiscalía imputa a Jhonny Fernández por dos delitos y pide su detención preventiva en Palmasola</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/alcaldia-crucena-defiende-a-fernandez-y-dice-la-contraloria-no-hizo-una-medicion-precisa-de-los-pavimentos-construidos/" rel="noopener noreferrer" target="_blank">Alcaldía cruceña defiende a Fernández y dice la Contraloría no hizo una “medición precisa de los pavimentos construidos”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Jhonny-Fernandez-permanece-en-celdas-de-la-felcc-a-la-espera-de-su-audiencia-cautelar" rel="noopener noreferrer" target="_blank">Jhonny Fernández permanece en celdas de la Felcc a la espera de su audiencia cautelar</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Defensa-de-jhonny-fernandez-asegura-que-inspeccion-confirmo-ejecucion-de-obras-observadas" rel="noopener noreferrer" target="_blank">Defensa de Jhonny Fernández asegura que inspección confirmó ejecución de obras observadas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/jhonny-fernandez-permanece-en-celdas-de-la-felcc-a-la-espera-de-su-audiencia-2026225123340" rel="noopener noreferrer" target="_blank">Jhonny Fernández permanece en celdas de la Felcc a la espera de su audiencia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/es-la-nueva-justicia-presidente-del-tsj-garantiza-imparcialidad-en-el-caso-que-involucra-al-alcalde-cruceno-2026225153334" rel="noopener noreferrer" target="_blank">“Es la nueva justicia”: TSJ garantiza imparcialidad en caso del alcalde cruceño</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fijan-para-manana-la-audiencia-del-alcalde-jhonny-fernandez-2026225164114" rel="noopener noreferrer" target="_blank">Fijan para mañana la audiencia del alcalde Jhonny Fernández</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/vigilia-en-la-felcc-vecinos-manifiestan-su-apoyo-a-jhonny-fernandez-202622519335" rel="noopener noreferrer" target="_blank">Vigilia en la Felcc: Vecinos manifiestan su apoyo a Jhonny Fernández</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/alcaldia-crucena-ve-interpretacion-forzada-en-la-imputacion-contra-jhonny-por-el-caso-pavimento-OD19389520" rel="noopener noreferrer" target="_blank">Alcaldía cruceña ve “interpretación forzada” en la imputación contra Jhonny por el caso pavimento</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/desde-el-concejo-municipal-senalan-que-jhonny-fernandez-suma-mas-de-120-procesos-ID19384905" rel="noopener noreferrer" target="_blank">Desde el Concejo municipal señalan que Jhonny Fernández suma más de 120 procesos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/sector-privado-no-descarta-asumir-acciones-contra-jhonny-fernandez-ante-deudas-de-mas-de-bs-500-millones-KD19389740" rel="noopener noreferrer" target="_blank">Sector privado no descarta asumir acciones contra Jhonny Fernández ante deudas de más de Bs 500 millones</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/caso-pavimento-a-la-denuncia-contra-jhonny-se-adhirieron-concejales-un-diputado-el-gobierno-y-una-oficina-municpal-GD19388394" rel="noopener noreferrer" target="_blank">Caso pavimento: A la denuncia contra Jhonny se adhirieron concejales, un diputado, el Gobierno y una oficina municpal</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/audiencia-clave-jhonny-fernandez-sera-puesto-este-jueves-ante-el-juez-cautelar-AD19387711" rel="noopener noreferrer" target="_blank">Audiencia clave: Jhonny Fernández será puesto este jueves ante el juez cautelar</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/%E2%80%9Ccaso-pavimento%E2%80%9D-audiencia-de-jhonny-fern%C3%A1ndez-se-realizar%C3%A1-este-jueves" rel="noopener noreferrer" target="_blank">“Caso pavimento”: Audiencia de Jhonny Fernández se realizará este jueves</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40558-la-audiencia-cautelar-de-jhonny-fernandez-se-realizara-de-forma-virtual-este-jueves" rel="noopener noreferrer" target="_blank">La audiencia cautelar de Jhonny Fernández se realizará de forma virtual este jueves</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40564-defensa-de-fernandez-advierte-que-la-aprehension-tiene-fines-politicos-para-favorecer-la-candidatura-de-saavedra-en-las-subnacionales" rel="noopener noreferrer" target="_blank">Defensa de Fernández advierte que la aprehensión tiene fines políticos para favorecer la candidatura de Saavedra en las subnacionales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_20">
+<div class="modal-backdrop" onclick="closeModal('modal_20')"></div>
+<div aria-label="LARA VS. MINISTRO DE HIDROCARBUROS Y PRESIDENTE DE YPFB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">LARA VS. MINISTRO DE HIDROCARBUROS Y PRESIDENTE DE YPFB</div>
+<div class="modal-sum">El vicepresidente Edmand Lara exige reunión y explicaciones al presidente de YPFB y encara al ministro de Hidrocarburos por calidad del combustible; denuncia que no se cambió a funcionarios “corruptos” y difunde video desde la refinería de Palmasola. Convoca a la ALP a interpelar a Medinaceli, pero el presidente del Senado dice que no tendrá efecto sin nueva ley.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">33</strong> titulares</span>
+<span><strong style="color:var(--c-09)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/esta-encerrado-en-su-oficina-no-quiere-salir-lara-exige-reunion-con-el-presidente-de-ypfb" rel="noopener noreferrer" target="_blank">“Está encerrado en su oficina, no quiere salir”: Lara exige reunión con el presidente de YPFB</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/lara-denuncia-que-no-existe-cambio-de-funcionarios-en-ypfb-son-los-mismos-corruptos-de-siempre" rel="noopener noreferrer" target="_blank">Lara denuncia que no existe cambio de funcionarios en YPFB: “son los mismos corruptos de siempre”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260225/ejecutivo-ypfb-constata-que-no-es-facil-despedir-sus-funcionarios" rel="noopener noreferrer" target="_blank">Ejecutivo de YPFB constata que “no es fácil despedir” a sus funcionarios</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dejeme-pasar-me-esta-agrediendo-lara-comparte-polemico-video-desde-la-refineria-de-palmasola/" rel="noopener noreferrer" target="_blank">“Déjeme pasar”, “me está agrediendo”: Lara comparte polémico video desde la refinería de Palmasola</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-consigue-otra-orden-judicial-para-que-se-eliminen-videos-en-su-contra" rel="noopener noreferrer" target="_blank">Lara consigue otra orden judicial para que se eliminen videos en su contra</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/%E2%80%9Cme-ver%C3%A1n-en-las-calles%E2%80%9D-lara-dice-que-fiscalizar%C3%A1-y-recibir%C3%A1-denuncias-en-su-despacho" rel="noopener noreferrer" target="_blank">“Me verán en las calles”: Lara dice que fiscalizará y recibirá denuncias en su despacho</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/bancada-de-libre-apoya-la-interpelacion-al-ministro-de-hidrocarburos-programado-para-este-viernes" rel="noopener noreferrer" target="_blank">Bancada de Libre apoya la interpelación al ministro de Hidrocarburos programado para este viernes</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/edmand-lara-exige-explicaciones-al-ministro-de-hidrocarburos-sobre-la-calidad-de-combustible" rel="noopener noreferrer" target="_blank">Edmand Lara exige explicaciones al ministro de Hidrocarburos sobre la calidad de combustible</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/lara-encara-al-ministro-de-hidrocarburos-y-ratifica-su-interpelacion-57655" rel="noopener noreferrer" target="_blank">Lara encara al ministro de Hidrocarburos y ratifica su interpelación</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-increpa-al-ministro-de-hidrocarburos-en-medio-del-conflicto-por-el-combustible" rel="noopener noreferrer" target="_blank">Lara increpa al ministro de Hidrocarburos en medio del conflicto por el combustible</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/lara-encara-a-medinaceli-y-cuestiona-su-capacidad-para-dirigir-hidrocarburos/" rel="noopener noreferrer" target="_blank">Lara encara a Medinaceli y cuestiona su capacidad para dirigir Hidrocarburos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/vicepresidente-ratifica-interpelacion-de-ministro-de-hidrocarburos-para-el-viernes/" rel="noopener noreferrer" target="_blank">Lara ratifica interpelación de ministro de Hidrocarburos para el viernes</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260225/vicepresidente-increpa-al-ministro-hidrocarburos-al-presidente-ypfb" rel="noopener noreferrer" target="_blank">El Vicepresidente increpa al Ministro de Hidrocarburos y al Presidente de YPFB</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/lara-increpa-ministro-hidrocarburos-presidente-ypfb-combustible/20260225203422989187.html" rel="noopener noreferrer" target="_blank">Lara increpa al Ministro de Hidrocarburos y al Presidente de YPFB por el combustible</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-anuncia-que-buscara-interpelar-al-ministro-de-hidrocarburos-este-viernes-espera-tener-apoyo-de-2-3-de-la-alp/" rel="noopener noreferrer" target="_blank">Lara anuncia que buscará interpelar al Ministro de Hidrocarburos este viernes, espera tener apoyo de 2/3 de la ALP</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lara-discute-con-el-ministro-de-hidrocarburos-y-el-presidente-de-ypfb-por-las-cisternas-varadas-y-la-gasolina-que-dano-motores-PD19389116" rel="noopener noreferrer" target="_blank">Lara discute con el ministro de Hidrocarburos y el presidente de YPFB por las cisternas varadas y la gasolina que dañó motores</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/vicepresidencia-convoca-a-sesion-para-interpelar-al-ministro-de-hidrocarburos-ED19388590" rel="noopener noreferrer" target="_blank">Vicepresidencia convoca a sesión para interpelar al Ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/pese-a-fallo-constitucional-lara-busca-que-alp-interpele-al-ministro-de-hidrocarburos-por-la-calidad-de-la-gasolina-MD19380927" rel="noopener noreferrer" target="_blank">Pese a fallo constitucional, Lara busca que ALP interpele al ministro de Hidrocarburos por la calidad de la gasolina</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/piedra-en-el-zapato-lara-ingresa-al-edificio-de-ypfb-para-increpar-medinacelli-y-akly" rel="noopener noreferrer" target="_blank">Piedra en el zapato: Lara ingresa al edificio de YPFB para increpar a Medinacelli y Akly</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40563-lara-increpa-con-dureza-al-ministro-de-hidrocarburos-a-dos-dias-del-acto-de-interpelacion-en-el-senado" rel="noopener noreferrer" target="_blank">Lara increpa con dureza al ministro de Hidrocarburos a dos días del acto de interpelación en el Senado</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/vicepresidente-fija-interpelacion-y-presidente-del-senado-la-considera-un-acto-ocioso" rel="noopener noreferrer" target="_blank">Vicepresidente fija interpelación y presidente del Senado la considera un “acto ocioso”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/25/lara-insiste-con-interpelar-a-medinaceli-el-presidente-del-senado-recuerda-que-esta-figura-no-tiene-respaldo-legal-57643" rel="noopener noreferrer" target="_blank">Lara insiste con interpelar a Medinaceli; el presidente del Senado recuerda que esta figura no tiene respaldo legal</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/politica/lara-anuncia-interpelacion-a-medinaceli-pero-el-presidente-del-senado-advierte-que-seria-ineficaz-sin-nueva-ley.html" rel="noopener noreferrer" target="_blank">Lara anuncia interpelación a Medinaceli, pero el presidente del Senado advierte que sería ineficaz sin nueva ley</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-anuncia-interpelaci%C3%B3n-medinaceli-pero-el-presidente-del-senado-advierte-que-no-tendr%C3%ADa" rel="noopener noreferrer" target="_blank">Lara anuncia interpelación a Medinaceli pero el presidente del Senado advierte que no tendría efecto sin una nueva ley</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/presidente-del-senado-defiende-ds-5552-que-reordena-la-vicepresidencia/" rel="noopener noreferrer" target="_blank">Presidente del Senado defiende DS 5552 que reordena la Vicepresidencia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/senado-sostiene-que-interpelaciones-no-tendran-efecto-y-quedaran-en-nada/" rel="noopener noreferrer" target="_blank">Senado sostiene que interpelaciones no tendrán efecto y ‘quedarán en nada’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260225/lara-quiere-que-parlamento-interpele-medinaceli" rel="noopener noreferrer" target="_blank">Lara quiere que el Parlamento interpele a Medinaceli</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-convoca-a-sesion-de-la-alp-para-interpelar-a-medinaceli-presidente-del-senado-dice-no-tendra-efecto/" rel="noopener noreferrer" target="_blank">Lara convoca a sesión de la ALP para interpelar a Medinaceli; Presidente del Senado dice no tendrá efecto</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/presidente-del-senado-insta-a-lara-a-suspender-convocatoria-a-interpelacion-ante-riesgo-de-cometer-acciones-contra-la-ley-MD19387281" rel="noopener noreferrer" target="_blank">Presidente del Senado insta a Lara a suspender convocatoria a interpelación “ante riesgo de cometer acciones contra la ley”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-a%C3%BAn-desconoce-del-%E2%80%9Cpoder-de-la-alp%E2%80%9D-y-no-tiene-en-claro-las-funciones-de-un" rel="noopener noreferrer" target="_blank">Lara aún desconoce del “poder de la ALP” y no tiene en claro las funciones de un Vicepresidente</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/medinaceli-se-reuni%C3%B3-con-parte-de-los-transportistas-en-la-paz-lara-y-sus-legisladores" rel="noopener noreferrer" target="_blank">Medinaceli se reunió con parte de los transportistas en La Paz, Lara y sus legisladores participaron</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-anuncia-interpelaci%C3%B3n-medinaceli-presidente-del-senado-advierte-que-no-generar%C3%A1-%E2%80%9Cning%C3%BAn" rel="noopener noreferrer" target="_blank">Lara anuncia interpelación a Medinaceli; presidente del Senado advierte que no generará “ningún efecto”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40561-lara-anuncia-interpelacion-a-medinaceli-pero-avila-advierte-que-el-acto-no-tendria-efectos-sin-una-nueva-ley" rel="noopener noreferrer" target="_blank">Lara anuncia interpelación a Medinaceli, pero Ávila advierte que el acto no tendría efectos sin una nueva ley</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_18b">
+<div class="modal-backdrop" onclick="closeModal('modal_18b')"></div>
+<div aria-label="CALIDAD DEL COMBUSTIBLE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">CALIDAD DEL COMBUSTIBLE</div>
+<div class="modal-sum">Se investiga a 12 funcionarios de YPFB por el ingreso de gasolina “desestabilizada” entre diciembre y febrero, cuya cantidad es aún desconocida, y YPFB reconoce la llegada de combustible de mala calidad. A la vez, la empresa estatal  presenta y habilita una plataforma digital (SREC) para que los ciudadanos puedan tramitar reportes, evaluar y gestionar la compensación de daños a vehículos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">17</strong> titulares</span>
+<span><strong style="color:var(--c-09)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/combustible-defectuoso-12-funcionarios-ypfb-estan-investigacion_1772032852" rel="noopener noreferrer" target="_blank">Combustible de mala calidad: 12 funcionarios de YPFB están bajo investigación</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_revelan-que-12-funcionarios-de-ypfb-son-investigados-por-mala-calidad-de-combustible.html" rel="noopener noreferrer" target="_blank">Revelan que 12 funcionarios de YPFB son investigados por mala calidad de combustible</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ypfb-desconoce-la-cantidad-de-gasolina-desestabilizada-que-ingreso-a-bolivia-desde-diciembre/" rel="noopener noreferrer" target="_blank">YPFB desconoce la cantidad de gasolina ‘desestabilizada’ que ingresó a Bolivia desde diciembre</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/denuncian-mas-de-30-vehiculos-oficiales-danados-por-presunta-mala-gasolina-2026225123218" rel="noopener noreferrer" target="_blank">Denuncian más de 30 vehículos oficiales dañados por presunta mala gasolina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/alcaldia-de-el-alto-reporta-que-ocho-ambulancias-presentan-fallas-presuntamente-por-calidad-del-combustible-ID19389247" rel="noopener noreferrer" target="_blank">Alcaldía de El Alto reporta que ocho ambulancias presentan fallas presuntamente por calidad del combustible</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40527-diputado-denuncia-que-hay-vehiculos-oficiales-de-la-alp-que-estan-danados-por-la-mala-calidad-del-combustible" rel="noopener noreferrer" target="_blank">Diputado denuncia que hay vehículos oficiales de la ALP que están dañados por la mala calidad del combustible</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40546-ypfb-reconoce-que-gasolina-de-mala-calidad-llego-entre-diciembre-y-febrero-y-que-funcionarios-afines-al-mas-tienen-proteccion-legal" rel="noopener noreferrer" target="_blank">YPFB reconoce que gasolina de mala calidad llegó entre diciembre y febrero y que funcionarios afines al MAS tienen protección legal</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ypfb-presenta-plataforma-srec-tramitar-compensacion-danos-vehiculos-combustible/20260225182422989170.html" rel="noopener noreferrer" target="_blank">YPFB presenta plataforma SREC para tramitar compensación de daños a vehículos por el combustible</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/ypfb-habilita-plataforma-para-gestionar-resarcimiento-por-gasolina-en-mal-estado-57648" rel="noopener noreferrer" target="_blank">YPFB habilita plataforma para gestionar resarcimiento por gasolina en mal estado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-presenta-sistema-digital-evaluar-compensar-danos-gasolina-desestabilizada_1772054189" rel="noopener noreferrer" target="_blank">YPFB presenta sistema digital para evaluar y compensar daños por gasolina desestabilizada</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/25/el-viernes-comienza-revision-de-casos-de-mototaxistas-afectados-por-gasolina/" rel="noopener noreferrer" target="_blank">El viernes comienza revisión de casos de mototaxistas afectados por gasolina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ypfb-lanza-plataforma-digital-para-atender-reportes-de-posibles-danos-por-la-gasolina-desestabilizada/" rel="noopener noreferrer" target="_blank">YPFB presenta plataforma digital para atender reportes de posibles daños por la gasolina “desestabilizada”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Comite-pro-santa-cruz-confirma-monto-y-procedimiento-para-resarcimiento-por-combustible-en-mal-estado" rel="noopener noreferrer" target="_blank">Comité Pro Santa Cruz confirma monto y procedimiento para resarcimiento por combustible en mal estado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/asi-es-la-plataforma-de-ypfb-para-atender-reportes-de-danos-a-vehiculos-asociados-a-gasolina-desestabilizada-GD19385636" rel="noopener noreferrer" target="_blank">Así es la plataforma de YPFB para atender reportes de daños a vehículos asociados a gasolina desestabilizada</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-pace%C3%B1os-y-el-gobierno-acuerdan-resarcimiento-por-la-gasolina-desestabilizada-desde" rel="noopener noreferrer" target="_blank">Choferes paceños y el Gobierno acuerdan resarcimiento por la gasolina desestabilizada desde el lunes</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ypfb-lanza-plataforma-digital-para-atender-reportes-de-veh%C3%ADculos-da%C3%B1ados-por-gasolina" rel="noopener noreferrer" target="_blank">YPFB lanza plataforma digital para atender reportes de vehículos dañados por gasolina desestabilizada</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40562-ypfb-presenta-plataforma-digital-para-gestionar-reportes-de-posibles-danos-en-vehiculos-por-gasolina-desestabilizada" rel="noopener noreferrer" target="_blank">YPFB presenta plataforma digital para gestionar reportes de posibles daños en vehículos por gasolina desestabilizada</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_21a">
+<div class="modal-backdrop" onclick="closeModal('modal_21a')"></div>
+<div aria-label="CHOFERES ABANDONAN DIALOGO POR TEMA COMBUSTIBLE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">CHOFERES ABANDONAN DIALOGO POR TEMA COMBUSTIBLE</div>
+<div class="modal-sum">Choferes de transporte público abandonan el diálogo con el Gobierno por el conflicto de la gasolina defectuosa, advirtiendo con retomar o intensificar medidas de presión ante la falta de acuerdos. En La Paz, choferes bloquearon vías en el centro exigiendo una reunión con el Gobierno para abordar la problemática de la calidad de la gasolina.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">16</strong> titulares</span>
+<span><strong style="color:var(--c-09)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_21a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/choferes-bloquean-via-del-centro-paceno-en-espera-de-reunion-con-el-gobierno-57628" rel="noopener noreferrer" target="_blank">Choferes bloquean vía del centro paceño en espera de reunión con el gobierno</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/choferes-vuelven-bloquear-centro-paceno-medio-reclamos_1772031931" rel="noopener noreferrer" target="_blank">Choferes vuelven a bloquear el centro paceño por la calidad de la gasolina</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-bloquean-el-centro-de-la-paz-la-espera-de-la-reuni%C3%B3n-con-el-gobierno-por-la" rel="noopener noreferrer" target="_blank">Choferes bloquean el centro de La Paz a la espera de la reunión con el Gobierno por la gasolina</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/confederacion-de-choferes-se-divide-en-reunion-con-el-gobierno-algunos-dirigentes-abandonaron-la-cita" rel="noopener noreferrer" target="_blank">Confederación de Choferes se divide en reunión con el Gobierno, algunos dirigentes abandonaron la cita</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/25/choferes-abandonan-dialogo-por-ausencia-de-medinaceli-e-intervencion-de-lara-57632" rel="noopener noreferrer" target="_blank">Choferes abandonan diálogo por ausencia de Medinaceli e “intervención” de Lara</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/choferes-abandonan-reunion-gobierno-advierten-tomar-acciones_1772037325" rel="noopener noreferrer" target="_blank">Choferes abandonan reunión con el Gobierno y advierten con “tomar acciones”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/contradicciones-dirigentes-acuerdos-gobierno_1772052991" rel="noopener noreferrer" target="_blank">Contradicciones entre dirigentes sobre acuerdos con el Gobierno</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/pais/confederacion-de-choferes-abandona-el-dialogo-con-el-gobierno-tras-ausencia-de-medinaceli.html" rel="noopener noreferrer" target="_blank">Confederación de Choferes abandona el diálogo con el Gobierno tras ausencia de Medinaceli</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_choferes-abandonan-dialogo-por-combustible-con-el-gobierno-y-amenazan-con-medidas-de-presion.html" rel="noopener noreferrer" target="_blank">Choferes abandonan diálogo por combustible con el Gobierno y amenazan con medidas de presión</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/confederaci%C3%B3n-de-choferes-abandona-di%C3%A1logo-con-el-gobierno-por-el-combustible-defectuoso" rel="noopener noreferrer" target="_blank">Confederación de Choferes abandona diálogo con el Gobierno por el combustible defectuoso</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/reunion-combustible-ministro-hidrocarburos-asiste-choferes-retiran-dialogo/20260225134708989165.html" rel="noopener noreferrer" target="_blank">Reunión por combustible: ministro de Hidrocarburos no asiste y choferes se retiran del diálogo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/choferes-abandonan-dialogo-por-inasistencia-del-ministro-de-hidrocarburos-y-advierten-con-salir-a-las-calles/" rel="noopener noreferrer" target="_blank">Choferes abandonan diálogo por inasistencia del Ministro de Hidrocarburos y advierten con “salir a las calles”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Choferes-rompen-dialogo-con-el-gobierno-y-anuncian-medidas-por-conflicto-de-gasolina" rel="noopener noreferrer" target="_blank">Choferes rompen diálogo con el Gobierno y anuncian medidas por conflicto de gasolina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/si-tenemos-que-salir-a-las-calles-lo-vamos-a-hacer-choferes-no-descartan-medidas-de-presion-tras-abandonar-reunion-con-el-gobierno-LC19390391" rel="noopener noreferrer" target="_blank">“Si tenemos que salir a las calles lo vamos a hacer”: Choferes no descartan medidas de presión tras abandonar reunión con el Gobierno</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-abandonan-reuni%C3%B3n-con-el-gobierno-por-la-gasolina-y-no-descartan-medidas-de" rel="noopener noreferrer" target="_blank">Choferes abandonan reunión con el Gobierno por la gasolina y no descartan medidas de protesta</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40534-choferes-se-retiran-del-dialogo-por-ausencia-del-ministro-y-porque-lara-intervino-en-el-conflicto" rel="noopener noreferrer" target="_blank">Choferes se retiran del diálogo por ausencia del ministro y porque Lara intervino en el conflicto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_18a">
+<div class="modal-backdrop" onclick="closeModal('modal_18a')"></div>
+<div aria-label="MÚLTIPLES INVESTIGACIONES CONTRA YPFB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">MÚLTIPLES INVESTIGACIONES CONTRA YPFB</div>
+<div class="modal-sum">Una comisión legislativa y la ANH inician por separado investigaciones y verificaciones sobre la calidad de la gasolina y el cumplimiento de la normativa, así como contratos de YPFB. Paralelamente, YPFB entrega a la Contraloría y a la Comisión de la Verdad cerca de 800 folios de documentación sobre contrataciones y provisión de crudo y combustible, dando inicio a auditorías.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">14</strong> titulares</span>
+<span><strong style="color:var(--c-09)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/contraloria-auditara-contratos-de-ypfb-tras-entrega-de-790-folios-sobre-provision-de-crudo-e-inspeccion-de-combustibles-57633" rel="noopener noreferrer" target="_blank">Contraloría auditará contratos de YPFB tras recibir 790 folios sobre provisión de crudo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-expone-contrataciones-cuestionadas-entrega-800-folios-contraloria_1772037134" rel="noopener noreferrer" target="_blank">YPFB expone contrataciones cuestionadas y entrega 800 folios a la Contraloría</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/ypfb-adjudica-provision-de-crudo-a-trafigura/" rel="noopener noreferrer" target="_blank">YPFB adjudica provisión de crudo a Trafigura</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/combustible-comision-de-la-verdad-remite-documentacion-de-ypfb-a-la-contraloria/" rel="noopener noreferrer" target="_blank">Combustible: Comisión de la Verdad remite documentación de YPFB a la Contraloría</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40536-contraloria-recibe-documentos-para-revision-de-proceso-de-compra-de-crudo-2026-y-de-contratacion-de-empresa-verificadora-de-calidad" rel="noopener noreferrer" target="_blank">Contraloría recibe documentos para revisión de proceso de compra de crudo 2026 y de contratación de empresa verificadora de calidad</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/comision-legislativa-inicia-investigacion-sobre-ypfb-y-calidad-de-combustibles" rel="noopener noreferrer" target="_blank">Comisión legislativa inicia investigación sobre YPFB y calidad de combustibles</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/comision-especial-de-diputados-que-investiga-denuncias-contra-ypfb-sesiona-este-miercoles-por-primera-vez-57624" rel="noopener noreferrer" target="_blank">Comisión especial de Diputados que investiga denuncias contra YPFB sesiona este miércoles por primera vez</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_anh-inicia-verificacion-del-cumplimiento-de-la-normativa-de-calidad-de-la-gasolina.html" rel="noopener noreferrer" target="_blank">ANH inicia verificación del cumplimiento de la normativa de calidad de la gasolina</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/diputada-del-pdc-preside-comisi%C3%B3n-que-investigar%C3%A1-contratos-y-calidad-de-carburantes" rel="noopener noreferrer" target="_blank">Diputada del PDC preside comisión que investigará contratos y calidad de carburantes</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/legisladores-reportan-numerosos-veh%C3%ADculos-de-la-asamblea-en-mantenimiento-y-presumen-mala" rel="noopener noreferrer" target="_blank">Legisladores reportan numerosos vehículos de la Asamblea en mantenimiento y presumen mala calidad de combustible</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/este-jueves-vence-plazo-para-que-ypfb-explique-a-la-anh-por-la-demora-en-el-ingreso-de-cisternas-a-palmasola-OC19390079" rel="noopener noreferrer" target="_blank">Este jueves vence plazo para que YPFB explique a la ANH por la demora en el ingreso de cisternas a Palmasola</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/anh-abre-investigacion-para-verificar-el-cumplimiento-de-la-norma-sobre-la-calidad-de-la-gasolina-GD19383885" rel="noopener noreferrer" target="_blank">ANH abre investigación para verificar el cumplimiento de la norma sobre la calidad de la gasolina</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40533-ypfb-baja-niveles-de-presencia-de-manganeso-y-goma-en-gasolina-alista-licitacion-para-contratar-certificadora-de-calidad" rel="noopener noreferrer" target="_blank">YPFB baja niveles de presencia de manganeso y goma en gasolina; alista licitación para contratar certificadora de calidad</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40566-la-anh-da-un-plazo-de-48-horas-a-ypfb-para-informar-sobre-las-causas-de-la-no-descarga-de-las-cisternas-afuera-de-palmasola" rel="noopener noreferrer" target="_blank">La ANH da un plazo de 48 horas a YPFB para informar sobre las causas de la no descarga de las cisternas afuera de Palmasola</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="DOLARES FALSOS EN OPERATIVO ANTIDROGAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">DOLARES FALSOS EN OPERATIVO ANTIDROGAS</div>
+<div class="modal-sum">Autoridades incautan 100.000 dólares americanos falsos en Cochabamba y aprehenden a una mujer, identificada como ciudadana peruana con antecedentes. Los billetes, que podrían pasar por circulación, habrían sido destinados al pago de sustancias ilícitas, según reportes, y fueron hallados durante un c</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">8</strong> titulares</span>
+<span><strong style="color:var(--c-29)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/detienen-a-ciudadana-peruana-con-us-100-000-falsos-en-cochabamba" rel="noopener noreferrer" target="_blank">Detienen a ciudadana peruana con $us 100.000 falsos en Cochabamba</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/decomisan-100-mil-dolares-americanos-falsos-que-eran-destinados-al-pago-de-sustancias-ilicitas" rel="noopener noreferrer" target="_blank">Decomisan 100 mil dólares americanos falsos que eran destinados al pago de sustancias ilícitas</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/secuestran-us-100-000-falsos-en-cochabamba-son-billetes-que-facilmente-podrian-pasar-por-circulacion/" rel="noopener noreferrer" target="_blank">Secuestran $us 100.000 falsos en Cochabamba: “Son billetes que fácilmente podrían pasar por circulación”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/peruana-antecedentes-capturada-us-100-mil-falsos_1772049721" rel="noopener noreferrer" target="_blank">Peruana con antecedentes es capturada con $us 100 mil falsos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/hallan-us-100-mil-falsos-detienen-mujer-control-policial" rel="noopener noreferrer" target="_blank">Hallan $us 100 mil falsos y detienen a una mujer durante control policial</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/secuestran-us-100000-falsos-posesion-mujer/20260225191920989177.html" rel="noopener noreferrer" target="_blank">Secuestran $us 100.000 falsos en posesión de una mujer</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/hallan-us-100-mil-falsos-y-aprehenden-a-una-mujer-durante-un-control-policial-en-cochabamba-2026225134210" rel="noopener noreferrer" target="_blank">Hallan $us 100 mil falsos y aprehenden a una mujer durante un control policial en Cochabamba</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40569-incautan-100000-dolares-falsos-y-aprehenden-a-una-mujer-durante-control-antidrogas-en-cochabamba" rel="noopener noreferrer" target="_blank">Incautan 100.000 dólares falsos y aprehenden a una mujer durante control antidrogas en Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11a">
+<div class="modal-backdrop" onclick="closeModal('modal_11a')"></div>
+<div aria-label="SITUACIÓN DE RAFAEL ARCE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">SITUACIÓN DE RAFAEL ARCE</div>
+<div class="modal-sum">Rafael Arce, hijo del expresidente, es declarado rebelde. La Fiscalía amplía la investigación, y pesan sobre él tres procesos activos en La Paz, cuyo estado es objeto de seguimiento. Mientras sus bienes, incluyendo un penthouse, pasan a ser administrados por Dircabi y quedan bajo tutela judicial con anotaciones preventivas y secuestro de inmueble.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">8</strong> titulares</span>
+<span><strong style="color:var(--c-15)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/penthouse-de-rafael-arce-pasa-a-ser-administrado-por-dircabi/" rel="noopener noreferrer" target="_blank">Penthouse de Rafael Arce pasa a ser administrado por Dircabi</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/penthouse-de-rafael-arce-pasa-a-manos-de-dircabi/" rel="noopener noreferrer" target="_blank">Penthouse de Rafael Arce pasa a manos de Dircabi</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Bienes-de-rafael-arce-quedan-bajo-tutela-judicial-y-fiscalia-evalua-activar-sello-rojo" rel="noopener noreferrer" target="_blank">Bienes de Rafael Arce quedan bajo tutela judicial y Fiscalía evalúa activar sello rojo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bienes-de-rafael-arce-quedan-bajo-tutela-judicial-por-dos-procesos-20262259410" rel="noopener noreferrer" target="_blank">Anotaciones preventivas y secuestro de inmueble en caso Rafael Arce</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_declaran-rebelde-a-rafael-hijo-del-expresidente-arce.html" rel="noopener noreferrer" target="_blank">Declaran rebelde a Rafael, hijo del expresidente Arce</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/la-segunda-fiscalia-amplia-investigacion-contra-rafael-arce/" rel="noopener noreferrer" target="_blank">La Fiscalía amplía investigación contra Rafael Arce</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/rafael-arce-mosqueira-hijo-expresidente-pesan-tres-procesos-paz/20260225135824989166.html" rel="noopener noreferrer" target="_blank">Sobre Rafael Arce Mosqueira, el hijo del expresidente, pesan tres procesos en La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/pesan-tres-procesos-contra-arce-mosqueira-en-la-paz-%C2%BFen-qu%C3%A9-etapa-est%C3%A1n" rel="noopener noreferrer" target="_blank">Pesan tres procesos contra Arce Mosqueira en La Paz; ¿en qué etapa están?</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14a">
+<div class="modal-backdrop" onclick="closeModal('modal_14a')"></div>
+<div aria-label="PRESIDENTE DE LA CAF EN BOLIVIA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">PRESIDENTE DE LA CAF EN BOLIVIA</div>
+<div class="modal-sum">El presidente ejecutivo de la CAF, Sergio Díaz-Granados, llegó a Bolivia para una visita oficial, reuniéndose con el presidente Paz y abordando temas de financiamiento, cooperación y proyectos por más de 3.100 millones de dólares.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">8</strong> titulares</span>
+<span><strong style="color:var(--c-04)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/el-presidente-de-la-caf-se-reunira-con-paz-y-visitara-los-cholets-de-el-alto-y-el-salar-de-uyuni-57635" rel="noopener noreferrer" target="_blank">El presidente de la CAF se reunirá con Paz y visitará los cholets de El Alto y el salar de Uyuni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/presidente-caf-visita-bolivia-agenda-participacion-exposoya_1772052261" rel="noopener noreferrer" target="_blank">Presidente de la CAF visita Bolivia y agenda participación en Exposoya</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/presidente-caf-llega-bolivia-anticipa-importantes-anuncios_1772077721" rel="noopener noreferrer" target="_blank">Presidente de la CAF llega a Bolivia y anticipa importantes anuncios</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/presidente-de-la-caf-llega-a-bolivia-para-consolidar-financiamiento-y-proyectos/" rel="noopener noreferrer" target="_blank">Presidente de la CAF llega a Bolivia para consolidar financiamiento y proyectos</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/presidente-de-la-caf-arriba-bolivia-y-presentar%C3%A1-avances-de-ejecuci%C3%B3n-de-financiamiento" rel="noopener noreferrer" target="_blank">Presidente de la CAF arriba a Bolivia y presentará avances de ejecución de financiamiento</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/25/diaz-granados-llega-a-bolivia-para-reforzar-cooperacion-con-la-caf/" rel="noopener noreferrer" target="_blank">Díaz-Granados llega a Bolivia para reforzar cooperación con la CAF</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/presidente-caf-llega-bolivia-analizar-financiamiento-mas-us-3100-millones/20260225195717989185.html" rel="noopener noreferrer" target="_blank">Presidente de la CAF llega a Bolivia para analizar financiamiento de más de $us 3.100 millones</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Bolivia-recibira-al-presidente-de-la-caf-para-fortalecer-cooperacion-y-financiamiento" rel="noopener noreferrer" target="_blank">Bolivia recibirá al presidente de la CAF para fortalecer cooperación y financiamiento</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="COMPENSACIÓN DE EMAPA A PANIFICADORES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMÍA</div>
+<div class="modal-title">COMPENSACIÓN DE EMAPA A PANIFICADORES</div>
+<div class="modal-sum">EMAPA propone devolver 16 millones de bolivianos en efectivo a panificadores por saldos de harina subvencionada, tras una reunión con el sector.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">7</strong> titulares</span>
+<span><strong style="color:var(--c-17)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/25/emapa-propone-devolver-bs-16-millones-a-panificadores-por-saldos-de-subvencion-de-harina-57645" rel="noopener noreferrer" target="_blank">Emapa propone devolver Bs 16 millones a panificadores por saldos de subvención de harina</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/emapa-plantea-devolver-bs-16-millones-a-panificadores-por-saldos-de-harina-subvencionada" rel="noopener noreferrer" target="_blank">Emapa plantea devolver Bs 16 millones a panificadores por saldos de harina subvencionada</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/economia/emapa-convoca-a-panificadores-y-proyecta-devolucion-de-bs-16-millones-en-efectivo.html" rel="noopener noreferrer" target="_blank">EMAPA convoca a panificadores y proyecta devolución de Bs 16 millones en efectivo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/emapa-propone-devolver-panificadores-bs-16-millones-en-efectivo-por-saldos-de-harina" rel="noopener noreferrer" target="_blank">Emapa propone devolver a panificadores Bs 16 millones en efectivo por saldos de harina subvencionada</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/emapa-propone-devolver-a-panificadores-bs-16-millones-en-efectivo-por-saldos-de-harina/" rel="noopener noreferrer" target="_blank">Emapa propone devolver a panificadores Bs 16 millones en efectivo por saldos de harina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/tras-reunion-con-panificadores-emapa-plantea-devolver-al-sector-bs-16-millones-en-efectivo-GD19388952" rel="noopener noreferrer" target="_blank">Tras reunión con panificadores, Emapa plantea devolver al sector Bs 16 millones en efectivo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40573-emapa-propone-devolver-16-millones-de-bolivianos-por-saldos-de-harina-subvencionada" rel="noopener noreferrer" target="_blank">Emapa propone devolver 16 millones de bolivianos por saldos de harina subvencionada</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="DECRETOS DE RODRÍGO PAZ EN 100 DÍAS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">DECRETOS DE RODRÍGO PAZ EN 100 DÍAS</div>
+<div class="modal-sum">El Gobierno y el Centro de Gobierno destacan que Rodrigo Paz, en sus primeros 100 días de presidencia, emitió 60 decretos, una cifra significativamente menor a la de gestiones anteriores, como parte de su estrategia de gobernar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">6</strong> titulares</span>
+<span><strong style="color:var(--c-04)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/gobierno-destaca-emision-de-60-decretos-en-100-dias-y-anuncia-que-enviara-un-paquete-de-proyectos-de-ley" rel="noopener noreferrer" target="_blank">Gobierno destaca emisión de 60 decretos en 100 días y anuncia que enviará un “paquete” de proyectos de ley</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/25/cengob-rodrigo-paz-es-el-presidente-que-menos-decretos-emitio-en-sus-primeros-100-dias-57637" rel="noopener noreferrer" target="_blank">CENGOB: Rodrigo Paz es el presidente que menos decretos emitió en sus primeros 100 días</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/politica/niegan-que-paz-gobierne-por-decreto-y-aseguran-que-es-el-presidente-que-menos-emitio-en-primeros-100-dias.html" rel="noopener noreferrer" target="_blank">Niegan que Paz gobierne por decreto y aseguran que es el presidente que menos emitió en primeros 100 días</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/gobierno-registra-la-menor-emision-de-decretos-en-sus-primeros-100-dias-frente-a-gestiones-anteriores/" rel="noopener noreferrer" target="_blank">Gobierno registra la menor emisión de decretos frente a gestiones anteriores</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/en-100-d%C3%ADas-rodrigo-paz-aprob%C3%B3-60-decretos-mucho-menos-que-mesa-quiroga-o-evo" rel="noopener noreferrer" target="_blank">En 100 días, Rodrigo Paz aprobó 60 decretos, mucho menos que Mesa, Quiroga o Evo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40539-centro-de-gobierno-sale-al-frente-de-las-criticas-y-dice-que-paz-fue-el-presidente-que-menos-decretos-aprobo-en-100-dias" rel="noopener noreferrer" target="_blank">Centro de Gobierno sale al frente de las críticas y dice que Paz fue el presidente que menos decretos aprobó en 100 días</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="DERRUMBE EN RUTA TARIJA-ENTRE RÍOS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">DERRUMBE EN RUTA TARIJA-ENTRE RÍOS</div>
+<div class="modal-sum">Un derrumbe impactó un bus o flota en el tramo Tarija-Entre Ríos, dejando siete pasajeros heridos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">6</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/derrumbe-en-carretera-hacia-tarija-deja-cuatro-personas-heridas" rel="noopener noreferrer" target="_blank">Derrumbe en carretera hacia Tarija deja cuatro personas heridas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/derrumbe-afecta-bus-deja-siete-heridos-tramo-tarija-rios_1772033500" rel="noopener noreferrer" target="_blank">Derrumbe afecta un bus y deja siete heridos en el tramo Tarija-Entre Ríos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/pais/derrumbe-en-la-ruta-tarija-entre-rios-impacta-a-un-bus-y-deja-siete-heridos.html" rel="noopener noreferrer" target="_blank">Derrumbe en la ruta Tarija-Entre Ríos impacta a un bus y deja siete heridos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_derrumbe-en-la-via-tarija-entre-rios-impacta-a-un-bus-y-deja-siete-heridos.html" rel="noopener noreferrer" target="_blank">Derrumbe en la vía Tarija – Entre Ríos impacta a un bus y deja siete heridos</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Derrumbes-afectan-rutas-en-tarija-y-la-abc-pide-circular-con-extrema-precaucion" rel="noopener noreferrer" target="_blank">Derrumbes afectan rutas en Tarija y la ABC pide circular con extrema precaución</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/piedras-caen-sobre-una-flota-en-la-ruta-tarija-entre-rios-y-dejan-siete-pasajeros-heridos-202622510174" rel="noopener noreferrer" target="_blank">Piedras caen sobre una flota en la ruta Tarija – Entre Ríos y dejan siete pasajeros heridos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="MORTALIDAD MATERNA EN BOLIVIA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-19)">SALUD</div>
+<div class="modal-title">MORTALIDAD MATERNA EN BOLIVIA</div>
+<div class="modal-sum">Bolivia registra una de las tasas de mortalidad materna más altas de la región, posicionándose como el tercer peor país. Ante esta situación, la ONU y otros actores plantean estrategias y desafíos para reducir estos índices.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-19)">5</strong> titulares</span>
+<span><strong style="color:var(--c-19)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/25/bolivia-es-el-tercer-pais-de-la-region-con-mayor-tasa-de-mortalidad-materna-57627" rel="noopener noreferrer" target="_blank">Bolivia es el tercer país de la región con mayor tasa de mortalidad materna</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-tercer-peor-pais-region-cuanto-mortalidad-materna_1772030314" rel="noopener noreferrer" target="_blank">Bolivia es el tercer peor país de la región en cuanto a mortalidad materna</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/plantean-cinco-desaf%C3%ADos-para-luchar-contra-la-mortalidad-materna-en-bolivia" rel="noopener noreferrer" target="_blank">Plantean cinco desafíos para luchar contra la mortalidad materna en Bolivia</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/ONU-plantea-estrategia-para-que-bolivia-reduzca-sus-altos-indices-de-mortalidad-materna" rel="noopener noreferrer" target="_blank">ONU plantea estrategia para que Bolivia reduzca sus altos índices de mortalidad materna</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/onu-propone-una-ruta-para-que-bolivia-revierta-los-altos-indices-de-mortalidad-materna-202622563445" rel="noopener noreferrer" target="_blank">ONU propone una ruta para que Bolivia revierta los altos índices de mortalidad materna</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="CAPACITACIONES, DEBATES Y MONITOREO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">CAPACITACIONES, DEBATES Y MONITOREO</div>
+<div class="modal-sum">El Órgano Electoral Plurinacional realiza diferentes actividades en el marco de los preparativos para las próximas elecciones subnacionaless: capacitaciones a notarios en Cochabamba, anuncia debates para candidatos a alcaldes y gobernadores, y el TED de La Paz monitorea a candidatos en medios y redes sociales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/subnacionales-1-258-notarios-electorales-se-capacitan-en-cochabamba" rel="noopener noreferrer" target="_blank">Subnacionales: 1.258 notarios electorales se capacitan en Cochabamba</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/politica/tse-alista-los-debates-simultaneos-primero-sera-de-candidatos-a-alcaldes-y-luego-a-gobernadores.html" rel="noopener noreferrer" target="_blank">TSE alista los debates simultáneos: primero será de candidatos a alcaldes y luego a gobernadores</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/organo-electoral-exhorta-a-jurados-electorales-cumplir-con-su-deber-civico/" rel="noopener noreferrer" target="_blank">Órgano Electoral exhorta a jurados electorales cumplir con su deber cívico</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/tse-alista-debates-primero-sera-candidatos-alcaldes-luego-gobernadores/20260225191630989175.html" rel="noopener noreferrer" target="_blank">TSE alista debates: Primero será de candidatos a alcaldes y luego a gobernadores</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ted-la-paz-monitorea-medios-y-redes-sociales-a-los-candidatos-2026225174856" rel="noopener noreferrer" target="_blank">TED La Paz monitorea medios y redes sociales a los candidatos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="APREHENSIÓN DE EXGERENTE DE B-AGRO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">APREHENSIÓN DE EXGERENTE DE B-AGRO</div>
+<div class="modal-sum">El exgerente de la empresa estatal B-Agro fue aprehendido por presuntas irregularidades, corrupción y un supuesto desfalco de 500 millones de bolivianos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">5</strong> titulares</span>
+<span><strong style="color:var(--c-15)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/aprehenden-a-exgerente-de-b-agro-por-presuntas-irregularidades" rel="noopener noreferrer" target="_blank">Aprehenden a exgerente de B-Agro por presuntas irregularidades</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/aprehenden-exgerente-b-agro-presunto-desfalco-bs-500-millones_1772073608" rel="noopener noreferrer" target="_blank">Aprehenden a exgerente de B-Agro por presunto desfalco de Bs 500 millones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-25/economia/aprehenden-al-exgerente-de-la-empresa-estabal-b-agro.html" rel="noopener noreferrer" target="_blank">Aprehenden al exgerente de la empresa estabal B-Agro</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/es-aprehendido-el-exgerente-de-b-agro-por-presunta-corrupcion/" rel="noopener noreferrer" target="_blank">Es aprehendido el exgerente de B-Agro por presunta corrupción</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/aprehenden-a-exgerente-de-empresa-estatal-agropecuaria-por-presunta-corrupcion-ID19389045" rel="noopener noreferrer" target="_blank">Aprehenden a exgerente de empresa estatal agropecuaria por presunta corrupción</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="ATAQUE A TAXISTA EN CBBA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">ATAQUE A TAXISTA EN CBBA</div>
+<div class="modal-sum">Un taxista atracado y brutalmente agredido en Cochabamba lucha por su vida en terapia intensiva tras cirugía; los atacantes fueron golpeados por una turba y recibieron detención preventiva.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">5</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/taxista-atracado-pirke-lucha-su-vida-turba-golpeo-asaltantes" rel="noopener noreferrer" target="_blank">Taxista atracado en Pirke lucha por su vida y una turba golpeó a los asaltantes</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/piden-ayuda-taxista-atracado-autores-terminan-golpeados-estan-hospitalizados/20260225000021989132.html" rel="noopener noreferrer" target="_blank">Piden ayuda para taxista atracado; autores terminan golpeados y están hospitalizados</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nueve-horas-en-quirofano-taxista-atacado-permanece-en-terapia-intensiva-en-cochabamba-202622514617" rel="noopener noreferrer" target="_blank">Nueve horas en quirófano: taxista atacado permanece en terapia intensiva en Cochabamba</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/determinan-detencion-preventiva-para-la-pareja-acusada-de-atracar-y-agredir-brutalmente-a-un-taxista-ID19389562" rel="noopener noreferrer" target="_blank">Determinan detención preventiva para la pareja acusada de atracar y agredir brutalmente a un taxista</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/taxista-atracado-brutalmente-esta-en-terapia-intensiva-tras-ser-sometido-a-una-cirugia-LD19387387" rel="noopener noreferrer" target="_blank">Taxista atracado brutalmente está en terapia intensiva tras ser sometido a una cirugía</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="LIBERACIÓN DE CHOFER (ACCIDENTE EN PLAN TRES MIL)" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">LIBERACIÓN DE CHOFER (ACCIDENTE EN PLAN TRES MIL)</div>
+<div class="modal-sum">El chofer que atropelló y causó la muerte de una adolescente en Santa Cruz, en el Plan Tres Mil, fue liberado con medidas cautelares, generando el bloqueo de vecinos en la zona.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">5</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/chofer-del-micro-queda-libre-tras-atropello-que-cobro-la-vida-de-una-adolescente" rel="noopener noreferrer" target="_blank">Chofer del micro queda libre tras atropello que cobró la vida de una adolescente</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/vecinos-bloquean-avenida-en-santa-cruz-tras-muerte-de-adolescente-atropellada" rel="noopener noreferrer" target="_blank">Vecinos bloquean avenida en Santa Cruz tras muerte de adolescente atropellada</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Chofer-que-atropello-y-causo-la-muerte-de-una-estudiante-es-liberado-con-medidas-cautelares-en-santa-cruz" rel="noopener noreferrer" target="_blank">Chofer que atropelló y causó la muerte de una estudiante es liberado con medidas cautelares en Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/liberan-con-medidas-cautelares-al-chofer-que-atropello-y-causo-la-muerte-de-una-estudiante-2026225125727" rel="noopener noreferrer" target="_blank">Liberan con medidas cautelares al chofer que atropelló y causó la muerte de una estudiante en Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-me-perdonen-las-palabras-del-chofer-que-atropello-y-mato-a-una-estudiante-en-el-plan-tres-mil-202622513231" rel="noopener noreferrer" target="_blank">“Que me perdonen”: Las palabras del chofer que atropelló y mató a una estudiante en el Plan Tres Mil</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14c">
+<div class="modal-backdrop" onclick="closeModal('modal_14c')"></div>
+<div aria-label="OPERATIVO EN BERMEJO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">OPERATIVO EN BERMEJO</div>
+<div class="modal-sum">Un operativo conjunto en Bermejo y Tarija resultó en la captura de alias ‘Conde’, el sexto narcotrafficante más buscado de Argentina, por delitos relacionados con el narcotráfico.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">4</strong> titulares</span>
+<span><strong style="color:var(--c-29)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cae-bermejo-sexto-narco-buscado-argentina_1772075041" rel="noopener noreferrer" target="_blank">Cae en Bermejo el sexto narco más buscado de Argentina</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/secuestran-mas-de-70-kilos-de-cocaina-en-oruro-y-golpean-redes-del-narcotrafico-2026225112032" rel="noopener noreferrer" target="_blank">Secuestran más de 70 kilos de sustancia controlada en Oruro y golpean redes del narcotráfico</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/cae-en-bermejo-alias-conde-uno-de-los-hombres-mas-buscados-de-argentina-MC19390279" rel="noopener noreferrer" target="_blank">Cae en Bermejo alias ‘Conde’, uno de los hombres más buscados de Argentina</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40567-operativo-en-tarija-termina-con-la-captura-del-sexto-hombre-mas-buscado-por-narcotrafico-en-argentina" rel="noopener noreferrer" target="_blank">Operativo en Tarija termina con la captura del sexto hombre más buscado por narcotráfico en Argentina</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="DEMANDA DE INHABILITACIÓN CONTRA LUIS REVILLA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">DEMANDA DE INHABILITACIÓN CONTRA LUIS REVILLA</div>
+<div class="modal-sum">El Tribunal Electoral Departamental de La Paz admite una demanda de inhabilitación contra Luis Revilla por requisito de residencia, otorgándole 48 horas para presentar sus descargos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">4</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/ted-admite-demanda-de-inhabilitacion-contra-revilla-tiene-48-horas-para-presentar-descargos-por-requisito-de-residencia" rel="noopener noreferrer" target="_blank">TED admite demanda de inhabilitación contra Revilla; tiene 48 horas para presentar descargos por requisito de residencia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/25/el-ted-la-paz-admite-demanda-para-inhabilitacion-de-revilla-57639" rel="noopener noreferrer" target="_blank">El TED La Paz admite demanda para inhabilitación de Revilla</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/ted-la-paz-admite-demanda-que-busca-inhabilitacion-de-revilla/" rel="noopener noreferrer" target="_blank">TED La Paz admite demanda que busca inhabilitación de Revilla</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ted-la-paz-admite-demanda-de-inhabilitacion-contra-luis-revilla-segun-el-denunciante/" rel="noopener noreferrer" target="_blank">TED La Paz admite demanda de inhabilitación contra Luis Revilla, según el denunciante</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="DESAPARECE PÁGINA OFICIAL DE PAZ EN FACEBOOK" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">DESAPARECE PÁGINA OFICIAL DE PAZ EN FACEBOOK</div>
+<div class="modal-sum">Desaparece la página oficial de Facebook del presidente Rodrigo Paz, generando incertidumbre sobre su presencia en redes sociales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">4</strong> titulares</span>
+<span><strong style="color:var(--c-04)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/no-se-encuentra-disponible-en-facebook-la-pagina-oficial-del-presidente-rodrigo-paz" rel="noopener noreferrer" target="_blank">No se encuentra disponible en Facebook la página oficial del presidente Rodrigo Paz</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/desaparece-la-pagina-oficial-de-rodrigo-paz-pereira-en-facebook/" rel="noopener noreferrer" target="_blank">DESAPARECE la página OFICIAL de Rodrigo Paz Pereira en Facebook</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/25/desaparece-la-pagina-oficial-de-rodrigo-paz-en-facebook/" rel="noopener noreferrer" target="_blank">Desaparece la página oficial de Rodrigo Paz en Facebook</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/desaparece-la-p%C3%A1gina-del-presidente-paz-en-facebook" rel="noopener noreferrer" target="_blank">Desaparece la página del presidente Paz en Facebook</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="FALLECCE UN JOVEN EN SUCRE POR INFLUENZA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">FALLECCE UN JOVEN EN SUCRE POR INFLUENZA</div>
+<div class="modal-sum">Un joven de 19 años fallece en Sucre a causa de influenza A H3N2, generando preocupación por la salud pública.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_fallece-un-joven-de-19-anos-por-influenza-a-h3n2-en-sucre.html" rel="noopener noreferrer" target="_blank">Fallece un joven de 19 años por influenza A H3N2 en Sucre</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/fallece-joven-de-19-a%C3%B1os-bajo-sospecha-de-hantavirus-y-leptospirosis" rel="noopener noreferrer" target="_blank">Fallece joven de 19 años bajo sospecha de hantavirus y leptospirosis</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/02/25/un-joven-de-19-anos-muere-por-influenza-ah3n2-en-sucre/" rel="noopener noreferrer" target="_blank">Un joven de 19 años muere por influenza AH3N2 en Sucre</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Joven-de-19-anos-fallece-en-sucre-tras-cuadro-critico-por-influenza-a-h3-n2" rel="noopener noreferrer" target="_blank">Joven de 19 años fallece en Sucre tras cuadro crítico por influenza A H3N2</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="MUJER CAE DE UN EDIFICIO JUDICIAL EN CBBA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">MUJER CAE DE UN EDIFICIO JUDICIAL EN CBBA</div>
+<div class="modal-sum">Una mujer fallece en Cochabamba tras caer de un edificio judicial, lo que ha puesto en marcha una investigación policial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/25/mujer-muere-al-caer-del-piso-11-de-un-edificio-en-cochabamba" rel="noopener noreferrer" target="_blank">Mujer muere al caer del piso 11 de un edificio en Cochabamba</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260225/mujer-cae-del-piso-11-edificio-judicial-cochabamba" rel="noopener noreferrer" target="_blank">Una mujer cae del piso 11 de un edificio judicial en Cochabamba</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tragedia-en-cochabamba-mujer-cae-del-piso-11-de-un-edificio-judicial-2026225132654" rel="noopener noreferrer" target="_blank">Tragedia en Cochabamba: mujer cae del piso 12 de un edificio judicial</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/policia-investiga-el-deceso-de-una-mujer-tras-caer-del-piso-12-de-un-edificio-centrico-en-cochabamba-202622520439" rel="noopener noreferrer" target="_blank">Policía investiga el deceso de una mujer tras caer del piso 12 de un edificio céntrico en Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2a">
+<div class="modal-backdrop" onclick="closeModal('modal_2a')"></div>
+<div aria-label="EXPLOSIÓN DE UN CALEFÓN EN LA PAZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">EXPLOSIÓN DE UN CALEFÓN EN LA PAZ</div>
+<div class="modal-sum">Explosión de un calefón en un edificio céntrico de La Paz provoca deflagración que afecta a varios departamentos, dejando al menos cuatro dañados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/25/explosion-de-calefon-en-edificio-centrico-de-la-paz-afecta-a-varios-departamentos-57631" rel="noopener noreferrer" target="_blank">Explosión de calefón en edificio céntrico de La Paz afecta a varios departamentos</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Explosion-de-calefon-dana-cuatro-departamentos-en-edificio-centrico-de-la-paz" rel="noopener noreferrer" target="_blank">Explosión de calefón daña cuatro departamentos en edificio céntrico de La Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/25/40521-mi-piso-estaba-lleno-de-humo-deflagracion-en-edificio-de-la-paz-habria-sido-causada-por-un-calefon-hay-4-departamentos-afectados" rel="noopener noreferrer" target="_blank">“Mi piso estaba lleno de humo”: deflagración en edificio de La Paz habría sido causada por un calefón, hay 4 departamentos afectados</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14b">
+<div class="modal-backdrop" onclick="closeModal('modal_14b')"></div>
+<div aria-label="BOLIVIA ASUME PRESIDENCIA DE CLASI" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">BOLIVIA ASUME PRESIDENCIA DE CLASI</div>
+<div class="modal-sum">Bolivia asumirá la presidencia del Comité Latinoamericano de Seguridad Interior (CLASI), con el objetivo de fortalecer la coordinación regional y la cooperación en la lucha contra el crimen organizado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">3</strong> titulares</span>
+<span><strong style="color:var(--c-18)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-reunion-ue-clasi-aqui-no-protege-nadie-cooperacion-debe-institucionalizarse_1772023486" rel="noopener noreferrer" target="_blank">Bolivia en reunión entre UE y CLASI: “Aquí no se protege a nadie, la cooperación debe institucionalizarse”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-asume-presidencia-comite-latinoamericano-seguridad-interior_1772034355" rel="noopener noreferrer" target="_blank">Bolivia asume la presidencia del Comité Latinoamericano de Seguridad Interior</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Bolivia-asumira-la-presidencia-del-clasi-y-fortalecera-la-coordinacion-regional-contra-el-crimen-organizado" rel="noopener noreferrer" target="_blank">Bolivia asumirá la presidencia del CLASI y fortalecerá la coordinación regional contra el crimen organizado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="LEY DE ALIVIO TRIBUTARIO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMÍA</div>
+<div class="modal-title">LEY DE ALIVIO TRIBUTARIO</div>
+<div class="modal-sum">El Gobierno y el sector privado continúan el debate sobre una política fiscal y un proyecto de alivio tributario, cuya propuesta aún no llega a comisión.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">3</strong> titulares</span>
+<span><strong style="color:var(--c-17)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/proyecto-de-alivio-tributario-sigue-sin-arribar-a-comision/" rel="noopener noreferrer" target="_blank">Proyecto de alivio tributario sigue sin arribar a comisión</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/25/gobierno-y-privados-definen-politica-fiscal/" rel="noopener noreferrer" target="_blank">Gobierno y privados definen política fiscal</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260225_alivio-tributario-gobierno-abre-debate-con-privados.html" rel="noopener noreferrer" target="_blank">Alivio tributario: Gobierno abre debate con privados</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
