@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260228</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">275</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">6</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · FEB · 28</strong>
+        Reporte N° 20260228<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_20')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-19)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-19)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-19)">ACCIDENTES</div>
+<div class="top3-title">ACCIDENTE DE AVIÓN MILITAR EN EL ALTO</div>
+<div class="top3-body">Un avión militar Hércules de la FAB que transportaba dinero sufrió un accidente al salirse de la pista en el aeropuerto de El Alto. El siniestro dejó al menos 15 fallecidos, numerosos heridos y vehículos destruidos. Se registraron intentos de saqueo de la carga, resultando en aprehensiones y acciones policiales.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-19)">96</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-19)">16</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_9')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-09)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-09)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="top3-title">INTERPELACIÓN A MINISTRO DE HIDROCARBUROS</div>
+<div class="top3-body">La Asamblea Legislativa Plurinacional (ALP) suspendió la sesión de interpelación al ministro de Hidrocarburos, ante su ausencia, y la reanudará el martes 3 de marzo tras un cuarto intermedio. El  gobierno afirmó que el Ejecutivo no teme la interpelación al ministro, solicitando que se respeten los procedimientos.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">26</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-09)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_17')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-04)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-04)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="top3-title">DISPUTAS ENTRE LARA Y LEGISLADORES</div>
+<div class="top3-body">Tensiones y disputas en la sesión de la Asamblea Legislativa Plurinacional convocada para la interpelación del ministro Medinaceli. Se registran enfrentamientos verbales entre el vicepresidente Edmand Lara y legisladores que lo calificaron de "dictador" y discutieron con él.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">25</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-04)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-19)"></div>
+<div class="cat-name">ACCIDENTES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-19)"></div></div>
+<div class="cat-n">119</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:44%;background:var(--c-04)"></div></div>
+<div class="cat-n">52</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:40%;background:var(--c-09)"></div></div>
+<div class="cat-n">48</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:25%;background:var(--c-15)"></div></div>
+<div class="cat-n">30</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:17%;background:var(--c-07)"></div></div>
+<div class="cat-n">20</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-29)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:5%;background:var(--c-29)"></div></div>
+<div class="cat-n">6</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">accidente</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">61</td>
+</tr>
+<tr>
+<td class="freq-word">billetes</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:54%"></div>
+</div>
+</td>
+<td class="freq-count">25</td>
+</tr>
+<tr>
+<td class="freq-word">interpelación</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:52%"></div>
+</div>
+</td>
+<td class="freq-count">24</td>
+</tr>
+<tr>
+<td class="freq-word">sesión</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">23</td>
+</tr>
+<tr>
+<td class="freq-word">fernández</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:47%"></div>
+</div>
+</td>
+<td class="freq-count">21</td>
+</tr>
+<tr>
+<td class="freq-word">gasolina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:44%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">policía</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">ministro</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:39%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">valor legal</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:37%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">medinaceli</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:36%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">ACCIDENTE DE AVIÓN MILITAR EN EL ALTO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-19))">96</div>
+</div>
+<div class="chart-medios">16 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INTERPELACIÓN A MINISTRO DE HIDROCARBUROS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:27.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">26</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DISPUTAS ENTRE LARA Y LEGISLADORES</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">25</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">BILLETES SIN VALOR LEGAL</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-19))">23</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DETENCIÓN DE JHONNY FERNÁNDEZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">22</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MALA CALIDAD DEl COMBUSTIBLE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">22</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">NUEVO INSPECTOR GENERAL DE LA POLICÍA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">11</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INVERSIONES DE LA CAF</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">9</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INCENDIO DE BUSES EN ORURO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:7.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">AVIONETAS INTERVENIDAS EN BENI</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DETENCIÓN DE ANA LUCIA REIS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ATAQUE POR PERROS EN ORURO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">DIVISIONES EN CREEMOS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INFANTICIDIO EN SUCRE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ASESINATO EN COCHABAMBA</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INAUGURACIÓN DE OBRAS EN LA PAZ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:3.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ORDEN DE APREHENSIÓN PARA RAFAEL ARCE</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:3.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_21')" role="button" style="border-top:2px solid var(--c-19)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-19)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-19)">ACCIDENTES</div>
+<div class="topic-title">BILLETES SIN VALOR LEGAL</div>
+<div class="topic-body">El Banco Central de Bolivia (BCB) afirmó que los billetes hallados tras el accidente del avión militar Hércules en El Alto no tienen valor legal y exhortó a la población a devolverlos, recordando que su tenencia constituye un delito.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>23</strong> titulares</div>
+<div class="topic-stat"><strong>14</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_13')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">DETENCIÓN DE JHONNY FERNÁNDEZ</div>
+<div class="topic-body">El alcalde de Santa Cruz, Jhonny Fernández, fue enviado con detención preventiva por 100 días al penal de Palmasola en el marco del caso 'Pavimento'. Mientras la defensa apela la decisión y la Policía confirma su reclusión sin privilegios, la Alcaldía y su asesor legal aseguran que seguirá ejerciendo sus funciones como alcalde.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>22</strong> titulares</div>
+<div class="topic-stat"><strong>13</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">MALA CALIDAD DEl COMBUSTIBLE</div>
+<div class="topic-body">Noticias extensas sobre la controversia de la gasolina de mala calidad distribuida por YPFB, causando daños a vehículos y maquinaria, y una caída en las ventas. Se revelan audios de ejecutivos de YPFB conscientes del problema. El Presidente Paz anuncia investigación, ubicación de culpables y búsqueda de recursos para soluciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>22</strong> titulares</div>
+<div class="topic-stat"><strong>12</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_11a')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">NUEVO INSPECTOR GENERAL DE LA POLICÍA</div>
+<div class="topic-body">El presidente Rodrigo Paz designa por decreto a Lionel Valenzuela como el nuevo Inspector General interino de la Policía Boliviana, en reemplazo de Gunter Agudo, quien fue destituido.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">INVERSIONES DE LA CAF</div>
+<div class="topic-body">La Corporación Andina de Fomento (CAF) ratifica su apoyo a la gestión del presidente Rodrigo Paz, garantizando una inversión de $us 3.100 millones para impulsar planes estratégicos y obras de desarrollo en Bolivia hasta 2030.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">INCENDIO DE BUSES EN ORURO</div>
+<div class="topic-body">Un incendio en un taller mecánico de Oruro arrasó con cinco buses, dejando a dieciséis a veinte personas afectadas por inhalación de humo y heridas. Se investigan las causas del siniestro.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="topic-title">AVIONETAS INTERVENIDAS EN BENI</div>
+<div class="topic-body">Se confirma que cuatro de las avionetas intervenidas en San Ramón, Beni, dieron positivo a rastros de cocaína y permanecen bajo custodia, según informes.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_14')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">DETENCIÓN DE ANA LUCIA REIS</div>
+<div class="topic-body">La alcaldesa de Cobija, Ana Lucía Reis, fue aprehendida y pasó la noche detenida. Su detención se vincula a procesos y deudas laborales heredadas de gestiones anteriores.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">ATAQUE POR PERROS EN ORURO</div>
+<div class="topic-body">Un hombre pierde la vida en Oruro tras ser atacado por dos perros rottweiler, supuestamente incitados por su dueño, lo que genera un pedido de cárcel para el responsable.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">DIVISIONES EN CREEMOS</div>
+<div class="topic-body">Los exparlamentarios Bazán, Egüez y Montero rompen con la agrupación Creemos y se distancian del líder político Luis Fernando Camacho, quien aspira a la reelección.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">INFANTICIDIO EN SUCRE</div>
+<div class="topic-body">Investigan el infanticidio de un recién nacido en Chuquisaca/Sucre, el primero de 2026, donde la principal sospechosa es una madre adolescente de 15 años acusada de golpear mortalmente a su bebé.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">ASESINATO EN COCHABAMBA</div>
+<div class="topic-body">Un albañil fue condenado a 30 años de cárcel por el asesinato del hijo de su vecina y el ataque a dos mujeres en Pacata Alta. La madre de la víctima brindó un desgarrador testimonio tras la sentencia.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1a')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">POLÍTICA</div>
+<div class="topic-title">INAUGURACIÓN DE OBRAS EN LA PAZ</div>
+<div class="topic-body">La Alcaldía de La Paz inaugura las avenidas del Poeta y La Paz, que absorberán el 40% del tráfico vehicular tras retrasos y polémica en su construcción.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">ORDEN DE APREHENSIÓN PARA RAFAEL ARCE</div>
+<div class="topic-body">Juzgado anticorrupción emite una nueva orden de aprehensión contra Rafael Arce por el caso “Adán y Eva”.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/nacional/2026/02/27/se-amplia-investigacion-por-b-agro-y-alcanza-a-tres-exministros-de-arce/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Se amplía investigación por B-Agro y alcanza a tres exministros de Arce</a></div>
+<div class="emergente-sum">Investigación por la quiebra de B-Agro se extiende, alcanzando a tres exministros del gobierno de Arce.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/sociedad/2026/02/27/cochabamba-embarazada-con-chikungunya-pierde-a-su-bebe-y-ella-lucha-por-su-vida/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Cochabamba: embarazada con chikungunya pierde a su bebé y ella lucha por su vida</a></div>
+<div class="emergente-sum">Una mujer embarazada pierde a su bebé y lucha por su vida en Cochabamba debido al chikungunya, evidenciando la gravedad del brote.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/fab-dice-hay-dos-tripulantes-avion-siniestrado-paz-estan-desaparecidos_1772242019" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">FAB dice que hay dos tripulantes del avión siniestrado en La Paz que están desaparecidos</a></div>
+<div class="emergente-sum">La FAB reporta dos tripulantes desaparecidos tras el siniestro de un avión en La Paz, manteniendo la búsqueda activa.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/mundo/el-senado-aprueba-una-reforma-de-la-ley-de-glaciares-que-reduce-la-proteccion-y-facilita-la-inversion-minera" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">El Senado aprueba una reforma de la ley de glaciares que reduce la protección y facilita la inversión minera</a></div>
+<div class="emergente-sum">El Senado aprueba una reforma a la ley de glaciares que reduce su protección para facilitar la inversión minera.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.lostiempos.com/actualidad/pais/20260227/camara-diputados-devuelve-nuevamente-lista-vocales-al-ted-paz-fallo" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Cámara de Diputados devuelve nuevamente la lista de vocales al TED de La Paz por fallo constitucional</a></div>
+<div class="emergente-sum">La Cámara de Diputados devuelve la lista de vocales al TED de La Paz, generando incertidumbre en el proceso electoral.</div>
+<div class="emergente-source">Fuente: Los Tiempos</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260228 · 2026-02-28</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 275 titulares · 17 temas · 6 categorías · 19 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_20">
+<div class="modal-backdrop" onclick="closeModal('modal_20')"></div>
+<div aria-label="ACCIDENTE DE AVIÓN MILITAR EN EL ALTO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-19)">ACCIDENTES</div>
+<div class="modal-title">ACCIDENTE DE AVIÓN MILITAR EN EL ALTO</div>
+<div class="modal-sum">Un avión militar Hércules de la FAB que transportaba dinero sufrió un accidente al salirse de la pista en el aeropuerto de El Alto. El siniestro dejó al menos 15 fallecidos, numerosos heridos y vehículos destruidos. Se registraron intentos de saqueo de la carga, resultando en aprehensiones y acciones policiales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-19)">96</strong> titulares</span>
+<span><strong style="color:var(--c-19)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/naabol-cierra-pista-del-aeropuerto-de-el-alto-tras-accidente-de-aeronave-fab-81" rel="noopener noreferrer" target="_blank">NAABOL cierra pista del Aeropuerto de El Alto tras accidente de aeronave FAB-81</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/avioneta-sufre-incidente-al-intentar-despegar-en-el-aeropuerto-de-el-alto" rel="noopener noreferrer" target="_blank">Avioneta sufre incidente al intentar despegar en el aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/cierran-temporalmente-el-aeropuerto-de-el-alto-debido-al-accidente-57742" rel="noopener noreferrer" target="_blank">Cierran temporalmente el aeropuerto de El Alto debido al accidente</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/aeropuerto-alto-permanecera-cerrado-21-30-tragico-accidente_1772238660" rel="noopener noreferrer" target="_blank">Aeropuerto de El Alto permanecerá cerrado hasta reestablecer la normalidad en la terminal, tras trágico accidente</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dgac-suspende-operaciones-aeropuerto-alto_1772235675" rel="noopener noreferrer" target="_blank">DGAC suspende operaciones en el aeropuerto de EL Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/naabol-suspende-operaciones-en-el-aeropuerto-de-el-alto/" rel="noopener noreferrer" target="_blank">Naabol suspende operaciones en el aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/naabol-anuncia-cierre-pista-alto-accidente-aeronave-fab" rel="noopener noreferrer" target="_blank">Naabol anuncia cierre de pista en El Alto tras accidente de aeronave de la FAB</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40691-boa-suspende-temporalmente-sus-vuelos-desde-y-hacia-la-paz-tras-el-accidente-de-un-avion-hercules" rel="noopener noreferrer" target="_blank">BoA suspende temporalmente sus vuelos desde y hacia La Paz tras el accidente de un avión Hércules</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/ministerio-de-defensa-brinda-reporte-sobre-el-accidente-aereo-en-el-alto" rel="noopener noreferrer" target="_blank">Ministerio de Defensa brinda reporte sobre el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/confirman-11-fallecidos-entre-ellos-ninos-tras-accidente-en-el-alto" rel="noopener noreferrer" target="_blank">Suman 15 los fallecidos tras el trágico accidente en El Alto</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/demoras-en-vuelos-y-mas-de-20-heridos-tras-accidente-en-el-aeropuerto-de-el-alto" rel="noopener noreferrer" target="_blank">Demoras en vuelos y más de 20 heridos tras accidente en el Aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/multitud-intenta-saquear-aeronave-siniestrada-en-el-alto-y-es-dispersada" rel="noopener noreferrer" target="_blank">Multitud intenta saquear aeronave siniestrada en El Alto y es dispersada</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/boa-aclara-que-avioneta-accidentada-en-el-alto-no-pertenece-a-la-estatal" rel="noopener noreferrer" target="_blank">BoA aclara que avioneta accidentada en El Alto no pertenece a la estatal</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/confirman-15-muertos-y-28-heridos-en-el-accidente-aereo-en-el-alto-57753" rel="noopener noreferrer" target="_blank">Confirman 15 muertos y 28 heridos en el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/siete-tripulantes-del-avion-fueron-rescatados-uno-esta-desaparecido-57751" rel="noopener noreferrer" target="_blank">Siete tripulantes del avión fueron rescatados; uno está desaparecido</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/grave-accidente-aereo-deja-al-menos-15-muertos-en-el-alto-57743" rel="noopener noreferrer" target="_blank">Grave accidente aéreo deja al menos 15 muertos en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/accidente-del-hercules-las-causas-aun-se-desconocen-se-conformo-una-junta-de-investigacion-57750" rel="noopener noreferrer" target="_blank">Accidente del Hércules: las causas aún se desconocen; se conformó una junta de investigación</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/avion-hercules-se-precipita-en-el-alto-y-cae-sobre-vehiculos-en-inmediaciones-del-puente-bolivia-57738" rel="noopener noreferrer" target="_blank">Un avión Hércules cae sobre vehículos en el Puente Bolivia en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/el-hercules-se-salio-de-pista-tras-aterrizar-se-presume-que-llevaba-dinero-del-bcb-57741" rel="noopener noreferrer" target="_blank">El Hércules se salió de pista tras aterrizar; se presume que llevaba dinero del BCB</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cae-un-avion-hercules-con-millonaria-carga-de-bolivianos-en-el-alto/" rel="noopener noreferrer" target="_blank">Cae un avión Hércules con MILLONARIA CARGA de BOLIVIANOS en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/menos-15-fallecidos-accidente-aereo-alto_1772237780" rel="noopener noreferrer" target="_blank">Al menos 15 fallecidos por el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cae-avion-militar-alto-piden-ayuda-autoridades_1772232478" rel="noopener noreferrer" target="_blank">Accidente aéreo en El Alto; un muerto y varios heridos es el informe preliminar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/12-personas-quedan-aprehendidas-saqueo-avion-accidentado-alto_1772245217" rel="noopener noreferrer" target="_blank">12 personas quedan aprehendidas tras saqueo del avión accidentado en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policia-gasifica-saqueo-avion-accidentado-alto_1772235416" rel="noopener noreferrer" target="_blank">Policía gasifica ante el saqueo del avión accidentado en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/esto-todo-sabe-avion-militar-accidento-alto_1772234964" rel="noopener noreferrer" target="_blank">Esto es todo lo que se sabe del avión militar que se accidentó en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/junta-militar-investiga-accidente-aereo-alto-dicen-hay-100-perdida_1772245515" rel="noopener noreferrer" target="_blank">Junta militar ya investiga el accidente aéreo en El Alto y dicen que hay 100% de pérdida</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tragedia-alto-nino-perdio-dos-piernas-accidente-avion-hercules_1772248708" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: un niño perdió sus dos piernas en el accidente del avión Hércules</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/estas-primeras-imagenes-accidente-aereo-alto-hay-heridos-dinero-via_1772234717" rel="noopener noreferrer" target="_blank">Estas son las primeras imágenes del accidente aéreo en El Alto; hay heridos y dinero en la vía</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-rodrigo-paz-traslada-paz-accidente-aereo-alto_1772247017" rel="noopener noreferrer" target="_blank">Presidente Rodrigo Paz se traslada a La Paz tras accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/pais/al-menos-15-muertos-y-mas-de-10-heridos-por-accidente-de-avion-en-el-alto-segun-jefe-de-bomberos.html" rel="noopener noreferrer" target="_blank">Al menos 15 muertos y más de 10 heridos por accidente de avión en El Alto, según jefe de Bomberos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/pais/tragedia-en-el-alto-vehiculos-publicos-y-particulares-destruidos-tras-accidente-de-avion-militar.html" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Vehículos públicos y particulares destruidos tras accidente de avión militar</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/pais/reportan-el-accidente-de-un-avion-en-el-alto.html" rel="noopener noreferrer" target="_blank">Avión de la FAB que transportaba dinero sufrió accidente al aterrizar en El Alto</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/27/urgente-aeronave-se-precipita-en-el-alto-provocando-incendio-y-danos-materiales-1901/" rel="noopener noreferrer" target="_blank">Urgente: Aeronave se precipita en El Alto provocando incendio y daños materiales (19:01)</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_atienden-a-18-pacientes-en-hospitales-tras-accidente-en-el-alto.html" rel="noopener noreferrer" target="_blank">Atienden a 18 pacientes en hospitales tras accidente en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_bomberos-reportan-al-menos-12-fallecidos-tras-accidente-de-avion-en-el-alto.html" rel="noopener noreferrer" target="_blank">Bomberos reportan al menos 12 fallecidos tras accidente de avión en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_el-alto-reportan-15-fallecidos-mientras-siguen-las-tareas-de-rescate.html" rel="noopener noreferrer" target="_blank">El Alto: Reportan 15 fallecidos, mientras siguen las tareas de rescate</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_policia-gasifica-a-personas-que-intentan-recoger-dinero-de-accidente.html" rel="noopener noreferrer" target="_blank">Policía gasifica a personas que intentan recoger dinero de accidente</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_queman-billetes-sin-valor-legal-que-se-encontraban-en-el-avion-accidentado-en-el-alto.html" rel="noopener noreferrer" target="_blank">Queman billetes sin valor legal que se encontraban en el avión accidentado en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_reportan-accidente-aereo-en-el-alto.html" rel="noopener noreferrer" target="_blank">Reportan accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_se-accidenta-un-avion-en-el-alto.html" rel="noopener noreferrer" target="_blank">Se accidenta un avión en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_un-accidente-de-avion-ocurrio-la-tarde-de-este-viernes-en-el-alto.html" rel="noopener noreferrer" target="_blank">Un accidente de avión ocurrió la tarde de este viernes en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/gobierno-reporta-al-menos-15-fallecidos-y-28-heridos-por-el-siniestro-a%C3%A9reo-en-el-alto" rel="noopener noreferrer" target="_blank">Gobierno reporta al menos 15 fallecidos y 28 heridos por el siniestro aéreo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/instauran-junta-investigadora-para-establecer-las-causas-del-accidente-a%C3%A9reo" rel="noopener noreferrer" target="_blank">Instauran junta investigadora para establecer las causas del accidente aéreo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/bomberos-reportan-m%C3%A1s-de-10-personas-fallecidas-tras-accidente-de-avi%C3%B3n" rel="noopener noreferrer" target="_blank">Bomberos reportan más de 10 personas fallecidas tras accidente de avión</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/accidente-a%C3%A9reo-deja-luto-en-el-alto" rel="noopener noreferrer" target="_blank">Accidente aéreo deja luto en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/conozca-la-lista-oficial-de-heridos-del-accidente-aereo-en-el-alto/" rel="noopener noreferrer" target="_blank">Conozca la lista oficial de heridos del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/autoridades-queman-los-billetes-para-evitar-un-saqueo/" rel="noopener noreferrer" target="_blank">Autoridades queman los billetes para evitar un saqueo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/la-fab-conformo-una-junta-para-investigar-el-accidente/" rel="noopener noreferrer" target="_blank">La FAB conformó una junta para investigar el accidente</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/avion-sufre-accidente-en-el-aeropuerto-de-el-alto-y-deja-vehiculos-danados-y-posibles-heridos/" rel="noopener noreferrer" target="_blank">Avión sufre accidente en el aeropuerto de El Alto y deja vehículos dañados</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/bomberos-al-menos-son-15-fallecidos-en-el-siniestro-en-el-alto/" rel="noopener noreferrer" target="_blank">Bomberos: Al menos son 15 fallecidos en el siniestro en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/al-menos-10-heridos-llegaron-al-hospital-del-norte/" rel="noopener noreferrer" target="_blank">Al menos 10 heridos llegaron al Hospital del Norte</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/avion-se-precipita-al-suelo-antes-lograr-aterrizar-aeropuerto-alto" rel="noopener noreferrer" target="_blank">Un avión se precipita al suelo antes de lograr aterrizar en el aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/tragedia-alto-accidente-aereo-deja-al-menos-15-victimas-fatales" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Accidente aéreo deja al menos 15 víctimas fatales y vehículos destrozados</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/necesitamos-buscar-heridos-bomberos-pide-pobladores-alto-retirarse" rel="noopener noreferrer" target="_blank">"Necesitamos buscar heridos": Bomberos pide a pobladores de El Alto retirarse de la zona del accidente del avión militar</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/gasifican-personas-que-pretendian-recoger-billetes-accidente-avion-fab" rel="noopener noreferrer" target="_blank">Gasifican a personas que pretendían recoger billetes tras accidente de avión de la FAB</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/bomberos-recuperan-cuerpos-ninos-adultos-impacto-del-avion-militar" rel="noopener noreferrer" target="_blank">Bomberos recuperan cuerpos de niños y adultos tras el impacto del avión militar en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/banco-sangre-solicita-donaciones-urgentes-accidente-aereo-alto" rel="noopener noreferrer" target="_blank">Banco de Sangre solicita donaciones urgentes tras accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/incineran-billetes-que-se-encontraban-avion-accidentado-alto" rel="noopener noreferrer" target="_blank">Incineran los billetes que se encontraban en el avión accidentado en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/denuncian-ataque-ambulancias-que-fueron-enviadas-dar-auxilio-accidente" rel="noopener noreferrer" target="_blank">Denuncian ataque a ambulancias que fueron enviadas a dar auxilio en accidente aéreo</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/reportan-menos-15-fallecidos-accidente-aereo-alto/20260227201858989347.html" rel="noopener noreferrer" target="_blank">Reporte preliminar: Hay al menos 11 fallecidos tras el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/accidente-aereo-alto-evacuan-heridos-saqueos-reportan-varios-vehiculos-afectados/20260227195430989344.html" rel="noopener noreferrer" target="_blank">Accidente aéreo en El Alto: Evacúan a heridos, hay saqueos y reportan varios vehículos afectados</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/reportan-accidente-avion-alto/20260227185827989336.html" rel="noopener noreferrer" target="_blank">Avión sufre accidente en El Alto; trasladaba divisas</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/reportan-accidente-de-un-avion-en-la-ciudad-de-el-alto-habria-heridos-y-vehiculos-afectados/" rel="noopener noreferrer" target="_blank">Reportan accidente de un avión en la ciudad de El Alto; habría heridos y vehículos afectados</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-pide-respeto-por-el-siniestro-en-el-alto-y-reitera-el-dinero-transportado-no-tiene-valor/" rel="noopener noreferrer" target="_blank">El Gobierno pide respeto por el siniestro en El Alto y reitera el dinero transportado no tiene valor</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/urgente-un-avion-cae-en-la-ciudad-de-el-alto-2026227184428" rel="noopener noreferrer" target="_blank">¡Urgente! Un avión cae en la ciudad de El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/avion-que-cayo-en-el-alto-transportaba-dinero-en-altas-cantidades-202622719230" rel="noopener noreferrer" target="_blank">Avión que cayó en El Alto transportaba dinero en altas cantidades</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fotos-asi-quedaron-los-vehiculos-tras-caida-de-avion-en-el-alto-2026227193625" rel="noopener noreferrer" target="_blank">FOTOS: Así quedaron los vehículos tras caída de avión en El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cerca-de-5-000-personas-intentan-rebasar-la-seguridad-para-llevarse-el-dinero-202622719509" rel="noopener noreferrer" target="_blank">Cerca de 5.000 personas intentan rebasar la seguridad para llevarse el dinero</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tragedia-en-el-alto-se-reporta-al-menos-12-fallecidos-tras-el-accidente-del-avion-militar-2026227201050" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Se reporta al menos 12 fallecidos tras el accidente del avión militar</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-se-sabe-sobre-el-avion-militar-que-cayo-en-el-alto-2026227195524" rel="noopener noreferrer" target="_blank">¿Qué se sabe sobre el avión militar que cayó en El Alto?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/boa-aclara-que-avion-siniestrado-en-el-alto-no-es-de-la-aerolinea-2026227201741" rel="noopener noreferrer" target="_blank">BoA aclara que avión siniestrado en El Alto no es de la aerolínea</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/esta-es-la-lista-de-la-tripulacion-del-avion-siniestrado-en-el-alto-2026227203719" rel="noopener noreferrer" target="_blank">Esta es la lista de la tripulación del avión siniestrado en El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/vandalos-atacaban-con-piedras-y-palos-movilizan-militares-para-evacuar-cuerpos-del-accidente-aereo-202622723430" rel="noopener noreferrer" target="_blank">Vándalos atacaban con piedras y palos: Movilizan militares para evacuar cuerpos del accidente aéreo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/el-alto-en-pleno-rescate-de-heridos-y-fallecidos-del-avion-accidentado-una-turba-se-enfrenta-a-la-policia-DO19420704" rel="noopener noreferrer" target="_blank">El Alto: En pleno rescate de heridos y fallecidos del avión accidentado, una turba se enfrenta a la Policía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tragedia-en-el-alto-esta-es-la-lista-de-heridos-y-los-hospitales-a-los-que-fueron-trasladados-EO19420675" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Esta es la lista de heridos y los hospitales a los que fueron trasladados</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tragedia-en-el-alto-sube-a-20-la-cifra-de-fallecidos-por-el-avion-que-se-accidento-cargado-de-dinero-DO19420641" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Sube a 20 la cifra de fallecidos por el avión que se accidentó cargado de dinero</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/al-menos-12-personas-fueron-aprehendidas-cuando-intentaban-llevarse-el-dinero-del-avion-accidentado-en-el-alto-CO19420471" rel="noopener noreferrer" target="_blank">Al menos 12 personas fueron aprehendidas cuando intentaban llevarse el dinero del avión accidentado en El Alto</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/seis-tripulantes-sobrevivieron-al-accidente-y-estan-heridos-buscan-a-otros-dos-senala-la-fab-AO19420330" rel="noopener noreferrer" target="_blank">Seis tripulantes sobrevivieron al accidente y están heridos, buscan a otros dos, señala la FAB</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/vuelos-cancelados-por-el-accidente-de-un-avion-en-el-alto-generan-perjuicio-a-pasajeros-AO19420213" rel="noopener noreferrer" target="_blank">Vuelos cancelados por el accidente de un avión en El Alto generan perjuicio a pasajeros</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/accidente-aereo-en-el-alto-al-menos-dos-heridos-estan-en-terapia-intensiva-IO19420080" rel="noopener noreferrer" target="_blank">Accidente aéreo en El Alto: Al menos dos heridos están en terapia intensiva</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/se-sintio-como-una-bomba-duena-de-un-auto-golpeado-por-una-llanta-del-avion-accidentado-en-el-alto-relata-lo-que-sucedio-OO19420097" rel="noopener noreferrer" target="_blank">“Se sintió como una bomba”: Dueña de un auto golpeado por una llanta del avión accidentado en El Alto relata lo que sucedió</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/avion-accidentado-en-el-alto-arribo-desde-santa-cruz-y-se-salio-de-la-pista-1-kilometro-senala-el-ministerio-de-defensa-EO19420114" rel="noopener noreferrer" target="_blank">Avión accidentado en El Alto arribó desde Santa Cruz y se salió de la pista 1 kilómetro, señala el Ministerio de Defensa</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/hay-cuerpos-mutilados-bomberos-reporta-ninos-y-adultos-fallecidos-en-el-accidente-de-avion-en-el-alto-BN19419967" rel="noopener noreferrer" target="_blank">“Hay cuerpos mutilados”: Bomberos reporta niños y adultos fallecidos en el accidente de avión en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/reportan-accidente-de-avi%C3%B3n-en-la-ciudad-de-el-alto" rel="noopener noreferrer" target="_blank">Reportan accidente de avión en la ciudad de El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/al-menos-seis-veh%C3%ADculos-quedaron-destrozados-tras-accidente-de-avi%C3%B3n-en-el-alto" rel="noopener noreferrer" target="_blank">Al menos seis vehículos quedaron destrozados tras accidente de avión en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/reporte-parcial-al-menos-12-muertos-por-el-accidente-a%C3%A9reo-en-el-alto" rel="noopener noreferrer" target="_blank">Reporte parcial: Al menos 12 muertos por el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ministra-de-salud-el-accidente-a%C3%A9reo-en-el-alto-provoc%C3%B3-15-muertos-y-28-heridos" rel="noopener noreferrer" target="_blank">Ministra de Salud: El accidente aéreo en El Alto provocó 15 muertos y 28 heridos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40687-un-avion-se-accidenta-en-el-alto-varios-vehiculos-resultan-afectados" rel="noopener noreferrer" target="_blank">Un avión se accidenta en El Alto; varios vehículos resultan afectados</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40688-dgac-sobre-accidente-en-el-alto-el-avion-se-salio-de-la-pista-no-se-cayo" rel="noopener noreferrer" target="_blank">DGAC sobre accidente en El Alto: “El avión se salió de la pista, no se cayó”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40689-personas-rompieron-el-cerco-de-seguridad-para-recoger-billetes-del-avion-hercules-accidentado" rel="noopener noreferrer" target="_blank">Personas rompieron el cerco de seguridad para recoger billetes del avión Hércules accidentado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40694-bomberos-reporta-al-menos-15-personas-fallecidas-a-causa-del-avion-hercules-siniestrado-en-el-alto" rel="noopener noreferrer" target="_blank">Bomberos reporta al menos 15 personas fallecidas a causa del avión Hércules siniestrado en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40695-al-menos-10-heridos-ocho-de-gravedad-llegaron-al-hospital-del-norte-tras-emergencia-personal-pide-apoyo" rel="noopener noreferrer" target="_blank">Al menos 10 heridos, ocho de gravedad, llegaron al hospital del Norte tras emergencia; personal pide apoyo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40696-asi-informa-la-prensa-internacional-sobre-el-accidente-del-avion-hercules-en-el-alto" rel="noopener noreferrer" target="_blank">Así informa la prensa internacional sobre el accidente del avión Hércules en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40699-defensa-avion-hercules-tiene-seguro-y-se-conformo-junta-para-investigar-el-siniestro-en-el-alto" rel="noopener noreferrer" target="_blank">Defensa: avión Hércules tiene seguro y se conformó junta para investigar el siniestro en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40703-turba-que-buscaba-dinero-en-la-zona-del-accidente-aereo-ataco-a-policias-y-obstaculizo-labores-de-rescate" rel="noopener noreferrer" target="_blank">Turba que buscaba dinero en la zona del accidente aéreo atacó a policías y obstaculizó labores de rescate</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40704-31-personas-resultaron-heridas-tras-el-accidente-del-avion-hercules-algunas-presentan-cuadros-de-alta-complejidad" rel="noopener noreferrer" target="_blank">31 personas resultaron heridas tras el accidente del avión Hércules; algunas presentan cuadros de alta complejidad</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="INTERPELACIÓN A MINISTRO DE HIDROCARBUROS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">INTERPELACIÓN A MINISTRO DE HIDROCARBUROS</div>
+<div class="modal-sum">La Asamblea Legislativa Plurinacional (ALP) suspendió la sesión de interpelación al ministro de Hidrocarburos, ante su ausencia, y la reanudará el martes 3 de marzo tras un cuarto intermedio. El  gobierno afirmó que el Ejecutivo no teme la interpelación al ministro, solicitando que se respeten los procedimientos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">26</strong> titulares</span>
+<span><strong style="color:var(--c-09)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/vicepresidencia-emite-comunicado-reanudan-interpelacion-al-ministro-de-hidrocarburos" rel="noopener noreferrer" target="_blank">Vicepresidencia anuncia reanudación de interpelación al ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/asamblea-amplia-cuarto-intermedio-pospone-sesion-interpelacion-3-marzo_1772227736" rel="noopener noreferrer" target="_blank">Asamblea amplía cuarto intermedio y pospone la sesión de interpelación hasta el 3 de marzo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/postergan-la-interpelaci%C3%B3n-medinaceli-hasta-el-3-de-marzo-tras-accidentada-sesi%C3%B3n" rel="noopener noreferrer" target="_blank">Postergan la interpelación a Medinaceli hasta el 3 de marzo tras accidentada sesión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/sesion-de-interpelacion-a-medinaceli-entra-en-cuarto-intermedio-hasta-las-17-00/" rel="noopener noreferrer" target="_blank">Sesión de interpelación a Medinaceli entra en cuarto intermedio hasta las 17.00</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/postergan-3-marzo-interpelacion-medinaceli/20260227190127989338.html" rel="noopener noreferrer" target="_blank">Postergan hasta el 3 de marzo la interpelación a Medinaceli</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/alp-reanudara-interpelacion-al-ministro-de-hidrocarburos-el-3-de-marzo-202622717710" rel="noopener noreferrer" target="_blank">ALP reanudará interpelación al ministro de Hidrocarburos el 3 de marzo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/alp-sesion-de-interpelacion-al-ministro-medinaceli-se-reanudara-el-martes-BN19417688" rel="noopener noreferrer" target="_blank">ALP: Sesión de interpelación al ministro Medinaceli se reanudará el martes</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40682-suspenden-la-sesion-de-interpelacion-a-medinaceli-para-el-martes-3-de-marzo" rel="noopener noreferrer" target="_blank">Suspenden la sesión de interpelación a Medinaceli para el martes 3 de marzo</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/cuarto-intermedio-en-la-alp-legisladores-retornaran-en-la-tarde-para-votar-a-favor-o-en-contra-de-la-censura-al-ministro-medinacelli" rel="noopener noreferrer" target="_blank">Cuarto intermedio en la ALP: Legisladores retornarán en la tarde para votar a favor o en contra de la censura al ministro Medinacelli</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/asamblea-legislativa-instala-sesion-ordinaria-para-interpelar-al-ministro-de-hidrocarburos.html" rel="noopener noreferrer" target="_blank">Asamblea Legislativa instala Sesión Ordinaria para interpelar al Ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/samuel-y-camacho-evitan-que-se-someta-a-votacion-en-alp-para-censura-a-min-medinaceli-por-gasolina-basura/" rel="noopener noreferrer" target="_blank">SAMUEL y CAMACHO evitan que se someta a votación en ALP para censura a Min Medinaceli por GASOLINA BASURA</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/interpelacion-ministro-de-hidrocarburos-no-asistio-y-sesion-de-la-alp-entra-en-cuarto-intermedio/" rel="noopener noreferrer" target="_blank">Interpelación: Ministro de Hidrocarburos no asistió y sesión de la ALP entra en cuarto intermedio</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/interpelacion-sin-ministro-tension-y-debate-por-posible-censura-en-alp-2026227133714" rel="noopener noreferrer" target="_blank">Interpelación sin ministro: tensión y debate por posible censura en ALP</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40665-medinaceli-no-acude-al-legislativo-y-la-sesion-en-la-que-se-define-si-hay-censura-entra-en-cuarto-intermedio-tras-incidentes-y-alusiones" rel="noopener noreferrer" target="_blank">Medinaceli no acude al Legislativo y la sesión en la que se define si hay censura entra en cuarto intermedio tras incidentes y alusiones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/vocera-no-existe-ningun-temor-del-ejecutivo-ni-del-ministro-ante-la-interpelacion/" rel="noopener noreferrer" target="_blank">Vocera: No existe ningún temor del Ejecutivo ni del ministro ante la interpelación</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/vocera-afirma-que-el-gobierno-teme-ser-interpelado-pero-pide-que-la-alp-cumpla-las-etapas/" rel="noopener noreferrer" target="_blank">Vocera afirma que el Gobierno no teme ser interpelado, pero pide que la ALP “cumpla las etapas”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/vocera-faval-ratifica-que-el-gobierno-no-teme-ser-interpelado-por-la-alp/" rel="noopener noreferrer" target="_blank">Vocera Faval ratifica que el Gobierno no teme ser interpelado por la ALP</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/merdinacelli-no-asistio-al-acto-de-interpelacion-frente-a-los-congresistas-de-libre-y-pdc" rel="noopener noreferrer" target="_blank">Merdinacelli no asistió al acto de interpelación frente a los congresistas de Libre y PDC</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/tal-como-se-anuncio-medinaceli-no-asiste-a-interpelacion-lara-dice-que-se-recurre-a-chicanas--57722" rel="noopener noreferrer" target="_blank">Tal como se anunció, Medinaceli no asiste a interpelación; Lara dice que se recurre a chicanas</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/lara-cuestiona-al-gobierno-tras-ausencia-de-medinaceli-en-su-interpelacion.html" rel="noopener noreferrer" target="_blank">Lara cuestiona al Gobierno tras ausencia de Medinaceli en su interpelación</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-hidrocarburos-no-asiste-interpelacion-asamblea-legislativa_1772208314" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos no asiste a su interpelación en la Asamblea Legislativa</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/gobierno-descarta-que-ministro-medinaceli-vaya-interpelacion" rel="noopener noreferrer" target="_blank">Gobierno descarta que ministro Medinaceli vaya a interpelación</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/ministro-hidrocarburos-no-asistira-interpelacion-anunciada-lara" rel="noopener noreferrer" target="_blank">El ministro de Hidrocarburos no asistirá a la interpelación anunciada por Lara</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/sesion-acalorada-lara-cruza-palabras-sus-detractores-medinaceli-no-asiste" rel="noopener noreferrer" target="_blank">Sesión acalorada; Lara cruza palabras con sus detractores y Medinaceli no asiste a interpelación</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/sesion-interpelacion-medinaceli-asiste-lara-dicta-cuarto-intermedio-falta-condiciones/20260227144624989328.html" rel="noopener noreferrer" target="_blank">Sesión de interpelación: Medinaceli no asiste y Lara dicta cuarto intermedio por falta de 'condiciones'</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/gobierno-dice-que-no-se-cumplio-el-procedimiento-para-interpelar-a-medinaceli-lara-denuncia-chicanas-HN19410645" rel="noopener noreferrer" target="_blank">Gobierno dice que no se cumplió el procedimiento para interpelar a Medinaceli; Lara denuncia “chicanas”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="DISPUTAS ENTRE LARA Y LEGISLADORES" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">DISPUTAS ENTRE LARA Y LEGISLADORES</div>
+<div class="modal-sum">Tensiones y disputas en la sesión de la Asamblea Legislativa Plurinacional convocada para la interpelación del ministro Medinaceli. Se registran enfrentamientos verbales entre el vicepresidente Edmand Lara y legisladores que lo calificaron de "dictador" y discutieron con él.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">25</strong> titulares</span>
+<span><strong style="color:var(--c-04)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/vicepresidente-pide-disculpas-a-asambleistas-y-reconoce-que-sus-declaraciones-fueron-excesivas-57720" rel="noopener noreferrer" target="_blank">Vicepresidente pide disculpas a asambleístas y reconoce que sus declaraciones fueron excesivas</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/politica/lara-se-disculpa-con-los-parlamentarios-por-sus-declaraciones-creo-que-me-excedi.html" rel="noopener noreferrer" target="_blank">Lara se disculpa con los parlamentarios por sus declaraciones: “creo que me excedí”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/lara-baja-el-tono-y-pide-disculpas-a-legisladores-tras-polemicas-acusaciones/" rel="noopener noreferrer" target="_blank">Lara baja el tono y pide disculpas a legisladores tras polémicas acusaciones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/lara-pide-disculpas-plena-sesion-calificar-delincuentes-legisladores" rel="noopener noreferrer" target="_blank">Lara pide disculpas en plena sesión por calificar de delincuentes a legisladores</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/creo-que-excedi-lara-pide-disculpas-parlamentarios-declaraciones/20260227113327989323.html" rel="noopener noreferrer" target="_blank">‘Creo que me excedí’: Lara pide disculpas a parlamentarios por sus declaraciones</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-se-disculpa-con-legisladores-que-le-ponen-el-hombro-a-la-patria-me-excedi-en-las-declaraciones/" rel="noopener noreferrer" target="_blank">Lara se disculpa con legisladores que “le ponen el hombro a la patria”: “Me excedí en las declaraciones”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Me-excedi-vicepresidente-edmand-lara-pide-disculpas-a-legisladores" rel="noopener noreferrer" target="_blank">“Me excedí”: vicepresidente Edmand Lara pide disculpas a legisladores</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/creo-que-me-excedi-lara-pide-perdon-a-parlamentarios-por-sus-declaraciones-2026227102424" rel="noopener noreferrer" target="_blank">“Creo que me excedí”: Lara pide perdón a diputados y senadores por sus declaraciones (Video)</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/creo-que-me-excedi-dice-lara-y-pide-disculpas-a-legisladores-por-sus-acusaciones-sobre-corrupcion-ON19410493" rel="noopener noreferrer" target="_blank">“Creo que me excedí”, dice Lara y pide disculpas a legisladores por sus acusaciones sobre “corrupción”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/lara-posterga-interpelacion-hasta-el-martes-para-sanear-el-proceso-57734" rel="noopener noreferrer" target="_blank">Lara posterga interpelación hasta el martes para “sanear” el proceso</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/interpelacion-lara-declara-cuarto-intermedio-en-sesion-por-falta-de-condiciones.html" rel="noopener noreferrer" target="_blank">Interpelación: Lara declara cuarto intermedio en sesión por “falta de condiciones”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/politica/lara-posterga-interpelacion-hasta-el-martes-buscaba-censurar-a-un-ministro-y-acabo-increpado.html" rel="noopener noreferrer" target="_blank">Lara posterga interpelación hasta el martes: buscaba censurar a un ministro y acabó increpado</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/politica/lara-suspende-sesion-de-interpelacion-por-falta-de-condiciones-y-lo-acusan-de-dictador.html" rel="noopener noreferrer" target="_blank">Lara suspende sesión de interpelación por falta de condiciones y lo acusan de “dictador”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/lara-posterga-al-martes-la-interpelacion-al-titular-de-hidrocarburos/" rel="noopener noreferrer" target="_blank">Lara posterga al martes la interpelación al titular de Hidrocarburos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-decide-posponer-para-el-3-febrero-la-reanudacion-del-acto-interpelatorio-contra-el-ministro-de-hidrocarburos/" rel="noopener noreferrer" target="_blank">Lara decide posponer para el 3 de marzo la reanudación del acto interpelatorio contra el Ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lara-termino-increpado-en-la-sesion-que-convoco-para-interpelar-al-ministro-de-hidrocarburos-IN19417348" rel="noopener noreferrer" target="_blank">Lara terminó increpado en la sesión que convocó para interpelar al ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/lara-declara-cuarto-intermedio-y-abandona-la-sesion-en-medio-de-gritos-de-legisladores-que-le-llaman-dictador-57728" rel="noopener noreferrer" target="_blank">Lara declara cuarto intermedio y abandona la sesión en medio de gritos de legisladores que le llaman "dictador"</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/sigo-siendo-capitan-te-guste-o-no-responde-lara-a-un-legislador-57730" rel="noopener noreferrer" target="_blank">"Sigo siendo capitán, te guste o no”, responde Lara a un legislador</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/usted-dictador-lara-declara-cuarto-intermedio-tensa-sesion-legislativa_1772216117" rel="noopener noreferrer" target="_blank">“Usted es un dictador”: Lara declara cuarto intermedio en tensa sesión legislativa</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/galindo-considera-que-lara-mal-imita-su-trabajo-y-lo-tilda-de-patetico-y-mediocre/" rel="noopener noreferrer" target="_blank">Galindo considera que Lara “mal imita” su trabajo y lo tilda de “patético” y “mediocre”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/no-sea-dictador-la-discusion-entre-lara-y-el-diputado-rada-en-plena-sesion-de-la-alp-CN19416589" rel="noopener noreferrer" target="_blank">“No sea dictador”: La discusión entre Lara y el diputado Rada en plena sesión de la ALP</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lara-declara-cuarto-intermedio-en-la-sesion-del-legislativo-tras-fricciones-por-la-censura-de-medinaceli-AN19414411" rel="noopener noreferrer" target="_blank">Lara declara cuarto intermedio en la sesión del Legislativo tras fricciones por la “censura” de Medinaceli</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/este-es-el-cruce-verbal-entre-lara-y-el-diputado-branez-en-plena-sesion-de-la-alp-AN19413210" rel="noopener noreferrer" target="_blank">Este es el cruce verbal entre Lara y el diputado Bráñez en plena sesión de la ALP</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-pierde-el-control-de-sesi%C3%B3n-de-la-asamblea-discute-y-lo-llaman-dictador" rel="noopener noreferrer" target="_blank">Lara pierde el control de sesión de la Asamblea, discute y lo llaman dictador</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40677-dictador-y-temas-maritales-cinco-momentos-de-tension-contra-lara-durante-la-sesion-de-la-asamblea" rel="noopener noreferrer" target="_blank">“Dictador” y “temas maritales”: cinco momentos de tensión contra Lara durante la sesión de la Asamblea</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_21">
+<div class="modal-backdrop" onclick="closeModal('modal_21')"></div>
+<div aria-label="BILLETES SIN VALOR LEGAL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-19)">ACCIDENTES</div>
+<div class="modal-title">BILLETES SIN VALOR LEGAL</div>
+<div class="modal-sum">El Banco Central de Bolivia (BCB) afirmó que los billetes hallados tras el accidente del avión militar Hércules en El Alto no tienen valor legal y exhortó a la población a devolverlos, recordando que su tenencia constituye un delito.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-19)">23</strong> titulares</span>
+<span><strong style="color:var(--c-19)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_21')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40706-ministro-espinoza-los-billetes-estaban-asegurados-y-su-reposicion-no-generara-gasto-al-estado" rel="noopener noreferrer" target="_blank">Ministro Espinoza: Los billetes estaban asegurados y reposición no generará gasto al Estado</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bcb-afirma-que-billetes-del-avion-militar-siniestrado-no-tienen-valor-legal" rel="noopener noreferrer" target="_blank">BCB afirma que billetes del avión militar siniestrado no tienen valor legal</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/defensa-advierte-que-retener-dinero-del-avion-siniestrado-es-delito" rel="noopener noreferrer" target="_blank">Defensa advierte que retener dinero del avión siniestrado es delito</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/bcb-billetes-hallados-en-aeronave-siniestrada-no-tienen-valor-legal" rel="noopener noreferrer" target="_blank">BCB: billetes hallados en aeronave siniestrada no tienen valor legal</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/bcb-los-billetes-que-llevaba-el-hercules-no-tienen-valor-legal-57746" rel="noopener noreferrer" target="_blank">BCB: los billetes que llevaba el Hércules no tienen valor legal</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/el-bcb-incinera-los-billetes-que-aun-estaban-en-el-avion-57749" rel="noopener noreferrer" target="_blank">El BCB incinera los billetes que aún estaban en el avión</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/27/dinero-en-las-calles-policia-y-ejercito-tratan-de-contener-a-la-gente-que-se-roba-billetes-57748" rel="noopener noreferrer" target="_blank">Dinero en las calles, Policía y Ejército tratan de contener a la gente que se roba billetes</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-economia-indico-reposicion-billetes-no-tendra-costo-estado_1772241454" rel="noopener noreferrer" target="_blank">Ministro de Economía indicó que la reposición de billetes no tendrá costo para el Estado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/accidente-aereo-gobierno-exige-devolver-dinero-saqueado-advierte-uso-constituye-delito_1772243475" rel="noopener noreferrer" target="_blank">Accidente aéreo: Gobierno exige devolver dinero saqueado y advierte que su uso constituye un delito</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/defensa-alerta-usar-billetes-accidente-aereo-delito-no-tienen-valor-legal_1772243416" rel="noopener noreferrer" target="_blank">Defensa alerta que usar los billetes del accidente aéreo “es un delito”; no tienen valor legal</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/autoridades-queman-billetes-esparcidos-accidente-aereo-alto_1772243431" rel="noopener noreferrer" target="_blank">Autoridades queman los billetes esparcidos tras el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bcb-indica-billetes-avion-siniestrado-no-tienen-ningun-valor-legal_1772241107" rel="noopener noreferrer" target="_blank">BCB indica que los billetes del avión siniestrado no tienen ningún valor legal</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_accidente-el-alto-autoridades-informan-que-el-dinero-no-tiene-valor-legal.html" rel="noopener noreferrer" target="_blank">Accidente El Alto: Autoridades informan que el dinero no tiene valor legal</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/siniestro-a%C3%A9reo-banco-central-dice-que-los-billetes-no-tienen-valor-legal-y-exhorta" rel="noopener noreferrer" target="_blank">Siniestro aéreo: Banco Central dice que los billetes no tienen valor legal y exhorta a devolver</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/bcb-los-billetes-que-transportaba-el-avion-no-tienen-valor-legal/" rel="noopener noreferrer" target="_blank">BCB: Los billetes que transportaba el avión no tienen valor legal</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/accidente-aereo-bcb-aclara-que-billetes-no-tienen-valor-legal" rel="noopener noreferrer" target="_blank">Tras accidente aéreo, BCB aclara que billetes no tienen valor legal</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/bcb-afirma-que-billetes-encontrados-siniestro-alto-tienen-valor-legal-pide-devolucion/20260227212111989357.html" rel="noopener noreferrer" target="_blank">BCB afirma que billetes encontrados tras siniestro en El Alto no tienen valor legal y pide su devolución</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/autoridades-incineran-billetes-que-eran-transportados-en-avion-siniestrado-y-banco-de-sangre-pide-donadores/" rel="noopener noreferrer" target="_blank">Autoridades incineran billetes que eran transportados en avión siniestrado y Banco de Sangre pide donadores</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/siniestro-en-el-alto-espinoza-afirma-que-los-billetes-estaban-asegurados-y-reposicion-no-generara-gasto-al-estado/" rel="noopener noreferrer" target="_blank">Siniestro en El Alto: Espinoza afirma que los billetes estaban asegurados y reposición no generará gasto al Estado</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tras-accidente-aereo-bcb-aclara-que-billetes-no-tienen-valor-legal-2026227205813" rel="noopener noreferrer" target="_blank">Tras accidente aéreo, BCB aclara que billetes no tienen valor legal; pide devolver el dinero</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-los-billetes-del-siniestro-no-tienen-valor-legal-y-su-tenencia-constituye-en-delito-ON19419997" rel="noopener noreferrer" target="_blank">BCB: “Los billetes del siniestro no tienen valor legal y su tenencia constituye en delito”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/bcb-afirma-que-billetes-del-avi%C3%B3n-siniestrado-en-el-alto-no-tienen-valor-legal" rel="noopener noreferrer" target="_blank">BCB afirma que billetes del avión siniestrado en El Alto no tienen valor legal</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40698-presidente-del-bcb-billetes-que-cayeron-en-el-accidente-del-avion-hercules-no-tienen-valor-legal" rel="noopener noreferrer" target="_blank">Presidente del BCB: billetes que cayeron en el accidente del avión Hércules no tienen valor legal</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="DETENCIÓN DE JHONNY FERNÁNDEZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">DETENCIÓN DE JHONNY FERNÁNDEZ</div>
+<div class="modal-sum">El alcalde de Santa Cruz, Jhonny Fernández, fue enviado con detención preventiva por 100 días al penal de Palmasola en el marco del caso 'Pavimento'. Mientras la defensa apela la decisión y la Policía confirma su reclusión sin privilegios, la Alcaldía y su asesor legal aseguran que seguirá ejerciendo sus funciones como alcalde.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">22</strong> titulares</span>
+<span><strong style="color:var(--c-15)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/concejo-municipal-analiza-designacion-de-alcalde-interino-en-santa-cruz" rel="noopener noreferrer" target="_blank">Concejo Municipal analiza designación de alcalde interino en Santa Cruz</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/roberto-fernandez-hermano-de-jhonny-fernandez-cuestiona-decision-de-la-justicia-y-dice-que-faltaron-argumentos-solidos" rel="noopener noreferrer" target="_blank">Roberto Fernández, hermano de Jhonny Fernández, cuestiona decisión de la Justicia y dice que faltaron “argumentos sólidos”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/tras-detencion-de-fernandez-concejo-cruceno-debe-elegir-al-alcalde-suplente-explica-presidente-del-tse-57710" rel="noopener noreferrer" target="_blank">Tras detención de Fernández, concejo cruceño debe elegir al alcalde suplente, explica presidente del TSE</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/02/27/jhonny-fernandez-seguira-ejerciendo-funciones-desde-palmasola-segun-la-alcaldia-57733" rel="noopener noreferrer" target="_blank">Jhonny Fernández seguirá ejerciendo funciones desde Palmasola, según la alcaldía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/alcaldia-crucena-descarta-designar-suplente-tras-detencion-preventiva-de-jhonny-fernandez.html" rel="noopener noreferrer" target="_blank">Alcaldía cruceña descarta designar suplente tras detención preventiva de Jhonny Fernández</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260227/dictan-100-dias-de-prision-contra-alcalde-fernandez.html" rel="noopener noreferrer" target="_blank">Dictan 100 días de prisión contra alcalde Fernández</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/27/jueza-ordena-100-dias-de-detencion-preventiva-para-alcalde-fernandez/" rel="noopener noreferrer" target="_blank">Jueza ordena 100 días de detención preventiva para alcalde Fernández</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/alcald%C3%ADa-de-santa-cruz-rechaza-que-se-elija-un-suplente-de-jhonny-fern%C3%A1ndez-pese-su" rel="noopener noreferrer" target="_blank">Alcaldía de Santa Cruz rechaza que se elija un suplente de Jhonny Fernández, pese a su detención</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/quien-reemplazara-jhonny-fernandez-tse-se-pronuncia-concejo-convoca-sesion" rel="noopener noreferrer" target="_blank">¿Quién reemplazará a Jhonny Fernández?: TSE se pronuncia y el Concejo convoca a sesión</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260227/pese-detencion-preventiva-fernandez-seguira-ejerciendo-funciones-como" rel="noopener noreferrer" target="_blank">Pese a detención preventiva, Fernández seguirá ejerciendo funciones como alcalde de Santa Cruz</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/palmasola-jhonny-fernandez-mantendra-mando-alcaldia-santa-cruz/20260227122525989326.html" rel="noopener noreferrer" target="_blank">Desde Palmasola, Jhonny Fernández mantendrá el mando de la Alcaldía de Santa Cruz</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/jhonny-fernandez-paso-primera-noche-pabellon-pc-6-penal-palmasola/20260227092309989316.html" rel="noopener noreferrer" target="_blank">Jhonny Fernández pasó su primera noche en el pabellón PC-6 del penal de Palmasola</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/caso-pavimento-jueza-envia-carcel-alcalde-jhonny-fernandez/20260227000035989294.html" rel="noopener noreferrer" target="_blank">Caso 'Pavimento': jueza envía a la cárcel al alcalde Jhonny Fernández</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/asesor-juridico-asegura-que-fernandez-seguira-ejerciendo-como-alcalde-de-santa-cruz-desde-la-carcel/" rel="noopener noreferrer" target="_blank">Asesor Jurídico asegura que Fernández seguirá ejerciendo como Alcalde de Santa Cruz desde la cárcel</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Alcaldia-crucena-afirma-vigencia-del-mandato-de-jhonny-fernandez" rel="noopener noreferrer" target="_blank">Alcaldía cruceña afirma vigencia del mandato de Jhonny Fernández</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Defensa-de-jhonny-fernandez-apela-detencion-y-cuestiona-trato-desigual-en-el-caso" rel="noopener noreferrer" target="_blank">Defensa de Jhonny Fernández apela detención y cuestiona trato desigual en el caso</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/sin-privilegios-policia-confirma-que-jhonny-fernandez-fue-recluido-como-cualquier-interno-en-palmasola-2026227131823" rel="noopener noreferrer" target="_blank">“Sin privilegios”: Policía confirma que Jhonny Fernández fue recluido como cualquier interno en Palmasola</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/jhonny-en-palmasola-alcaldia-crucena-dice-que-fernandez-sigue-siendo-alcalde-DN19410388" rel="noopener noreferrer" target="_blank">Jhonny en Palmasola: Alcaldía cruceña dice que Fernández sigue siendo alcalde</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-alcalde-johnny-fern%C3%A1ndez-pas%C3%B3-su-primera-noche-en-palmasola" rel="noopener noreferrer" target="_blank">El alcalde Johnny Fernández pasó su primera noche en Palmasola</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/jhonny-fern%C3%A1ndez-mantendr%C3%A1-el-mando-de-la-alcald%C3%ADa-desde-palmasola" rel="noopener noreferrer" target="_blank">Jhonny Fernández mantendrá el mando de la Alcaldía desde Palmasola</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40653-sesion-de-concejo-oposicion-busca-interinato-y-oficialismo-apunta-a-que-fernandez-gobierne-desde-palmasola" rel="noopener noreferrer" target="_blank">Sesión de Concejo: oposición busca interinato y oficialismo apunta a que Fernández gobierne desde Palmasola</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40666-la-hora-mas-dificil-de-dos-alcaldes-reis-y-fernandez-frente-a-la-justicia" rel="noopener noreferrer" target="_blank">La hora más difícil de dos alcaldes: Reis y Fernández frente a la justicia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="MALA CALIDAD DEl COMBUSTIBLE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">MALA CALIDAD DEl COMBUSTIBLE</div>
+<div class="modal-sum">Noticias extensas sobre la controversia de la gasolina de mala calidad distribuida por YPFB, causando daños a vehículos y maquinaria, y una caída en las ventas. Se revelan audios de ejecutivos de YPFB conscientes del problema. El Presidente Paz anuncia investigación, ubicación de culpables y búsqueda de recursos para soluciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">22</strong> titulares</span>
+<span><strong style="color:var(--c-09)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260227/pondran-antioxidantes-y-detergentes-a-la-gasolina.html" rel="noopener noreferrer" target="_blank">Pondrán antioxidantes y detergentes a la gasolina</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/denuncian-que-nueve-vagonetas-del-senado-estan-en-taller-por-fallas-atribuidas-al-combustible.html" rel="noopener noreferrer" target="_blank">Denuncian que nueve vagonetas del Senado están en taller por fallas atribuidas al combustible</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260227/resarcimiento-por-gasolina-desestabilizada-arranca-el-3-de-marzo-y-se-gestionara-por-whatsapp.html" rel="noopener noreferrer" target="_blank">Resarcimiento por gasolina desestabilizada arranca el martes y se gestionará por WhatsApp</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/akly-dice-que-informes-sobre-gasolina-con-exceso-de-goma-son-fotocopias-tambien-son-fotocopias-sobreprecio-que-estamos-pagando/" rel="noopener noreferrer" target="_blank">Akly dice que informes sobre gasolina con exceso de goma son “fotocopias”; ¿también son fotocopias sobreprecio que estamos pagando?</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/desastre-en-ypfb-saben-de-gasolina-basura-y-aun-la-venden-ahora-pondran-aditivos-al-combustible/" rel="noopener noreferrer" target="_blank">Desastre en YPFB: saben de gasolina basura y aún la venden, ahora pondrán “aditivos” al combustible</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/rodrigo-paz-la-gasolina-sale-limpia-de-un-punto-y-llega-contaminada-a-otro-es-un-sabotaje/" rel="noopener noreferrer" target="_blank">Rodrigo Paz: “La gasolina sale limpia de un punto y llega contaminada a otro; es un sabotaje”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gasolina-desestabilizada-golpea-ventas-surtidores-asosur-deslinda-responsabilidad_1772228280" rel="noopener noreferrer" target="_blank">Gasolina “desestabilizada” golpea ventas en surtidores y Asosur deslinda responsabilidad</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/economia/audios-revelan-que-ejecutivos-de-ypfb-sabian-sobre-la-mala-gasolina-y-optaron-por-culpar-a-la-anterior-gestion.html" rel="noopener noreferrer" target="_blank">Audios revelan que ejecutivos de YPFB sabían sobre la mala gasolina y optaron por culpar a la anterior gestión.</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/27/ypfb-mejorara-con-aditivos-calidad-de-gasolina/" rel="noopener noreferrer" target="_blank">YPFB mejorará con aditivos calidad de gasolina</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-informa-que-se-re%C3%BAnen-los-recursos-para-dar-soluci%C3%B3n-reclamos-por-la-gasolina" rel="noopener noreferrer" target="_blank">Paz informa que se reúnen los recursos para dar solución a reclamos por la gasolina contaminada</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/27/paz-sobre-gasolina-defectuosa-los-culpables-ya-estan-ubicados/" rel="noopener noreferrer" target="_blank">Paz sobre gasolina defectuosa: Los culpables ya están ‘ubicados’</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/gobierno-asegura-que-tiene-recursos-solucionar-reclamos-gasolina-contaminada/20260227190255989339.html" rel="noopener noreferrer" target="_blank">Gobierno asegura que ya se tiene los recursos para solucionar reclamos por la gasolina contaminada</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ypfb-incluira-proxima-semana-aditivos-mejorar-calidad-gasolina/20260227000052989295.html" rel="noopener noreferrer" target="_blank">YPFB incluirá, desde la próxima semana, aditivos para mejorar la calidad de la gasolina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/gasolina-desestabilizada-paz-afirma-que-ya-se-ubico-a-los-culpables-y-se-busca-recursos-para-dar-soluciones/" rel="noopener noreferrer" target="_blank">Gasolina “desestabilizada”: Paz afirma que ya se “ubicó” a los culpables y se busca recursos para dar soluciones</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Paz-anuncia-investigacion-y-sanciones-por-gasolina-irregular" rel="noopener noreferrer" target="_blank">Paz anuncia investigación y sanciones por gasolina irregular</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/camara-de-la-construccion-de-la-paz-reporta-graves-danos-en-maquinaria-por-la-calidad-del-combustible-HN19417404" rel="noopener noreferrer" target="_blank">Cámara de la Construcción de La Paz reporta “graves daños” en maquinaria por la calidad del combustible</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/agropecuarios-y-gobierno-sostienen-una-reunion-para-analizar-temas-de-productividad-y-sobre-combustible-LN19415619" rel="noopener noreferrer" target="_blank">Agropecuarios y Gobierno sostienen una reunión para analizar temas de productividad y sobre combustible</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/anh-despliega-laboratorios-moviles-de-control-de-la-calidad-de-la-gasolina-en-estaciones-de-servicio-ON19410259" rel="noopener noreferrer" target="_blank">ANH despliega laboratorios móviles de control de la calidad de la gasolina en estaciones de servicio</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/la-gente-esta-con-temor-surtidores-registran-caida-de-ventas-por-la-gasolina-desestabilizada-dice-asosur-PM19409530" rel="noopener noreferrer" target="_blank">“La gente está con temor”: Surtidores registran caída de ventas por la gasolina desestabilizada, dice Asosur</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40649-revelan-documentos-y-audios-de-gasolina-con-altos-niveles-de-goma-lara-alista-denuncia-penal" rel="noopener noreferrer" target="_blank">Revelan documentos y audios de gasolina con altos niveles de goma; Lara alista denuncia penal</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40672-ypfb-asegura-que-combustible-con-desviacion-no-sale-al-mercado-y-ve-afanes-tendenciosos-en-publicaciones" rel="noopener noreferrer" target="_blank">YPFB asegura que combustible con “desviación” no sale al mercado y ve afanes tendenciosos en publicaciones</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40679-exgerente-de-operaciones-de-ypfb-considera-que-la-gasolina-pudo-contaminarse-por-falta-de-mantenimiento-de-tanques-de-almacenamiento" rel="noopener noreferrer" target="_blank">Exgerente de Operaciones de YPFB considera que la gasolina pudo contaminarse por falta de mantenimiento de tanques de almacenamiento</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11a">
+<div class="modal-backdrop" onclick="closeModal('modal_11a')"></div>
+<div aria-label="NUEVO INSPECTOR GENERAL DE LA POLICÍA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">NUEVO INSPECTOR GENERAL DE LA POLICÍA</div>
+<div class="modal-sum">El presidente Rodrigo Paz designa por decreto a Lionel Valenzuela como el nuevo Inspector General interino de la Policía Boliviana, en reemplazo de Gunter Agudo, quien fue destituido.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">11</strong> titulares</span>
+<span><strong style="color:var(--c-04)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Lionel-Valenzuela-asume-como-inspector-general-interino-de-la-policia-boliviana" rel="noopener noreferrer" target="_blank">Lionel Valenzuela asume como nuevo Inspector General de la Policía Boliviana</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260227/rodrigo-paz-nombra-a-lionel-valenzuela-como-inspector-general-interino-de-la-policia.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz nombra a Lionel Valenzuela como inspector general interino de la Policía</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-cambia-inspector-general-policia-valenzuela-nueva-autoridad_1772205185" rel="noopener noreferrer" target="_blank">Paz cambia al Inspector General de la Policía, Valenzuela es la nueva autoridad</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/pais/presidente-paz-designa-por-decreto-a-nuevo-inspector-de-la-policia.html" rel="noopener noreferrer" target="_blank">Presidente Paz designa por decreto a nuevo Inspector de la Policía</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/tras-salir-del-cargo-de-inspector-de-la-polic%C3%ADa-agudo-anuncia-que-se-dedicar%C3%A1-la-defensa" rel="noopener noreferrer" target="_blank">Tras salir del cargo de Inspector de la Policía, Agudo anuncia que se dedicará a la defensa de sus camaradas</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/jura-el-general-lionel-david-valenzuela-como-inspector-de-la-polic%C3%ADa" rel="noopener noreferrer" target="_blank">Jura el general Lionel David Valenzuela como Inspector de la Policía</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/decreto-paz-designa-nuevo-inspector-policia/20260227084332989314.html" rel="noopener noreferrer" target="_blank">Por decreto, Paz designa a nuevo Inspector de la Policía</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/por-decreto-paz-destituye-a-gunter-agudo-y-nombra-a-nuevo-inspector-de-la-policia/" rel="noopener noreferrer" target="_blank">Por Decreto, Paz destituye a Gunter Agudo y nombra a nuevo Inspector de la Policía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/posesionan-david-valenzuela-como-inspector-general-de-la-polic%C3%ADa-en-reemplazo-de-gunther" rel="noopener noreferrer" target="_blank">Posesionan a David Valenzuela como Inspector General de la Policía, en reemplazo de Gunther Agudo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40647-presidente-paz-destituye-al-inspector-general-de-la-policia-gunter-agudo-y-designa-a-un-interino" rel="noopener noreferrer" target="_blank">Presidente Paz destituye al inspector general de la Policía, Gunter Agudo, y designa a un interino</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40657-comandante-de-la-policia-posesiona-al-nuevo-inspector-general-y-justifica-el-relevo-de-gunter-agudo" rel="noopener noreferrer" target="_blank">Comandante de la Policía posesiona al nuevo inspector general y justifica el relevo de Gunter Agudo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="INVERSIONES DE LA CAF" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">INVERSIONES DE LA CAF</div>
+<div class="modal-sum">La Corporación Andina de Fomento (CAF) ratifica su apoyo a la gestión del presidente Rodrigo Paz, garantizando una inversión de $us 3.100 millones para impulsar planes estratégicos y obras de desarrollo en Bolivia hasta 2030.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">9</strong> titulares</span>
+<span><strong style="color:var(--c-04)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/27/presidente-de-la-caf-llega-a-tarija-y-manana-se-reune-con-el-sector-privado-en-santa-cruz-57711" rel="noopener noreferrer" target="_blank">Presidente de la CAF llega a Tarija y mañana se reúne con el sector privado en Santa Cruz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/27/presidente-de-la-caf-informa-que-el-agua-y-el-saneamiento-son-temas-centrales-para-el-ente-financiador-57723" rel="noopener noreferrer" target="_blank">Presidente de la CAF informa que el agua y el saneamiento son temas centrales para el ente financiador</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/27/gobierno-y-caf-firman-acuerdo-para-planta-de-tratamiento-de-aguas-residuales-en-tarija-y-preven-proximos-proyectos-57724" rel="noopener noreferrer" target="_blank">Gobierno y CAF firman acuerdo para planta de tratamiento de aguas residuales en Tarija y prevén próximos proyectos</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260227/paz-asegura-us-3-100-millones-y-caf-ratifica-apoyo-a-su-gestion.html" rel="noopener noreferrer" target="_blank">Paz asegura $us 3.100 millones y CAF ratifica apoyo a su gestión</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/caf-impulsa-estrategia-pais-bolivia-asegura-us-3-100-millones_1772188929" rel="noopener noreferrer" target="_blank">CAF impulsa su Estrategia País en Bolivia y asegura $us 3.100 millones</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/02/27/caf-garantiza-us-3-100-millones-para-planes-estrategicos-hasta-2030/" rel="noopener noreferrer" target="_blank">CAF garantiza $us 3.100 millones para planes estratégicos hasta 2030</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260227/caf-acompanara-gestion-paz-anuncia-mas-us-400-millones-obras-proyectos" rel="noopener noreferrer" target="_blank">La CAF acompañará gestión de Paz y anuncia más de $us 400 millones para obras y proyectos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/caf-busca-impulsar-desarrollo-bolivia-us-3100-millones/20260227000011989274.html" rel="noopener noreferrer" target="_blank">La CAF busca impulsar desarrollo de Bolivia con $us 3.100 millones</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presencia-de-la-caf-abre-puertas-a-inversion-y-crecimiento-destaca-el-gobierno-2026227896" rel="noopener noreferrer" target="_blank">Presencia de la CAF abre puertas a inversión y crecimiento, destaca el Gobierno</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="INCENDIO DE BUSES EN ORURO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">INCENDIO DE BUSES EN ORURO</div>
+<div class="modal-sum">Un incendio en un taller mecánico de Oruro arrasó con cinco buses, dejando a dieciséis a veinte personas afectadas por inhalación de humo y heridas. Se investigan las causas del siniestro.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">7</strong> titulares</span>
+<span><strong style="color:var(--c-07)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260227/oruro-incendio-arrasa-con-5-buses-en-un-taller.html" rel="noopener noreferrer" target="_blank">Oruro: Incendio arrasa con 5 buses en un taller</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/calculan-perdida-600-mil-dolares-buses-calcinados-oruro_1772202593" rel="noopener noreferrer" target="_blank">Calculan pérdida de más de 600 mil dólares por buses calcinados en Oruro</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/cinco-buses-incendian-taller-mecanico-oruro/20260227000054989272.html" rel="noopener noreferrer" target="_blank">Cinco buses se incendian en taller mecánico de Oruro</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/incendio-taller-mecanico-oruro-deja-20-heridos/20260227111328989320.html" rel="noopener noreferrer" target="_blank">Incendio en taller mecánico de Oruro deja 20 heridos</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Incendio-en-taller-mecanico-de-oruro-deja-16-personas-afectadas-por-inhalacion-de-humo" rel="noopener noreferrer" target="_blank">Incendio en taller mecánico de Oruro deja 16 personas afectadas por inhalación de humo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/incendio-en-taller-de-oruro-deja-buses-calcinados-que-lo-provoco-202622710560" rel="noopener noreferrer" target="_blank">Incendio en taller de Oruro deja buses calcinados: ¿qué lo provocó?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/evaluan-causas-y-estado-de-los-afectados-tras-incendio-de-cinco-buses-en-oruro-202622711339" rel="noopener noreferrer" target="_blank">Evalúan causas y estado de los afectados tras incendio de cinco buses en Oruro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="AVIONETAS INTERVENIDAS EN BENI" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRÁFICO</div>
+<div class="modal-title">AVIONETAS INTERVENIDAS EN BENI</div>
+<div class="modal-sum">Se confirma que cuatro de las avionetas intervenidas en San Ramón, Beni, dieron positivo a rastros de cocaína y permanecen bajo custodia, según informes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">6</strong> titulares</span>
+<span><strong style="color:var(--c-29)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260227/cuatro-avionetas-intervenidas-en-beni-dieron-positivo-para-cocaina-informa-justiniano.html" rel="noopener noreferrer" target="_blank">Cuatro avionetas intervenidas en Beni dieron positivo para cocaína, informa Justiniano</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/confirman-rastros-de-coca%C3%ADna-en-cuatro-avionetas-intervenidas-en-san-ram%C3%B3n" rel="noopener noreferrer" target="_blank">Confirman rastros de cocaína en cuatro avionetas intervenidas en San Ramón</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/gobierno-confirma-rastros-de-cocaina-en-cuatro-de-cinco-aeronaves-intervenidas-en-beni/" rel="noopener noreferrer" target="_blank">Confirman rastros de cocaína en cuatro de cinco aeronaves intervenidas en Beni</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Cuatro-avionetas-dan-positivo-para-cocaina-en-san-ramon-y-continuan-bajo-custodia" rel="noopener noreferrer" target="_blank">Cuatro avionetas dan positivo para cocaína en San Ramón y continúan bajo custodia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cuatro-avionetas-dieron-positivo-para-cocaina-en-san-ramon-beni-202622710649" rel="noopener noreferrer" target="_blank">Cuatro avionetas dieron positivo para cocaína en San Ramón, Beni</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40658-cuatro-aeronaves-intervenidas-en-san-ramon-dan-positivo-a-cocaina-y-permanecen-bajo-custodia" rel="noopener noreferrer" target="_blank">Cuatro aeronaves intervenidas en San Ramón dan positivo a cocaína y permanecen bajo custodia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="DETENCIÓN DE ANA LUCIA REIS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">DETENCIÓN DE ANA LUCIA REIS</div>
+<div class="modal-sum">La alcaldesa de Cobija, Ana Lucía Reis, fue aprehendida y pasó la noche detenida. Su detención se vincula a procesos y deudas laborales heredadas de gestiones anteriores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">5</strong> titulares</span>
+<span><strong style="color:var(--c-15)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/alcaldesa-cobija-paso-noche-celda-especial_1772197555" rel="noopener noreferrer" target="_blank">Alcaldesa de Cobija pasó la noche en una “celda especial”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/procesos-heredados-derivan-detencion-alcaldesa-cobija_1772189644" rel="noopener noreferrer" target="_blank">Procesos heredados derivan en la detención de la alcaldesa de Cobija</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_aprehenden-a-alcaldesa-de-cobija-ana-lucia-reis.html" rel="noopener noreferrer" target="_blank">Aprehenden a alcaldesa de Cobija, Ana Lucía Reis</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/aprehenden-alcaldesa-cobija-temas-laborales/20260227000004989297.html" rel="noopener noreferrer" target="_blank">Aprehenden a la Alcaldesa de Cobija por temas laborales</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Aprehension-de-alcaldesa-de-cobija-se-vincula-a-deudas-laborales-heredadas" rel="noopener noreferrer" target="_blank">Aprehensión de alcaldesa de Cobija se vincula a deudas laborales heredadas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="ATAQUE POR PERROS EN ORURO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">ATAQUE POR PERROS EN ORURO</div>
+<div class="modal-sum">Un hombre pierde la vida en Oruro tras ser atacado por dos perros rottweiler, supuestamente incitados por su dueño, lo que genera un pedido de cárcel para el responsable.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">5</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/incitados-dueno-perros-rottweiler-matan-hombre-oruro_1772194373" rel="noopener noreferrer" target="_blank">Incitados por su dueño, perros rottweiler matan a un hombre en Oruro</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/piden-carcel-joven-mato-hombre-atacarlo-perros-rottweiler_1772231176" rel="noopener noreferrer" target="_blank">Piden cárcel para joven que mató a un hombre al atacarlo con perros rottweiler</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/atacado-por-perros-rottweiler-un-hombre-pierde-la-vida-en-oruro-tras-una-gresca/" rel="noopener noreferrer" target="_blank">Atacado por perros rottweiler, un hombre pierde la vida en Oruro</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/perros-causan-la-muerte-de-un-hombre-en-oruro-2026227122622" rel="noopener noreferrer" target="_blank">Perros causan la muerte de un hombre en Oruro</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40648-tragedia-en-oruro-dos-rottweilers-matan-a-un-hombre-tras-pelea-con-su-dueno" rel="noopener noreferrer" target="_blank">Tragedia en Oruro: dos rottweilers matan a un hombre tras pelea con su dueño</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="DIVISIONES EN CREEMOS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">DIVISIONES EN CREEMOS</div>
+<div class="modal-sum">Los exparlamentarios Bazán, Egüez y Montero rompen con la agrupación Creemos y se distancian del líder político Luis Fernando Camacho, quien aspira a la reelección.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">4</strong> titulares</span>
+<span><strong style="color:var(--c-04)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-27/politica/exparlamentarios-bazan-eguez-y-montero-se-alejan-de-creemos-y-de-camacho.html" rel="noopener noreferrer" target="_blank">Exparlamentarios Bazán, Egüez y Montero se alejan de Creemos y de Camacho</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/bazan-eguez-y-montero-rompen-con-creemos-y-se-distancian-de-camacho/" rel="noopener noreferrer" target="_blank">Bazán, Egüez y Montero rompen con Creemos y se distancian de Camacho</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/bazan-eguez-y-montero-se-alejan-de-creemos-y-de-luis-fernando-camacho-NN19410850" rel="noopener noreferrer" target="_blank">Bazán, Egüez y Montero se alejan de Creemos y de Luis Fernando Camacho</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/27/40663-otras-tres-figuras-politicas-se-alejan-de-creemos-y-del-aspirante-a-la-reeleccion-fernando-camacho" rel="noopener noreferrer" target="_blank">Otras tres figuras políticas se alejan de Creemos y del aspirante a la reelección Fernando Camacho</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="INFANTICIDIO EN SUCRE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">INFANTICIDIO EN SUCRE</div>
+<div class="modal-sum">Investigan el infanticidio de un recién nacido en Chuquisaca/Sucre, el primero de 2026, donde la principal sospechosa es una madre adolescente de 15 años acusada de golpear mortalmente a su bebé.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/27/madre-de-15-anos-dio-cuatro-golpes-mortales-a-su-bebe-recien-nacido" rel="noopener noreferrer" target="_blank">Madre de 15 años dio cuatro golpes mortales a su bebé recién nacido</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/sucre-adolescente-da-luz-golpea-piedra-bebe-matarlo_1772219801" rel="noopener noreferrer" target="_blank">Sucre: Adolescente da a luz y golpea con una piedra a su bebé hasta matarlo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260227_chuquisaca-registra-el-primer-infanticidio-de-2026.html" rel="noopener noreferrer" target="_blank">Chuquisaca registra el primer infanticidio de 2026</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/investigan-infanticidio-de-un-recien-nacido-en-chuquisaca-la-autora-seria-su-madre-adolescente-202622712652" rel="noopener noreferrer" target="_blank">Investigan infanticidio de un recién nacido en Chuquisaca; la autora sería su madre adolescente</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="ASESINATO EN COCHABAMBA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">ASESINATO EN COCHABAMBA</div>
+<div class="modal-sum">Un albañil fue condenado a 30 años de cárcel por el asesinato del hijo de su vecina y el ataque a dos mujeres en Pacata Alta. La madre de la víctima brindó un desgarrador testimonio tras la sentencia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260227/condenan-30-anos-carcel-albanil-que-mato-al-hijo-su-vecina-pacata-alta" rel="noopener noreferrer" target="_blank">Condenan a 30 años de cárcel a albañil que mató al hijo de su vecina en Pacata Alta</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/contratan-vecino-como-plomero-mata-joven-deja-heridas-madre-hermana/20260227000003989270.html" rel="noopener noreferrer" target="_blank">Contratan a su vecino como plomero: mata a joven y deja heridas a su madre y hermana</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cochabamba-sentencian-a-30-anos-de-carcel-al-albanil-que-mato-a-su-vecino-en-pacata-e-hirio-a-dos-mujeres-202622717816" rel="noopener noreferrer" target="_blank">Sentencian a 30 años de cárcel al albañil que mató a su vecino en Pacata y atacó a dos mujeres</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nada-me-va-a-devolver-a-mi-hijo-el-desgarrador-testimonio-de-la-madre-tras-la-condena-del-albanil-2026227215945" rel="noopener noreferrer" target="_blank">"Nada me va a devolver a mi hijo": El desgarrador testimonio de la madre tras la condena del albañil</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="INAUGURACIÓN DE OBRAS EN LA PAZ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">POLÍTICA</div>
+<div class="modal-title">INAUGURACIÓN DE OBRAS EN LA PAZ</div>
+<div class="modal-sum">La Alcaldía de La Paz inaugura las avenidas del Poeta y La Paz, que absorberán el 40% del tráfico vehicular tras retrasos y polémica en su construcción.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">3</strong> titulares</span>
+<span><strong style="color:var(--c-04)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/27/las-avenidas-del-poeta-y-la-paz-absorberan-el-40-del-trafico-vehicular/" rel="noopener noreferrer" target="_blank">Las avenidas del Poeta y La Paz absorberán el 40% del tráfico vehicular</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/Inauguran-avenidas-la-paz-y-del-poeta-tras-retrasos-y-polemica" rel="noopener noreferrer" target="_blank">Inauguran avenidas La Paz y Del Poeta tras retrasos y polémica</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-alcald%C3%ADa-inaugurar%C3%A1-las-avenidas-del-poeta-y-la-paz-este-viernes-las-1800" rel="noopener noreferrer" target="_blank">La Alcaldía inaugurará las avenidas del Poeta y La Paz este viernes a las 18:00</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="ORDEN DE APREHENSIÓN PARA RAFAEL ARCE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">ORDEN DE APREHENSIÓN PARA RAFAEL ARCE</div>
+<div class="modal-sum">Juzgado anticorrupción emite una nueva orden de aprehensión contra Rafael Arce por el caso “Adán y Eva”.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/juzgado-anticorrupcion-emite-mandamiento-de-aprehension-contra-rafael-arce-por-caso-adan-y-eva" rel="noopener noreferrer" target="_blank">Juzgado anticorrupción emite mandamiento de aprehensión contra Rafael Arce por caso “Adán y Eva”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/27/caso-adan-y-eva-juez-ordena-la-aprehension-de-rafael-arce/" rel="noopener noreferrer" target="_blank">Caso Adán y Eva: Juez ordena la aprehensión de Rafael Arce</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/emiten-nueva-orden-aprehension-rafael-arce-mosqueira/20260227190536989340.html" rel="noopener noreferrer" target="_blank">Emiten nueva orden de aprehensión contra Rafael Arce Mosqueira</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
