@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260301</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">175</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">6</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">5</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">16</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · MAR · 01</strong>
+        Reporte N° 20260301<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_4a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-19)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-19)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-19)">ACCIDENTES</div>
+<div class="top3-title">AVIÓN MILITAR EN EL ALTO</div>
+<div class="top3-body">Un avión militar Hércules C-130 se estrelló en El Alto, causando la muerte de al menos 22 personas y decenas de heridos, incluyendo una familia que perdió a varios miembros. El gobierno decretó duelo nacional, garantizó asistencia a víctimas e inició investigaciones tras la recuperación de la caja negra.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-19)">95</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-19)">16</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_4b')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-17)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-17)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-17)">ECONOMÍA</div>
+<div class="top3-title">BILLETES DE LA SERIE B</div>
+<div class="top3-body">El Banco Central de Bolivia (BCB) y la ASFI inhabilitaron la circulación de billetes de Bs 10, 20 y 50 de la Serie B, que eran transportados en el avión militar siniestrado en El Alto y fueron sustraídos tras el accidente. El Gobierno aclaró que la inhabilitación sería por 48 horas y generó confusión entre la población.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-17)">57</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-17)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_2b')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-18)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-18)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="top3-title">ATAQUES DE EEUU E ISRAEL CONTRA IRÁN</div>
+<div class="top3-body">Estados Unidos e Israel lanzan una operación militar masiva y continua, que incluye ataques preventivos contra Irán, con el objetivo de eliminar lo que describen como una amenaza existencial, llevando a Israel a declarar estado de emergencia.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-18)">10</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-18)">3</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-19)"></div>
+<div class="cat-name">ACCIDENTES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-19)"></div></div>
+<div class="cat-n">95</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:60%;background:var(--c-17)"></div></div>
+<div class="cat-n">57</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-18)"></div></div>
+<div class="cat-n">15</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-14)"></div>
+<div class="cat-name">TRANSPORTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:5%;background:var(--c-14)"></div></div>
+<div class="cat-n">5</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:3%;background:var(--c-15)"></div></div>
+<div class="cat-n">3</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">accidente</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">59</td>
+</tr>
+<tr>
+<td class="freq-word">billetes</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:92%"></div>
+</div>
+</td>
+<td class="freq-count">52</td>
+</tr>
+<tr>
+<td class="freq-word">militar</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:45%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">tragedia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">hércules</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:40%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">caja negra</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:38%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:38%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">avión siniestrado</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:33%"></div>
+</div>
+</td>
+<td class="freq-count">12</td>
+</tr>
+<tr>
+<td class="freq-word">israel</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">negra del avión</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">AVIÓN MILITAR EN EL ALTO</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-19))">95</div>
+</div>
+<div class="chart-medios">16 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">BILLETES DE LA SERIE B</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:60.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">57</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">ATAQUES DE EEUU E ISRAEL CONTRA IRÁN</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">10</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">SANCIONES POR RETRASOS EN VUELOS AREOS</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-14))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">MUERTE DEL AYATOLÁ IRANÍ</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">INVESTIGACIÓN CONTRA FREDDY VIDOVIC</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:3.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-14)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-14)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-14)">TRANSPORTE</div>
+<div class="topic-title">SANCIONES POR RETRASOS EN VUELOS AREOS</div>
+<div class="topic-body">El Gobierno instruyó a BoA y Naabol aplicar sanciones económicas y multas a funcionarios responsables por demoras injustificadas y retrasos en vuelos del sector aeronáutico nacional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2a')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">MUERTE DEL AYATOLÁ IRANÍ</div>
+<div class="topic-body">Varios medios y figuras como Donald Trump y Netanyahu reportan y confirman la muerte del líder supremo iraní, el ayatolá Alí Jamenei, y miembros de su familia, tras los ataques masivos de Estados Unidos e Israel contra Irán.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">JUSTICIA</div>
+<div class="topic-title">INVESTIGACIÓN CONTRA FREDDY VIDOVIC</div>
+<div class="topic-body">La Fiscalía boliviana ha iniciado una investigación formal contra Freddy Vidovic, Secretario General de la Vicepresidencia, por la presunta usurpación de funciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/seguridad/informe-tecnico-definira-si-san-pedro-deja-de-recibir-internos-anuncia-regimen-penitenciario" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Informe técnico definirá si San Pedro deja de recibir internos, anuncia Régimen Penitenciario</a></div>
+<div class="emergente-sum">El Régimen Penitenciario evalúa un informe técnico que podría determinar si la cárcel de San Pedro dejará de recibir nuevos internos.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldia.com.bo/2026-02-28/pais/gobierno-pretende-por-decreto-formalizar-a-3982-autorizaciones-mineras-transitorias.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Gobierno pretende por decreto formalizar a 3.982 autorizaciones mineras transitorias</a></div>
+<div class="emergente-sum">El Gobierno boliviano busca formalizar por decreto 3.982 autorizaciones mineras transitorias, generando expectativas en el sector.</div>
+<div class="emergente-source">Fuente: El Día</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/seguridad/alcaldesa-de-cobija-recupera-su-libertad-tras-firmar-compromisos-de-pagos-laborales" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Alcaldesa de Cobija recupera su libertad tras firmar compromisos de pagos laborales</a></div>
+<div class="emergente-sum">La alcaldesa de Cobija recuperó su libertad tras dos días de aprehensión, luego de firmar compromisos para el pago de deudas laborales.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldia.com.bo/2026-02-28/politica/en-la-paz-mas-de-500-personas-piden-anulacion-del-registro-de-militancia-sin-consentimiento.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">En La Paz, más de 500 personas piden anulación del registro de militancia sin consentimiento</a></div>
+<div class="emergente-sum">Más de 500 personas se manifiestan en La Paz para solicitar la anulación de registros de militancia política sin su consentimiento.</div>
+<div class="emergente-source">Fuente: El Día</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260228_representantes-de-bolivia-y-argentina-se-reunen-en-la-paz-y-acuerdan-relanzar-agenda-bilateral.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Representantes de Bolivia y Argentina se reúnen en La Paz y acuerdan relanzar agenda bilateral</a></div>
+<div class="emergente-sum">Bolivia y Argentina acuerdan en La Paz relanzar su agenda bilateral, buscando profundizar lazos y proyectos conjuntos.</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260301 · 2026-03-01</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 175 titulares · 6 temas · 5 categorías · 16 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="AVIÓN MILITAR EN EL ALTO" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-19)">ACCIDENTES</div>
+<div class="modal-title">AVIÓN MILITAR EN EL ALTO</div>
+<div class="modal-sum">Un avión militar Hércules C-130 se estrelló en El Alto, causando la muerte de al menos 22 personas y decenas de heridos, incluyendo una familia que perdió a varios miembros. El gobierno decretó duelo nacional, garantizó asistencia a víctimas e inició investigaciones tras la recuperación de la caja negra.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-19)">95</strong> titulares</span>
+<span><strong style="color:var(--c-19)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/idif-realizo-20-autopsias-tras-el-siniestro-del-avion-hercules-en-el-alto" rel="noopener noreferrer" target="_blank">IDIF realizó 20 autopsias tras el siniestro del avión Hércules en El Alto</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/tragedia-en-el-alto-perdio-a-siete-integrantes-de-su-familia-en-el-accidente-aereo" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Perdió a siete integrantes de su familia en el accidente aéreo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/hallan-caja-negra-del-avion-siniestrado-en-el-alto-advierten-que-analisis-de-datos-puede-demorar-hasta-un-ano" rel="noopener noreferrer" target="_blank">Hallan caja negra del avión siniestrado en El Alto; advierten que análisis de datos puede demorar hasta un año</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/reporteros-golpeados-y-un-vehiculo-de-tv-atacado-con-piedras-durante-cobertura-de-accidente-aereo" rel="noopener noreferrer" target="_blank">Reporteros golpeados y un vehículo de tv atacado con piedras durante cobertura de accidente aéreo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/fab-busca-caja-negra-de-la-aeronave-que-se-estrello-en-el-alto-y-denuncia-contaminacion-del-area" rel="noopener noreferrer" target="_blank">FAB busca caja negra de la aeronave que se estrelló en El Alto y denuncia contaminación del área</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/gobierno-garantiza-atencion-medica-a-heridos-e-indemnizacion-a-las-familias-de-los-fallecidos" rel="noopener noreferrer" target="_blank">Gobierno garantiza atención médica a heridos e indemnización a las familias de los fallecidos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/un-contingente-militar-y-policial-resguarda-el-aeropuerto-de-el-alto-vuelven-a-gasificar-ante-intento-de-disturbios" rel="noopener noreferrer" target="_blank">Un contingente militar y policial resguarda el aeropuerto de El Alto, vuelven a gasificar ante intento de disturbios</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/sube-la-cifra-de-victimas-salud-confirma-22-muertos-y-37-heridos-en-accidente-aereo-en-el-alto" rel="noopener noreferrer" target="_blank">Sube la cifra de víctimas: Salud confirma 22 muertos y 37 heridos en accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/confirman-al-menos-15-muertos-y-28-heridos-al-estrellarse-el-avion-militar-con-18-toneladas-de-billetes-del-bcb" rel="noopener noreferrer" target="_blank">Confirman al menos 15 muertos y 28 heridos al estrellarse el avión militar con 18 toneladas de billetes del BCB</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/avion-militar-cae-en-el-alto-transportaba-dinero-para-el-banco-central" rel="noopener noreferrer" target="_blank">Avión militar cae en El Alto; transportaba dinero para el Banco Central</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/marcelo-salinas-detalla-operativo-tras-accidente-del-hercules" rel="noopener noreferrer" target="_blank">Ministro de Defensa detalla operativo tras accidente del Hércules</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/militares-refuerzan-resguardo-zona-de-accidente-aereo-en-el-alto-y-reportan-uso-de-agentes-quimicos" rel="noopener noreferrer" target="_blank">Militares refuerzan resguardo zona de accidente aéreo en El Alto y reportan uso de agentes químicos</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/fiscalia-inicia-investigacion-por-accidente-aereo-en-inmediaciones-del-aeropuerto-de-el-alto" rel="noopener noreferrer" target="_blank">Fiscalía inicia investigación por accidente aéreo en inmediaciones del Aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/obras-publicas-suspende-agenda-con-la-caf-tras-tragedia-aerea-en-el-alto" rel="noopener noreferrer" target="_blank">Obras Públicas suspende agenda con la CAF tras tragedia aérea en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/gobierno-suspende-parte-de-su-agenda-con-la-caf-para-atender-emergencia-en-el-alto-57767" rel="noopener noreferrer" target="_blank">Gobierno suspende parte de su agenda con la CAF para atender emergencia en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/28/la-cifra-de-muertos-por-el-accidente-aereo-llega-a-22-57761" rel="noopener noreferrer" target="_blank">La cifra de muertos por el accidente aéreo llega a 22</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/28/accidente-aereo-ya-suman-20-muertos-paz-dice-que-todo-el-gobierno-trabaja-en-la-emergencia-57758" rel="noopener noreferrer" target="_blank">Accidente aéreo: ya suman 20 muertos; Paz dice que todo el gobierno trabaja en la emergencia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/28/fiscalia-moviliza-equipos-forenses-de-todo-el-pais-ya-se-hizo-20-autopsias--57759" rel="noopener noreferrer" target="_blank">Fiscalía moviliza equipos forenses de todo el país; ya se hizo 20 autopsias</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/28/la-fab-busca-la-caja-negra-del-hercules-y-viceministro-abre-debate-de-traslado-del-aeropuerto-57762" rel="noopener noreferrer" target="_blank">La FAB busca la caja negra del Hércules y viceministro abre debate de traslado del aeropuerto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/02/28/recuperan-la-caja-negra-del-avion-hercules-siniestrado-en-el-alto-57773" rel="noopener noreferrer" target="_blank">Recuperan la caja negra del avión Hércules siniestrado en El Alto</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/al-menos-10-victimas-aun-no-fueron-reconocidas-tras-siniestro-en-el-alto-se-preve-llegada-de-mas-cuerpos/" rel="noopener noreferrer" target="_blank">Al menos 10 víctimas aún no fueron reconocidas tras siniestro en El Alto, “se prevé llegada de más cuerpos”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/hoy-dia-dolor-alto-bolivia-presidente-rodrigo-paz-expresa-pesar-tragedia-aerea_1772286205" rel="noopener noreferrer" target="_blank">“Hoy es un día de dolor para El Alto y para Bolivia”, el Presidente Rodrigo Paz expresa su pesar por la tragedia aérea</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tragedia-aerea-deja-22-fallecidos-37-heridos-ambulancias-fueron-agredidas-alto_1772300854" rel="noopener noreferrer" target="_blank">Tragedia aérea deja 22 fallecidos y 37 heridos; ambulancias fueron agredidas en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/obras-publicas-suma-trabajo-atender-emergencia-accidente-aereo-militar_1772312584" rel="noopener noreferrer" target="_blank">Obras Públicas se suma al trabajo para atender emergencia tras accidente aéreo militar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fab-busca-caja-negra-preve-seis-meses-esclarecer-accidente-c-130h_1772298268" rel="noopener noreferrer" target="_blank">FAB busca la “caja negra” y prevé hasta seis meses para esclarecer el accidente del C-130H</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/100-heridos-accidente-avion-militar-alto-salud-activa-estado-contingencia_1772285260" rel="noopener noreferrer" target="_blank">Al menos 30 heridos tras accidente de avión militar en El Alto; Salud activa estado de contingencia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-instruye-tres-dias-luto-victimas-accidente-aereo-alto_1772337347" rel="noopener noreferrer" target="_blank">Gobierno instruye tres días de luto por las víctimas del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fallece-uno-ocho-tripulantes-hercules-fab-81-otros-siete-siguen-terapia-intensiva_1772299227" rel="noopener noreferrer" target="_blank">Fallece uno de los ocho tripulantes del Hércules FAB-81; los otros siete siguen en terapia intensiva</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/junta-investigadora-aun-no-halla-caja-negra-hercules-fab-81-siniestrado-alto_1772295613" rel="noopener noreferrer" target="_blank">Junta Investigadora aún no halla la caja negra del Hércules FAB 81 siniestrado en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-garantiza-cobertura-medica-indemnizacion-victimas-accidente-aereo-alto_1772313317" rel="noopener noreferrer" target="_blank">Gobierno garantiza cobertura médica e indemnización a víctimas del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/era-avion-hercules-fab-81-avion-militar-estrello-alto_1772283221" rel="noopener noreferrer" target="_blank">Cómo era el Hércules FAB-81, el avión militar que se estrelló en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policia-detuvo-49-personas-provocar-caos-zona-accidente-aereo_1772299753" rel="noopener noreferrer" target="_blank">Policía detuvo a 49 personas por provocar caos en la zona del accidente aéreo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/granizada-caos-saqueo-hercules-salio-pista-desato-noche-horror-alto_1772289647" rel="noopener noreferrer" target="_blank">Granizada, caos y saqueo: el Hércules que se salió de pista desató una noche de horror en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-justiniano-tragedia-alto-todos-bolivianos-debemos-solidarizarnos_1772293842" rel="noopener noreferrer" target="_blank">Ministro Justiniano sobre la tragedia de El Alto: "Todos los bolivianos debemos solidarizarnos"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/encuentran-caja-negra-avion-siniestrado-sera-examinado-fuera-pais_1772329486" rel="noopener noreferrer" target="_blank">Encuentran la caja negra del avión siniestrado y será examinado fuera del país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/tragedia-aerea-alto-obliga-gobierno-modificar-agenda-oficial-caf_1772284625" rel="noopener noreferrer" target="_blank">Tragedia aérea en El Alto obliga al gobierno a modificar agenda oficial con la CAF</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/pais/hallan-la-caja-negra-del-avion-hercules-c-130-siniestrado-en-el-alto.html" rel="noopener noreferrer" target="_blank">Hallan la caja negra del avión Hércules C-130 siniestrado en El Alto</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/pais/paredes-este-accidente-podia-haber-sido-una-tremenda-tragedia-pericia-del-piloto-redujo-el-impacto-humano.html" rel="noopener noreferrer" target="_blank">Paredes: Este accidente podía haber sido una tremenda tragedia, pericia del piloto redujo el impacto humano</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/pais/ascienden-a-22-las-victimas-mortales-y-superan-los-30-los-heridos-en-el-accidente-del-avion-de-la-fab.html" rel="noopener noreferrer" target="_blank">Ascienden a 22 las víctimas mortales y superan los 30 los heridos en el accidente del avión de la FAB</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/pais/ya-son-20-los-fallecidos-por-el-siniestro-aereo-en-el-alto-entre-ellos-una-bebe.html" rel="noopener noreferrer" target="_blank">Ya son 20 los fallecidos por el siniestro aéreo en El Alto, entre ellos una bebé</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_alcaldia-de-el-alto-denuncia-que-turba-quema-camioneta-edil-y-destroza-tres-ambulancias.html" rel="noopener noreferrer" target="_blank">Alcaldía de El Alto denuncia que turba quema camioneta edil y destroza tres ambulancias</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_denuncian-ataque-a-ambulancias-que-brindaban-ayuda-tras-accidente-aereo-en-el-alto.html" rel="noopener noreferrer" target="_blank">Denuncian ataque a ambulancias que brindaban ayuda tras accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_no-estan-solos-paz-expresa-solidaridad-y-afirma-que-el-gobierno-esta-movilizado-por-accidente-en-el-alto.html" rel="noopener noreferrer" target="_blank">“No están solos”: Paz expresa solidaridad y afirma que el Gobierno está movilizado por accidente en El Alto</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_suben-a-20-los-fallecidos-del-accidente-aereo-en-el-alto.html" rel="noopener noreferrer" target="_blank">Suben a 20 los fallecidos del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/aeropuerto-retoma-operaciones-y-la-zona-del-siniestro-est%C3%A1-bajo-custodia-militar-en-el-alto" rel="noopener noreferrer" target="_blank">Aeropuerto retoma operaciones y la zona del siniestro está bajo custodia militar en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/ministra-de-salud-confirma-22-fallecidos-y-37-heridos-tras-accidente-a%C3%A9reo-en-el-alto" rel="noopener noreferrer" target="_blank">Ministra de Salud confirma 22 fallecidos y 37 heridos tras accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-expresa-su-solidaridad-y-condolencias-por-el-siniestro-a%C3%A9reo-en-el-alto" rel="noopener noreferrer" target="_blank">Paz expresa su solidaridad y condolencias por el siniestro aéreo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/encuentran-la-%E2%80%9Ccaja-negra%E2%80%9D-del-avi%C3%B3n-militar-siniestrado-en-el-alto-y-se-someter%C3%A1-pericia" rel="noopener noreferrer" target="_blank">Encuentran la “caja negra” del avión militar siniestrado en El Alto y se someterá a pericia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/de-ocho-tripulantes-uno-falleci%C3%B3-y-el-resto-es-atendido-en-cossmil-tras-el-siniestro-a%C3%A9reo" rel="noopener noreferrer" target="_blank">De ocho tripulantes, uno falleció y el resto es atendido en COSSMIL tras el siniestro aéreo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/equipos-forenses-se-trasladaron-el-alto-y-confirman-20-autopsias-tras-el-siniestro-del" rel="noopener noreferrer" target="_blank">Equipos forenses se trasladaron a El Alto y confirman 20 autopsias tras el siniestro del avión</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/asociaciones-de-periodistas-condenan-agresiones-contra-trabajadores-de-la-prensa-tras-el" rel="noopener noreferrer" target="_blank">Asociaciones de periodistas condenan agresiones contra trabajadores de la prensa tras el siniestro aéreo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/28/recuperada-la-caja-negra-del-avion-siniestrado-es-enviada-a-peritaje/" rel="noopener noreferrer" target="_blank">Recuperada, la caja negra del avión siniestrado es enviada a peritaje</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/28/accidente-aereo-salud-da-a-conocer-la-lista-de-heridos-internados/" rel="noopener noreferrer" target="_blank">Accidente aéreo: Salud da a conocer la lista de heridos internados</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/28/fab-busca-la-caja-negra-del-avion-tras-tragedia-aerea-en-el-alto/" rel="noopener noreferrer" target="_blank">FAB busca la caja negra del avión tras tragedia aérea en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/28/tse-ofrece-apoyo-registral-tras-siniestro-aereo-en-el-alto/" rel="noopener noreferrer" target="_blank">TSE ofrece apoyo registral tras siniestro aéreo en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/02/28/accidente-aereo-se-garantiza-cobertura-medica-e-indemnizacion-a-victimas/" rel="noopener noreferrer" target="_blank">Accidente aéreo: Se garantiza cobertura médica e indemnización a víctimas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/28/accidente-aereo-defensoria-vigilia-y-gestiona-atencion-en-salud-a-victimas/" rel="noopener noreferrer" target="_blank">Accidente aéreo: Defensoría vigilia y gestiona atención en salud a víctimas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/28/cancilleria-agradece-solidaridad-internacional-por-tragedia-aerea/" rel="noopener noreferrer" target="_blank">Cancillería agradece solidaridad internacional por tragedia aérea</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260228/sube-20-cifra-muertos-accidente-aereo-alto" rel="noopener noreferrer" target="_blank">Sube a 20 la cifra de muertos en el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260228/presidente-rodrigo-paz-expresa-solidaridad-tragico-accidente-alto" rel="noopener noreferrer" target="_blank">El presidente Rodrigo Paz expresa solidaridad por el trágico accidente en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260228/periodistas-son-agredidos-mientras-cubrian-accidente-aereo-autoridades" rel="noopener noreferrer" target="_blank">Periodistas son agredidos mientras cubrían accidente aéreo; autoridades condenan la violencia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260228/fab-aguarda-informes-del-momento-aterrizaje-del-avion-hercules-investigar" rel="noopener noreferrer" target="_blank">FAB aguarda informes del momento de aterrizaje del avión Hércules para investigar accidente</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/sola-familia-perdio-ocho-miembros-tragedia-aerea-alto/20260228123336989377.html" rel="noopener noreferrer" target="_blank">Una sola familia perdió a ocho de sus miembros en la tragedia aérea de El Alto</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/idif-realiza-20-autopsias-fallecidos-siniestro-avion-hercules-alto/20260228111435989374.html" rel="noopener noreferrer" target="_blank">IDIF realiza 20 autopsias a fallecidos en el siniestro del avión Hércules en El Alto</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/sube-15-20-fallecidos-entre-ellos-bebe-tragedia-area-alto/20260228110331989371.html" rel="noopener noreferrer" target="_blank">Sube de 15 a 20 los fallecidos, entre ellos una bebé, por la tragedia área en El Alto</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ministra-salud-accidente-aereo-alto-provoco-15-muertos-28-heridos/20260228083709989359.html" rel="noopener noreferrer" target="_blank">Ministra de Salud: El accidente aéreo en El Alto provocó 15 muertos y 28 heridos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/se-eleva-a-22-el-numero-de-fallecidos-y-mas-de-30-heridos-tras-el-accidente-del-avion-de-la-fab/" rel="noopener noreferrer" target="_blank">Se eleva a 22 el número de fallecidos y más de 30 heridos tras el accidente del avión de la FAB</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/caos-tras-accidente-aereo-policia-arresto-a-49-personas-por-vandalismo-y-robo-de-dinero/" rel="noopener noreferrer" target="_blank">Caos tras accidente aéreo: Policía arrestó a 49 personas por vandalismo y robo de dinero</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fiscalia-inicia-investigaciones-de-oficio-tras-tragico-accidente-aereo-en-el-alto-2026227235728" rel="noopener noreferrer" target="_blank">Fiscalía inicia investigaciones de oficio tras trágico accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tragedia-aerea-en-el-alto-difunden-lista-oficial-de-heridos-tras-accidente-de-avion-militar-202622873436" rel="noopener noreferrer" target="_blank">Tragedia aérea en El Alto: difunden lista oficial de heridos tras accidente de avión militar</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/video-camara-capto-el-momento-del-accidente-aereo-en-el-alto-2026228171444" rel="noopener noreferrer" target="_blank">VIDEO: Cámara captó el momento del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ministra-de-educacion-acompana-a-familia-que-perdio-a-siete-miembros-en-la-tragedia-aerea-2026228213746" rel="noopener noreferrer" target="_blank">Ministra de Educación acompaña a familia que perdió a siete miembros en la tragedia aérea</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/es-un-dia-de-mucho-dolor-presidente-paz-expresa-su-solidaridad-con-las-familias-afectadas-por-el-accidente-aereo-KO19421795" rel="noopener noreferrer" target="_blank">“Es un día de mucho dolor”: Presidente Paz expresa su solidaridad con las familias afectadas por el accidente aéreo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/sale-a-la-luz-el-video-del-avion-accidentado-en-el-alto-arrasando-todo-a-su-paso-LO19427084" rel="noopener noreferrer" target="_blank">Sale a la luz el video del avión accidentado en El Alto arrasando todo a su paso</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/encuentran-la-caja-negra-del-avion-siniestrado-en-el-alto-el-analisis-de-datos-puede-tomar-semanas-senala-el-gobierno-BO19426698" rel="noopener noreferrer" target="_blank">Encuentran la caja negra del avión siniestrado en El Alto; el análisis de datos puede tomar semanas, señala el Gobierno</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/bomberos-reportan-hallazgo-de-restos-humanos-cerca-del-accidente-de-avion-militar-en-el-alto-IO19424729" rel="noopener noreferrer" target="_blank">Bomberos reportan hallazgo de restos humanos cerca del accidente de avión militar en El Alto</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/el-piso-ha-temblado-ana-maria-la-mujer-que-rescato-a-dos-sobrevivientes-del-accidente-aereo-en-el-alto-GO19424705" rel="noopener noreferrer" target="_blank">“El piso ha temblado”: Ana María, la mujer que rescató a dos sobrevivientes del accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tragedia-en-el-alto-padre-perdio-a-ocho-integrantes-de-su-familia-un-hijo-sobrevivio-pero-quedo-muy-malherido-CO19423551" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: Padre perdió a ocho integrantes de su familia; un hijo sobrevivió, pero quedó muy malherido</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/un-tripulante-fallecio-y-otros-siete-sobrevivieron-al-accidente-aereo-en-el-alto-senala-la-fab-HO19423271" rel="noopener noreferrer" target="_blank">Un tripulante falleció y otros siete sobrevivieron al accidente aéreo en El Alto, señala la FAB</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/el-seguro-cubrira-gastos-de-heridos-y-fallecidos-del-accidente-aereo-en-el-alto-senala-el-gobierno-GO19423234" rel="noopener noreferrer" target="_blank">El seguro cubrirá gastos de heridos y fallecidos del accidente aéreo en El Alto, señala el Gobierno</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tragedia-en-el-alto-fab-busca-la-caja-negra-y-evaluara-los-factores-climaticos-en-el-momento-del-accidente-DO19423055" rel="noopener noreferrer" target="_blank">Tragedia en El Alto: FAB busca la caja negra y evaluará los factores climáticos en el momento del accidente</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/salud-confirma-22-fallecidos-y-37-heridos-tras-accidente-a%C3%A9reo-en-el-alto" rel="noopener noreferrer" target="_blank">Salud confirma 22 fallecidos y 37 heridos tras accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/sobreviv%C3%AD-de-milagro-la-familia-que-huy%C3%B3-del-horror-entre-restos-humanos-y-el-caos" rel="noopener noreferrer" target="_blank">"Sobreviví de milagro": La familia que huyó del horror entre restos humanos y el caos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/recuperan-la-caja-negra-del-h%C3%A9rcules-fab-81-su-an%C3%A1lisis-y-resultados-podr%C3%ADan-demorar-hasta" rel="noopener noreferrer" target="_blank">Recuperan la "caja negra" del Hércules FAB-81: Su análisis y resultados podrían demorar hasta más de un año</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/velan-siete-integrantes-de-una-familia-tras-accidente-de-avi%C3%B3n" rel="noopener noreferrer" target="_blank">Velan a siete integrantes de una familia tras accidente de avión</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/47-adultos-y-4-adolescentes-ser%C3%A1n-llevados-la-justicia-por-el-saqueo-tras-el-siniestro-a%C3%A9reo" rel="noopener noreferrer" target="_blank">47 adultos y 4 adolescentes serán llevados a la justicia por el saqueo tras el siniestro aéreo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40709-no-estan-solos-paz-expresa-sus-condolencias-a-victimas-del-accidente-aereo-y-anuncia-investigaciones" rel="noopener noreferrer" target="_blank">“No están solos”, Paz expresa sus condolencias a víctimas del accidente aéreo y anuncia investigaciones</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40710-tragedia-aerea-en-el-alto-policia-reporta-al-menos-20-fallecidos-tras-accidente-de-avion-militar-paz-expresa-condolencias" rel="noopener noreferrer" target="_blank">Tragedia aérea en El Alto: Policía reporta al menos 20 fallecidos tras accidente de avión militar; Paz expresa condolencias</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40711-zona-de-accidente-aereo-en-el-alto-amanece-con-fuerte-custodia-militar-tras-una-noche-de-vandalismo" rel="noopener noreferrer" target="_blank">Zona de accidente aéreo en El Alto amanece con fuerte custodia militar tras una noche de vandalismo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40715-fiscalia-confirma-20-autopsias-tras-accidente-del-avion-hercules-12-varones-7-mujeres-y-un-bebe" rel="noopener noreferrer" target="_blank">Fiscalía confirma 20 autopsias tras accidente del avión Hércules: 12 varones, 7 mujeres y un bebé</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40719-un-dia-despues-del-accidente-aereo-que-dejo-20-fallecidos-militares-resguardan-el-aeropuerto-de-el-alto" rel="noopener noreferrer" target="_blank">Un día después del accidente aéreo que dejó 20 fallecidos, militares resguardan el aeropuerto de El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40722-gobierno-ajusta-agenda-con-la-caf-para-enfocarse-en-atencion-a-victimas-del-accidente-aereo" rel="noopener noreferrer" target="_blank">Gobierno ajusta agenda con la CAF para enfocarse en atención a víctimas del accidente aéreo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40723-sube-a-22-la-cifra-de-fallecidos-por-el-accidente-de-un-avion-de-la-fab-en-el-alto" rel="noopener noreferrer" target="_blank">Sube a 22 la cifra de fallecidos por el accidente de un avión de la FAB en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40729-policia-detiene-a-49-personas-tras-disturbios-en-accidente-del-hercules-en-el-alto" rel="noopener noreferrer" target="_blank">Policía detiene a 49 personas tras disturbios en accidente del Hércules en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40738-hallan-la-caja-negra-del-avion-hercules-accidentado-en-el-alto-su-analisis-especializado-podria-demorar-hasta-un-ano" rel="noopener noreferrer" target="_blank">Hallan la “caja negra” del avión Hércules accidentado en El Alto; su análisis especializado podría demorar hasta un año</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4b">
+<div class="modal-backdrop" onclick="closeModal('modal_4b')"></div>
+<div aria-label="BILLETES DE LA SERIE B" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMÍA</div>
+<div class="modal-title">BILLETES DE LA SERIE B</div>
+<div class="modal-sum">El Banco Central de Bolivia (BCB) y la ASFI inhabilitaron la circulación de billetes de Bs 10, 20 y 50 de la Serie B, que eran transportados en el avión militar siniestrado en El Alto y fueron sustraídos tras el accidente. El Gobierno aclaró que la inhabilitación sería por 48 horas y generó confusión entre la población.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">57</strong> titulares</span>
+<span><strong style="color:var(--c-17)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bcb-difunde-numeros-de-billetes-de-serie-b-en-avion-siniestrado-y-habilita-aplicacion-para-identificarlos" rel="noopener noreferrer" target="_blank">BCB difunde números de billetes de serie B en avión siniestrado y habilita aplicación para identificarlos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/ministro-informa-que-la-invalidacion-de-billetes-de-la-serie-b-solo-es-por-48-horas" rel="noopener noreferrer" target="_blank">Ministro informa que la invalidación de billetes de la serie B solo es por 48 horas</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bcb-alista-canje-de-billetes-de-la-serie-b-de-cortes-de-10-20-y-50-bolivianos-obtenidos-legalmente" rel="noopener noreferrer" target="_blank">BCB alista canje de billetes de la serie B de cortes de 10, 20 y 50 bolivianos obtenidos legalmente</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/bcb-reporta-perdida-del-30-de-billetes-transportados-en-avion-siniestrado" rel="noopener noreferrer" target="_blank">BCB reporta pérdida del 30% de billetes transportados en avión siniestrado</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/bcb-publica-numeros-de-serie-de-billetes-sin-valor-tras-accidente-en-el-alto" rel="noopener noreferrer" target="_blank">BCB publica números de serie de billetes sin valor tras accidente en El Alto</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/denominaciones-de-serie-b-recobraran-validez-este-lunes-se-habilitara-verificacion-en-linea-de-billetes-de-lote-involucrado-en-el-siniestro-aereo" rel="noopener noreferrer" target="_blank">Denominaciones de serie B recobrarán validez este lunes; se podrán verificar en línea</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/asfi-inhabilita-uso-y-circulacion-de-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b" rel="noopener noreferrer" target="_blank">ASFI inhabilita uso y circulación de billetes de Bs 10, Bs 20 y Bs 50 de la serie B</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/banco-central-de-bolivia-inhabilita-billetes-de-bs10-bs20-y-bs50-de-la-serie-b-de-la-nueva-familia-de-billetes" rel="noopener noreferrer" target="_blank">Banco Central de Bolivia inhabilita billetes de Bs10, Bs20 y Bs50 de la Serie B de la nueva familia de billetes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/conozca-los-numeros-de-serie-de-los-billetes-inhabilitados-57776" rel="noopener noreferrer" target="_blank">Conozca los números de serie de los billetes inhabilitados</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/el-30-del-lote-de-billetes-transportado-en-el-avion-fue-robado-57774" rel="noopener noreferrer" target="_blank">El 30% del lote de billetes transportado en el avión fue robado</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/el-gobierno-retrocede-inhabilitacion-de-billetes-de-serie-b-es-solo-por-48-horas-57771" rel="noopener noreferrer" target="_blank">El gobierno retrocede: inhabilitación de billetes de serie B es solo por 48 horas</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/confusion-por-anulacion-de-billetes-de-la-serie-b-existen-miles-de-ellos-anteriores-al-accidente-57768" rel="noopener noreferrer" target="_blank">Confusión por anulación de billetes de la Serie B; existen miles de ellos anteriores al accidente</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/02/28/el-bcb-inhabilita-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-tras-saqueo-en-el-alto-57756" rel="noopener noreferrer" target="_blank">El BCB inhabilita billetes de Bs 10, Bs 20 y Bs 50 de la serie B tras saqueo en El Alto</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/presidente-bcb-se-aplazo-en-manejo-de-crisis-dinero-siniestrado-en-avion-hercules-fue-contratado-por-luis-arce/" rel="noopener noreferrer" target="_blank">Presidente BCB se APLAZÓ en manejo de crisis, dinero siniestrado en avión hércules fue contratado por Luis Arce</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bcb-identifica-numeros-billetes-avion-siniestrado-calcula-30-dinero-saqueado_1772318248" rel="noopener noreferrer" target="_blank">BCB identifica números de billetes en avión siniestrado que serán considerados como falsos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policia-realiza-operativos-busqueda-billetes-casas-colindantes-accidente-aereo_1772325460" rel="noopener noreferrer" target="_blank">Policía realiza operativos de búsqueda de billetes en casas colindantes con el accidente aéreo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-aclara-disposicion-billetes-serie-b-mantiene-inhabilitacion-lunes_1772310702" rel="noopener noreferrer" target="_blank">Gobierno aclara disposición sobre billetes de serie B, mantiene la inhabilitación hasta el lunes</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bcb-declara-invalidos-billetes-hallados-avion-siniestrado-alerta-sanciones_1772278493" rel="noopener noreferrer" target="_blank">BCB declara inválidos los billetes de la serie B y alerta sobre sanciones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/politica/lara-sospecha-del-dinero-transportado-en-avion-militar-y-presentara-denuncia.html" rel="noopener noreferrer" target="_blank">Lara sospecha del dinero transportado en avión militar y presentará denuncia</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/economia/el-bcb-da-a-conocer-la-numeracion-de-los-billetes-invalidados-tras-accidente.html" rel="noopener noreferrer" target="_blank">El BCB da a conocer la numeración de los billetes invalidados tras accidente</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/economia/gobierno-aclara-que-la-inhabilitacion-de-billetes-serie-b-sera-solo-por-48-horas.html" rel="noopener noreferrer" target="_blank">Gobierno aclara que la inhabilitación de billetes serie B será solo por 48 horas</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/economia/asfi-instruye-abstenerse-de-utilizar-billetes-de-bs-10-bs-20-y-bs-50-correspondientes-a-la-serie-b.html" rel="noopener noreferrer" target="_blank">ASFI instruye abstenerse de utilizar billetes de Bs 10, Bs 20 y Bs 50 correspondientes a la serie B</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/economia/bcb-anuncia-la-inhabilitacion-de-billetes-serie-b-de-bs-10-20-y-50-y-activa-plan-de-canje.html" rel="noopener noreferrer" target="_blank">BCB anuncia la inhabilitación de billetes Serie B de Bs 10, 20 y 50 y activa plan de canje</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/pais/mi-teleferico-acata-disposicion-del-bcb-y-sugiere-el-uso-de-tarjetas-y-la-aplicacion-yala.html" rel="noopener noreferrer" target="_blank">Mi Teleférico acata disposición del BCB y sugiere el uso de tarjetas y la aplicación YALA</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_aprehenden-a-12-personas-por-robo-de-billetes-que-transportaba-el-avion-accidentado.html" rel="noopener noreferrer" target="_blank">Aprehenden a 12 personas por robo de billetes que transportaba el avión accidentado</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_bcb-inhabilita-cortes-de-bs-10-20-y-50-de-la-serie-b-de-la-nueva-familia-de-billetes.html" rel="noopener noreferrer" target="_blank">BCB inhabilita cortes de Bs 10, 20 y 50 de la Serie B de la nueva familia de billetes</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_bcb-publica-lista-de-los-billetes-del-accidente-y-desde-el-lunes-se-restablecera-la-circulacion-de-la-serie-b.html" rel="noopener noreferrer" target="_blank">BCB publica lista de los billetes del accidente y desde el lunes se restablecerá la circulación de la serie B</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_espinoza-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-volveran-a-ser-validos-desde-el-lunes.html" rel="noopener noreferrer" target="_blank">Espinoza: Billetes de Bs 10, Bs 20 y Bs 50 de la serie B volverán a ser válidos desde el lunes</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_lara-cuestiona-version-del-bcb-sobre-billetes-del-accidente-en-el-alto-y-habla-de-origen-ilicito.html" rel="noopener noreferrer" target="_blank">Lara cuestiona versión del BCB sobre billetes del accidente en El Alto y habla de “origen ilícito”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-sospecha-de-los-billetes-trasladados-en-el-avi%C3%B3n-militar-y-anuncia-que-presentar%C3%A1" rel="noopener noreferrer" target="_blank">Lara sospecha de los billetes trasladados en el avión militar y anuncia que presentará denuncia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/billetes-de-serie-b-ser%C3%A1n-v%C3%A1lidos-desde-el-lunes-excepto-los-del-siniestro-anuncia-el-bcb" rel="noopener noreferrer" target="_blank">Billetes de Serie B serán válidos desde el lunes, excepto los del siniestro, anuncia el BCB</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/embarque-de-billetes-ten%C3%ADa-17-millones-de-piezas-y-se-estima-que-se-sustrajo-un-30" rel="noopener noreferrer" target="_blank">Embarque de billetes tenía 17 millones de piezas y se estima que se sustrajo un 30%</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/asfi-advierte-que-billetes-del-siniestro-%E2%80%9Cest%C3%A1n-plenamente-identificados%E2%80%9D-y-ser%C3%A1n-retenidos" rel="noopener noreferrer" target="_blank">ASFI advierte que billetes del siniestro “están plenamente identificados” y serán retenidos</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/bcb-invalida-los-billetes-de-10-20-y-50-de-la-serie-b-quienes-los-consiguieron-legales" rel="noopener noreferrer" target="_blank">BCB invalida los billetes de 10, 20 y 50 de la Serie B; quienes los consiguieron legales podrán canjearlos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/28/conozca-los-billetes-inhabilitados-sustraidos-del-avion-accidentado/" rel="noopener noreferrer" target="_blank">Conozca los billetes inhabilitados sustraídos del avión accidentado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/28/mas-de-5-millones-de-billetes-fueron-sustraidos-del-avion-accidentado/" rel="noopener noreferrer" target="_blank">Más de 5 millones de billetes fueron sustraídos del avión accidentado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/02/28/bcb-identifica-numeracion-de-billetes-en-accidente-aereo-y-alista-socializacion/" rel="noopener noreferrer" target="_blank">BCB identifica numeración de billetes en accidente aéreo y alista socialización</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/dia-despues-aun-gente-que-acosa-militares-policias-busca-dinero-zona-cero/20260228101644989369.html" rel="noopener noreferrer" target="_blank">El día después, aún hay gente que acosa a militares y policías en busca de dinero en la zona cero</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/urgente-tragedia-bcb-inhabilita-todos-cortes-bs-10-20-50-nueva-familia-billetes/20260228092327989366.html" rel="noopener noreferrer" target="_blank">Urgente: Tras la tragedia, el BCB inhabilita todos los cortes de Bs 10, 20 y 50 de la nueva familia de billetes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/banco-central-de-bolivia-inhabilita-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-tras-siniestro-en-el-alto/" rel="noopener noreferrer" target="_blank">Banco Central de Bolivia inhabilita billetes de Bs 10, Bs 20 y Bs 50 de la Serie B tras siniestro en El Alto</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/asfi-pide-no-usar-la-serie-b-de-billetes-de-bs-10-bs-20-y-bs-50-y-dice-que-dinero-del-siniestro-esta-plenamente-identificado/" rel="noopener noreferrer" target="_blank">ASFI pide no usar la Serie B de billetes de Bs 10, Bs 20 y Bs 50 y dice que dinero del siniestro está “plenamente identificado”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/conoce-en-pocos-pasos-si-tu-billete-de-la-serie-b-tiene-valor-legal/" rel="noopener noreferrer" target="_blank">Conoce en pocos pasos si tu billete de la Serie B tiene valor legal</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-difunde-los-numeros-de-serie-de-los-billetes-inhabilitados-sustraidos-del-avion-accidentado-NO19425844" rel="noopener noreferrer" target="_blank">BCB difunde los números de serie de los billetes inhabilitados sustraídos del avión accidentado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ministro-espinoza-dice-que-invalidacion-de-billetes-de-la-serie-b-es-por-48-horas-EO19425331" rel="noopener noreferrer" target="_blank">Ministro Espinoza dice que invalidación de billetes de la serie B es por 48 horas</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/asfi-advierte-que-entidades-financieras-retendran-billetes-sustraidos-del-avion-siniestrado-OO19423386" rel="noopener noreferrer" target="_blank">ASFI advierte que entidades financieras retendrán billetes sustraídos del avión siniestrado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/que-pasara-con-los-billetes-de-la-serie-b-que-no-fueron-incinerados-en-el-accidente-esto-dice-el-bcb-PO19422638" rel="noopener noreferrer" target="_blank">¿Qué pasará con los billetes de la serie B que no fueron incinerados en el accidente? Esto dice el BCB</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-inhabilita-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-y-alista-un-canje-para-el-dinero-obtenido-legalmente-HO19421600" rel="noopener noreferrer" target="_blank">BCB inhabilita billetes de Bs 10, Bs 20 y Bs 50 de la Serie B y alista un canje para el dinero obtenido legalmente</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-asfi-pide-la-poblaci%C3%B3n-abstenerse-de-usar-todos-los-billetes-de-bs10-bs20-y-bs50-de-la" rel="noopener noreferrer" target="_blank">La ASFI pide a la población abstenerse de usar todos los billetes de Bs10, Bs20 y Bs50 de la serie B</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cunde-la-confusi%C3%B3n-y-el-miedo-por-los-billetes-anulados-de-la-serie-b" rel="noopener noreferrer" target="_blank">Cunde la confusión y el miedo por los billetes anulados de la serie B</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/invalidaci%C3%B3n-de-los-billetes-de-la-serie-b-durar%C3%A1-48-horas-el-lunes-volver%C3%A1n-ser-legales" rel="noopener noreferrer" target="_blank">Invalidación de los billetes de la serie B durará 48 horas; el lunes volverán a ser legales</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/m%C3%A1s-confusi%C3%B3n-ahora-el-gobierno-dice-que-la-inhabilitaci%C3%B3n-de-los-billetes-de-la-serie-b-es" rel="noopener noreferrer" target="_blank">Más confusión, ahora el gobierno dice que la inhabilitación de los billetes de la serie B es sólo por 48 horas</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gu%C3%ADa-r%C3%A1pida-para-saber-qu%C3%A9-hacer-con-los-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b" rel="noopener noreferrer" target="_blank">Guía rápida para saber qué hacer con los billetes de Bs 10, Bs 20 y Bs 50 de la serie B</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40712-bcb-inhabilita-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-tras-accidente-en-el-alto-y-advierte-sobre-sanciones" rel="noopener noreferrer" target="_blank">BCB inhabilita billetes de Bs 10, Bs 20 y Bs 50 de la Serie B tras accidente en El Alto y advierte sobre sanciones</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40725-circulacion-de-billetes-del-accidente-aereo-desata-nerviosismo-en-la-paz-y-el-alto" rel="noopener noreferrer" target="_blank">Circulación de billetes del accidente aéreo desata nerviosismo en La Paz y El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40727-asfi-recomienda-abstenerse-del-uso-de-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-hasta-nuevo-aviso" rel="noopener noreferrer" target="_blank">ASFI recomienda abstenerse del uso de billetes de Bs 10, Bs 20 y Bs 50 de la Serie B hasta nuevo aviso</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40733-ministerio-de-economia-inhabilitacion-de-billetes-de-bs-10-bs-20-y-bs-50-de-la-serie-b-sera-de-48-horas" rel="noopener noreferrer" target="_blank">Ministerio de Economía: Inhabilitación de billetes de Bs 10, Bs 20 y Bs 50 de la Serie B será de 48 horas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/02/28/40742-desde-el-lunes-vuelven-a-circular-los-billetes-de-la-serie-b-el-bcb-difunde-la-lista-de-los-sustraidos-e-inhabilitados" rel="noopener noreferrer" target="_blank">Desde el lunes vuelven a circular los billetes de la Serie B; el BCB difunde la lista de los sustraídos e inhabilitados</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2b">
+<div class="modal-backdrop" onclick="closeModal('modal_2b')"></div>
+<div aria-label="ATAQUES DE EEUU E ISRAEL CONTRA IRÁN" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">ATAQUES DE EEUU E ISRAEL CONTRA IRÁN</div>
+<div class="modal-sum">Estados Unidos e Israel lanzan una operación militar masiva y continua, que incluye ataques preventivos contra Irán, con el objetivo de eliminar lo que describen como una amenaza existencial, llevando a Israel a declarar estado de emergencia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">10</strong> titulares</span>
+<span><strong style="color:var(--c-18)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/iran-denuncia-al-menos-51-ninas-fallecidas-en-un-bombardeo-israeli-contra-una-escuela-en-el-sur-de-iran" rel="noopener noreferrer" target="_blank">Irán denuncia al menos 51 niñas fallecidas en un bombardeo israelí contra una escuela en el sur de Irán</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/netanyahu-confirma-una-operacion-militar-con-eeuu-para-eliminar-la-amenaza-existencial-de-iran" rel="noopener noreferrer" target="_blank">Netanyahu confirma una operación militar con EEUU para "eliminar la amenaza existencial" de Irán</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/iran-ataca-posiciones-militares-de-eeuu-en-bahrein-qatar-kuwait-y-emiratos-arabes-unidos" rel="noopener noreferrer" target="_blank">Irán ataca posiciones militares de EEUU en Bahréin, Qatar, Kuwait y Emiratos Árabes Unidos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/eeuu-e-israel-lanzan-un-ataque-masivo-contra-el-corazon-del-poder-en-iran" rel="noopener noreferrer" target="_blank">EEUU e Israel lanzan un ataque masivo contra el corazón del poder en Irán</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/israel-lanza-un-ataque-preventivo-contra-iran-y-declara-estado-de-emergencia-en-todo-el-pais" rel="noopener noreferrer" target="_blank">Israel lanza un "ataque preventivo" contra Irán y declara estado de emergencia en todo el país</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/bolivia-activa-mecanismos-preventivos-ante-la-escalada-de-tension-en-medio-oriente" rel="noopener noreferrer" target="_blank">Bolivia activa mecanismos preventivos ante la escalada de tensión en Medio Oriente</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260228/ejercito-ee-uu-lleva-cabo-operacion-masiva-continua-iran-afirma-trump" rel="noopener noreferrer" target="_blank">Ejército de EE. UU. lleva a cabo una "operación masiva y continua" en Irán, afirma Trump</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260228/iran-lanza-nueva-oleada-ataques-misiles-contra-israel-medios" rel="noopener noreferrer" target="_blank">Irán lanza nueva oleada de ataques con misiles contra Israel, según medios</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260228/eeuu-esta-actuando-fuera-del-derecho-internacional-tradicional-advierte" rel="noopener noreferrer" target="_blank">EE.UU. está actuando por fuera del derecho internacional tradicional, advierte el presidente de Finlandia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260228/cifra-muertos-ataque-aereo-israel-eeuu-contra-escuela-ninas-sur-iran" rel="noopener noreferrer" target="_blank">Cifra de muertos por ataque aéreo Israel-EEUU contra escuela de niñas en sur de Irán asciende a 60</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="SANCIONES POR RETRASOS EN VUELOS AREOS" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-14)">TRANSPORTE</div>
+<div class="modal-title">SANCIONES POR RETRASOS EN VUELOS AREOS</div>
+<div class="modal-sum">El Gobierno instruyó a BoA y Naabol aplicar sanciones económicas y multas a funcionarios responsables por demoras injustificadas y retrasos en vuelos del sector aeronáutico nacional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-14)">5</strong> titulares</span>
+<span><strong style="color:var(--c-14)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/02/28/gobierno-instruye-sanciones-economicas-por-demoras-injustificables-en-el-sector-aeronautico" rel="noopener noreferrer" target="_blank">Gobierno instruye sanciones económicas por demoras injustificables en el sector aeronáutico</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/02/28/ministro-instruye-sanciones-por-demoras-en-vuelos-atribuibles-a-negligencia-57763" rel="noopener noreferrer" target="_blank">Ministro instruye sanciones por demoras en vuelos atribuibles a negligencia</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-02-28/economia/ordenan-a-boa-y-naabol-sancionar-a-funcionarios-por-retrasos-en-vuelos.html" rel="noopener noreferrer" target="_blank">Ordenan a BoA y Naabol sancionar a funcionarios por retrasos en vuelos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260228_instruyen-a-boa-y-naabol-aplicar-multas-a-funcionarios-por-retrasos-en-vuelos-de-la-aerolinea-nacional.html" rel="noopener noreferrer" target="_blank">Instruyen a BoA y Naabol aplicar multas a funcionarios por retrasos en vuelos de la aerolínea nacional</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/instruyen-boa-naabol-sanciones-economicas-funcionarios-demoras-injustificadas-vuelos/20260228124855989378.html" rel="noopener noreferrer" target="_blank">Instruyen a BoA y NAABOL sanciones económicas a funcionarios por demoras injustificadas de vuelos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2a">
+<div class="modal-backdrop" onclick="closeModal('modal_2a')"></div>
+<div aria-label="MUERTE DEL AYATOLÁ IRANÍ" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">MUERTE DEL AYATOLÁ IRANÍ</div>
+<div class="modal-sum">Varios medios y figuras como Donald Trump y Netanyahu reportan y confirman la muerte del líder supremo iraní, el ayatolá Alí Jamenei, y miembros de su familia, tras los ataques masivos de Estados Unidos e Israel contra Irán.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">5</strong> titulares</span>
+<span><strong style="color:var(--c-18)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/donald-trump-anuncia-la-muerte-del-lider-supremo-irani-ali-jamenei-en-los-ataques-de-eeuu-a-israel" rel="noopener noreferrer" target="_blank">Donald Trump anuncia la muerte del líder supremo iraní Alí Jamenei en los ataques de EEUU a Israel</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/mundo/ir%C3%A1n-confirma-la-muerte-del-ayatol%C3%A1-al%C3%AD-jamenei-y-de-su-hija-yerno-y-su-nieto-tras-ataque-de" rel="noopener noreferrer" target="_blank">Irán confirma la muerte del ayatolá Alí Jamenei y de su hija, yerno y su nieto tras ataque de EEUU e Israel</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/mundo/trump-anuncia-la-muerte-del-l%C3%ADder-supremo-iran%C3%AD-al%C3%AD-jamenei-en-los-ataques-de-eeuu-e-israel" rel="noopener noreferrer" target="_blank">Trump anuncia la muerte del líder supremo iraní Alí Jamenei en los ataques de EEUU e Israel</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260228/netanyahu-lider-supremo-ali-jamenei-podria-haber-muerto" rel="noopener noreferrer" target="_blank">Netanyahu: líder supremo Alí Jamenei podría haber muerto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/trump-afirma-que-muri%C3%B3-el-l%C3%ADder-supremo-de-ir%C3%A1n-tras-los-ataques-de-eeuu-e-israel" rel="noopener noreferrer" target="_blank">Trump afirma que murió el líder supremo de Irán tras los ataques de EEUU e Israel</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="INVESTIGACIÓN CONTRA FREDDY VIDOVIC" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">INVESTIGACIÓN CONTRA FREDDY VIDOVIC</div>
+<div class="modal-sum">La Fiscalía boliviana ha iniciado una investigación formal contra Freddy Vidovic, Secretario General de la Vicepresidencia, por la presunta usurpación de funciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/02/28/fiscalia-investiga-a-vidovic-por-presunta-usurpacion-de-funciones/" rel="noopener noreferrer" target="_blank">Fiscalía investiga a Vidovic por presunta usurpación de funciones</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fiscalia-admite-denuncia-contra-freddy-vidovic-por-presunta-usurpacion-de-funciones-202622821118" rel="noopener noreferrer" target="_blank">Fiscalía admite denuncia contra Freddy Vidovic por presunta usurpación de funciones</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-inicia-investigacion-por-usurpacion-de-funciones-a-vidovic-secretario-general-de-vicepresidencia-AO19427465" rel="noopener noreferrer" target="_blank">Fiscalía inicia investigación por usurpación de funciones a Vidovic, secretario General de Vicepresidencia</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
