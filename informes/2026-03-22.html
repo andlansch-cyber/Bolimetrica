@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260322</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #2B6CB0;
+    --c-02: #2F855A;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #B83280;
+    --c-06: #2C7A7B;
+    --c-07: #9B2C2C;
+    --c-08: #975A16;
+    --c-09: #1A202C;
+    --c-10: #3182CE;
+    --c-11: #38A169;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #319795;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #4A5568;
+    --c-19: #63B3ED;
+    --c-20: #68D391;
+    --c-21: #F6AD55;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #FEB2B2;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── Ajustes de legibilidad (solo UI web) ───────── */
+.card-subtitle{
+  margin-top:6px;
+  font-size:11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Frecuencias: mejorar legibilidad del término */
+.freq-word{ font-weight: 650; }
+.freq-bar-fill{ border-radius: 999px; }
+
+/* Emergentes: sumilla */
+.emergente-sum{
+  margin-top:6px;
+  font-size:12px;
+  color: var(--text-secondary);
+  line-height:1.45;
+}
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto; text-align: left; }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna */
+  .modal-panel{ width: calc(100vw - 18px); border-radius: 12px; }
+  .modal-list li{ grid-template-columns: 1fr; }
+  .m-src{ white-space: normal; }
+}
+
+</style></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<div class="brand">Boli<span>métrica</span></div>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">103</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">16</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">16</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>2026 · MAR · 22</strong>
+        Reporte N° 20260322<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row">
+<!-- TOP 3 -->
+<div>
+<div class="section-label">Top 3 temas del día</div>
+<div class="top3-stack"><div class="top3-card" onclick="openModal('modal_10a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-15)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-15)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="top3-title">Detención preventiva de Marcelo Arce</div>
+<div class="top3-body">Marcelo Arce, hijo del presidente Luis Arce, cumple detención preventiva de 140 días en Palmasola, tras su aprehensión. Su defensa apela la medida, mientras surgen reacciones sobre el caso y las motivaciones de su traslado a la cárcel.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-15)">12</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-15)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_10b')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-29)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-29)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-29)">NARCOTRAFICO</div>
+<div class="top3-title">Detienen grupo vinculado a Marset</div>
+<div class="top3-body">Un grupo de 15 personas, incluyendo ciudadanos extranjeros, presuntamente vinculadas a la seguridad de Sebastián Marset, fue enviado con detención preventiva por 180 días a prisión tras su cautelar.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-29)">10</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-29)">8</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" onclick="openModal('modal_11')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-10)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-10)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="top3-title">Inhabilitan candidatos en El Alto</div>
+<div class="top3-body">El Tribunal Supremo Electoral (TSE) confirmó la inhabilitación de David Vargas y Eynar Viscarra como candidatos a la alcaldía de El Alto, mientras que ratificó la habilitación de Eliser Roca para postularse al mismo cargo, tras la revisión de los expedientes de los aspirantes.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-10)">10</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-10)">7</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+<div class="cat-bar-card">
+<div class="section-label">COBERTURA POR CATEGORÍA</div><div class="card-subtitle">Cantidad de titulares por categoría</div>
+<div class="cat-bars"><div class="cat-row">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">ELECCIONES SUBNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-10)"></div></div>
+<div class="cat-n">33</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-29)"></div>
+<div class="cat-name">NARCOTRAFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:64%;background:var(--c-29)"></div></div>
+<div class="cat-n">21</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:45%;background:var(--c-07)"></div></div>
+<div class="cat-n">15</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:36%;background:var(--c-15)"></div></div>
+<div class="cat-n">12</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-17)"></div>
+<div class="cat-name">ECONOMIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:24%;background:var(--c-17)"></div></div>
+<div class="cat-n">8</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:21%;background:var(--c-18)"></div></div>
+<div class="cat-n">7</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-11)"></div></div>
+<div class="cat-n">4</div>
+</div>
+<div class="cat-row">
+<div class="cat-dot" style="background:var(--c-09)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:9%;background:var(--c-09)"></div></div>
+<div class="cat-n">3</div>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">marset</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:84%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:79%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">seguridad</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:79%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">marcelo arce</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:68%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">abroga decreto</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:62%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">subnacionales</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:68%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">villa tunari</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:62%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">feminicidio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:62%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">chuquisaca</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:55%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area"><div class="chart-row">
+<div class="chart-label">Detención preventiva de Marcelo Arce</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">12</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Detienen grupo vinculado a Marset</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:83.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">10</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Inhabilitan candidatos en El Alto</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:83.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">10</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Feminicidio investigado en Chuquisaca</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:75.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">9</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Bolivia elige autoridades subnacionales</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:75.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">9</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Gobierno elimina arancel a soya</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:66.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-17))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Emboscada a Umopar en operativo</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:58.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Bolivia y Chile reactivan agenda</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:58.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">OEA despliega misión electoral</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:41.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Vicepresidente incumple silencio electoral</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:41.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Acto por Día del Mar</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Trasladan vehículos caso Marset</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-29))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Intervienen negocios por Auto de Gobierno</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">YPFB y CAINCO analizan sector</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-09))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Investigan muerte de conscripto</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row">
+<div class="chart-label">Choque de camiones deja fallecido</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" onclick="openModal('modal_4a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Feminicidio investigado en Chuquisaca</div>
+<div class="topic-body">Chuquisaca registra su primer feminicidio del año, donde Judyth fue arrollada por la camioneta que conducía su pareja. La Fiscalía y otros organismos investigan el caso, con el enamorado aprehendido y se revela la autopsia.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7b')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">Bolivia elige autoridades subnacionales</div>
+<div class="topic-body">Bolivia se prepara para las elecciones subnacionales, donde más de 7,4 millones de votantes acudirán a las urnas este domingo para elegir a 5.432 autoridades regionales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-17)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-17)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-17)">ECONOMIA</div>
+<div class="topic-title">Gobierno elimina arancel a soya</div>
+<div class="topic-body">El gobierno del presidente Rodrigo Paz abroga el Decreto Supremo 5547, que establecía arancel cero para la importación de grano de soya, atendiendo así demandas del sector agropecuario.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRAFICO</div>
+<div class="topic-title">Emboscada a Umopar en operativo</div>
+<div class="topic-body">Una patrulla de la fuerza antidroga Umopar fue emboscada en Villa Tunari, Cochabamba, por pobladores. El ataque dejó como saldo dos policías heridos y un vehículo dañado, durante un operativo antidroga.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_7a')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Bolivia y Chile reactivan agenda</div>
+<div class="topic-body">Cancilleres de Bolivia y Chile se reunieron en Bogotá y acordaron convocar a un futuro encuentro para impulsar una agenda común y suscribir acuerdos estratégicos en áreas como integración, comercio, migración, seguridad, energía e hidrocarburos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_8a')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">OEA despliega misión electoral</div>
+<div class="topic-body">La Organización de los Estados Americanos (OEA) despliega su misión de observación electoral en Bolivia, conformada por observadores de 14 países, de cara a las elecciones subnacionales del domingo. El Órgano Electoral se reúne con dicha misión.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">Vicepresidente incumple silencio electoral</div>
+<div class="topic-body">El vicepresidente Edmand Lara incumple el silencio electoral en las horas previas a las elecciones subnacionales, al infringir la normativa e inducir al voto o criticar a candidatos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">GOBIERNO</div>
+<div class="topic-title">Acto por Día del Mar</div>
+<div class="topic-body">El acto central por el Día del Mar se llevará a cabo en Puerto Quijarro, donde el presidente Rodrigo Paz emitirá un mensaje oficial, según anunció Lupo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-29)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-29)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-29)">NARCOTRAFICO</div>
+<div class="topic-title">Trasladan vehículos caso Marset</div>
+<div class="topic-body">El Gobierno y Dircabi confirmaron el traslado de cinco vehículos incautados en operativos contra la estructura criminal de Sebastián Marset, respondiendo a denuncias previas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="topic-title">Intervienen negocios por Auto de Gobierno</div>
+<div class="topic-body">En La Paz, 32 actividades económicas fueron intervenidas con aprehensiones y clausuras por infringir el Auto de Buen Gobierno establecido previo a las elecciones subnacionales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-09)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-09)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-09)">HIDROCARBUROS</div>
+<div class="topic-title">YPFB y CAINCO analizan sector</div>
+<div class="topic-body">YPFB se reunió con la Cámara de Industria, Comercio, Servicios y Turismo (CAINCO) para abordar los desafíos estructurales del sector de hidrocarburos y combustibles.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4b')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Investigan muerte de conscripto</div>
+<div class="topic-body">La Fiscalía inició una investigación de oficio por la muerte de un conscripto en Pando. Una diputada y la Defensoría del Pueblo solicitaron informes al Ministerio de Defensa sobre el deceso del soldado.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" onclick="openModal('modal_4c')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Choque de camiones deja fallecido</div>
+<div class="topic-body">Un choque frontal entre dos camiones en Cotoca, Santa Cruz, dejó una persona fallecida. El accidente es calificado como fatal por los medios locales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.urgente.bo/noticia/ir%C3%A1n-ataca-la-central-de-dimona-epicentro-del-programa-nuclear-de-israel" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Irán ataca la central de Dimona, epicentro del programa nuclear de Israel</a></div>
+<div class="emergente-sum">Este titular representa una escalada crítica en el conflicto internacional, apuntando directamente a una instalación nuclear.</div>
+<div class="emergente-source">Fuente: Urgente.bo</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/politica/2026/03/21/arce-pide-investigar-tambien-a-gobierno-de-evo-por-caso-marset-dice-su-abogado-58593" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Arce pide investigar también a gobierno de Evo por caso Marset, dice su abogado</a></div>
+<div class="emergente-sum">La solicitud de investigar al gobierno anterior en un caso de narcotráfico tan relevante como el de Marset indica una profunda polarización política y nuevas implicaciones en el escándalo.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/03/21/25-anos-de-prision-para-exjefe-antidroga-de-morales/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">25 años de prisión para exjefe antidroga de Morales</a></div>
+<div class="emergente-sum">La condena de un ex alto cargo de la lucha antidrogas en un caso de narcotráfico internacional es un hito judicial significativo con implicaciones en la percepción de la justicia y la corrupción.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260321_senador-nilton-condori-plantea-cerrar-la-asamblea-legislativa-plurinacional.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Senador Nilton Condori plantea cerrar la Asamblea Legislativa Plurinacional</a></div>
+<div class="emergente-sum">Una propuesta de tal magnitud para cerrar un poder fundamental del Estado representa un desarrollo político extremo y potencialmente desestabilizador de la democracia.</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° 20260322 · 2026-03-22</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 103 titulares · 16 temas · 8 categorías · 16 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_10a">
+<div class="modal-backdrop" onclick="closeModal('modal_10a')"></div>
+<div aria-label="Detención preventiva de Marcelo Arce" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">JUSTICIA</div>
+<div class="modal-title">Detención preventiva de Marcelo Arce</div>
+<div class="modal-sum">Marcelo Arce, hijo del presidente Luis Arce, cumple detención preventiva de 140 días en Palmasola, tras su aprehensión. Su defensa apela la medida, mientras surgen reacciones sobre el caso y las motivaciones de su traslado a la cárcel.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">12</strong> titulares</span>
+<span><strong style="color:var(--c-15)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/juan-jose-zuniga-a-luis-arce-el-dolor-de-la-carcel-toco-la-puerta-de-su-familia" rel="noopener noreferrer" target="_blank">Juan José Zúñiga a Luis Arce: “El dolor de la cárcel tocó la puerta de su familia”</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/marcelo-arce-niega-acusaciones-y-califica-su-proceso-como-politico" rel="noopener noreferrer" target="_blank">Marcelo Arce niega acusaciones y califica su proceso como político</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/03/21/hoy-bolivia-pide-a-gritos-carcel-no-solo-para-su-familia-sino-para-sus-exministros-le-dice-zuniga-en-una-carta-a-arce-58602" rel="noopener noreferrer" target="_blank">"Hoy Bolivia pide a gritos cárcel no solo para su familia, sino para sus exministros”, le dice Zúñiga en una carta a Arce</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/piden-creacion-comision-legislativo-investigar-caso-marcelo-arce_1774133730" rel="noopener noreferrer" target="_blank">Piden creación de una comisión en el Legislativo para investigar caso Marcelo Arce</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dolor-carcel-toco-puerta-familia-le-dice-zuniga-arce_1774133721" rel="noopener noreferrer" target="_blank">“El dolor de la cárcel tocó la puerta de su familia”, le dice Zúñiga a Arce</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/03/21/dictan-140-dias-de-detencion-preventiva-para-marcelo-arce/" rel="noopener noreferrer" target="_blank">Dictan 140 días de detención preventiva para Marcelo Arce</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260321_hijo-de-luis-arce-cumple-su-primera-noche-en-palmasola-fiscalia-apunta-a-su-entorno-familiar.html" rel="noopener noreferrer" target="_blank">Hijo de Luis Arce cumple su primera noche en Palmasola; Fiscalía apunta a su entorno familiar</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/marcelo-arce-ya-esta-en-palmasola-su-defensa-apela-la-detencion/" rel="noopener noreferrer" target="_blank">Marcelo Arce ya está en Palmasola; su defensa apela la detención</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-motivo-la-detencion-de-marcelo-arce-y-su-traslado-a-la-carcel-202632162954" rel="noopener noreferrer" target="_blank">¿Qué motivó la detención de Marcelo Arce y su traslado a la cárcel?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/aprehension-de-marcelo-arce-activa-investigacion-a-nucleo-famiiliar-2026321145339" rel="noopener noreferrer" target="_blank">Aprehensión de Marcelo Arce activa investigación a núcleo famiiliar</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/es-una-senal-contra-la-impunidad-reacciones-tras-detencion-de-marcelo-arce-2026321213927" rel="noopener noreferrer" target="_blank">“Es una señal contra la impunidad”: reacciones tras detención de Marcelo Arce</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/reuniones-y-documentos-akly-habla-de-indicios-que-vincular%C3%ADan-marcelo-arce-con-negociados-en" rel="noopener noreferrer" target="_blank">Reuniones y documentos: Akly habla de indicios que vincularían a Marcelo Arce con negociados en YPFB</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10b">
+<div class="modal-backdrop" onclick="closeModal('modal_10b')"></div>
+<div aria-label="Detienen grupo vinculado a Marset" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRAFICO</div>
+<div class="modal-title">Detienen grupo vinculado a Marset</div>
+<div class="modal-sum">Un grupo de 15 personas, incluyendo ciudadanos extranjeros, presuntamente vinculadas a la seguridad de Sebastián Marset, fue enviado con detención preventiva por 180 días a prisión tras su cautelar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">10</strong> titulares</span>
+<span><strong style="color:var(--c-29)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/envian-con-detencion-preventiva-a-15-aprehendidos-por-el-caso-marset" rel="noopener noreferrer" target="_blank">Envían con detención preventiva a 15 aprehendidos por el caso Marset</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/03/21/dictan-180-dias-de-detencion-preventiva-para-15-acusados-de-integrar-la-seguridad-de-marset-58601" rel="noopener noreferrer" target="_blank">Dictan 180 días de detención preventiva para 15 acusados de integrar la seguridad de Marset</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260321_envian-a-prision-preventiva-por-180-dias-a-acusados-de-brindar-seguridad-a-marset.html" rel="noopener noreferrer" target="_blank">Envían a prisión preventiva por 180 días a acusados de brindar seguridad a Marset</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/detencion-preventiva-para-15-integrantes-de-la-seguridad-de-marset/" rel="noopener noreferrer" target="_blank">Detención preventiva para 15 integrantes de la seguridad de Marset</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/15-sindicados-integrar-seguridad-marset-van-prision-preventiva/20260321205946990432.html" rel="noopener noreferrer" target="_blank">15 sindicados de integrar la seguridad de Marset van a prisión preventiva</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cautelan-a-ciudadanos-extranjeros-presuntamente-vinculados-a-la-seguridad-de-marset-2026321134625" rel="noopener noreferrer" target="_blank">Cautelan a ciudadanos extranjeros presuntamente vinculados a la seguridad de Marset</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/detencion-preventiva-para-15-personas-vinculadas-a-la-seguridad-de-marset-2026321185412" rel="noopener noreferrer" target="_blank">Detención preventiva para 15 personas vinculadas a la seguridad de Marset</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/envian-a-la-carcel-a-los-15-acusados-de-ser-parte-de-la-seguridad-de-sebastian-marset-HL19655893" rel="noopener noreferrer" target="_blank">Envían a la cárcel a los 15 acusados de ser parte de la seguridad de Sebastián Marset</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/15-personas-vinculadas-a-la-seguridad-de-sebastian-marset-son-cauteladas-este-sabado-HL19654254" rel="noopener noreferrer" target="_blank">15 personas vinculadas a la seguridad de Sebastián Marset son cauteladas este sábado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41915-envian-a-prision-a-15-acusados-de-formar-parte-del-equipo-de-seguridad-de-marset" rel="noopener noreferrer" target="_blank">Envían a prisión a 15 acusados de formar parte del equipo de seguridad de Marset</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Inhabilitan candidatos en El Alto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">Inhabilitan candidatos en El Alto</div>
+<div class="modal-sum">El Tribunal Supremo Electoral (TSE) confirmó la inhabilitación de David Vargas y Eynar Viscarra como candidatos a la alcaldía de El Alto, mientras que ratificó la habilitación de Eliser Roca para postularse al mismo cargo, tras la revisión de los expedientes de los aspirantes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">10</strong> titulares</span>
+<span><strong style="color:var(--c-10)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/tse-ratifica-inhabilitacion-de-david-vargas-y-eynar-viscarra-a-la-alcaldia-de-el-alto" rel="noopener noreferrer" target="_blank">TSE ratifica inhabilitación de David Vargas y Eynar Viscarra a la alcaldía de El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/03/21/tse-deja-afuera-de-la-candidatura-a-la-alcaldia-de-el-alto-a-vargas-y-viscarra-roca-sigue-58591" rel="noopener noreferrer" target="_blank">TSE deja afuera de la candidatura a la Alcaldía de El Alto a Vargas y Viscarra; Roca sigue</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tse-habilita-uno-tres-candidatos-altenos-habilita-rocio-molina-cochabamba_1774125542" rel="noopener noreferrer" target="_blank">TSE habilita a uno de tres candidatos alteños; también habilita a Rocio Molina en Cochabamba</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/tse-habilita-a-roca-como-candidato-en-el-alto-viscarra-y-vargas-quedan-fuera/" rel="noopener noreferrer" target="_blank">TSE habilita a Roca como candidato en El Alto; Viscarra y Vargas quedan fuera</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/tse-reinicia-analisis-de-situacion-de-tres-candidatos-a-alcaldia-de-el-alto/" rel="noopener noreferrer" target="_blank">TSE reinicia análisis de situación de tres candidatos a alcaldía de El Alto</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tse-ratifica-candidatura-de-eliser-roca-a-la-alcaldia-de-el-alto-pero-inhabilita-a-david-vargas-y-eynar-viscarra/" rel="noopener noreferrer" target="_blank">El TSE ratifica candidatura de Eliser Roca a la Alcaldía de El Alto, pero inhabilita a David Vargas y Eynar Viscarra</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/horas-decisivas-tse-retoma-hoy-la-situaci%C3%B3n-de-los-tres-candidatos-observados-en-el-alto" rel="noopener noreferrer" target="_blank">Horas decisivas: TSE retoma hoy la situación de los tres candidatos observados en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/oficial-sala-plena-del-tse-decide-habilitar-eliser-roca-e-inhabilitar-david-vargas-y-eynar" rel="noopener noreferrer" target="_blank">Oficial: Sala Plena del TSE decide habilitar a Eliser Roca e inhabilitar a David Vargas y Eynar Viscarra</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/upc-present%C3%B3-sustituci%C3%B3n-de-roca-el-mi%C3%A9rcoles-pero-ahora-lo-ratifica-como-su-%E2%80%9C%C3%BAnico%E2%80%9D" rel="noopener noreferrer" target="_blank">UPC presentó sustitución de Roca el miércoles, pero ahora lo ratifica como su “único” candidato en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41903-tse-habilita-a-uno-de-los-tres-candidatos-a-alcalde-de-el-alto-observados-por-residencia" rel="noopener noreferrer" target="_blank">TSE habilita a uno de los tres candidatos a alcalde de El Alto observados por residencia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="Feminicidio investigado en Chuquisaca" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Feminicidio investigado en Chuquisaca</div>
+<div class="modal-sum">Chuquisaca registra su primer feminicidio del año, donde Judyth fue arrollada por la camioneta que conducía su pareja. La Fiscalía y otros organismos investigan el caso, con el enamorado aprehendido y se revela la autopsia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">9</strong> titulares</span>
+<span><strong style="color:var(--c-07)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/03/21/chuquisaca-registra-su-primer-feminicidio-del-ano-y-el-pais-suma-23-victimas-58592" rel="noopener noreferrer" target="_blank">Chuquisaca registra su primer feminicidio del año y el país suma 23 víctimas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/chuquisaca-hombre-mata-novia-arrollarla-camioneta_1774110220" rel="noopener noreferrer" target="_blank">Chuquisaca: Un hombre mata a su novia tras arrollarla con su camioneta</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/pais/investigan-por-feminicidio-la-muerte-de-una-mujer-atropellada-por-su-pareja-en-chuquisaca.html" rel="noopener noreferrer" target="_blank">Investigan por feminicidio la muerte de una mujer atropellada por su pareja en Chuquisaca</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/investigan-por-feminicidio-la-muerte-de-una-mujer-atropellada-por-su-pareja-en-villa" rel="noopener noreferrer" target="_blank">Investigan por feminicidio la muerte de una mujer atropellada por su pareja en Villa Charcas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/03/21/chuquisaca-registra-su-primer-feminicidio-la-victima-murio-atropellada/" rel="noopener noreferrer" target="_blank">Chuquisaca registra su primer feminicidio; la víctima murió atropellada</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/primer-feminicidio-chuquisaca-judyth-fue-arrollada-enamorado-aprehendido/20260321121430990400.html" rel="noopener noreferrer" target="_blank">Primer feminicidio en Chuquisaca: Judyth fue arrollada y su enamorado está aprehendido</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/revelan-autopsia-en-caso-de-mujer-fallecida-en-chuquisaca-investigan-a-su-pareja-2026321143340" rel="noopener noreferrer" target="_blank">Revelan autopsia en caso de mujer fallecida en Chuquisaca; investigan a su pareja</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/feminicidio-mujer-muere-arrollada-por-la-camioneta-que-conducia-su-pareja-reporta-la-fiscalia-NL19653835" rel="noopener noreferrer" target="_blank">Feminicidio: Mujer muere arrollada por la camioneta que conducía su pareja, reporta la Fiscalía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/mujer-muere-tras-ser-arrollada-por-la-camioneta-que-conduc%C3%ADa-su-pareja-investigan" rel="noopener noreferrer" target="_blank">Mujer muere tras ser arrollada por la camioneta que conducía su pareja; investigan feminicidio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7b">
+<div class="modal-backdrop" onclick="closeModal('modal_7b')"></div>
+<div aria-label="Bolivia elige autoridades subnacionales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">Bolivia elige autoridades subnacionales</div>
+<div class="modal-sum">Bolivia se prepara para las elecciones subnacionales, donde más de 7,4 millones de votantes acudirán a las urnas este domingo para elegir a 5.432 autoridades regionales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">9</strong> titulares</span>
+<span><strong style="color:var(--c-10)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/03/21/no-tiene-carnet-para-votar-segip-habilita-atencion-extraordinaria-hasta-las-1500-de-este-sabado-58581" rel="noopener noreferrer" target="_blank">¿No tiene carnet para votar? Segip habilita atención extraordinaria hasta las 15:00 de este sábado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tarija-elegira-139-autoridades-voto-ciudadano_1774112941" rel="noopener noreferrer" target="_blank">Tarija elegirá a 139 autoridades por el voto ciudadano</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/organo-electoral-publica-ultima-lista-candidatos-habilitados-este-domingo_1774141483" rel="noopener noreferrer" target="_blank">Órgano Electoral publica última lista de candidatos habilitados para este domingo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/pais/conozca-los-numero-telefonicos-del-transporte-autorizado-para-traslados-desde-aeropuertos-el-domingo-de-elecciones.html" rel="noopener noreferrer" target="_blank">Conozca los número telefónicos del transporte autorizado para traslados desde aeropuertos el domingo de elecciones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/medio-ambiente/%C2%BFpresencia-en-medio-de-ausencia-el-medioambiente-en-disputa-en-las-elecciones" rel="noopener noreferrer" target="_blank">¿Presencia en medio de ausencia? El medioambiente en disputa en las elecciones subnacionales de Bolivia 2026</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/bolivia-va-este-domingo-a-las-urnas-para-elegir-a-5-432-autoridades-subnacionales/" rel="noopener noreferrer" target="_blank">Bolivia va este domingo a las urnas para elegir a 5.432 autoridades subnacionales</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260321/elecciones-subnacionales-tse-pone-cero-sistema-computo-deja-todo-listo" rel="noopener noreferrer" target="_blank">Elecciones subnacionales: TSE pone en cero el sistema de cómputo y deja todo listo para el conteo de votos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/22-de-marzo-m%C3%A1s-de-74-millones-de-ciudadanos-eligen-5432-autoridades-regionales" rel="noopener noreferrer" target="_blank">22 de marzo: Más de 7,4 millones de ciudadanos eligen a 5.432 autoridades regionales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41918-bolivia-acude-a-las-urnas-mas-de-7_4-millones-de-votantes-elegiran-a-sus-autoridades-regionales" rel="noopener noreferrer" target="_blank">Bolivia acude a las urnas: más de 7,4 millones de votantes elegirán a sus autoridades regionales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Gobierno elimina arancel a soya" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-17)">ECONOMIA</div>
+<div class="modal-title">Gobierno elimina arancel a soya</div>
+<div class="modal-sum">El gobierno del presidente Rodrigo Paz abroga el Decreto Supremo 5547, que establecía arancel cero para la importación de grano de soya, atendiendo así demandas del sector agropecuario.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-17)">8</strong> titulares</span>
+<span><strong style="color:var(--c-17)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-abroga-decreto-que-fijaba-arancel-cero-para-la-importacion-de-grano-de-soya" rel="noopener noreferrer" target="_blank">Gobierno abroga decreto que fijaba arancel cero para la importación de grano de soya</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/gobierno-abroga-el-d-s-5547-que-permitia-importar-soya-con-arancel-cero" rel="noopener noreferrer" target="_blank">Gobierno abroga el D.S. 5547 que permitía importar soya con arancel cero</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-atiende-demandas-agro-abroga-decreto-arancel-cero-soya_1774103352" rel="noopener noreferrer" target="_blank">Gobierno atiende demandas del agro y abroga decreto de arancel cero a la soya</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/economia/rodrigo-paz-abroga-decreto-que-fijaba-arancel-cero-para-la-importacion-de-grano-de-soya.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz abroga decreto que fijaba arancel cero para la importación de grano de soya</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/03/21/conapes-aprueba-abrogacion-del-decreto-supremo-5547/" rel="noopener noreferrer" target="_blank">Conapes aprueba abrogación del Decreto Supremo 5547</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260321_paz-abroga-decreto-de-gravamen-cero-para-la-importacion-de-grano-de-soya-ante-amenazas.html" rel="noopener noreferrer" target="_blank">Paz abroga decreto de gravamen cero para la importación de grano de soya ante amenazas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/03/21/gobierno-abroga-decreto-que-autorizaba-importacion-de-soya-con-arancel-cero/" rel="noopener noreferrer" target="_blank">Gobierno abroga decreto que autorizaba importación de soya con arancel cero</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/conapes-aprueba-abrogacion-del-decreto-5547-en-respuesta-a-demanda-de-soyeros-y-arroceros/" rel="noopener noreferrer" target="_blank">Conapes aprueba abrogación del Decreto 5547 en respuesta a demanda de soyeros y arroceros</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Emboscada a Umopar en operativo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRAFICO</div>
+<div class="modal-title">Emboscada a Umopar en operativo</div>
+<div class="modal-sum">Una patrulla de la fuerza antidroga Umopar fue emboscada en Villa Tunari, Cochabamba, por pobladores. El ataque dejó como saldo dos policías heridos y un vehículo dañado, durante un operativo antidroga.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">7</strong> titulares</span>
+<span><strong style="color:var(--c-29)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/pobladores-de-villa-tunari-emboscan-a-patrulla-de-umopar-y-dejan-dos-policias-heridos" rel="noopener noreferrer" target="_blank">Pobladores de Villa Tunari emboscan a patrulla de Umopar y dejan dos policías heridos</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/ataque-a-umopar-en-villa-tunari-deja-dos-policias-heridos-durante-operativo-antidroga" rel="noopener noreferrer" target="_blank">Ataque a Umopar en Villa Tunari deja dos policías heridos durante operativo antidroga</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/03/21/dos-policias-de-umopar-quedan-heridos-tras-emboscada-en-villa-tunari-58594" rel="noopener noreferrer" target="_blank">Dos policías de Umopar quedan heridos tras emboscada en Villa Tunari</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/villa-tunari-emboscan-comando-umopar-dejan-dos-policias-heridos-vehiculo-danado_1774122651" rel="noopener noreferrer" target="_blank">Villa Tunari: emboscan a un comando de Umopar y dejan a dos policías heridos y un vehículo dañado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/efectivos-de-umopar-son-emboscados-y-heridos-en-villa-tunari/" rel="noopener noreferrer" target="_blank">Efectivos de Umopar son emboscados y heridos en Villa Tunari</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/hallan-cocaina-armas-municiones-casa-villa-tunari-dos-aprehendidos-dos-policias-heridos/20260321202648990430.html" rel="noopener noreferrer" target="_blank">Hallan cocaína, armas y municiones en una casa de Villa Tunari; hay dos aprehendidos y dos policías heridos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/villa-tunari-agentes-antidrogas-sufren-emboscada-tras-hallar-droga-y-armamento-en-una-vivienda-DL19655350" rel="noopener noreferrer" target="_blank">Villa Tunari: Agentes antidrogas sufren emboscada tras hallar droga y armamento en una vivienda</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="Bolivia y Chile reactivan agenda" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Bolivia y Chile reactivan agenda</div>
+<div class="modal-sum">Cancilleres de Bolivia y Chile se reunieron en Bogotá y acordaron convocar a un futuro encuentro para impulsar una agenda común y suscribir acuerdos estratégicos en áreas como integración, comercio, migración, seguridad, energía e hidrocarburos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">7</strong> titulares</span>
+<span><strong style="color:var(--c-18)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/bolivia-y-chile-acuerdan-avanzar-en-agenda-comun-tras-reunion-bilateral-en-la-celac" rel="noopener noreferrer" target="_blank">Bolivia y Chile acuerdan avanzar en agenda común tras reunión bilateral en la CELAC</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/03/21/cancilleres-de-bolivia-y-chile-se-reunen-en-bogota-y-deciden-impulsar-acuerdos-en-7-ejes-58584" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile se reúnen en Bogotá y deciden impulsar acuerdos en 7 ejes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/pais/canciller-boliviano-se-reunio-con-su-par-de-chile-y-acordaron-convocar-a-un-encuentro-para-suscribir-acuerdos-estrategicos.html" rel="noopener noreferrer" target="_blank">Canciller boliviano se reunió con su par de Chile y acordaron convocar a un encuentro para suscribir “acuerdos estratégicos”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/cancilleres-de-bolivia-y-chile-acuerdan-reunion-para-impulsar-agenda/" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile acuerdan reunión para impulsar agenda</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/bolivia-y-chile-fijan-reunion-para-acuerdos-en-integracion-comercio-migracion-seguridad-energia-e-hidrocarburos/" rel="noopener noreferrer" target="_blank">Bolivia y Chile fijan reunión para acuerdos en integración, comercio, migración, seguridad, energía e hidrocarburos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cancilleres-de-bolivia-y-chile-se-re%C3%BAnen-y-proyectan-acuerdos-en-%C3%A1reas-clave-de-cooperaci%C3%B3n" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile se reúnen y proyectan acuerdos en áreas clave de cooperación</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41886-el-canciller-se-reunio-con-su-par-de-chile-y-acordaron-convocar-a-un-encuentro-para-suscribir-acuerdos-estrategicos" rel="noopener noreferrer" target="_blank">El Canciller se reunió con su par de Chile y acordaron convocar a un encuentro para suscribir “acuerdos estratégicos”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="OEA despliega misión electoral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">OEA despliega misión electoral</div>
+<div class="modal-sum">La Organización de los Estados Americanos (OEA) despliega su misión de observación electoral en Bolivia, conformada por observadores de 14 países, de cara a las elecciones subnacionales del domingo. El Órgano Electoral se reúne con dicha misión.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/politica/oea-despliega-una-mision-con-observadores-de-14-paises-para-las-elecciones-de-este-domingo.html" rel="noopener noreferrer" target="_blank">OEA despliega una misión con observadores de 14 países para las elecciones de este domingo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260321_organo-electoral-se-reune-con-mision-de-observacion-de-la-oea.html" rel="noopener noreferrer" target="_blank">Órgano Electoral se reúne con misión de observación de la OEA</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/subnacionales-observadores-de-14-paises-conforman-mision-de-oea/" rel="noopener noreferrer" target="_blank">Subnacionales: Observadores de 14 países conforman misión de OEA</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260321/elecciones-subnacionales-observadores-14-nacionalidades-conforman-mision" rel="noopener noreferrer" target="_blank">Elecciones subnacionales: Observadores de 14 nacionalidades conforman la misión de la OEA</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/subnacionales-m%C3%A1s-de-2000-observadores-electorales-se-desplegar%C3%A1n-en-todo-el-pa%C3%ADs" rel="noopener noreferrer" target="_blank">Subnacionales: Más de 2.000 observadores electorales se desplegarán en todo el país</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Vicepresidente incumple silencio electoral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">Vicepresidente incumple silencio electoral</div>
+<div class="modal-sum">El vicepresidente Edmand Lara incumple el silencio electoral en las horas previas a las elecciones subnacionales, al infringir la normativa e inducir al voto o criticar a candidatos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/a-pocas-horas-de-las-elecciones-vicepresidente-lara-viola-el-silencio-electoral-y-se-estrella-contra-candidatos" rel="noopener noreferrer" target="_blank">A pocas horas de las elecciones, vicepresidente Lara viola el silencio electoral y se estrella contra candidatos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/03/21/lara-infringe-la-normativa-e-induce-al-voto-58588" rel="noopener noreferrer" target="_blank">Lara infringe la normativa e induce al voto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/a-horas-de-los-comicios-lara-incumple-silencio-electoral-e-induce-al-voto/" rel="noopener noreferrer" target="_blank">A horas de los comicios, Lara incumple silencio electoral e induce al voto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/en-la-antesala-de-las-subnacionales-lara-incumple-el-silencio-electoral" rel="noopener noreferrer" target="_blank">En la antesala de las subnacionales, Lara incumple el silencio electoral</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41890-a-24-horas-de-los-comicios-el-vicepresidente-lara-incumple-el-silencio-electoral" rel="noopener noreferrer" target="_blank">A 24 horas de los comicios, el vicepresidente Lara incumple el silencio electoral</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Acto por Día del Mar" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">GOBIERNO</div>
+<div class="modal-title">Acto por Día del Mar</div>
+<div class="modal-sum">El acto central por el Día del Mar se llevará a cabo en Puerto Quijarro, donde el presidente Rodrigo Paz emitirá un mensaje oficial, según anunció Lupo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">4</strong> titulares</span>
+<span><strong style="color:var(--c-11)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/acto-central-del-dia-del-mar-se-realizara-en-puerto-quijarro" rel="noopener noreferrer" target="_blank">Acto central del Día del Mar se realizará en Puerto Quijarro</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-03-21/pais/lupo-anuncia-que-el-presidente-paz-dara-mensaje-por-el-dia-del-mar-en-puerto-quijarro.html" rel="noopener noreferrer" target="_blank">Lupo anuncia que el presidente Paz dará mensaje por el Día del Mar en Puerto Quijarro</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/03/21/trasladan-restos-del-heroe-del-topater-por-dia-del-mar/" rel="noopener noreferrer" target="_blank">Trasladan restos del héroe del Topáter por Día del Mar</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/03/21/paz-emitira-mensaje-por-el-dia-del-mar-desde-puerto-quijarro-segun-lupo/" rel="noopener noreferrer" target="_blank">Paz emitirá mensaje por el Día del Mar desde Puerto Quijarro, según Lupo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Trasladan vehículos caso Marset" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-29)">NARCOTRAFICO</div>
+<div class="modal-title">Trasladan vehículos caso Marset</div>
+<div class="modal-sum">El Gobierno y Dircabi confirmaron el traslado de cinco vehículos incautados en operativos contra la estructura criminal de Sebastián Marset, respondiendo a denuncias previas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-29)">4</strong> titulares</span>
+<span><strong style="color:var(--c-29)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/gobierno-traslada-cinco-vehiculos-incautados-en-operativo-contra-red-de-sebastian-marset" rel="noopener noreferrer" target="_blank">Gobierno traslada cinco vehículos incautados en operativo contra red de Sebastián Marset</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dircabi-traslada-cinco-vehiculos-incautados-en-operativos-contra-la-estructura-criminal-de-marset/" rel="noopener noreferrer" target="_blank">Dircabi traslada cinco vehículos incautados en operativos contra la estructura criminal de Marset</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-se-pronuncia-por-vehiculos-incautados-a-sebastian-marset-2026321163120" rel="noopener noreferrer" target="_blank">Gobierno se pronuncia por vehículos incautados a Sebastián Marset</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/03/21/41911-tras-denuncia-gobierno-aclara-que-se-trasladaron-5-vehiculos-incautados-en-operativos-contra-la-estructura-de-marset" rel="noopener noreferrer" target="_blank">Tras denuncia, Gobierno aclara que se trasladaron 5 vehículos incautados en operativos contra la estructura de Marset</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Intervienen negocios por Auto de Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">ELECCIONES SUBNACIONALES</div>
+<div class="modal-title">Intervienen negocios por Auto de Gobierno</div>
+<div class="modal-sum">En La Paz, 32 actividades económicas fueron intervenidas con aprehensiones y clausuras por infringir el Auto de Buen Gobierno establecido previo a las elecciones subnacionales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">4</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/03/21/intervienen-32-locales-por-venta-ilegal-de-alcohol-durante-auto-de-buen-gobierno" rel="noopener noreferrer" target="_blank">Intervienen 32 locales por venta ilegal de alcohol durante Auto de Buen Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/03/21/la-paz-al-menos-32-actividades-intervenidas-por-infringir-auto-de-buen-gobierno/" rel="noopener noreferrer" target="_blank">La Paz: al menos 32 actividades intervenidas por infringir Auto de Buen Gobierno</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-paz-intervienen-32-actividades-economicas-que-infringian-el-auto-de-buen-gobierno/" rel="noopener noreferrer" target="_blank">La Paz: Intervienen 32 actividades económicas que infringían el Auto de Buen Gobierno</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/aprehensiones-y-clausuras-marcan-el-cumplimiento-del-auto-de-buen-gobierno-previo-a-las-subnacionales-202632110142" rel="noopener noreferrer" target="_blank">Aprehensiones y clausuras marcan el cumplimiento del Auto de Buen Gobierno previo a las subnacionales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="YPFB y CAINCO analizan sector" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-09)">HIDROCARBUROS</div>
+<div class="modal-title">YPFB y CAINCO analizan sector</div>
+<div class="modal-sum">YPFB se reunió con la Cámara de Industria, Comercio, Servicios y Turismo (CAINCO) para abordar los desafíos estructurales del sector de hidrocarburos y combustibles.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-09)">3</strong> titulares</span>
+<span><strong style="color:var(--c-09)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-reune-cainco-exponer-desafios-estructurales-sector-hidrocarburifero_1774112078" rel="noopener noreferrer" target="_blank">YPFB se reúne con CAINCO para exponer los desafíos estructurales del sector hidrocarburífero</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ypfb-y-cainco-se-reunen-para-tratar-temas-de-hidrocarburos-y-combustibles-EL19653205" rel="noopener noreferrer" target="_blank">YPFB y Cainco se reúnen para tratar temas de hidrocarburos y combustibles</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ypfb-y-cainco-se-re%C3%BAnen-para-conocer-los-desaf%C3%ADos-estructurales-del-sector-hidrocarbur%C3%ADfero" rel="noopener noreferrer" target="_blank">YPFB y Cainco se reúnen para conocer los desafíos estructurales del sector hidrocarburífero</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4b">
+<div class="modal-backdrop" onclick="closeModal('modal_4b')"></div>
+<div aria-label="Investigan muerte de conscripto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Investigan muerte de conscripto</div>
+<div class="modal-sum">La Fiscalía inició una investigación de oficio por la muerte de un conscripto en Pando. Una diputada y la Defensoría del Pueblo solicitaron informes al Ministerio de Defensa sobre el deceso del soldado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/03/21/fiscalia-investiga-de-oficio-muerte-de-conscripto-en-pando-58585" rel="noopener noreferrer" target="_blank">Fiscalía investiga de oficio muerte de conscripto en Pando</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/03/21/diputada-pide-informe-a-defensa-por-deceso-de-conscripto-en-pando-2/" rel="noopener noreferrer" target="_blank">Diputada pide informe a Defensa por deceso de conscripto en Pando</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-paso-con-el-soldado-fallecido-en-pando-defensoria-pide-informe-202632165124" rel="noopener noreferrer" target="_blank">¿Qué pasó con el soldado fallecido en Pando? Defensoría pide informe</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4c">
+<div class="modal-backdrop" onclick="closeModal('modal_4c')"></div>
+<div aria-label="Choque de camiones deja fallecido" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Choque de camiones deja fallecido</div>
+<div class="modal-sum">Un choque frontal entre dos camiones en Cotoca, Santa Cruz, dejó una persona fallecida. El accidente es calificado como fatal por los medios locales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260321_choque-frontal-entre-dos-camiones-deja-un-fallecido-en-santa-cruz.html" rel="noopener noreferrer" target="_blank">Choque frontal entre dos camiones deja un fallecido en Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fatal-accidente-choque-frontal-entre-camiones-deja-una-persona-fallecida-en-cotoca-202632120412" rel="noopener noreferrer" target="_blank">Fatal accidente: Choque frontal entre camiones deja una persona fallecida en Cotoca</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/accidente-fatal-un-muerto-deja-el-choque-frontal-entre-dos-camiones-en-cotoca-AL19655261" rel="noopener noreferrer" target="_blank">Accidente fatal: Un muerto deja el choque frontal entre dos camiones en Cotoca</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+</script></body>
+</html>
