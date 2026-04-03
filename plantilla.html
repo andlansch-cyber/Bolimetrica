@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolimétrica | Historial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                brandBlue: '#0f2137',
+                brandAmber: '#c8880a',
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Barlow Condensed', sans-serif; }
+        #countdown-box {
+            display: none;
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen">
+
+    <header class="bg-brandBlue py-6 shadow-lg border-b-4 border-brandAmber">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="font-display text-2xl tracking-wider uppercase font-extrabold text-white">
+                Boli<span class="text-[#f0c060]">métrica</span>
+            </a>
+            <nav class="flex gap-6 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <a href="/" class="hover:text-white transition-colors">Inicio</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+
+            <div class="p-8 border-b border-slate-100 bg-slate-50/50">
+                <h1 class="font-display text-4xl font-bold text-brandBlue uppercase tracking-tight">Archivo de Informes</h1>
+                <p class="text-slate-500 text-sm">Cronología de monitoreo digital en Bolivia. Mostrando solo los informes de los últimos 7 días.</p>
+            </div>
+
+            <div class="divide-y divide-slate-100">
+                {{FILAS_INFORMES}}
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ─────────────────────────────────────────────────────────
+        // TEMPORIZADOR BOLIMÉTRICA
+        // Zona horaria: Bolivia (UTC-4), sin cambio de horario.
+        // Lógica: el informe del día (id="btn-hoy") se oculta
+        // hasta las 09:00 AM hora boliviana. Antes de esa hora
+        // se muestra una cuenta regresiva que se actualiza cada
+        // segundo. A las 09:00 el botón se revela solo.
+        // ─────────────────────────────────────────────────────────
+
+        const BOLIVIA_OFFSET_HOURS = -4;
+        const UNLOCK_HOUR = 9; // 9:00 AM
+
+        function getBoliviaDate() {
+            const now = new Date();
+            // Desplazar UTC a Bolivia (UTC-4)
+            const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+            return new Date(utcMs + BOLIVIA_OFFSET_HOURS * 3600000);
+        }
+
+        function calcularSegundosRestantes() {
+            const bolivia = getBoliviaDate();
+            const desbloqueo = new Date(bolivia);
+            desbloqueo.setHours(UNLOCK_HOUR, 0, 0, 0);
+            return Math.floor((desbloqueo - bolivia) / 1000);
+        }
+
+        function formatearContador(seg) {
+            if (seg <= 0) return "00:00:00";
+            const h = Math.floor(seg / 3600);
+            const m = Math.floor((seg % 3600) / 60);
+            const s = seg % 60;
+            return [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
+        }
+
+        function revelarInforme() {
+            const btn = document.getElementById("btn-hoy");
+            const box = document.getElementById("countdown-box");
+            if (btn) btn.style.display = "";
+            if (box) box.style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const btn = document.getElementById("btn-hoy");
+            const box = document.getElementById("countdown-box");
+            const reloj = document.getElementById("countdown-timer");
+
+            // Si no hay informe del día, no hay nada que controlar
+            if (!btn) return;
+
+            const segundosRestantes = calcularSegundosRestantes();
+
+            if (segundosRestantes <= 0) {
+                // Ya pasaron las 09:00 → mostrar directamente
+                revelarInforme();
+                return;
+            }
+
+            // Antes de las 09:00 → ocultar botón y mostrar cuenta regresiva
+            btn.style.display = "none";
+            if (box) box.style.display = "block";
+
+            let contador = segundosRestantes;
+
+            if (reloj) reloj.textContent = formatearContador(contador);
+
+            const intervalo = setInterval(function () {
+                // Recalcular siempre desde la hora real para evitar desfases
+                const restantes = calcularSegundosRestantes();
+
+                if (restantes <= 0) {
+                    clearInterval(intervalo);
+                    revelarInforme();
+                    return;
+                }
+
+                contador = restantes;
+                if (reloj) reloj.textContent = formatearContador(contador);
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
