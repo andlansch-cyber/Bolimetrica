@@ -125,15 +125,31 @@
     </main>
 
     <script>
-        const LINK_HOY = "informes/2026-04-04-doQqBo.html";
-        const FECHA_HOY = "2026-04-04";
-        const t = document.querySelector("#main-title");
-        const html = document.querySelector("#link-html");
-        const pdf = document.querySelector("#link-pdf");
+        const LINK_HOY      = "informes/2026-04-04-doQqBo.html";
+        const FECHA_HOY     = "2026-04-04";
+        const LINK_ANTERIOR = "PENDIENTE";
+        const FECHA_ANTERIOR = "PENDIENTE";
 
-        if (t) t.innerHTML = `Reporte del día <br><span class="text-slate-400">${LAST}</span>`;
-        if (html) html.setAttribute("href", `informes/${LAST}.html`);
-        if (pdf) pdf.setAttribute("href", `informes/${LAST}.pdf`);
+        // Hora Bolivia (UTC-4)
+        const horaBolivia = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" })
+        );
+        const esPublico = horaBolivia.getHours() >= 9;
+
+        const linkActivo  = esPublico ? LINK_HOY      : LINK_ANTERIOR;
+        const fechaActiva = esPublico ? FECHA_HOY      : FECHA_ANTERIOR;
+        const textoBoton  = esPublico ? "Ver informe de hoy" : "Ver último informe";
+
+        const btnPrincipal = document.querySelector("#link-html");
+        const titulo       = document.querySelector("#main-title");
+
+        if (btnPrincipal) {
+            btnPrincipal.setAttribute("href", linkActivo);
+            btnPrincipal.textContent = textoBoton;
+        }
+        if (titulo) {
+            titulo.innerHTML = `Reporte del día <br><span class="text-slate-400">${fechaActiva}</span>`;
+        }
     </script>
 </body>
 </html>
