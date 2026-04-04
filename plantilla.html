@@ -53,6 +53,12 @@
             </div>
 
             <div class="divide-y divide-slate-100">
+                <div id="plantilla-countdown-banner" class="px-8 py-4 bg-slate-50 border-b border-slate-100 flex items-center gap-3 text-sm font-medium text-slate-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brandAmber flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span id="plantilla-countdown-text" class="font-mono font-bold text-brandAmber"></span>
+                </div>
                 {{FILAS_INFORMES}}
             </div>
 
@@ -101,6 +107,26 @@
 
         actualizarEstado();
         setInterval(actualizarEstado, 1000);
+      })();
+
+      // Countdown global (banner superior)
+      (function () {
+        const cdEl = document.getElementById("plantilla-countdown-text");
+        if (!cdEl) return;
+        function actualizar() {
+            const ahora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" }));
+            const meta  = new Date(ahora);
+            if (ahora.getHours() >= 9) meta.setDate(meta.getDate() + 1);
+            meta.setHours(9, 0, 0, 0);
+            const diff = meta - ahora;
+            const h = String(Math.floor(diff / 3600000)).padStart(2, "0");
+            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
+            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+            const prefijo = ahora.getHours() >= 9 ? "Próxima actualización en" : "Disponible en";
+            cdEl.textContent = `${prefijo} ${h}:${m}:${s}`;
+        }
+        actualizar();
+        setInterval(actualizar, 1000);
       })();
     </script>
 </body>
