@@ -69,7 +69,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brandAmber" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Cobertura: Última jornada completa de 24 horas. 
+                    Cobertura: última jornada completa de 24 horas.
+                </p>
+                <p id="home-countdown" class="mt-2 text-sm text-brandAmber flex items-center gap-2 font-mono font-bold"></p>
                 </p>
             </div>
 
@@ -117,6 +119,15 @@
     </main>
 
     <script>
+        function formatearFecha(fechaStr) {
+            const [y, mo, d] = fechaStr.split("-").map(Number);
+            const fecha = new Date(y, mo - 1, d);
+            const dia   = fecha.toLocaleDateString("es-BO", { weekday: "long" });
+            const mes   = fecha.toLocaleDateString("es-BO", { month:   "long" });
+            const diaCapital = dia.charAt(0).toUpperCase() + dia.slice(1);
+            const mesCapital = mes.charAt(0).toUpperCase() + mes.slice(1);
+        return `${diaCapital} ${String(d).padStart(2,"0")} · ${mesCapital} · ${y}`;
+        }
         const LINK_HOY = "informes/2026-04-04-EPAKnV.html";
         const FECHA_HOY = "2026-04-04";
         const LINK_ANTERIOR = "informes/2026-04-03-doQqBo.html";
@@ -140,7 +151,28 @@
             btnPrincipal.textContent = textoBoton;
         }
         if (titulo) {
-            titulo.innerHTML = `Reporte del día <br><span class="text-slate-400">${fechaActiva}</span>`;
+            titulo.innerHTML = `Reporte diario <br><span class="text-slate-400">${formatearFecha(fechaActiva)}</span>`;
+        }
+
+        // Countdown hacia las 9:00 AM (o hacia las 9:00 AM del día siguiente)
+        const cdEl = document.getElementById("home-countdown");
+        if (cdEl) {
+            function actualizarCdHome() {
+                const ahora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" }));
+                const meta  = new Date(ahora);
+                if (ahora.getHours() >= 9) {
+                    meta.setDate(meta.getDate() + 1);
+                }
+                meta.setHours(9, 0, 0, 0);
+                const diff = meta - ahora;
+                const h = String(Math.floor(diff / 3600000)).padStart(2, "0");
+                const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
+                const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+                const prefijo = ahora.getHours() >= 9 ? "Próxima actualización en" : "Disponible en";
+                cdEl.textContent = `${prefijo} ${h}:${m}:${s}`;
+            }
+            actualizarCdHome();
+            setInterval(actualizarCdHome, 1000);
         }
     </script>
 </body>
