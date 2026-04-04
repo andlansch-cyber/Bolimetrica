@@ -60,86 +60,48 @@
     </main>
 
     <script>
-        // ─────────────────────────────────────────────────────────
-        // TEMPORIZADOR BOLIMÉTRICA
-        // Zona horaria: Bolivia (UTC-4), sin cambio de horario.
-        // Lógica: el informe del día (id="btn-hoy") se oculta
-        // hasta las 09:00 AM hora boliviana. Antes de esa hora
-        // se muestra una cuenta regresiva que se actualiza cada
-        // segundo. A las 09:00 el botón se revela solo.
-        // ─────────────────────────────────────────────────────────
+      (function () {
+        const btnHoy       = document.getElementById("btn-hoy");
+        const countdownBox = document.getElementById("countdown-box");
+        const timer        = document.getElementById("countdown-timer");
 
-        const BOLIVIA_OFFSET_HOURS = -4;
-        const UNLOCK_HOUR = 9; // 9:00 AM
+        // Si no hay informe de hoy en la página, no hacer nada
+        if (!btnHoy) return;
 
-        function getBoliviaDate() {
-            const now = new Date();
-            // Desplazar UTC a Bolivia (UTC-4)
-            const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-            return new Date(utcMs + BOLIVIA_OFFSET_HOURS * 3600000);
+        function ahoraBolivia() {
+          // Bolivia es UTC-4, sin horario de verano
+          const ahora = new Date();
+          return new Date(ahora.toLocaleString("en-US", { timeZone: "America/La_Paz" }));
         }
 
-        function calcularSegundosRestantes() {
-            const bolivia = getBoliviaDate();
-            const desbloqueo = new Date(bolivia);
-            desbloqueo.setHours(UNLOCK_HOUR, 0, 0, 0);
-            return Math.floor((desbloqueo - bolivia) / 1000);
+        function actualizarEstado() {
+          const ahora   = ahoraBolivia();
+          const hora9   = new Date(ahora);
+          hora9.setHours(9, 0, 0, 0);
+          const diff    = hora9 - ahora;
+
+          if (diff <= 0) {
+            // Ya pasaron las 9:00 AM → mostrar botón, ocultar countdown
+            btnHoy.style.display       = "inline-block";
+            countdownBox.style.display = "none";
+          } else {
+            // Antes de las 9:00 AM → ocultar botón, mostrar countdown
+            btnHoy.style.display       = "none";
+            countdownBox.style.display = "block";
+
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            timer.textContent =
+              String(h).padStart(2, "0") + ":" +
+              String(m).padStart(2, "0") + ":" +
+              String(s).padStart(2, "0");
+          }
         }
 
-        function formatearContador(seg) {
-            if (seg <= 0) return "00:00:00";
-            const h = Math.floor(seg / 3600);
-            const m = Math.floor((seg % 3600) / 60);
-            const s = seg % 60;
-            return [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
-        }
-
-        function revelarInforme() {
-            const btn = document.getElementById("btn-hoy");
-            const box = document.getElementById("countdown-box");
-            if (btn) btn.style.display = "";
-            if (box) box.style.display = "none";
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const btn = document.getElementById("btn-hoy");
-            const box = document.getElementById("countdown-box");
-            const reloj = document.getElementById("countdown-timer");
-
-            // Si no hay informe del día, no hay nada que controlar
-            if (!btn) return;
-
-            const segundosRestantes = calcularSegundosRestantes();
-
-            if (segundosRestantes <= 0) {
-                // Ya pasaron las 09:00 → mostrar directamente
-                revelarInforme();
-                return;
-            }
-
-            // Antes de las 09:00 → ocultar botón y mostrar cuenta regresiva
-            btn.style.display = "none";
-            if (box) box.style.display = "block";
-
-            let contador = segundosRestantes;
-
-            if (reloj) reloj.textContent = formatearContador(contador);
-
-            const intervalo = setInterval(function () {
-                // Recalcular siempre desde la hora real para evitar desfases
-                const restantes = calcularSegundosRestantes();
-
-                if (restantes <= 0) {
-                    clearInterval(intervalo);
-                    revelarInforme();
-                    return;
-                }
-
-                contador = restantes;
-                if (reloj) reloj.textContent = formatearContador(contador);
-            }, 1000);
-        });
+        actualizarEstado();
+        setInterval(actualizarEstado, 1000);
+      })();
     </script>
-
 </body>
 </html>
