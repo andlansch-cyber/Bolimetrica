@@ -3,121 +3,705 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bolimétrica | Inteligencia de Medios</title>
+    <title>Bolimétrica | Inteligencia de medios</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
           theme: {
             extend: {
               colors: {
-                brandBlue: '#0f2137',
+                brandBlue:  '#0f2137',
+                brandBlue2: '#152b45',
+                brandBlue3: '#1c3553',
                 brandAmber: '#c8880a',
+                brandAmber2:'#f0c060',
+                ink:        '#0a1726',
+                paper:      '#f4f1ea',
+                paper2:     '#ebe6da',
+              },
+              fontFamily: {
+                display: ['Fraunces', 'Georgia', 'serif'],
+                mono:    ['JetBrains Mono', 'ui-monospace', 'monospace'],
+                sans:    ['Inter', 'system-ui', 'sans-serif'],
               }
             }
           }
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .font-display { font-family: 'Barlow Condensed', sans-serif; }
-        .bg-pattern { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 24px 24px; }
+        :root{
+            --brand-blue:  #0f2137;
+            --brand-blue2: #152b45;
+            --brand-amber: #c8880a;
+            --brand-amber2:#f0c060;
+            --paper: #f4f1ea;
+            --paper2:#ebe6da;
+            --ink: #0a1726;
+        }
+        html, body { background: var(--paper); }
+        body{
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #1f2a3a;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        .font-display{ font-family:'Fraunces', Georgia, serif; font-optical-sizing:auto; }
+        .font-mono   { font-family:'JetBrains Mono', ui-monospace, monospace; }
+
+        /* ---------- BRAND LOGO (idéntico a los reportes) ---------- */
+        .brand{
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-decoration: none;
+            line-height: 1;
+        }
+        .brand span{ color: #F0C060; }
+        .brand-sub{
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        /* ---------- RADAR WATERMARK ---------- */
+        .radar{
+            position:absolute;
+            top: 50%;
+            right: -180px;
+            transform: translateY(-50%);
+            width: 780px;
+            height: 780px;
+            pointer-events:none;
+            opacity: 0.085;
+            mix-blend-mode: screen;
+            z-index: 1;
+        }
+        .radar svg{ width:100%; height:100%; display:block; }
+        .radar .sweep{
+            transform-origin: 50% 50%;
+            animation: radar-sweep 8s linear infinite;
+        }
+        .radar .blip{
+            transform-origin: 50% 50%;
+            animation: blip-fade 8s linear infinite;
+        }
+        .radar .blip.b2{ animation-delay: -2.6s; }
+        .radar .blip.b3{ animation-delay: -5.2s; }
+        @keyframes radar-sweep{
+            from{ transform: rotate(0deg); }
+            to  { transform: rotate(360deg); }
+        }
+        @keyframes blip-fade{
+            0%, 100% { opacity: 0; }
+            10%      { opacity: 1; }
+            60%      { opacity: 0; }
+        }
+        @media (max-width: 1024px){
+            .radar{ right:-280px; width:620px; height:620px; opacity:0.06; }
+        }
+
+
+        .hero{
+            background:
+                radial-gradient(1200px 600px at 85% -10%, rgba(200,136,10,0.18), transparent 60%),
+                radial-gradient(900px 500px at 10% 110%, rgba(200,136,10,0.06), transparent 60%),
+                linear-gradient(180deg, #0a1726 0%, #0f2137 40%, #0f2137 100%);
+            position:relative;
+            overflow:hidden;
+        }
+        .hero::before{
+            content:"";
+            position:absolute; inset:0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse at 50% 40%, #000 40%, transparent 85%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 40%, transparent 85%);
+            pointer-events:none;
+        }
+        .hero::after{
+            content:"";
+            position:absolute; inset:0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+            opacity:.5; mix-blend-mode:overlay; pointer-events:none;
+        }
+
+        /* corner ticks */
+        .ticks{ position:relative; }
+        .ticks::before, .ticks::after,
+        .ticks > .tick-tl, .ticks > .tick-tr, .ticks > .tick-bl, .ticks > .tick-br{
+            content:""; position:absolute; width:14px; height:14px;
+            border-color:var(--brand-amber);
+        }
+        .ticks::before{ top:-1px; left:-1px; border-top:1px solid; border-left:1px solid; }
+        .ticks::after { top:-1px; right:-1px; border-top:1px solid; border-right:1px solid; }
+        .ticks > .tick-bl{ bottom:-1px; left:-1px; border-bottom:1px solid var(--brand-amber); border-left:1px solid var(--brand-amber); }
+        .ticks > .tick-br{ bottom:-1px; right:-1px; border-bottom:1px solid var(--brand-amber); border-right:1px solid var(--brand-amber); }
+
+        /* live dot */
+        .live-dot{
+            display:inline-block; width:8px; height:8px; border-radius:9999px;
+            background:#22c55e; box-shadow:0 0 0 0 rgba(34,197,94,.7);
+            animation: pulse 2s infinite;
+        }
+        .live-dot.amber{ background:var(--brand-amber2); box-shadow:0 0 0 0 rgba(240,192,96,.7); }
+        @keyframes pulse{
+            0%{ box-shadow:0 0 0 0 rgba(34,197,94,.55); }
+            70%{ box-shadow:0 0 0 10px rgba(34,197,94,0); }
+            100%{ box-shadow:0 0 0 0 rgba(34,197,94,0); }
+        }
+
+        /* CTA */
+        .cta-primary{
+            position:relative;
+            background: linear-gradient(180deg, #d89610 0%, #c8880a 50%, #a86f06 100%);
+            color:#fff;
+            border:1px solid rgba(255,255,255,0.15);
+            box-shadow:
+                0 1px 0 rgba(255,255,255,0.25) inset,
+                0 0 0 1px rgba(200,136,10,0.4),
+                0 18px 40px -18px rgba(200,136,10,0.7);
+            transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        }
+        .cta-primary:hover{
+            transform: translateY(-1px);
+            filter: brightness(1.07);
+            box-shadow:
+                0 1px 0 rgba(255,255,255,0.3) inset,
+                0 0 0 1px rgba(200,136,10,0.6),
+                0 22px 50px -18px rgba(200,136,10,0.85);
+        }
+
+        /* Editorial headline */
+        .headline{
+            font-family:'Fraunces', serif;
+            font-weight:400;
+            font-optical-sizing:auto;
+            font-variation-settings: "opsz" 144, "SOFT" 50;
+            letter-spacing:-0.02em;
+            line-height:0.92;
+        }
+        .headline em{
+            font-style: italic;
+            font-weight:300;
+            color:#f0c060;
+        }
+
+        /* Section label */
+        .sec-label{
+            font-family:'JetBrains Mono', monospace;
+            font-size:11px;
+            letter-spacing:0.18em;
+            text-transform:uppercase;
+            color:#7e8a9c;
+        }
+        .sec-label::before{ content:"// "; color:var(--brand-amber); }
+
+        /* Numbered process card */
+        .step{
+            position:relative;
+            background:#fff;
+            border:1px solid #e6dfce;
+            border-radius:2px;
+            padding:36px 32px 32px 32px;
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+        .step:hover{
+            transform: translateY(-2px);
+            border-color:#c8880a;
+            box-shadow: 0 30px 50px -30px rgba(15,33,55,0.25);
+        }
+        .step .num{
+            font-family:'Fraunces', serif;
+            font-weight:300;
+            font-size:88px;
+            line-height:0.85;
+            color:transparent;
+            -webkit-text-stroke: 1px #c8880a;
+            letter-spacing:-0.04em;
+            display:block;
+        }
+        .step h3{
+            font-family:'Fraunces', serif;
+            font-weight:500;
+            font-size:22px;
+            color:var(--brand-blue);
+            line-height:1.15;
+            margin-top:18px;
+            margin-bottom:10px;
+            letter-spacing:-0.01em;
+        }
+        .step p{
+            font-size:14px;
+            line-height:1.65;
+            color:#4b5868;
+        }
+
+        /* Hairline divider */
+        .hairline{
+            height:1px;
+            background: linear-gradient(to right, transparent, #c8880a 20%, #c8880a 80%, transparent);
+            opacity:.4;
+        }
+
+        /* Aged paper section */
+        .paper-section{
+            background: var(--paper);
+            position:relative;
+        }
+        .paper-section::before{
+            content:""; position:absolute; inset:0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+            opacity:.7; pointer-events:none;
+        }
+        .paper-section > *{ position:relative; }
+
+        /* Acceso card */
+        .credential{
+            background:
+                radial-gradient(800px 400px at 0% 0%, rgba(200,136,10,0.18), transparent 55%),
+                linear-gradient(160deg, #0f2137 0%, #152b45 100%);
+            border:1px solid rgba(200,136,10,0.35);
+            position:relative;
+            overflow:hidden;
+        }
+        .credential::before{
+            content:"";
+            position:absolute; inset:0;
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events:none;
+        }
+
+        /* Marquee-ish ticker bar */
+        .tape{
+            background:#0a1726;
+            color:#c8880a;
+            border-top:1px solid rgba(200,136,10,0.3);
+            border-bottom:1px solid rgba(200,136,10,0.3);
+        }
+        .tape-track{
+            display:flex; gap:48px;
+            white-space:nowrap;
+            animation: scroll 60s linear infinite;
+        }
+        @keyframes scroll{
+            from{ transform: translateX(0); }
+            to  { transform: translateX(-50%); }
+        }
+
+        /* Subtle entrance */
+        .reveal{ opacity:0; transform: translateY(14px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+        .d1{ animation-delay:.05s } .d2{ animation-delay:.18s } .d3{ animation-delay:.30s }
+        .d4{ animation-delay:.42s } .d5{ animation-delay:.54s } .d6{ animation-delay:.66s }
+        @keyframes rise{ to{ opacity:1; transform: translateY(0); } }
+
+        /* Small caps utility */
+        .smallcaps{ font-variant: all-small-caps; letter-spacing:0.12em; }
+
+        /* link underline animation */
+        .nav-link{ position:relative; }
+        .nav-link::after{
+            content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+            background:var(--brand-amber); transform:scaleX(0); transform-origin:left;
+            transition: transform .35s ease;
+        }
+        .nav-link:hover::after{ transform:scaleX(1); }
+
+        /* big quote marks for intro */
+        .intro-rule{
+            display:flex; align-items:center; gap:18px;
+            font-family:'JetBrains Mono', monospace;
+            font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+            color:#7e8a9c;
+        }
+        .intro-rule::before, .intro-rule::after{
+            content:""; flex:1; height:1px; background:#c8c0a8;
+        }
+
+        /* status pill */
+        .status-pill{
+            display:inline-flex; align-items:center; gap:8px;
+            padding:6px 12px;
+            border:1px solid rgba(240,192,96,0.35);
+            border-radius:999px;
+            font-family:'JetBrains Mono', monospace;
+            font-size:11px;
+            letter-spacing:0.14em;
+            text-transform:uppercase;
+            color:#f0c060;
+            background: rgba(200,136,10,0.06);
+        }
+
+        /* terminal panel */
+        .terminal{
+            background: rgba(10,23,38,0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(200,136,10,0.25);
+            border-radius:2px;
+        }
+
+        /* responsive headline sizing */
+        @media (min-width: 1024px){
+            .headline{ font-size: clamp(72px, 7.2vw, 116px); }
+        }
+        @media (max-width: 1023px){
+            .headline{ font-size: clamp(56px, 9vw, 84px); }
+        }
+
+        /* selection */
+        ::selection{ background:#c8880a; color:#fff; }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-slate-800 bg-pattern min-h-screen">
+<body class="bg-paper text-slate-800 min-h-screen">
 
-    <header class="bg-brandBlue py-6 shadow-lg border-b-4 border-brandAmber">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="/" class="font-display text-2xl tracking-wider uppercase font-extrabold text-white">
-                Boli<span class="text-[#f0c060]">métrica</span>
-            </a>
-            <nav class="flex gap-8 text-sm font-bold text-slate-400 uppercase tracking-widest">
-                <a href="/informes/" class="hover:text-white transition-colors">Informes</a>
-            </nav>
+    <!-- ════════════════════════════════════════════════════════════
+         TOP TICKER BAR
+    ════════════════════════════════════════════════════════════ -->
+    <div class="tape py-2 text-[11px] font-mono uppercase tracking-widest overflow-hidden">
+        <div class="tape-track">
+            <span>● Bolimétrica · Inteligencia de medios</span>
+            <span>// Monitoreo diario de la agenda mediática boliviana</span>
+            <span>// Publicación 09:00 BOT</span>
+            <span>// Cobertura: últimas 24 horas</span>
+            <span>● Bolimétrica · Inteligencia de medios</span>
+            <span>// Monitoreo diario de la agenda mediática boliviana</span>
+            <span>// Publicación 09:00 BOT</span>
+            <span>// Cobertura: últimas 24 horas</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         HEADER
+    ════════════════════════════════════════════════════════════ -->
+    <header class="hero">
+
+        <!-- RADAR WATERMARK -->
+        <div class="radar" aria-hidden="true">
+            <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="sweepGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%"   stop-color="#f0c060" stop-opacity="0.95"/>
+                        <stop offset="60%"  stop-color="#f0c060" stop-opacity="0.25"/>
+                        <stop offset="100%" stop-color="#f0c060" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="sweepLine" x1="0%" y1="50%" x2="100%" y2="50%">
+                        <stop offset="0%"   stop-color="#f0c060" stop-opacity="0"/>
+                        <stop offset="100%" stop-color="#f0c060" stop-opacity="1"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- concentric rings -->
+                <g fill="none" stroke="#f0c060" stroke-width="1.2">
+                    <circle cx="400" cy="400" r="380" stroke-opacity="0.55"/>
+                    <circle cx="400" cy="400" r="310" stroke-opacity="0.45"/>
+                    <circle cx="400" cy="400" r="240" stroke-opacity="0.40"/>
+                    <circle cx="400" cy="400" r="170" stroke-opacity="0.35"/>
+                    <circle cx="400" cy="400" r="100" stroke-opacity="0.30"/>
+                    <circle cx="400" cy="400" r="40"  stroke-opacity="0.50"/>
+                </g>
+
+                <!-- crosshair / cardinal lines -->
+                <g stroke="#f0c060" stroke-width="1" stroke-opacity="0.55">
+                    <line x1="20"  y1="400" x2="780" y2="400"/>
+                    <line x1="400" y1="20"  x2="400" y2="780"/>
+                    <line x1="89"  y1="89"  x2="711" y2="711" stroke-opacity="0.25"/>
+                    <line x1="711" y1="89"  x2="89"  y2="711" stroke-opacity="0.25"/>
+                </g>
+
+                <!-- cardinal letters -->
+                <g fill="#f0c060" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" text-anchor="middle">
+                    <text x="400" y="14"  fill-opacity="0.85">N</text>
+                    <text x="400" y="798" fill-opacity="0.85">S</text>
+                    <text x="14"  y="406" fill-opacity="0.85">W</text>
+                    <text x="788" y="406" fill-opacity="0.85">E</text>
+                </g>
+
+                <!-- tick marks around outer ring -->
+                <g stroke="#f0c060" stroke-width="1.2" stroke-opacity="0.5">
+                    <g id="ticks-group">
+                    </g>
+                </g>
+
+                <!-- center dot -->
+                <circle cx="400" cy="400" r="4" fill="#f0c060"/>
+
+                <!-- sweeping arm -->
+                <g class="sweep">
+                    <path d="M 400 400 L 780 400 A 380 380 0 0 0 668 131 Z" fill="url(#sweepGrad)"/>
+                    <line x1="400" y1="400" x2="780" y2="400" stroke="url(#sweepLine)" stroke-width="2"/>
+                </g>
+
+                <!-- blips -->
+                <g class="blip">
+                    <circle cx="560" cy="260" r="5" fill="#f0c060"/>
+                    <circle cx="560" cy="260" r="12" fill="none" stroke="#f0c060" stroke-width="1"/>
+                </g>
+                <g class="blip b2">
+                    <circle cx="280" cy="520" r="4" fill="#f0c060"/>
+                    <circle cx="280" cy="520" r="10" fill="none" stroke="#f0c060" stroke-width="1"/>
+                </g>
+                <g class="blip b3">
+                    <circle cx="600" cy="540" r="3" fill="#f0c060"/>
+                    <circle cx="600" cy="540" r="9" fill="none" stroke="#f0c060" stroke-width="1"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 lg:px-10 pt-8 pb-6">
+            <div class="flex justify-between items-center">
+                <div class="header-left">
+                    <a class="brand" href="/">Boli<span>métrica</span></a>
+                    <div class="brand-sub">Monitoreo de medios · Bolivia</div>
+                </div>
+                <nav class="flex gap-8 text-[11px] font-mono uppercase tracking-[0.18em] text-slate-300">
+                    <a href="#metodologia" class="nav-link hover:text-white transition-colors">Metodología</a>
+                    <a href="#acceso" class="nav-link hover:text-white transition-colors">Acceso</a>
+                    <a href="/informes/" class="nav-link hover:text-white transition-colors">Informes</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════════
+             HERO MAIN
+        ════════════════════════════════════════════════════════ -->
+        <div class="relative z-10 container mx-auto px-6 lg:px-10 pt-16 pb-28 lg:pt-24 lg:pb-36">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+                <!-- LEFT — editorial -->
+                <div class="lg:col-span-8">
+                    <div class="reveal d1 flex items-center gap-4 mb-10">
+                        <span class="status-pill">
+                            <span class="live-dot"></span>
+                            Reporte diario
+                        </span>
+                    </div>
+
+                    <h1 id="main-title" class="headline text-white reveal d2">
+                        Reporte<br>del día <em>…</em>
+                    </h1>
+
+                    <div class="reveal d3 mt-12 max-w-xl">
+                        <p class="text-slate-300 text-base lg:text-lg leading-relaxed">
+                            Análisis de la agenda mediática nacional de la última jornada. Disponible cada mañana a las 9:00 AM.
+                        </p>
+                    </div>
+
+                    <div class="reveal d4 mt-10 flex flex-wrap items-center gap-6">
+                        <a id="link-html" href="#"
+                           class="cta-primary group inline-flex items-center gap-4 px-9 py-5 rounded-sm font-semibold text-[13px] uppercase tracking-[0.18em]">
+                            <span>Ver informe del día</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                        <div class="font-mono text-[11px] uppercase tracking-[0.16em] text-slate-400 max-w-[14rem] leading-relaxed">
+                            Cobertura: última<br>jornada completa de 24 horas
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT — terminal panel -->
+                <div class="lg:col-span-4 reveal d5">
+                    <div class="ticks terminal p-7 lg:p-8">
+                        <span class="tick-bl"></span><span class="tick-br"></span>
+
+                        <div class="flex items-center justify-between mb-7">
+                            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                                Estado del sistema
+                            </span>
+                            <span id="status-tag" class="font-mono text-[10px] uppercase tracking-[0.14em] text-emerald-400 flex items-center gap-2">
+                                <span class="live-dot"></span> en línea
+                            </span>
+                        </div>
+
+                        <div class="mb-8">
+                            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-3" id="cd-prefix">
+                                Próxima publicación en
+                            </div>
+                            <div id="home-countdown" class="font-mono font-semibold text-4xl lg:text-5xl text-brandAmber2 tracking-tight tabular-nums">
+                                --:--:--
+                            </div>
+                            <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 mt-3">
+                                Publicación · 09:00 AM hora de Bolivia
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom hairline -->
+        <div class="relative z-10 container mx-auto px-6 lg:px-10">
+            <div class="hairline"></div>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12 max-w-5xl">
-        <div class="grid md:grid-cols-12 gap-8 items-start">
-            
-            <div class="md:col-span-7 lg:col-span-8">
-                <section class="bg-brandBlue text-white rounded-[2rem] p-8 lg:p-12 shadow-2xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-brandAmber opacity-10 rounded-full blur-3xl pointer-events-none"></div>
-                    
-                    <div class="relative z-10">
-                        <span class="inline-block bg-brandAmber/20 text-brandAmber text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest mb-6 border border-brandAmber/30">
-                            Actualización Diaria
-                        </span>
+    <!-- ════════════════════════════════════════════════════════════
+         METODOLOGÍA
+    ════════════════════════════════════════════════════════════ -->
+    <section id="metodologia" class="paper-section py-28 lg:py-36">
+        <div class="container mx-auto px-6 lg:px-10 max-w-6xl">
 
-                        <h1 id="main-title" class="font-display text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
-                            Reporte del día <br><span class="text-slate-400">…</span>
-                        </h1>
-                        <p class="text-slate-300 text-lg mb-8 leading-relaxed max-w-xl">
-                            Análisis de la agenda mediática nacional de la última jornada. Disponible cada mañana a las 9:00 AM.
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a id="link-html" href="#" class="group flex items-center gap-3 bg-brandAmber text-white px-8 py-4 rounded-xl font-bold hover:brightness-110 transition-all shadow-lg shadow-brandAmber/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                                Ver último informe
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <p class="mt-4 text-sm text-slate-500 flex items-center gap-2 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brandAmber" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Cobertura: última jornada completa de 24 horas.
-                </p>
-                <p id="home-countdown" class="mt-2 text-sm text-brandAmber flex items-center gap-2 font-mono font-bold"></p>
-                
+            <div class="grid lg:grid-cols-12 gap-12 mb-20">
+                <div class="lg:col-span-4">
+                    <div class="sec-label mb-6">02 — Metodología</div>
+                    <h2 class="font-display text-5xl lg:text-6xl font-medium leading-[0.95] tracking-tight text-brandBlue">
+                        En cada<br><em class="italic font-light text-brandAmber">reporte</em>
+                    </h2>
+                </div>
+                <div class="lg:col-span-7 lg:col-start-6">
+                    <div class="intro-rule mb-6">Resumen del proceso</div>
+                    <p class="text-lg leading-relaxed text-slate-700 font-light">
+                        Cada reporte es el resultado de un proceso automatizado de revisión, filtrado y agrupación de la cobertura informativa publicada por los principales medios digitales bolivianos durante la última jornada de 24 horas. El objetivo es ofrecer, en una sola lectura, una imagen ordenada de aquello que efectivamente concentró la atención mediática del país.
+                    </p>
+                </div>
             </div>
 
-            <aside class="md:col-span-5 lg:col-span-4 space-y-6">
-                
-                <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-slate-200/60">
-                    <h3 class="font-display text-xl font-bold text-brandBlue mb-8 uppercase tracking-wider">En cada reporte:</h3>
-                    
-                    <div class="grid grid-cols-1 gap-8">
-                        <div class="flex gap-4 items-start group">
-                            <div class="bg-blue-50 p-3 rounded-2xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 leading-tight">Top temas del día</h4>
-                                <p class="text-sm text-slate-500 leading-snug">Por volumen de titulares.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start group">
-                             <div class="bg-purple-50 p-3 rounded-2xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 leading-tight">Cobertura por categoría</h4>
-                                <p class="text-sm text-slate-500 leading-snug">Distribución de atención mediática.</p>
-                            </div>
-                        </div>
-                         <div class="flex gap-4 items-start group">
-                             <div class="bg-emerald-50 p-3 rounded-2xl text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 leading-tight">Titulares y fuentes</h4>
-                                <p class="text-sm text-slate-500 leading-snug">Por tema, para lectura rápida.</p>
-                            </div>
-                        </div>
+            <!-- 5 STEPS -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-paper2">
+                <div class="step">
+                    <span class="num">01</span>
+                    <h3>Escaneo automatizado</h3>
+                    <p>Cada mañana se revisan de forma sistemática las portadas y secciones de actualidad de un conjunto de medios digitales bolivianos de alcance nacional. El proceso se ejecuta antes del inicio de la jornada informativa.</p>
+                </div>
+                <div class="step">
+                    <span class="num">02</span>
+                    <h3>Señal sobre ruido</h3>
+                    <p>La selección prioriza coyuntura política, economía, justicia, seguridad, gestión pública y asuntos de interés nacional.</p>
+                </div>
+                <div class="step">
+                    <span class="num">03</span>
+                    <h3>Temas del día</h3>
+                    <p>Un "tema" se conforma cuando al menos tres titulares coinciden sobre un mismo hecho. Los temas se ordenan según el volumen de cobertura recibida. Cada uno conserva el titular original, el medio y el enlace directo a la fuente.</p>
+                </div>
+                <div class="step">
+                    <span class="num">04</span>
+                    <h3>Señales emergentes</h3>
+                    <p>Una sección reservada a entre tres y cinco noticias que no alcanzaron el umbral para constituir un tema masivo, pero cuyo peso cualitativo las vuelve relevantes. Son alertas tempranas: hechos que circulan por debajo del radar y que conviene registrar antes de que escalen.</p>
+                </div>
+                <div class="step">
+                    <span class="num">05</span>
+                    <h3>Términos frecuentes</h3>
+                    <p>Un registro complementario de las palabras y nombres con mayor presencia en la cobertura del día. Permite identificar los actores e ideas que dominaron la conversación pública.</p>
+                </div>
+                <div class="step flex flex-col justify-between" style="background:linear-gradient(160deg,#0f2137 0%, #152b45 100%); border-color:#0f2137;">
+                    <div>
+                        <span class="num" style="-webkit-text-stroke:1px #f0c060;">∞</span>
+                        <h3 style="color:#fff;">Una sola lectura</h3>
+                        <p style="color:#a8b4c4;">Cinco capas de análisis convergen en un único documento diario, diseñado para leerse en minutos y para sostener decisiones informadas durante toda la jornada.</p>
                     </div>
                 </div>
-
-                <div class="bg-slate-200 p-6 rounded-2xl text-xs font-bold text-slate-600 border border-slate-300 text-center uppercase tracking-widest leading-relaxed">
-                    Alcance: Medios digitales bolivianos de interés nacional.
-                </div>
-            </aside>
+            </div>
         </div>
-    </main>
+    </section>
 
+    <!-- ════════════════════════════════════════════════════════════
+         ACCESO TEMPRANO
+    ════════════════════════════════════════════════════════════ -->
+    <section id="acceso" class="bg-brandBlue py-28 lg:py-32 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-30" style="background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 56px 56px;"></div>
+
+        <div class="container mx-auto px-6 lg:px-10 max-w-4xl relative z-10">
+            <div class="ticks credential p-10 lg:p-16">
+                <span class="tick-bl"></span><span class="tick-br"></span>
+
+                <div class="flex items-center justify-between mb-10">
+                    <div class="sec-label" style="color:#f0c060;">03 — Acceso anticipado</div>
+                </div>
+
+                <h2 class="font-display text-4xl lg:text-5xl font-medium text-white leading-[1.05] tracking-tight max-w-2xl">
+                    Acceso <em class="italic font-light text-brandAmber2">temprano</em>
+                </h2>
+
+                <p class="mt-7 text-slate-300 text-base lg:text-lg max-w-2xl leading-relaxed">
+                    El reporte se publica cada día a las 09:00. Un grupo de lectores lo recibe a las 7:00 AM, directamente en su correo y WhatsApp.
+                </p>
+
+                <div class="mt-10 flex flex-wrap items-center gap-6">
+                    <a href="https://wa.me/59177305687?text=Hola%2C%20solicito%20acceso%20temprano%20a%20Bolim%C3%A9trica."
+                       target="_blank" rel="noopener"
+                       class="group inline-flex items-center gap-4 px-9 py-5 rounded-sm font-semibold text-[13px] uppercase tracking-[0.18em] text-brandBlue bg-brandAmber2 hover:bg-white transition-colors">
+                        <span>Solicitar acceso temprano</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500">
+                        Acceso sujeto a disponibilidad
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         ALCANCE · USO · PRIVACIDAD
+    ════════════════════════════════════════════════════════════ -->
+    <section class="paper-section py-24 lg:py-28">
+        <div class="container mx-auto px-6 lg:px-10 max-w-6xl">
+            <div class="grid md:grid-cols-3 gap-12 lg:gap-16">
+
+                <div>
+                    <div class="sec-label mb-5">04 — Alcance</div>
+                    <h3 class="font-display text-2xl font-medium text-brandBlue mb-4 leading-tight">Alcance</h3>
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Medios digitales bolivianos de interés nacional. El sistema promedia entre 15 y 20 fuentes por reporte, seleccionadas por relevancia y distribución geográfica.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="sec-label mb-5">05 — Fair use</div>
+                    <h3 class="font-display text-2xl font-medium text-brandBlue mb-4 leading-tight">Uso de contenidos<br>de terceros</h3>
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Los titulares reproducidos en este reporte se utilizan con fines analíticos, informativos y transformativos. Bolimétrica no reproduce artículos completos ni sustituye la lectura de las fuentes originales, a las que deriva tráfico de forma directa mediante enlace. El uso de fragmentos breves con fines de análisis de agenda mediática es consistente con los principios de uso legítimo reconocidos en legislación comparada.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="sec-label mb-5">06 — Privacidad</div>
+                    <h3 class="font-display text-2xl font-medium text-brandBlue mb-4 leading-tight">Tratamiento<br>de datos</h3>
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Para el acceso anticipado, se recopila únicamente nombre, número de WhatsApp y correo electrónico. Estos datos no se comparten con terceros. El único propósito es la distribución del informe diario.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════════════════════════ -->
+    <footer class="bg-brandBlue text-slate-400 py-14 border-t-2 border-brandAmber">
+        <div class="container mx-auto px-6 lg:px-10 max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <a class="brand" href="/">Boli<span>métrica</span></a>
+                    <div class="brand-sub">Monitoreo de medios · Bolivia</div>
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                    © 2026 Bolimétrica · Todos los derechos reservados
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ════════════════════════════════════════════════════════════
+         JS — NO TOCAR LAS CONSTANTES (las inyecta Colab)
+    ════════════════════════════════════════════════════════════ -->
     <script>
         function formatearFecha(fechaStr) {
             const [y, mo, d] = fechaStr.split("-").map(Number);
@@ -126,7 +710,7 @@
             const mes   = fecha.toLocaleDateString("es-BO", { month:   "long" });
             const diaCapital = dia.charAt(0).toUpperCase() + dia.slice(1);
             const mesCapital = mes.charAt(0).toUpperCase() + mes.slice(1);
-        return `${diaCapital} ${String(d).padStart(2,"0")} · ${mesCapital} · ${y}`;
+            return `${diaCapital} ${String(d).padStart(2,"0")} · ${mesCapital} · ${y}`;
         }
         const LINK_HOY = "informes/2026-04-07-VHSg7d.html";
         const FECHA_HOY = "2026-04-07";
@@ -141,7 +725,6 @@
 
         const linkActivo  = esPublico ? LINK_HOY      : LINK_ANTERIOR;
         const fechaActiva = esPublico ? FECHA_HOY      : FECHA_ANTERIOR;
-        
 
         const btnPrincipal = document.querySelector("#link-html");
         const titulo       = document.querySelector("#main-title");
@@ -149,14 +732,16 @@
         if (btnPrincipal) {
             btnPrincipal.setAttribute("href", linkActivo);
             btnPrincipal.setAttribute("target", "_blank");
-            
         }
         if (titulo) {
-            titulo.innerHTML = `Reporte diario <br><span class="text-slate-400">${formatearFecha(fechaActiva)}</span>`;
+            titulo.innerHTML = `Reporte<br>del día <em>${formatearFecha(fechaActiva)}</em>`;
         }
 
         // Countdown hacia las 9:00 AM (o hacia las 9:00 AM del día siguiente)
-        const cdEl = document.getElementById("home-countdown");
+        const cdEl     = document.getElementById("home-countdown");
+        const cdPrefix = document.getElementById("cd-prefix");
+        const statusTag= document.getElementById("status-tag");
+
         if (cdEl) {
             function actualizarCdHome() {
                 const ahora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" }));
@@ -169,8 +754,19 @@
                 const h = String(Math.floor(diff / 3600000)).padStart(2, "0");
                 const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
                 const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
-                const prefijo = ahora.getHours() >= 9 ? "Próxima actualización en" : "Disponible en";
-                cdEl.textContent = `${prefijo} ${h}:${m}:${s}`;
+                cdEl.textContent = `${h}:${m}:${s}`;
+                if (cdPrefix) {
+                    cdPrefix.textContent = ahora.getHours() >= 9 ? "Próxima publicación en" : "Disponible en";
+                }
+                if (statusTag) {
+                    if (ahora.getHours() >= 9) {
+                        statusTag.innerHTML = '<span class="live-dot"></span> publicado';
+                    } else {
+                        statusTag.innerHTML = '<span class="live-dot amber"></span> en preparación';
+                        statusTag.classList.remove("text-emerald-400");
+                        statusTag.classList.add("text-brandAmber2");
+                    }
+                }
             }
             actualizarCdHome();
             setInterval(actualizarCdHome, 1000);
