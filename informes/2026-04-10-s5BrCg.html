@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260410</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<meta content="Bolimétrica · 2026-04-10" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-04-10-s5BrCg.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">220</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">25</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">11</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 10-ABRIL-2026</strong><br/>
+        Reporte N° B24-20260410<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_13" onclick="openModal('modal_13')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-11)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-11)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="top3-title">Interpelación legislativa por calidad de la gasolina</div>
+<div class="top3-body">En su interpelación ante la Asamblea Legislativa, el ministro Medinaceli negó corrupción, defendió el contrato con Trafigura y atribuyó a YPFB la responsabilidad de importaciones y controles; aunque evitó la censura, Rodrigo Paz reconoció la mala calidad del combustible y relevó autoridades, mientras Samuel Doria Medina y otros sectores denunciaron la venta de “gasolina basura” y exigieron cambios.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">62</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">16</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_9a" onclick="openModal('modal_9a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-02)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-02)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="top3-title">Reactivación gradual de tarjetas para compras internacionales</div>
+<div class="top3-body">Bancos y Asoban reactivaron el uso de tarjetas para compras y pagos en el exterior tras tres años de restricciones, aunque advierten que la medida será gradual y dependerá del flujo de dólares; en paralelo, el Gobierno y la ASFI aprobaron un reglamento que fija límites a comisiones, ajusta tarifas de giros y redefine el tipo de cambio aplicable.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-02)">22</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-02)">12</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_10a" onclick="openModal('modal_10a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-01)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-01)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="top3-title">Amparo constitucional por balotaje en La Paz</div>
+<div class="top3-body">René Yahuasi interpone una Acción de Amparo Constitucional en El Alto para ser habilitado en el balotaje por la Gobernación de La Paz. Mientras un vocal del TSE respalda su participación, sectores sociales mantienen vigilias y protestas exigiendo respeto a la democracia y al voto popular.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">15</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-11)"></div></div>
+<div class="cat-n">68</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">1.</span> Interpelación legislativa por calidad de la gasolina</li><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">11.</span> Presentación de anteproyecto de nueva Ley de Hidrocarburos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:66%;background:var(--c-02)"></div></div>
+<div class="cat-n">45</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_9a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">2.</span> Reactivación gradual de tarjetas para compras internacionales</li><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">6.</span> Gobierno rechaza incremento salarial del veinte por ciento</li><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">15.</span> Alerta del Banco Central por estafas digitales</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">19.</span> Ampliación del plazo para cobro del bono PEPE</li><li onclick="scrollToCard('card_N002'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">23.</span> Habilitación de terminal presidencial para vuelos comerciales</li><li onclick="scrollToCard('card_N003'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">24.</span> Premiación de ejemplares lecheros en Agropecruz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:32%;background:var(--c-10)"></div></div>
+<div class="cat-n">22</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_15'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">9.</span> Condena de diez años para exministro Santos Cruz</li><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">12.</span> Investigación por sobreprecio en escáner de la Aduana</li><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">14.</span> Obligación de permanencia para autoridades salientes</li><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">17.</span> Solicitud de extradición para líder criminal colombiano</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:26%;background:var(--c-07)"></div></div>
+<div class="cat-n">18</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">4.</span> Ataque armado de mineros ilegales en Sorata</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">21.</span> Recuperación de caja fuerte abandonada por delincuentes</li><li onclick="scrollToCard('card_6c'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">22.</span> Asesinato de un hombre por disputa de lotes</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:25%;background:var(--c-05)"></div></div>
+<div class="cat-n">17</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">8.</span> Denuncia por acoso político entre diputadas</li><li onclick="scrollToCard('card_10b'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">10.</span> Inversión millonaria para obras en Achacachi</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">16.</span> Restitución del busto de Víctor Paz Estenssoro</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ELECCIONES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-01)"></div>
+<div class="cat-name">ELECCIONES</div>
+<div class="cat-track"><div class="cat-fill" style="width:22%;background:var(--c-01)"></div></div>
+<div class="cat-n">15</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ELECCIONES"><li onclick="scrollToCard('card_10a'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">3.</span> Amparo constitucional por balotaje en La Paz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:15%;background:var(--c-18)"></div></div>
+<div class="cat-n">10</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">5.</span> Cancelación de convenios de cooperación militar con Irán</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:13%;background:var(--c-21)"></div></div>
+<div class="cat-n">9</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_18'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">7.</span> Cuartos intermedios en sesión de la Asamblea Legislativa</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:10%;background:var(--c-08)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_6d'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">18.</span> Bloqueos en la carretera Santa Cruz y Cochabamba</li><li onclick="scrollToCard('card_N004'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">25.</span> Paro nacional de trabajadores de salud por despidos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTR_FICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:9%;background:var(--c-04)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTR_FICO"><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">13.</span> Operativo antidroga termina en enfrentamientos en Bulo Bulo</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-03)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_10c'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">20.</span> Coordinación de agenda legislativa en gabinete ministerial</li></ul>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">medinaceli</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">48</td>
+</tr>
+<tr>
+<td class="freq-word">ministro</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:80%"></div>
+</div>
+</td>
+<td class="freq-count">35</td>
+</tr>
+<tr>
+<td class="freq-word">interpelación</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:63%"></div>
+</div>
+</td>
+<td class="freq-count">25</td>
+</tr>
+<tr>
+<td class="freq-word">gasolina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:58%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">hidrocarburos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:48%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">asamblea</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">sorata</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:33%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">mala calidad</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">caso coimas</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">bulo bulo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:23%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Interpelación legislativa por calidad de la gasolina
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">62</div>
+</div>
+<div class="chart-medios">16 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Reactivación gradual de tarjetas para compras internacionales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">22</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Amparo constitucional por balotaje en La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">15</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Ataque armado de mineros ilegales en Sorata
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:19.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">12</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Cancelación de convenios de cooperación militar con Irán
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">10</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Gobierno rechaza incremento salarial del veinte por ciento
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">9</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_18')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Cuartos intermedios en sesión de la Asamblea Legislativa
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:14.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">9</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Denuncia por acoso político entre diputadas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_15')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Condena de diez años para exministro Santos Cruz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Inversión millonaria para obras en Achacachi
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Presentación de anteproyecto de nueva Ley de Hidrocarburos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Investigación por sobreprecio en escáner de la Aduana
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Operativo antidroga termina en enfrentamientos en Bulo Bulo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Obligación de permanencia para autoridades salientes
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Alerta del Banco Central por estafas digitales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Restitución del busto de Víctor Paz Estenssoro
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Solicitud de extradición para líder criminal colombiano
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6d')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Bloqueos en la carretera Santa Cruz y Cochabamba
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Ampliación del plazo para cobro del bono PEPE
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Coordinación de agenda legislativa en gabinete ministerial
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            Recuperación de caja fuerte abandonada por delincuentes
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">22.</span>
+            Asesinato de un hombre por disputa de lotes
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N002')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">23.</span>
+            Habilitación de terminal presidencial para vuelos comerciales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N003')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">24.</span>
+            Premiación de ejemplares lecheros en Agropecruz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N004')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">25.</span>
+            Paro nacional de trabajadores de salud por despidos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" id="card_6a" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Ataque armado de mineros ilegales en Sorata</div>
+<div class="topic-body">La Autoridad Jurisdiccional Administrativa Minera (AJAM) y la Policía Boliviana denunciaron un ataque armado con dinamita y proyectiles por parte de mineros ilegales durante un operativo de restitución de derechos en Sorata, La Paz, dejando al menos un efectivo herido de bala.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Cancelación de convenios de cooperación militar con Irán</div>
+<div class="topic-body">Bolivia anunció la cancelación de los convenios de cooperación militar con Irán. Ante esto, la embajada de Irán aclaró que el documento firmado en 2023 no era un acuerdo vinculante sino un acta de negociaciones, negando que existiera un compromiso de defensa formal entre ambos países.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_4" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Gobierno rechaza incremento salarial del veinte por ciento</div>
+<div class="topic-body">El Gobierno de Rodrigo Paz, a través del Ministerio de Economía, rechazó la demanda de la Central Obrera Boliviana (COB) de un incremento salarial del 20%, calificándola de inviable. Las autoridades argumentaron la inviabilidad financiera y anticiparon la necesidad de un diálogo tripartito.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_18" onclick="openModal('modal_18')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">LEGISLATIVA</div>
+<div class="topic-title">Cuartos intermedios en sesión de la Asamblea Legislativa</div>
+<div class="topic-body">El vicepresidente Edmand Lara declara sucesivos cuartos intermedios en la sesión de la Asamblea Legislativa ante el desorden en el hemiciclo. Lara convoca a reuniones con los jefes de bancada para coordinar la interpelación al ministro Medinaceli, logrando finalmente retomar el debate parlamentario.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Denuncia por acoso político entre diputadas</div>
+<div class="topic-body">La diputada Diana Romero, esposa del vicepresidente Edmand Lara, presentó una denuncia por acoso político contra su colega Nicole Rocha ante la Comisión de Ética. Asimismo, Romero defendió su desempeño en la Asamblea Legislativa Plurinacional y expuso resultados de su gestión ante críticas recibidas</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_15" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Condena de diez años para exministro Santos Cruz</div>
+<div class="topic-body">El exministro de Medio Ambiente, Juan Santos Cruz, fue condenado a 10 años de prisión por corrupción en el 'caso Coimas'. La sentencia también alcanzó al exviceministro Valda, quien recibió una pena de seis años de cárcel por su participación en este esquema ilícito.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10b" onclick="openModal('modal_10b')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Inversión millonaria para obras en Achacachi</div>
+<div class="topic-body">El presidente Rodrigo Paz visitó Achacachi y la provincia Omasuyos para anunciar una inversión de 35 millones de bolivianos destinada a obras de infraestructura, incluyendo la construcción de puentes y alcantarillado, destacando la devolución de recursos a las regiones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_14" onclick="openModal('modal_14')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Presentación de anteproyecto de nueva Ley de Hidrocarburos</div>
+<div class="topic-body">El gobierno anunció que el anteproyecto de la nueva Ley de Hidrocarburos está listo y se sustenta en cinco ejes clave. El presidente Rodrigo Paz ratificó su confianza en el ministro Medinaceli, quien pidió a la estatal YPFB transparentar los contratos de importación firmados.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigación por sobreprecio en escáner de la Aduana</div>
+<div class="topic-body">La Fiscalía y la Policía investigan un presunto sobreprecio de 25 millones de bolivianos en la compra de un escáner para la Aduana Nacional en Tambo Quemado. El caso ha derivado en múltiples allanamientos y la aprehensión de cuatro exfuncionarios de la institución.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6b" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="topic-title">Operativo antidroga termina en enfrentamientos en Bulo Bulo</div>
+<div class="topic-body">Un operativo antidroga de la FELCN en Bulo Bulo, Cochabamba, derivó en enfrentamientos y emboscadas por parte de pobladores que intentaron impedir la acción policial. La intervención incluyó el uso de gases lacrimógenos y resultó en la incautación de armas y varias detenciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Obligación de permanencia para autoridades salientes</div>
+<div class="topic-body">La Contraloría General del Estado recordó a los gobernadores, alcaldes y demás autoridades salientes que deben permanecer en el país durante seis meses tras dejar sus cargos. La disposición busca garantizar que los exfuncionarios cumplan con la rendición de cuentas obligatoria de sus gestiones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Alerta del Banco Central por estafas digitales</div>
+<div class="topic-body">El Banco Central de Bolivia (BCB) alertó sobre el uso ilícito de su identidad, logotipos y nombres de funcionarios para realizar estafas y robo de información. La entidad denunció que delincuentes suplantan su imagen para ofrecer falsos beneficios y captar datos financieros de los ciudadanos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Restitución del busto de Víctor Paz Estenssoro</div>
+<div class="topic-body">La Asamblea Legislativa restituye el busto del expresidente Víctor Paz Estenssoro tras 16 años de haber sido retirado.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Solicitud de extradición para líder criminal colombiano</div>
+<div class="topic-body">Alias ‘Mapaya’ y sus cómplices de nacionalidad colombiana fueron enviados a prisión tras un enfrentamiento armado con la policía boliviana. En paralelo, la Interpol en Bolivia confirmó la recepción de una solicitud formal de extradición por parte de Colombia contra el líder de este grupo criminal.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6d" onclick="openModal('modal_6d')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Bloqueos en la carretera Santa Cruz y Cochabamba</div>
+<div class="topic-body">Se reportan puntos de bloqueo en la carretera que conecta Santa Cruz y Cochabamba, afectando la transitabilidad en la ruta nueva y el sector de Yapacaní. La medida de presión ha condicionado la salida de buses desde las terminales y ha obligado al corte de rutas alternativas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Ampliación del plazo para cobro del bono PEPE</div>
+<div class="topic-body">El Gobierno nacional amplió el plazo hasta el 19 de junio para que los beneficiarios rezagados cobren el bono PEPE de Bs 450. La medida busca facilitar el acceso al beneficio mediante la aplicación de un nuevo cronograma oficial de pagos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10c" onclick="openModal('modal_10c')" role="button" style="border-top:2px solid var(--c-03)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-03)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-03)">GOBIERNO</div>
+<div class="topic-title">Coordinación de agenda legislativa en gabinete ministerial</div>
+<div class="topic-body">El presidente Rodrigo Paz se reunió con su gabinete ministerial para analizar y definir un paquete de proyectos de ley que será presentado ante la Asamblea Legislativa Plurinacional, coordinando así la agenda legislativa del Gobierno.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Recuperación de caja fuerte abandonada por delincuentes</div>
+<div class="topic-body">Una caja fuerte que contenía dinero, joyas y documentos fue abandonada por delincuentes en inmediaciones de un surtidor, presuntamente debido a su gran peso tras un robo. El objeto fue recuperado por las autoridades tras ser hallado en la vía pública.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6c" onclick="openModal('modal_6c')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Asesinato de un hombre por disputa de lotes</div>
+<div class="topic-body">Un hombre de 30 años fue asesinado con dos disparos en la cabeza en la zona de Pucarita, Cochabamba, tras una presunta discusión por un lote. La autopsia confirmó la causa de muerte mientras la familia denuncia que los agresores portaban uniformes policiales y armas de fuego.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N002" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">23</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Habilitación de terminal presidencial para vuelos comerciales</div>
+<div class="topic-body">El Gobierno habilita la terminal presidencial del aeropuerto Viru Viru para operaciones comerciales y descongestionamiento de pasajeros.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N003" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">24</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Premiación de ejemplares lecheros en Agropecruz</div>
+<div class="topic-body">Destacan el avance genético y la premiación de ejemplares de la raza Gyr en el concurso lechero de la Agropecruz 2026.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N004" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">25</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Paro nacional de trabajadores de salud por despidos</div>
+<div class="topic-body">Trabajadores del sector salud cumplen un paro nacional de 24 horas y marchas en protesta por despidos y condiciones laborales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/economia/2026/04/09/dolar-referencial-marca-record-en-bs-961-y-supera-cotizacion-en-binance-59310" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Dólar referencial marca récord en Bs 9,61 y supera cotización en Binance</a></div>
+<div class="emergente-sum">Indica un hito crítico en la economía nacional con el dólar referencial alcanzando niveles récord frente a mercados alternativos.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://correodelsur.com/economia/20260409/bolivia-tendra-este-ano-la-economia-mas-debil-de-la-region-segun-el-bm.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Bolivia tendrá este año la economía más débil de la región, según el BM</a></div>
+<div class="emergente-sum">Alerta sobre una proyección económica negativa de un organismo internacional de alto impacto para el país.</div>
+<div class="emergente-source">Fuente: Correo del Sur</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/se-tiene-un-contrato-de-akly-con-la-empresa-del-hijo-de-arce-comision-investigadora-apunta-al-gobierno-de-arce-por-combustible-basura/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">“Se tiene un contrato de Akly, con la empresa del hijo de Arce”: Comisión investigadora apunta al gobierno de Arce por combustible basura</a></div>
+<div class="emergente-sum">Presenta una denuncia grave de presunta corrupción y nepotismo que involucra directamente al entorno presidencial.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/bolivia-vuelve-a-la-mesa-regional-con-la-dea-y-apuesta-por-desarticular-redes-antes-que-decomisar-droga-caso-de-sebastian-marset-fue-senalado-como-un-ejemplo/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Bolivia vuelve a la mesa regional con la DEA y apuesta por desarticular redes antes que decomisar droga; “caso de Sebastián Marset fue señalado como un ejemplo”</a></div>
+<div class="emergente-sum">Representa un cambio estratégico en la política de seguridad y relaciones internacionales de lucha contra el narcotráfico.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldia.com.bo/2026-04-09/pais/mas-de-10-personas-cumplen-arresto-domiciliario-con-vigilancia-digital-en-bolivia-se-prescinde-de-la-custodia-policial.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Más de 10 personas cumplen arresto domiciliario con vigilancia digital en Bolivia; se prescinde de la custodia policial</a></div>
+<div class="emergente-sum">Informa sobre una innovación relevante en el sistema penitenciario y judicial boliviano mediante el uso de tecnología.</div>
+<div class="emergente-source">Fuente: El Día</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260410 · 2026-04-10</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 220 titulares · 25 temas · 11 categorías · 17 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Interpelación legislativa por calidad de la gasolina" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Interpelación legislativa por calidad de la gasolina</div>
+<div class="modal-sum">En su interpelación ante la Asamblea Legislativa, el ministro Medinaceli negó corrupción, defendió el contrato con Trafigura y atribuyó a YPFB la responsabilidad de importaciones y controles; aunque evitó la censura, Rodrigo Paz reconoció la mala calidad del combustible y relevó autoridades, mientras Samuel Doria Medina y otros sectores denunciaron la venta de “gasolina basura” y exigieron cambios.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">62</strong> titulares</span>
+<span><strong style="color:var(--c-11)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/medinaceli-defiende-contrato-con-trafigura-y-atribuye-su-continuidad-a-decisiones-de-la-anterior-gestion.html" rel="noopener noreferrer" target="_blank">Medinaceli defiende contrato con Trafigura y atribuye su continuidad a decisiones de la anterior gestión</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/medinaceli-deslinda-responsabilidad-operativa-y-afirma-que-ypfb-ejecuta-la-importacion-de-combustibles.html" rel="noopener noreferrer" target="_blank">Medinaceli deslinda responsabilidad operativa y afirma que YPFB ejecuta la importación de combustibles</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ministro-medinaceli-responde-a-samuel-y-lo-invita-a-probar-que-compraron-gasolina-de-mala-calidad/" rel="noopener noreferrer" target="_blank">Ministro Medinaceli responde a Samuel y lo invita a “probar” que compraron gasolina de “mala calidad”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/no-me-estoy-lavando-las-manos-medinaceli-afirma-que-ypfb-es-el-brazo-operativo-en-la-importacion-de-combustibles/" rel="noopener noreferrer" target="_blank">“No me estoy lavando las manos”: Medinaceli afirma que YPFB es el brazo operativo en la importación de combustibles</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/samuel-a-medinaceli-la-mejor-prueba-la-esta-dando-la-propia-ypfb-que-esta-pagando-millones-para-compensar-los-motores-averiados-por-ese-mal-combustible/" rel="noopener noreferrer" target="_blank">Samuel a Medinaceli: “La mejor prueba la está dando la propia YPFB, que está pagando millones para compensar los motores averiados por ese mal combustible”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/da%C3%B1os-por-el-combustible-compensaciones-pagadas-suman-casi-bs10-millones" rel="noopener noreferrer" target="_blank">Daños por el combustible: Compensaciones pagadas suman casi Bs10 millones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/09/medinaceli-defiende-transparencia-en-contratos-y-pide-pruebas-ante-denuncias-sobre-gasolina/" rel="noopener noreferrer" target="_blank">Medinaceli defiende transparencia en contratos y pide pruebas ante denuncias sobre gasolina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/en-sus-redes-samuel-dice-que-ypfb-compro-gasolina-de-mala-calidad-y-la-prueba-la-paga-de-compensaciones-a-choferes/" rel="noopener noreferrer" target="_blank">En sus redes, Samuel dice que YPFB compró gasolina de mala calidad y la prueba es la paga de compensaciones a choferes</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/medinaceli-contrato-con-trafigura-viene-de-la-anterior-gestion-y-se-mantuvo-para-evitar-conflictos-legales-GB19901447" rel="noopener noreferrer" target="_blank">Medinaceli: Contrato con Trafigura viene de la anterior gestión y se mantuvo para evitar conflictos legales</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-dice-que-invirtieron-casi-bs-9-millones-en-el-resarcimiento-y-afirma-que-el-problema-se" rel="noopener noreferrer" target="_blank">Paz dice que invirtieron casi Bs 9 millones en el resarcimiento y afirma que el problema se resuelve</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42961-ypfb-realiza-pagos-por-9_7-millones-de-bolivianos-a-usuarios-afectados-por-combustible" rel="noopener noreferrer" target="_blank">YPFB realiza pagos por 9,7 millones de bolivianos a usuarios afectados por combustible</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42975-medinaceli-deslinda-responsabilidad-sobre-la-vigencia-del-contrato-con-trafigura-y-la-firma-de-la-adenda-con-esa-empresa-por-ypfb" rel="noopener noreferrer" target="_blank">Medinaceli deslinda responsabilidad sobre la vigencia del contrato con Trafigura y la firma de la adenda con esa empresa por YPFB</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/medinaceli-no-aceptare-la-acusacion-de-corrupcion-yo-nunca-he-participado-en-actos-de-corrupcion.html" rel="noopener noreferrer" target="_blank">Medinaceli: “No aceptaré la acusación de corrupción, yo nunca he participado en actos de corrupción”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/medinaceli-niega-corrupcion-en-la-alp-no-tengo-nada-que-ocultar-y-atribuye-operaciones-a-ypfb/" rel="noopener noreferrer" target="_blank">Medinaceli niega corrupción en la ALP: “No tengo nada que ocultar” y atribuye operaciones a YPFB</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/medinaceli-nunca-he-participado-actos-corrupcion-no-tengo-nada-ocultar_1775757518" rel="noopener noreferrer" target="_blank">Medinaceli en la Asamblea: “Nunca he participado en actos de corrupción y no tengo nada que ocultar”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260409/medinaceli-yo-nunca-he-participado-actos-corrupcion-hecho-no-tengo-nada-que" rel="noopener noreferrer" target="_blank">Medinaceli: “Yo nunca he participado en actos de corrupción y, de hecho, no tengo nada que ocultar”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/no-aceptare-la-acusacion-de-corrupcion-mira-las-respuestas-que-dio-el-ministro-medinaceli-ante-la-alp/" rel="noopener noreferrer" target="_blank">“No aceptaré la acusación de corrupción”: Mira las respuestas que dio el ministro Medinaceli ante la ALP</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/no-tengo-nada-que-ocultar-medinaceli-rechaza-acusaciones-en-su-interpelacion-202649141638" rel="noopener noreferrer" target="_blank">“No tengo nada que ocultar”: Medinaceli rechaza acusaciones en su interpelación</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/alp-retoma-sesion-de-interpelacion-medinaceli-dice-que-no-tiene-nada-que-ocultar" rel="noopener noreferrer" target="_blank">ALP retoma sesión de interpelación: Medinaceli dice que "no tiene nada que ocultar”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/decoraciones-de-doria-medina-compra-gasolina-basura-son-irresponsables-esta-actuando-de-manera-infantil/" rel="noopener noreferrer" target="_blank">“Declaraciones de Doria Medina (compra gasolina basura) son irresponsables; está actuando de manera infantil”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/rodrigo-paz-admite-que-la-gasolina-esta-mala-ya-renega-conmigo-la-gasolina-esta-mala-es-verdad/" rel="noopener noreferrer" target="_blank">Rodrigo Paz admite que la gasolina “está mala”; “ya renega conmigo, la gasolina está mala, es verdad”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tengo-ganas-de-llorar-al-ver-a-mi-gente-en-la-calle-por-esta-gasolina-basura-acaso-motores-es-facil-arreglar-tiene-que-irse-medinaceli/" rel="noopener noreferrer" target="_blank">“Tengo ganas de llorar al ver a mi gente en la calle por esta gasolina basura ¿Acaso motores es fácil arreglar? TIENE QUE IRSE (Medinaceli)”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/medinaceli-y-doria-medina-cruzan-fuego-por-gasolina-de-mala-calidad/" rel="noopener noreferrer" target="_blank">Medinaceli y Doria Medina cruzan fuego por gasolina de mala calidad</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260409/lagrimas-senadora-del-pdc-pide-renuncia-del-ministro-hidrocarburos-gasolina" rel="noopener noreferrer" target="_blank">Entre lágrimas, Senadora del PDC pide la renuncia del Ministro de Hidrocarburos por la "gasolina basura"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/entre-lagrimas-senadora-del-pdc-pide-la-renuncia-del-ministro-de-hidrocarburos-por-la-gasolina-basura/" rel="noopener noreferrer" target="_blank">Entre lágrimas, Senadora del PDC pide la renuncia del Ministro de Hidrocarburos por la “gasolina basura”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/medinaceli-responde-samuel-y-le-pide-pruebas-sobre-compra-de-gasolina-de-mala-calidad" rel="noopener noreferrer" target="_blank">Medinaceli responde a Samuel y le pide pruebas sobre compra de gasolina de “mala calidad”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/doria-medina-se-reafirma-y-dice-que-la-umsa-probo-que-la-gasolina-es-mala" rel="noopener noreferrer" target="_blank">Doria Medina se reafirma y dice que la UMSA probó que la gasolina es mala</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42986-cruce-de-palabras-entre-doria-medina-y-el-ministro-medinaceli-por-la-gasolina-de-mala-calidad-adquirida-a-un-alto-precio" rel="noopener noreferrer" target="_blank">Cruce de palabras entre Doria Medina y el ministro Medinaceli por la gasolina de mala calidad adquirida a un alto precio</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/medinaceli-falta-a-su-interpelacion-la-asamblea-legislativa-analiza-aceptar-su-excusa" rel="noopener noreferrer" target="_blank">Medinaceli falta a su interpelación; la Asamblea Legislativa analiza aceptar su excusa</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/09/legisladores-cierran-interpelacion-a-medinaceli-y-pasan-a-votacion-para-definir-su-censura-59326" rel="noopener noreferrer" target="_blank">Legisladores terminan debate tras interpelar a Medinaceli y se van a votación</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/se-ha-viciado-de-nulidad-desde-que-se-ha-iniciado-interpelacion-min-medinacelli-hay-una-serie-de-irregularidades/" rel="noopener noreferrer" target="_blank">“Se ha viciado de nulidad desde que se ha iniciado interpelación (min. Medinacelli), hay una serie de irregularidades”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/concluye-intervencion-ministro-medinaceli-empieza-debate-censura_1775771585" rel="noopener noreferrer" target="_blank">Concluye intervención del ministro Medinaceli y empieza debate por la censura</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/aparece-el-ministro-medinaceli-y-se-instala-interpelaci%C3%B3n-en-la-asamblea" rel="noopener noreferrer" target="_blank">Aparece el ministro Medinaceli y se instala interpelación en la Asamblea</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/rojas-cuestiona-interpelacion-a-medinaceli-y-denuncia-irregularidades/" rel="noopener noreferrer" target="_blank">Rojas cuestiona interpelación a Medinaceli y denuncia irregularidades</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/medinaceli-enfrenta-interpelacion-respaldado-por-ministros/" rel="noopener noreferrer" target="_blank">Medinaceli enfrenta interpelación respaldado por ministros</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/senadora-nurmy-rompe-en-llanto-al-interpelar-a-medinaceli-por-gasolina-contaminada/" rel="noopener noreferrer" target="_blank">Senadora Nurmy rompe en llanto al interpelar a Medinaceli por gasolina contaminada</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/yarhui-cuestiona-a-medinaceli-vino-despues-de-dos-meses/" rel="noopener noreferrer" target="_blank">Yarhui cuestiona a Medinaceli: ‘Vino después de dos meses’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/medinaceli-llega-a-asamblea-para-interpelacion-sobre-la-gasolina-contaminada/" rel="noopener noreferrer" target="_blank">Medinaceli llega a Asamblea para interpelación sobre la gasolina contaminada</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260409/suspenden-interpelacion-inasistencia-medinaceli" rel="noopener noreferrer" target="_blank">Suspenden interpelación ante inasistencia de Medinaceli</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/tras-mas-de-un-mes-el-ministro-medinaceli-acude-a-su-interpelacion-en-la-alp-mira-la-sesion-en-vivo/" rel="noopener noreferrer" target="_blank">Tras más de un mes, el ministro Medinaceli acude a su interpelación en la ALP: Mira la sesión en vivo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/asamblea-legislativa-procede-con-la-votacion-para-censurar-o-ratificar-al-ministro-medinaceli-AB19906017" rel="noopener noreferrer" target="_blank">Asamblea Legislativa procede con la votación para censurar o ratificar al ministro Medinaceli</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/interpelacion-legisladores-critican-al-ministro-medinaceli-y-algunos-piden-su-censura-OB19902862" rel="noopener noreferrer" target="_blank">Interpelación: Legisladores critican al ministro Medinaceli y algunos piden su censura</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/asamblea-legislativa-reinstala-interpelacion-a-ministro-medinaceli-por-combustibles-DJ19897554" rel="noopener noreferrer" target="_blank">Asamblea Legislativa reinstala interpelación a ministro Medinaceli por combustibles</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ministro-medinaceli-llega-la-alp-y-enfrenta-interpelacion-por-calidad-de-combustible" rel="noopener noreferrer" target="_blank">Ministro Medinaceli llega a la ALP y enfrenta interpelación por calidad de combustible</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42976-tres-ministros-y-un-viceministro-acompanaron-a-medinaceli-en-la-interpelacion-en-la-alp" rel="noopener noreferrer" target="_blank">Tres ministros y un viceministro acompañaron a Medinaceli en la interpelación en la ALP</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/continua-la-interpelacion-al-ministro-de-hidrocarburos-por-presunto-sobreprecio-en-compra-de-crudo" rel="noopener noreferrer" target="_blank">Continúa la interpelación al ministro de Hidrocarburos por presunto sobreprecio en compra de crudo</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/se-reinstala-interpelacion-a-ministro-de-hidrocarburos-por-presunto-sobreprecio-en-compra-de-crudo-2" rel="noopener noreferrer" target="_blank">Se reinstala interpelación a Ministro de Hidrocarburos por presunto sobreprecio en compra de crudo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/medinaceli-defiende-contratos-de-crudo-y-asegura-que-no-hubo-dano-economico-en-proceso-observado-59313" rel="noopener noreferrer" target="_blank">Medinaceli defiende contratos de crudo y asegura que no hubo daño económico en proceso observado</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/mauricio-medinaceli-afronta-interpelacion-sobre-compra-de-crudo-en-el-legislativo.html" rel="noopener noreferrer" target="_blank">Mauricio Medinaceli afronta interpelación sobre compra de crudo en el Legislativo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/ministro-de-hidrocarburos-llega-a-la-asamblea-para-su-interpelacion.html" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos llega a la Asamblea para su interpelación</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-hidrocarburos-presenta-asamblea-interpelado_1775753225" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos se presenta en la Asamblea y es interpelado</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/ministro-de-hidrocarburos-comparece-ante-el-legislativo-para-responder-sobre-calidad-de-combustible.html" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos comparece ante el Legislativo para responder sobre calidad de combustible</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_interpelacion-a-medinaceli-no-logra-consenso-en-la-alp.html" rel="noopener noreferrer" target="_blank">Interpelación a Medinaceli no logra consenso en la ALP</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/ministro-de-hidrocarburos-pide-pruebas-sobre-denuncias-por-sobreprecio-y-calidad-de-la" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos pide pruebas sobre denuncias por sobreprecio y calidad de la gasolina</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/hubo-sobreprecio-interpelan-a-ministro-de-hidrocarburos-en-la-alp-20264913738" rel="noopener noreferrer" target="_blank">¿Hubo sobreprecio? Interpelan a ministro de Hidrocarburos en la ALP</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/ministro-de-hidrocarburos-evade-la-censura-hubo-una-fragmentacion-del-voto-en-las-fuerzas-politicas-DB19903752" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos evade la censura: hubo una fragmentación del voto en las fuerzas políticas</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/advierten-que-gasolina-no-cumple-estandares-de-calidad-y-cuestionan-controles" rel="noopener noreferrer" target="_blank">Advierten que gasolina no cumple estándares de calidad y cuestionan controles</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/unidad-ve-autosabotaje-en-el-gobierno-por-compra-de-la-peor-gasolina-del-mundo.html" rel="noopener noreferrer" target="_blank">Unidad ve “autosabotaje” en el Gobierno por compra de “la peor gasolina del mundo”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/09/paz-reconoce-malestar-por-la-mala-calidad-de-la-gasolina/" rel="noopener noreferrer" target="_blank">Paz reconoce malestar por la mala calidad de la gasolina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/senadora-crispin-denuncia-gasolina-de-mala-calidad-tras-inspeccion-en-senkata/" rel="noopener noreferrer" target="_blank">Senadora Crispín denuncia gasolina de mala calidad tras inspección en Senkata</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/medinaceli-asegura-que-ya-circula-la-nueva-gasolina-con-mayores-parametros-de-calidad-y-un-octanaje-de-85-o-mas/" rel="noopener noreferrer" target="_blank">Medinaceli asegura que ya circula la nueva gasolina con mayores parámetros de calidad y un octanaje de “85 o más”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/paz-sobre-gasolina-de-mala-calidad-hemos-cambiado-autoridades-porque-no-han-hecho-bien-su-trabajo" rel="noopener noreferrer" target="_blank">Paz sobre gasolina de mala calidad: Hemos cambiado autoridades porque no han hecho bien su trabajo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9a">
+<div class="modal-backdrop" onclick="closeModal('modal_9a')"></div>
+<div aria-label="Reactivación gradual de tarjetas para compras internacionales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Reactivación gradual de tarjetas para compras internacionales</div>
+<div class="modal-sum">Bancos y Asoban reactivaron el uso de tarjetas para compras y pagos en el exterior tras tres años de restricciones, aunque advierten que la medida será gradual y dependerá del flujo de dólares; en paralelo, el Gobierno y la ASFI aprobaron un reglamento que fija límites a comisiones, ajusta tarifas de giros y redefine el tipo de cambio aplicable.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">22</strong> titulares</span>
+<span><strong style="color:var(--c-02)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bancos-restablecen-desde-este-jueves-los-pagos-internacionales-con-tarjetas-de-debito-y-credito-NJ19899545" rel="noopener noreferrer" target="_blank">Bancos restablecen pagos con tarjetas de crédito y débito desde este jueves</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/los-bancos-habilitan-uso-de-tarjetas-de-credito-y-debito-para-compras-internacionales" rel="noopener noreferrer" target="_blank">Los bancos habilitan uso de tarjetas de crédito y débito para compras internacionales</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/bancos-reactivan-pagos-online-con-tarjetas-tras-normalizarse-normativa-y-divisas" rel="noopener noreferrer" target="_blank">Bancos reactivan pagos online con tarjetas tras normalizarse normativa y divisas</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/los-bolivianos-ya-pueden-hacer-transacciones-internacionales-con-tarjetas-de-debito-y-credito-59329" rel="noopener noreferrer" target="_blank">Los bolivianos ya pueden hacer transacciones internacionales con tarjetas de débito y crédito</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260409/espinoza-confirma-que-tarjetas-para-pagos-en-el-exterior-ya-funcionan-sin-restricciones.html" rel="noopener noreferrer" target="_blank">Espinoza confirma que tarjetas para pagos en el exterior ya funcionan sin restricciones</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/hoy-todos-los-bancos-tienen-la-obligacion-de-habilitar-por-lo-menos-500-dolares-de-compras-mensuales/" rel="noopener noreferrer" target="_blank">“Hoy todos los bancos tienen la obligación de habilitar por lo menos 500 dólares de compras mensuales”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/el-restablecimiento-del-uso-de-tarjetas-ha-comenzado-a-materializarse-a-pasar-de-promesa-a-realidad-analista-advierte-aplicacion-gradual-y-desigual-en-el-sistema-financiero/" rel="noopener noreferrer" target="_blank">“El restablecimiento del uso de tarjetas ha comenzado a materializarse, a pasar de promesa a realidad”: analista advierte aplicación gradual y desigual en el sistema financiero</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bancos-reactivan-pagos-tarjeta-exterior-3-anos-cepo_1775767552" rel="noopener noreferrer" target="_blank">Bancos reactivan pagos con tarjeta en el exterior tras 3 años de cepo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/economia/asoban-confirma-que-los-bancos-liberan-desde-hoy-el-pago-con-tarjetas-en-el-exterior-y-plataformas.html" rel="noopener noreferrer" target="_blank">Asoban confirma que los bancos liberan desde hoy el pago con tarjetas en el exterior y plataformas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260409/entidades-financieras-reactivaron-pagos-internacionales-tarjetas" rel="noopener noreferrer" target="_blank">Entidades financieras reactivaron los pagos internacionales con tarjetas bancarias</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/bancos-reactivan-desde-este-jueves-el-uso-de-tarjetas-en-el-exterior-tras-tres-anos-de-restricciones/" rel="noopener noreferrer" target="_blank">Bancos reactivan desde este jueves el uso de tarjetas en el exterior tras tres años de restricciones</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/asoban-uso-de-tarjetas-depende-del-flujo-de-dolares-del-mercado-internacional-y-no-del-bcb-IB19901328" rel="noopener noreferrer" target="_blank">Asoban: Uso de tarjetas depende del flujo de dólares del mercado internacional y no del BCB</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/desde-este-jueves-bancos-restablecen-uso-de-tarjetas-para-compras-en-el-exterior" rel="noopener noreferrer" target="_blank">Desde este jueves, bancos restablecen uso de tarjetas para compras en el exterior</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42952-el-banco-bcp-amplia-a-us-5000-el-limite-de-compras-en-el-exterior-con-tarjetas-de-debito" rel="noopener noreferrer" target="_blank">El banco BCP amplía a $us 5.000 el límite de compras en el exterior con tarjetas de débito</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42968-asoban-bancos-reactivan-el-uso-de-tarjetas-en-el-exterior-para-consumo-personal" rel="noopener noreferrer" target="_blank">Asoban: bancos reactivan el uso de tarjetas en el exterior “para consumo personal”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/asfi-actualiza-tarifas-para-transacciones-y-giros-al-exterior/" rel="noopener noreferrer" target="_blank">ASFI actualiza tarifas de transacciones y giros al exterior</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/farmaceuticos-ven-limitado-beneficio-por-liberacion-de-tarjetas-de-credito" rel="noopener noreferrer" target="_blank">Farmacéuticos ven limitado beneficio por liberación de tarjetas de crédito</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/giros-al-exterior-estaran-sujetos-a-comisiones-de-entre-el-5-y-el-10--59330" rel="noopener noreferrer" target="_blank">Giros al exterior estarán sujetos a comisiones de entre el 5 % y el 10 %</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/claves-entender-nueva-regulacion-tarjetas-exterior_1775774326" rel="noopener noreferrer" target="_blank">Claves para entender la nueva regulación de tarjetas en el exterior</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-activa-reglamento-uso-tarjetas-exterior_1775760212" rel="noopener noreferrer" target="_blank">Gobierno activa reglamento para uso de tarjetas en el exterior</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/asfi-fija-nuevas-reglas-comisiones-uso-tarjetas-exterior_1775780436" rel="noopener noreferrer" target="_blank">ASFI fija nuevas reglas para comisiones y uso de tarjetas en el exterior</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42988-la-asfi-ajusta-tarifas-para-giros-al-exterior-y-el-bcb-redefine-el-uso-del-tipo-de-cambio-en-tarjetas" rel="noopener noreferrer" target="_blank">La ASFI ajusta tarifas para giros al exterior y el BCB redefine el uso del tipo de cambio en tarjetas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10a">
+<div class="modal-backdrop" onclick="closeModal('modal_10a')"></div>
+<div aria-label="Amparo constitucional por balotaje en La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Amparo constitucional por balotaje en La Paz</div>
+<div class="modal-sum">René Yahuasi interpone una Acción de Amparo Constitucional en El Alto para ser habilitado en el balotaje por la Gobernación de La Paz. Mientras un vocal del TSE respalda su participación, sectores sociales mantienen vigilias y protestas exigiendo respeto a la democracia y al voto popular.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">15</strong> titulares</span>
+<span><strong style="color:var(--c-01)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/vocal-del-tse-cambia-de-postura-y-ahora-respalda-participacion-de-yahuasi" rel="noopener noreferrer" target="_blank">Vocal del TSE cambia de postura y ahora respalda participación de Yahuasi</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/persisten-protestas-por-balotaje-en-la-paz-yahuasi-afirma-que-no-se-rendira-y-exige-respeto-a-la-democracia-y-al-voto-del-pueblo/" rel="noopener noreferrer" target="_blank">Persisten protestas por balotaje en La Paz: Yahuasi afirma que no se rendirá y exige “respeto a la democracia y al voto del pueblo”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/rene-yahuasi-presento-un-amparo-constitucional-en-el-alto-mas-alla-de-un-candidato-tiene-que-prevalecer-el-derecho-de-la-poblacion/" rel="noopener noreferrer" target="_blank">René Yahuasi presentó un amparo constitucional en El Alto: “Más allá de un candidato, tiene que prevalecer el derecho de la población”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/balotaje-confirman-cinco-debates-simultaneos-este-domingo_1775775299" rel="noopener noreferrer" target="_blank">Balotaje: Confirman cinco debates simultáneos para este domingo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/vigilia-seguidores-yahuasi-reubicada-plaza-abaroa_1775739294" rel="noopener noreferrer" target="_blank">La vigilia de los seguidores de Yahuasi es reubicada en la plaza Abaroa</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/segunda-vuelta-tse-confirma-debates-en-simultaneo-el-12-de-abril-a-las-2100.html" rel="noopener noreferrer" target="_blank">Segunda vuelta: TSE confirma debates en simultáneo el 12 de abril a las 21.00</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_yahuasi-presenta-amparo-en-busca-de-restablecer-su-candidatura-para-el-balotaje-en-la-paz.html" rel="noopener noreferrer" target="_blank">Yahuasi presenta amparo en busca de restablecer su candidatura para el balotaje en La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/vocal-descarta-sancion-a-ngp-por-su-retiro-del-balotaje-en-la-paz/" rel="noopener noreferrer" target="_blank">Vocal descarta sanción a NGP por su retiro del balotaje en La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/yahuasi-presenta-amparo-en-el-alto-para-viabilizar-balotaje-en-la-paz/" rel="noopener noreferrer" target="_blank">Yahuasi presenta amparo en El Alto para viabilizar balotaje en La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/tse-proyecta-resultados-preliminares-desde-las-20-00-en-la-segunda-vuelta/" rel="noopener noreferrer" target="_blank">TSE proyecta resultados preliminares desde las 20.00 en la segunda vuelta</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/policia-acordona-inmediaciones-del-tse-ante-protestas-de-seguidores-de-yahuasi/" rel="noopener noreferrer" target="_blank">Policía acordona inmediaciones del TSE ante protestas de seguidores de Yahuasi</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260409/yahuasi-aliados-dan-48-horas-al-tse-que-reponga-2da-vuelta-paz" rel="noopener noreferrer" target="_blank">Yahuasi y aliados dan 48 horas al TSE para que reponga 2da vuelta en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/vocal-del-tse-afirma-no-habra-sanciones-para-ngp-pero-pide-la-fiscalia-investigue-de-oficio/" rel="noopener noreferrer" target="_blank">Vocal del TSE afirma no habrá sanciones para NGP, pero pide la Fiscalía investigue de oficio</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/yahuasi-presenta-accion-de-amparo-constitucional-para-ir-a-la-segunda-vuelta-conoce-el-documento/" rel="noopener noreferrer" target="_blank">Yahuasi presenta Acción de Amparo Constitucional para ir a la segunda vuelta: Conoce el documento</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/rene-yahuasi-presenta-amparo-constitucional-para-ser-habilitado-en-segunda-vuelta" rel="noopener noreferrer" target="_blank">René Yahuasi presenta amparo constitucional para ser habilitado en segunda vuelta</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Ataque armado de mineros ilegales en Sorata" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Ataque armado de mineros ilegales en Sorata</div>
+<div class="modal-sum">La Autoridad Jurisdiccional Administrativa Minera (AJAM) y la Policía Boliviana denunciaron un ataque armado con dinamita y proyectiles por parte de mineros ilegales durante un operativo de restitución de derechos en Sorata, La Paz, dejando al menos un efectivo herido de bala.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">12</strong> titulares</span>
+<span><strong style="color:var(--c-07)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/mineros-hacen-retroceder-con-dinamita-a-350-policias-y-a-personal-de-la-ajam-en-sorata" rel="noopener noreferrer" target="_blank">Mineros hacen retroceder con dinamita a 350 policías y a personal de la AJAM en Sorata</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/intervencion-en-area-minera-de-soraya-deja-un-policia-herido" rel="noopener noreferrer" target="_blank">Intervención en área minera de Soraya deja un policía herido</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/09/ajam-denuncia-ataque-armado-contra-policias-en-operativo-para-recuperar-un-area-minera-59302" rel="noopener noreferrer" target="_blank">Ajam denuncia ataque armado contra policías en operativo para recuperar un área minera</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260409/denuncian-ataque-contra-operativo-de-restitucion-del-derecho-minero-en-sorata.html" rel="noopener noreferrer" target="_blank">Denuncian ataque contra operativo de restitución del derecho minero en Sorata</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/emboscan-a-mas-de-340-policias-en-sorata-usan-dinamita-y-armas-de-fuego-un-efectivo-herido-de-bala/" rel="noopener noreferrer" target="_blank">Emboscan a más de 340 policías en Sorata: usan dinamita y armas de fuego; un efectivo herido de bala</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/operativo-policial-sufre-ataque-armado-sorata-reportan-hay-heridos_1775749956" rel="noopener noreferrer" target="_blank">Un operativo policial sufre un ataque armado en Sorata; reportan que hay heridos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/ajam-denuncia-ataque-armado-contra-operativo-en-area-minera-de-sorata.html" rel="noopener noreferrer" target="_blank">AJAM denuncia ataque armado contra operativo en área minera de Sorata</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_ajam-denuncia-ataque-durante-operativo-de-restitucion-del-derecho-minero-en-sorata.html" rel="noopener noreferrer" target="_blank">AJAM denuncia ataque durante operativo de restitución del derecho minero en Sorata</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/la-paz-un-policia-herido-de-bala-deja-la-emboscada-con-explosivos-y-armas-en-operativo-minero-en-sorata-FJ19890588" rel="noopener noreferrer" target="_blank">La Paz: Un policía herido de bala deja la emboscada con explosivos y armas en operativo minero en Sorata</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-ajam-denuncia-que-mineros-ilegales-atacaron-policias-en-lipichi-sorata" rel="noopener noreferrer" target="_blank">La AJAM denuncia que mineros ilegales atacaron a policías en Lip'ichi, Sorata</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/policias-resultan-heridos-durante-operativo-de-restitucion-minera-en-sorata" rel="noopener noreferrer" target="_blank">Policías resultan heridos durante operativo de restitución minera en Sorata</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42947-policias-fueron-atacados-con-disparos-y-dinamita-cuando-intentaban-restituir-un-area-minera-en-sorata" rel="noopener noreferrer" target="_blank">Policías fueron atacados con disparos y dinamita cuando intentaban restituir un área minera en Sorata</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Cancelación de convenios de cooperación militar con Irán" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Cancelación de convenios de cooperación militar con Irán</div>
+<div class="modal-sum">Bolivia anunció la cancelación de los convenios de cooperación militar con Irán. Ante esto, la embajada de Irán aclaró que el documento firmado en 2023 no era un acuerdo vinculante sino un acta de negociaciones, negando que existiera un compromiso de defensa formal entre ambos países.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">10</strong> titulares</span>
+<span><strong style="color:var(--c-18)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bolivia-cancela-un-convenio-de-cooperacion-militar-con-iran-20264965020" rel="noopener noreferrer" target="_blank">Bolivia cancela convenio de cooperación militar con irán</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/embajada-de-iran-afirma-que-no-existio-un-acuerdo-militar-vinculante-con-bolivia" rel="noopener noreferrer" target="_blank">Embajada de Irán afirma que no existió un acuerdo militar vinculante con Bolivia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/09/embajada-de-iran-afirma-que-documento-firmado-en-2023-no-era-un-acuerdo-militar-vinculante-59325" rel="noopener noreferrer" target="_blank">Embajada de Irán afirma que documento firmado en 2023 no era un acuerdo militar vinculante</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/iran-dice-documento-cooperacion-firmado-bolivia-era-acta-negociaciones_1775773840" rel="noopener noreferrer" target="_blank">Irán dice que documento de cooperación firmado con Bolivia era un "acta de negociaciones"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-rompe-vinculo-militar-iran-casi-dos-decadas-relacion_1775731647" rel="noopener noreferrer" target="_blank">Bolivia rompe el vínculo militar con Irán tras casi dos décadas de relación</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_que-dice-iran-sobre-el-acuerdo-con-bolivia.html" rel="noopener noreferrer" target="_blank">¿Qué dice Irán sobre el acuerdo con Bolivia?</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/ir%C3%A1n-aclara-que-en-2023-firm%C3%B3-un-acta-de-negociaciones-con-bolivia-y-no-era-vinculante" rel="noopener noreferrer" target="_blank">Irán aclara que en 2023 firmó un Acta de Negociaciones con Bolivia y no era vinculante</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/embajada-de-iran-niega-acuerdo-militar-con-bolivia-y-aclara-alcance-de-cooperacion/" rel="noopener noreferrer" target="_blank">Embajada de Irán niega acuerdo militar con Bolivia y aclara alcance de cooperación</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-embajada-de-iran-aclara-que-no-firmo-un-acuerdo-militar-con-bolivia-sino-un-acta-de-negociaciones/" rel="noopener noreferrer" target="_blank">La Embajada de Irán aclara que no firmó un acuerdo militar con Bolivia, sino un “acta de negociaciones”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42983-iran-afirma-que-no-hubo-acuerdo-de-cooperacion-militar-vinculante-con-bolivia-que-fuera-objeto-de-anulacion" rel="noopener noreferrer" target="_blank">Irán afirma que no hubo acuerdo de cooperación militar vinculante con Bolivia que fuera objeto de anulación</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Gobierno rechaza incremento salarial del veinte por ciento" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Gobierno rechaza incremento salarial del veinte por ciento</div>
+<div class="modal-sum">El Gobierno de Rodrigo Paz, a través del Ministerio de Economía, rechazó la demanda de la Central Obrera Boliviana (COB) de un incremento salarial del 20%, calificándola de inviable. Las autoridades argumentaron la inviabilidad financiera y anticiparon la necesidad de un diálogo tripartito.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">9</strong> titulares</span>
+<span><strong style="color:var(--c-02)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-afirma-que-no-es-viable-el-incremento-al-haber-basico-del-20-solicitado-por-la-cob" rel="noopener noreferrer" target="_blank">Gobierno afirma que “no es viable” el incremento al haber básico del 20% solicitado por la COB</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/el-gobierno-nacional-descarta-el-incremento-de-20-al-salario-59321" rel="noopener noreferrer" target="_blank">El gobierno nacional descarta el incremento de 20 % al salario</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/gobierno-descarta-alza-salarial-del-20-no-no-es-viable-y-eso-esta-absolutamente-claro-esta-discusion-no-debe-ser-solamente-salarial/" rel="noopener noreferrer" target="_blank">Gobierno descarta alza salarial del 20%: “No, no es viable y eso está absolutamente claro… esta discusión no debe ser solamente salarial”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/economia/ministro-de-economia-senala-que-no-es-viable-el-20-de-alza-salarial-que-pide-la-cob.html" rel="noopener noreferrer" target="_blank">Ministro de Economía señala que “no es viable” el 20% de alza salarial que pide la COB</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_gobierno-senala-que-no-es-viable-el-alaza-salarial-pedido-por-la-cob.html" rel="noopener noreferrer" target="_blank">Gobierno señala que no es viable el alaza salarial pedido por la COB</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/argollo-considera-%E2%80%9Ccobarde%E2%80%9D-la-posici%C3%B3n-del-ministro-de-econom%C3%ADa-en-la-negociaci%C3%B3n-salarial" rel="noopener noreferrer" target="_blank">Argollo considera “cobarde” la posición del ministro de Economía en la negociación salarial</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/mineros-asistiran-masivamente-al-cabildo-convocado-por-la-cob/" rel="noopener noreferrer" target="_blank">Mineros asistirán masivamente al cabildo convocado por la COB</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260409/espinoza-aumento-del-20-al-salario-basico-no-es-viable" rel="noopener noreferrer" target="_blank">Espinoza: aumento del 20% al salario básico “no es viable”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/incremento-salarial-espinoza-ve-inviable-cumplir-la-demanda-de-la-cob-y-anticipa-habra-dialogo-tripartito/" rel="noopener noreferrer" target="_blank">Incremento salarial: Espinoza ve “inviable” cumplir la demanda de la COB y anticipa habrá diálogo tripartito</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_18">
+<div class="modal-backdrop" onclick="closeModal('modal_18')"></div>
+<div aria-label="Cuartos intermedios en sesión de la Asamblea Legislativa" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Cuartos intermedios en sesión de la Asamblea Legislativa</div>
+<div class="modal-sum">El vicepresidente Edmand Lara declara sucesivos cuartos intermedios en la sesión de la Asamblea Legislativa ante el desorden en el hemiciclo. Lara convoca a reuniones con los jefes de bancada para coordinar la interpelación al ministro Medinaceli, logrando finalmente retomar el debate parlamentario.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">9</strong> titulares</span>
+<span><strong style="color:var(--c-21)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/09/medinaceli-reinstalan-sesion-en-la-asamblea-para-continuar-la-interpelacion-al-ministro-de-hidrocarburos-59309" rel="noopener noreferrer" target="_blank">Medinaceli llega a la ALP y se reinstala sesión de interpelación</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/09/lara-declara-nuevo-cuarto-intermedio-en-sesion-de-alp-y-pide-decoro-a-legisladores-59304" rel="noopener noreferrer" target="_blank">Lara declara nuevo cuarto intermedio en sesión de ALP y pide decoro a legisladores</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/lara-cita-a-jefes-de-bancada-a-una-reunion-sobre-interpelacion-al-ministro-de-hidrocarburos.html" rel="noopener noreferrer" target="_blank">Lara cita a jefes de bancada a una reunión sobre interpelación al Ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/lara-reinstala-sesion-legislativa-vuelve-declarar-cuarto-intermedio_1775746259" rel="noopener noreferrer" target="_blank">Lara reinstala sesión legislativa y vuelve a declarar cuarto intermedio</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/lara-dicta-nuevo-cuarto-intermedio-en-interpelacion-a-medinaceli/" rel="noopener noreferrer" target="_blank">Lara dicta nuevo cuarto intermedio en interpelación a Medinaceli</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/a-minutos-de-reanudar-la-sesion-de-interpelacion-lara-dicta-otro-cuarto-intermedio-por-desorden/" rel="noopener noreferrer" target="_blank">A minutos de reanudar la sesión de interpelación, Lara dicta otro cuarto intermedio por ‘desorden’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260409/se-reinstala-sesion-del-legislativo-lara-llama-reunion-jefes-bancada" rel="noopener noreferrer" target="_blank">Se reinstala la sesión del Legislativo: Lara llama a reunión a jefes de bancada para analizar la interpelación de Medinaceli</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/alp-reinstala-sesion-de-interpelacion-al-ministro-medinaceli" rel="noopener noreferrer" target="_blank">ALP reinstala sesión de interpelación al ministro Medinaceli</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42950-el-legislativo-retoma-la-sesion-interpelatoria-con-la-sorpresiva-asistencia-del-ministro-medinaceli" rel="noopener noreferrer" target="_blank">El Legislativo retoma la sesión interpelatoria con la sorpresiva asistencia del ministro Medinaceli</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Denuncia por acoso político entre diputadas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Denuncia por acoso político entre diputadas</div>
+<div class="modal-sum">La diputada Diana Romero, esposa del vicepresidente Edmand Lara, presentó una denuncia por acoso político contra su colega Nicole Rocha ante la Comisión de Ética. Asimismo, Romero defendió su desempeño en la Asamblea Legislativa Plurinacional y expuso resultados de su gestión ante críticas recibidas</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">7</strong> titulares</span>
+<span><strong style="color:var(--c-05)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/diana-romero-presenta-denuncia-contra-la-diputada-nicole-rocha-ante-la-comision-de-etica-por-acoso-politico.html" rel="noopener noreferrer" target="_blank">Diana Romero presenta denuncia contra la diputada Nicole Rocha ante la Comisión de Ética por acoso político</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/diana-romero-responde-a-criticas-con-cifras-no-me-detendran-acusaciones-falsas-e-infundadas-y-expone-su-trabajo-legislativo/" rel="noopener noreferrer" target="_blank">Diana Romero responde a críticas con cifras: “No me detendrán acusaciones falsas e infundadas” y expone su trabajo legislativo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_diana-romero-denuncia-a-una-colega-por-acoso-politico.html" rel="noopener noreferrer" target="_blank">Diana Romero denuncia a una colega por acoso político</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/comision-de-etica-analizara-denuncia-de-romero-contra-rocha/" rel="noopener noreferrer" target="_blank">Comisión de Ética analizará denuncia de Romero contra Rocha</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diputada-diana-romero-esposa-del-vicepresidente-defiende-su-trabajo-en-la-alp-y-detalla-las-iniciativas-que-impulso/" rel="noopener noreferrer" target="_blank">Diputada Diana Romero, esposa del Vicepresidente, defiende su trabajo en la ALP y detalla las iniciativas que impulsó</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/condori-cuestiona-a-lara-y-romero-es-lindo-llevar-a-tu-casita-50-mil-bolivianos-sin-hacer-nada" rel="noopener noreferrer" target="_blank">Condori cuestiona a Lara y Romero: «Es lindo llevar a tu casita 50 mil bolivianos sin hacer nada»</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42951-denuncia-de-la-diputada-romero-aun-no-llego-a-la-comision-de-etica-tampoco-se-notifico-a-la-legisladora-rocha" rel="noopener noreferrer" target="_blank">Denuncia de la diputada Romero aún no llegó a la Comisión de Ética; tampoco se notificó a la legisladora Rocha</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="Condena de diez años para exministro Santos Cruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Condena de diez años para exministro Santos Cruz</div>
+<div class="modal-sum">El exministro de Medio Ambiente, Juan Santos Cruz, fue condenado a 10 años de prisión por corrupción en el 'caso Coimas'. La sentencia también alcanzó al exviceministro Valda, quien recibió una pena de seis años de cárcel por su participación en este esquema ilícito.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-coimas-exministro-juan-santos-recibe-10-anos-de-carcel-y-exviceministro-valda-es-condenado-a-6/" rel="noopener noreferrer" target="_blank">Caso coimas: exministro Juan Santos recibe 10 años de cárcel y exviceministro Valda es condenado a 6</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/caso-coimas-exministro-exviceministro-condenados-corrupcion_1775785647" rel="noopener noreferrer" target="_blank">Caso Coimas: exministro y exviceministro del MAS son condenados por corrupción</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/condenan-a-10-anos-de-carcel-al-exministro-juan-santos-cruz-por-el-caso-coima-en-medio-ambiente.html" rel="noopener noreferrer" target="_blank">Condenan a 10 años de cárcel al exministro Juan Santos Cruz por el caso “Coimas” en Medio Ambiente</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/exministro-santos-es-condenado-10-a%C3%B1os-de-c%C3%A1rcel-por-corrupci%C3%B3n-en-el-%E2%80%9Ccaso-coimas%E2%80%9D" rel="noopener noreferrer" target="_blank">Exministro Santos es condenado a 10 años de cárcel por corrupción en el “caso coimas”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/caso-coimas-condenan-a-exministro-santos-a-10-anos-y-a-valda-a-seis/" rel="noopener noreferrer" target="_blank">Caso Coimas: condenan a exministro Santos a 10 años y a Valda, a seis</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/exministro-santos-cruz-es-sentenciado-a-10-anos-de-carcel-por-el-caso-coimas/" rel="noopener noreferrer" target="_blank">Exministro Santos Cruz es sentenciado a 10 años de cárcel por el ‘caso coimas’</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42991-condenan-a-10-anos-de-carcel-al-exministro-juan-santos-cruz-y-a-un-exviceministro-por-el-caso-coimas-en-medio-ambiente" rel="noopener noreferrer" target="_blank">Condenan a 10 años de cárcel al exministro Juan Santos Cruz y a un exviceministro por el caso “Coimas” en Medio Ambiente</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10b">
+<div class="modal-backdrop" onclick="closeModal('modal_10b')"></div>
+<div aria-label="Inversión millonaria para obras en Achacachi" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Inversión millonaria para obras en Achacachi</div>
+<div class="modal-sum">El presidente Rodrigo Paz visitó Achacachi y la provincia Omasuyos para anunciar una inversión de 35 millones de bolivianos destinada a obras de infraestructura, incluyendo la construcción de puentes y alcantarillado, destacando la devolución de recursos a las regiones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">6</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/09/paz-anuncia-una-inversion-de-bs-35-millones-en-varias-obras-para-omasuyos-59319" rel="noopener noreferrer" target="_blank">Paz anuncia una inversión de Bs 35 millones en varias obras para Omasuyos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-va-achacachi-ofrece-12-puentes-dice-metio-preso-quien-altero-gasolina_1775781494" rel="noopener noreferrer" target="_blank">Paz va a Achacachi, ofrece 12 puentes y dice que metió preso a quien alteró gasolina</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/paz-compromete-inversion-y-obras-en-achacachi-no-vengo-con-la-mano-oculta-en-la-espalda.html" rel="noopener noreferrer" target="_blank">Paz compromete inversión y obras en Achacachi: “No vengo con la mano oculta en la espalda”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/paz-compromete-12-puentes-y-bs-35-millones-para-omasuyos/" rel="noopener noreferrer" target="_blank">Paz compromete 12 puentes y Bs 35 millones para Omasuyos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-anuncia-obras-para-achacachi-estamos-devolviendo-recursos-20264914133" rel="noopener noreferrer" target="_blank">Paz anuncia obras para Achacachi: "Estamos devolviendo recursos"</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-garantiza-presupuesto-para-alcantarillado-y-seis-puentes-en-omasuyos" rel="noopener noreferrer" target="_blank">Paz garantiza presupuesto para alcantarillado y seis puentes en Omasuyos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Presentación de anteproyecto de nueva Ley de Hidrocarburos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Presentación de anteproyecto de nueva Ley de Hidrocarburos</div>
+<div class="modal-sum">El gobierno anunció que el anteproyecto de la nueva Ley de Hidrocarburos está listo y se sustenta en cinco ejes clave. El presidente Rodrigo Paz ratificó su confianza en el ministro Medinaceli, quien pidió a la estatal YPFB transparentar los contratos de importación firmados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">6</strong> titulares</span>
+<span><strong style="color:var(--c-11)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/el-gobierno-anuncia-que-tiene-listo-proyecto-de-ley-de-hidrocarburos-con-cinco-ejes-clave-59327" rel="noopener noreferrer" target="_blank">El gobierno anuncia que tiene listo proyecto de ley de hidrocarburos con cinco ejes clave</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/economia/paz-ratifica-confianza-en-medinaceli-y-espera-presentacion-de-anteproyecto-de-ley-de-hidrocarburos.html" rel="noopener noreferrer" target="_blank">Paz ratifica confianza en Medinaceli y espera presentación de anteproyecto de ley de hidrocarburos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260409/medinaceli-tiene-listo-proyecto-nueva-ley-hidrocarburos" rel="noopener noreferrer" target="_blank">Medinaceli tiene listo el proyecto de nueva Ley de Hidrocarburos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/nueva-ley-de-hidrocarburos-esta-lista-y-contempla-cinco-objetivos-clave-segun-ministro-DB19903213" rel="noopener noreferrer" target="_blank">Nueva Ley de Hidrocarburos está lista y contempla cinco objetivos clave, según ministro</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/medinaceli-dice-que-la-nueva-ley-de-hidrocarburos-esta-lista-y-se-sustenta-en-cinco-pilares" rel="noopener noreferrer" target="_blank">Medinaceli dice que la nueva Ley de Hidrocarburos está lista y se sustenta en cinco pilares</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42981-medinaceli-habla-de-los-cinco-ejes-de-la-nueva-ley-de-hidrocarburos-y-pide-a-la-presidenta-de-ypfb-transparentar-los-contratos-firmados" rel="noopener noreferrer" target="_blank">Medinaceli habla de los cinco ejes de la nueva ley de hidrocarburos y pide a la presidenta de YPFB transparentar los contratos firmados</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Investigación por sobreprecio en escáner de la Aduana" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigación por sobreprecio en escáner de la Aduana</div>
+<div class="modal-sum">La Fiscalía y la Policía investigan un presunto sobreprecio de 25 millones de bolivianos en la compra de un escáner para la Aduana Nacional en Tambo Quemado. El caso ha derivado en múltiples allanamientos y la aprehensión de cuatro exfuncionarios de la institución.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">6</strong> titulares</span>
+<span><strong style="color:var(--c-10)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/aprehenden-a-cuatro-exfuncionarios-por-caso-aduana-y-presunto-sobreprecio-en-escaner" rel="noopener noreferrer" target="_blank">Aprehenden a cuatro exfuncionarios por caso Aduana y presunto sobreprecio en escáner</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260409/cuatro-aprehendidos-e-investigacion-en-curso-por-presunto-sobreprecio-de-de-escaner-de-la-aduana.html" rel="noopener noreferrer" target="_blank">Cuatro aprehendidos e investigación en curso por presunto sobreprecio de escáner de la Aduana</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cuatro-exfuncionarios-de-la-aduana-detenidos-por-presunto-dano-de-bs-25-millones-relacionado-con-escaner-en-tambo-quemadof/" rel="noopener noreferrer" target="_blank">Cuatro exfuncionarios de la Aduana detenidos por presunto daño de Bs 25 millones relacionado con escáner en Tambo Quemadof</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/presunto-sobreprecio-en-escaner-aduanero-investigacion-deja-allanamientos-y-detenidos.html" rel="noopener noreferrer" target="_blank">Presunto sobreprecio en escáner aduanero: investigación deja allanamientos y detenidos</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/investigan-presunto-sobreprecio-en-esc%C3%A1ner-de-la-aduana-hay-allanamientos-y-aprehendidos" rel="noopener noreferrer" target="_blank">Investigan presunto sobreprecio en escáner de la Aduana: hay allanamientos y aprehendidos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42987-cuatro-exfuncionarios-de-la-aduana-fueron-aprehendidos-por-la-compra-con-sobreprecio-de-un-escaner" rel="noopener noreferrer" target="_blank">Cuatro exfuncionarios de la Aduana fueron aprehendidos por la compra con sobreprecio de un escáner</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Operativo antidroga termina en enfrentamientos en Bulo Bulo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Operativo antidroga termina en enfrentamientos en Bulo Bulo</div>
+<div class="modal-sum">Un operativo antidroga de la FELCN en Bulo Bulo, Cochabamba, derivó en enfrentamientos y emboscadas por parte de pobladores que intentaron impedir la acción policial. La intervención incluyó el uso de gases lacrimógenos y resultó en la incautación de armas y varias detenciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">6</strong> titulares</span>
+<span><strong style="color:var(--c-04)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/policia-ejecuta-operativo-antidroga-en-bulo-bulo-con-detenciones-enfrentamiento-y-decomiso-de-armas" rel="noopener noreferrer" target="_blank">Policía ejecuta operativo antidroga en Bulo Bulo con detenciones, enfrentamiento y decomiso de armas</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/operativo-antidrogas-en-bulo-bulo-deriva-en-enfrentamientos-pobladores-rodean-a-agentes-de-la-felcn/" rel="noopener noreferrer" target="_blank">Operativo antidrogas en Bulo Bulo deriva en enfrentamientos; pobladores rodean a agentes de la FELCN</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/operativo-antidrog-deriva-en-caos-en-bulo-bulo-denuncian-gasificacion-cerca-de-hospital-y-emboscada-a-la-felcn/" rel="noopener noreferrer" target="_blank">Operativo antidrog@ deriva en caos en Bulo Bulo: denuncian gasificación cerca de hospital y emboscada a la Felcn</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policias-gasifican-comunarios-bulo-bulo-emboscada_1775782746" rel="noopener noreferrer" target="_blank">Bulo Bulo: emboscan a policías antinarcóticos y gasifican para evitar las agresiones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260409/pobladores-bulo-bulo-atacan-policias-operativo-antidrogas" rel="noopener noreferrer" target="_blank">Pobladores de Bulo Bulo atacan a policías en operativo antidrogas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42984-policias-antidrogas-son-emboscados-con-piedras-y-amenazas-en-bulo-bulo-durante-operativo" rel="noopener noreferrer" target="_blank">Policías antidrogas son emboscados con piedras y amenazas en Bulo Bulo durante operativo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Obligación de permanencia para autoridades salientes" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Obligación de permanencia para autoridades salientes</div>
+<div class="modal-sum">La Contraloría General del Estado recordó a los gobernadores, alcaldes y demás autoridades salientes que deben permanecer en el país durante seis meses tras dejar sus cargos. La disposición busca garantizar que los exfuncionarios cumplan con la rendición de cuentas obligatoria de sus gestiones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/contraloria-recuerda-a-gobernadores-y-alcaldes-salientes-que-deben-permanecer-en-el-pais-6-meses-para-rendir-cuentas" rel="noopener noreferrer" target="_blank">Contraloría recuerda a gobernadores y alcaldes salientes que deben permanecer en el país 6 meses para rendir cuentas</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/autoridades-salientes-deben-permanecer-seis-meses-en-el-pais-tras-cese-de-sus-funciones.html" rel="noopener noreferrer" target="_blank">Autoridades salientes deben permanecer seis meses en el país tras cese de sus funciones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/contraloria-recuerda-que-autoridades-salientes-deben-permanecer-seis-meses-en-el-pais-tras-el-cese-de-sus-funciones.html" rel="noopener noreferrer" target="_blank">Contraloría recuerda que autoridades salientes deben permanecer seis meses en el país tras el cese de sus funciones</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_contraloria-autoridades-salientes-deben-permanecer-seis-meses-en-el-pais-tras-el-cese-de-sus-funciones.html" rel="noopener noreferrer" target="_blank">Contraloría: autoridades salientes deben permanecer seis meses en el país tras el cese de sus funciones</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobernadores-salientes-no-podran-salir-del-pais-por-seis-meses-esto-dice-la-contraloria-202649102744" rel="noopener noreferrer" target="_blank">Gobernadores salientes no podrán salir del país por seis meses: esto dice la Contraloría</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Alerta del Banco Central por estafas digitales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Alerta del Banco Central por estafas digitales</div>
+<div class="modal-sum">El Banco Central de Bolivia (BCB) alertó sobre el uso ilícito de su identidad, logotipos y nombres de funcionarios para realizar estafas y robo de información. La entidad denunció que delincuentes suplantan su imagen para ofrecer falsos beneficios y captar datos financieros de los ciudadanos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">5</strong> titulares</span>
+<span><strong style="color:var(--c-02)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260409/bcb-alerta-sobre-intentos-de-robo-de-informacion-y-estafas.html" rel="noopener noreferrer" target="_blank">BCB alerta sobre intentos de estafa y robo de información</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/09/bcb-alerta-sobre-uso-ilicito-de-su-identidad-para-robo-de-informacion-y-estafas-59311" rel="noopener noreferrer" target="_blank">BCB alerta sobre uso ilícito de su identidad para robo de información y estafas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/evitar-estafas-financieras-bcb-da-claves-robo-dinero-datos_1775745923" rel="noopener noreferrer" target="_blank">¿Cómo evitar estafas financieras? BCB da claves tras robo de dinero y datos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-denuncia-que-delincuentes-usan-su-imagen-y-llaman-a-su-nombre-para-ofrecer-beneficios-y-estafar-JI19889536" rel="noopener noreferrer" target="_blank">BCB denuncia que delincuentes usan su imagen y llaman a su nombre para ofrecer “beneficios” y estafar</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/09/42941-el-bcb-alerta-sobre-estafas-que-utilizan-su-identidad-logotipos-e-incluso-nombres-de-sus-funcionarios" rel="noopener noreferrer" target="_blank">El BCB alerta sobre estafas que utilizan su identidad, logotipos e incluso nombres de sus funcionarios</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Restitución del busto de Víctor Paz Estenssoro" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Restitución del busto de Víctor Paz Estenssoro</div>
+<div class="modal-sum">La Asamblea Legislativa restituye el busto del expresidente Víctor Paz Estenssoro tras 16 años de haber sido retirado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">4</strong> titulares</span>
+<span><strong style="color:var(--c-05)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/09/reinstalan-busto-de-victor-paz-estenssoro-en-el-antiguo-edificio-de-la-asamblea-tras-16-anos" rel="noopener noreferrer" target="_blank">Reinstalan busto de Víctor Paz Estenssoro en el antiguo edificio de la Asamblea tras 16 años</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/restituyen-busto-victor-paz-estenssoro-antiguo-edificio-asamblea_1775762908" rel="noopener noreferrer" target="_blank">Restituyen busto de Víctor Paz Estenssoro en antiguo edificio de la Asamblea</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/politica/restituyen-busto-de-victor-paz-estenssoro-en-antiguo-edificio-de-la-asamblea-tras-16-anos.html" rel="noopener noreferrer" target="_blank">Restituyen busto de Víctor Paz Estenssoro en antiguo edificio de la Asamblea tras 16 años</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/la-asamblea-legislativa-restituye-busto-de-victor-paz-estenssoro/" rel="noopener noreferrer" target="_blank">La Asamblea Legislativa restituye busto de Víctor Paz Estenssoro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Solicitud de extradición para líder criminal colombiano" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Solicitud de extradición para líder criminal colombiano</div>
+<div class="modal-sum">Alias ‘Mapaya’ y sus cómplices de nacionalidad colombiana fueron enviados a prisión tras un enfrentamiento armado con la policía boliviana. En paralelo, la Interpol en Bolivia confirmó la recepción de una solicitud formal de extradición por parte de Colombia contra el líder de este grupo criminal.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">4</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/mapaya-complices-enviados-tres-carceles-balacera-policias_1775733964" rel="noopener noreferrer" target="_blank">‘Mapaya’ y sus cómplices son enviados a tres cárceles por la balacera con policías</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-recibe-pedido-colombia-extraditar-supuesto-lider-grupo-criminal_1775774148" rel="noopener noreferrer" target="_blank">Bolivia recibe pedido de Colombia para extraditar a supuesto líder de grupo criminal</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260409_envian-a-distintas-carceles-a-colombianos-capturados.html" rel="noopener noreferrer" target="_blank">Envían a distintas cárceles a colombianos capturados</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/segun-interpol-bolivia-se-recibio-el-pedido-de-colombia-para-extraditar-a-alias-mapaya-IB19903281" rel="noopener noreferrer" target="_blank">Según Interpol Bolivia, se recibió el pedido de Colombia para extraditar a alias ‘Mapaya’</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6d">
+<div class="modal-backdrop" onclick="closeModal('modal_6d')"></div>
+<div aria-label="Bloqueos en la carretera Santa Cruz y Cochabamba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Bloqueos en la carretera Santa Cruz y Cochabamba</div>
+<div class="modal-sum">Se reportan puntos de bloqueo en la carretera que conecta Santa Cruz y Cochabamba, afectando la transitabilidad en la ruta nueva y el sector de Yapacaní. La medida de presión ha condicionado la salida de buses desde las terminales y ha obligado al corte de rutas alternativas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6d')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/09/reportan-bloqueos-en-carretera-nueva-santa-cruz-cochabamba-59306" rel="noopener noreferrer" target="_blank">Reportan bloqueos en carretera nueva Santa Cruz-Cochabamba</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/09/tras-acuerdo-con-el-gobierno-se-declara-cuarto-intermedio-en-el-bloqueo-a-yapacani-59314" rel="noopener noreferrer" target="_blank">Tras acuerdo con el Gobierno, se declara cuarto intermedio en el bloqueo a Yapacaní</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/salidas-de-buses-a-cochabamba-son-condicionadas-por-bloqueo-en-yapacani" rel="noopener noreferrer" target="_blank">Salidas de buses a Cochabamba son condicionadas por bloqueo en Yapacaní</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/instalan-tres-puntos-de-bloqueo-en-la-carretera-santa-cruz-y-cortan-la-antigua-cochabamba" rel="noopener noreferrer" target="_blank">Instalan tres puntos de bloqueo en la carretera a Santa Cruz y cortan la vía antigua a Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Ampliación del plazo para cobro del bono PEPE" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Ampliación del plazo para cobro del bono PEPE</div>
+<div class="modal-sum">El Gobierno nacional amplió el plazo hasta el 19 de junio para que los beneficiarios rezagados cobren el bono PEPE de Bs 450. La medida busca facilitar el acceso al beneficio mediante la aplicación de un nuevo cronograma oficial de pagos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-amplia-hasta-el-19-de-junio-el-plazo-para-que-los-rezagados-puedan-cobrar-el-bono-pepe" rel="noopener noreferrer" target="_blank">Gobierno amplía hasta el 19 de junio el plazo para que los rezagados puedan cobrar el bono PEPE</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/gobierno-extiende-hasta-el-19-de-junio-el-plazo-para-cobrar-el-bono-pepe-de-bs-450.html" rel="noopener noreferrer" target="_blank">Gobierno extiende hasta el 19 de junio el plazo para cobrar el bono PEPE de Bs 450</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bono-pepe-se-amplio-esto-es-todo-lo-que-debe-saber-con-el-nuevo-cronograma-20264917341" rel="noopener noreferrer" target="_blank">Bono PEPE se amplió: Esto es todo lo que debe saber con el nuevo cronograma</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10c">
+<div class="modal-backdrop" onclick="closeModal('modal_10c')"></div>
+<div aria-label="Coordinación de agenda legislativa en gabinete ministerial" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Coordinación de agenda legislativa en gabinete ministerial</div>
+<div class="modal-sum">El presidente Rodrigo Paz se reunió con su gabinete ministerial para analizar y definir un paquete de proyectos de ley que será presentado ante la Asamblea Legislativa Plurinacional, coordinando así la agenda legislativa del Gobierno.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">3</strong> titulares</span>
+<span><strong style="color:var(--c-03)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/09/paz-se-reune-con-su-gabinete-para-tratar-agenda-de-proyectos-de-ley-59299" rel="noopener noreferrer" target="_blank">Paz se reúne con su gabinete para tratar agenda de proyectos de ley</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260409/paz-tratara-este-jueves-con-su-gabinete-el-paquete-de-leyes-que-sera-presentado-a-la-asamblea.html" rel="noopener noreferrer" target="_blank">Paz tratará este jueves con su gabinete el paquete de leyes que será presentado a la Asamblea</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/09/paz-se-reune-con-su-gabinete-para-definir-paquete-de-leyes-que-enviara-a-la-asamblea/" rel="noopener noreferrer" target="_blank">Paz se reúne con su gabinete para definir paquete de leyes que enviará a la Asamblea</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Recuperación de caja fuerte abandonada por delincuentes" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Recuperación de caja fuerte abandonada por delincuentes</div>
+<div class="modal-sum">Una caja fuerte que contenía dinero, joyas y documentos fue abandonada por delincuentes en inmediaciones de un surtidor, presuntamente debido a su gran peso tras un robo. El objeto fue recuperado por las autoridades tras ser hallado en la vía pública.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260409/roban-una-caja-fuerte-de-una-vivienda-pero-la-dejan-abandonada-en-un-surtidor.html" rel="noopener noreferrer" target="_blank">Roban una caja fuerte de una vivienda, pero la dejan abandonada en un surtidor</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/delincuentes-abandonan-caja-fuerte-robada-en-surtidor-por-su-peso-hallan-dinero-joyas-y-documentos/" rel="noopener noreferrer" target="_blank">Delincuentes abandonan caja fuerte robada en surtidor por su peso; hallan dinero, joyas y documentos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/hallan-caja-fuerte-abandonada-en-la-calle-y-los-presuntos-duenos-dicen-que-delincuentes-la-robaron-NI19884238" rel="noopener noreferrer" target="_blank">Hallan caja fuerte abandonada en la calle y los presuntos dueños dicen que delincuentes la robaron</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6c">
+<div class="modal-backdrop" onclick="closeModal('modal_6c')"></div>
+<div aria-label="Asesinato de un hombre por disputa de lotes" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Asesinato de un hombre por disputa de lotes</div>
+<div class="modal-sum">Un hombre de 30 años fue asesinado con dos disparos en la cabeza en la zona de Pucarita, Cochabamba, tras una presunta discusión por un lote. La autopsia confirmó la causa de muerte mientras la familia denuncia que los agresores portaban uniformes policiales y armas de fuego.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/asesinan-a-hombre-de-30-anos-con-dos-disparos-en-la-cabeza-en-cochabamba-tras-discusion-y-ataque-armado-en-su-propio-lote/" rel="noopener noreferrer" target="_blank">Asesinan a hombre de 30 años con dos disparos en la cabeza en Cochabamba tras discusión y ataque armado en su propio lote</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/autopsia-revela-hombre-asesinado-cochabamba-recibio-dos-disparos_1775745720" rel="noopener noreferrer" target="_blank">Autopsia revela que hombre asesinado en Cochabamba recibió dos disparos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/hermano-del-asesinado-en-pucarita-denuncia-que-fue-interceptado-por-sujetos-con-uniformes-policiales-y-armas-IH19878505" rel="noopener noreferrer" target="_blank">Hermano del asesinado en Pucarita denuncia que fue interceptado por sujetos con uniformes policiales y armas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="Habilitación de terminal presidencial para vuelos comerciales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Habilitación de terminal presidencial para vuelos comerciales</div>
+<div class="modal-sum">El Gobierno habilita la terminal presidencial del aeropuerto Viru Viru para operaciones comerciales y descongestionamiento de pasajeros.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/readecuaran-terminal-presidencial-viru-viru-descongestionar-trafico-pasajeros_1775770120" rel="noopener noreferrer" target="_blank">Readecuarán la terminal presidencial de Viru Viru para descongestionar el tráfico de pasajeros</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/terminal-presidencial-de-viru-viru-dejar%C3%A1-de-ser-exclusiva-del-mandatario-y-se-abrir%C3%A1-otro" rel="noopener noreferrer" target="_blank">Terminal Presidencial de Viru Viru dejará de ser exclusiva del mandatario y se abrirá a otro tipo de vuelos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/09/terminal-presidencial-de-viru-viru-dejara-de-ser-exclusiva-y-se-abre-a-operaciones-comerciales/" rel="noopener noreferrer" target="_blank">Terminal Presidencial de Viru Viru dejará de ser exclusiva y se abre a operaciones comerciales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="Premiación de ejemplares lecheros en Agropecruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Premiación de ejemplares lecheros en Agropecruz</div>
+<div class="modal-sum">Destacan el avance genético y la premiación de ejemplares de la raza Gyr en el concurso lechero de la Agropecruz 2026.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/campeonas-elite-genetica-lechera-brilla-agropecruz-2026_1775753035" rel="noopener noreferrer" target="_blank">Campeonas de élite: la genética lechera brilla en Agropecruz 2026</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/economia/garapa-fiv-zamboni-brilla-en-agropecruz-2026-y-se-consagra-gran-campeona-del-concurso-lechero.html" rel="noopener noreferrer" target="_blank">Garapa FIV Zamboni brilla en Agropecruz 2026 y se consagra Gran Campeona del concurso lechero</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/coronan-a-las-grandes-campeonas-de-produccion-de-leche-de-la-raza-gyr" rel="noopener noreferrer" target="_blank">Coronan a las grandes campeonas de producción de leche de la raza Gyr</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="Paro nacional de trabajadores de salud por despidos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Paro nacional de trabajadores de salud por despidos</div>
+<div class="modal-sum">Trabajadores del sector salud cumplen un paro nacional de 24 horas y marchas en protesta por despidos y condiciones laborales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/09/trabajadores-en-salud-marcharon-en-la-paz-exigen-frenar-despidos-y-mejorar-condiciones-laborales-59316" rel="noopener noreferrer" target="_blank">Trabajadores en salud marcharon en La Paz; exigen frenar despidos y mejorar condiciones laborales</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/09/trabajadores-de-salud-ejecutan-un-paro-de-24-horas-a-nivel-nacional-59296" rel="noopener noreferrer" target="_blank">Trabajadores de salud ejecutan un paro de 24 horas a nivel nacional</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-09/pais/paro-nacional-de-24-horas-trabajadores-de-salud-suspenden-actividades.html" rel="noopener noreferrer" target="_blank">Paro nacional de 24 horas: trabajadores de salud suspenden actividades</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+</body>
+</html>
