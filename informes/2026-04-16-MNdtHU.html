@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260416</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<meta content="Bolimétrica · 2026-04-16" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-04-16-MNdtHU.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">168</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">21</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">10</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 16-ABRIL-2026</strong><br/>
+        Reporte N° B24-20260416<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_10" onclick="openModal('modal_10')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-01)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-01)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="top3-title">Controversia por segunda vuelta electoral en La Paz</div>
+<div class="top3-body">El TSE advirtió que una eventual tutela constitucional a favor de Yahuasi sería de cumplimiento imposible por interferir en sus atribuciones, mientras el excandidato lidera una marcha hacia La Paz para exigir segunda vuelta, en paralelo a la admisión de un amparo que definirá el futuro del balotaje.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">18</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_16" onclick="openModal('modal_16')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-08)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-08)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="top3-title">Gobierno logra acuerdos parciales con campesinos del Beni</div>
+<div class="top3-body">El Gobierno de Rodrigo Paz alcanzó acuerdos parciales con sectores campesinos del Beni sobre la Ley 1720 de conversión de tierras. Mientras algunas facciones levantaron las medidas tras el diálogo en Rurrenabaque, otros grupos mantienen la marcha de protesta que cumple ocho días.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">16</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_11" onclick="openModal('modal_11')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-05)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-05)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="top3-title">Presidente del Senado sufre descompensación en Tarija</div>
+<div class="top3-body">El presidente de la Cámara de Senadores sufrió una descompensación de salud durante los actos oficiales por el aniversario de Tarija. Tras ser evacuado de emergencia a un centro médico, los informes oficiales indican que la autoridad se encuentra estable y permanece bajo observación profesional.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">13</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ELECCIONES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-01)"></div>
+<div class="cat-name">ELECCIONES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-01)"></div></div>
+<div class="cat-n">37</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ELECCIONES"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">1.</span> Controversia por segunda vuelta electoral en La Paz</li><li onclick="scrollToCard('card_15'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">8.</span> Presidente respalda al TSE ante conflicto electoral</li><li onclick="scrollToCard('card_20a'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">12.</span> Inicia silencio electoral y Auto de Buen Gobierno</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">20.</span> Bloqueos en San Ignacio exigen elecciones municipales</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:81%;background:var(--c-05)"></div></div>
+<div class="cat-n">30</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">3.</span> Presidente del Senado sufre descompensación en Tarija</li><li onclick="scrollToCard('card_13c'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">7.</span> Presidente Rodrigo Paz vuela avión de combate K-8</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">11.</span> Senador denuncia hostigamiento político tras cabildo alteño</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:76%;background:var(--c-08)"></div></div>
+<div class="cat-n">28</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_16'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">2.</span> Gobierno logra acuerdos parciales con campesinos del Beni</li><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">5.</span> Transportistas bloquean carretera al occidente en Cochabamba</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:62%;background:var(--c-02)"></div></div>
+<div class="cat-n">23</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_18'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">6.</span> Designan a Eduardo Valdivia como gerente de BoA</li><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">9.</span> FMI proyecta fuerte contracción económica para Bolivia</li><li onclick="scrollToCard('card_19'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">18.</span> Bolivia reprueba en transparencia presupuestaria internacional</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ACCIDENTES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-28)"></div>
+<div class="cat-name">ACCIDENTES</div>
+<div class="cat-track"><div class="cat-fill" style="width:32%;background:var(--c-28)"></div></div>
+<div class="cat-n">12</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ACCIDENTES"><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-28); font-weight:700;">10.</span> Recuperan caja negra tras siniestro aéreo</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-28); font-weight:700;">16.</span> Camión arrolla a peatones en zona Alto Chijini</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:32%;background:var(--c-11)"></div></div>
+<div class="cat-n">12</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_4a'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">4.</span> Choferes rechazan ampliación de plazos de YPFB</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_SOCIEDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-25)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:30%;background:var(--c-25)"></div></div>
+<div class="cat-n">11</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_SOCIEDAD"><li onclick="scrollToCard('card_13b'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">14.</span> Tarija conmemora 209 años de la Batalla de La Tablada</li><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">15.</span> Alerta sanitaria por muerte de fiebre amarilla</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-21)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">13.</span> Diputados evalúan situación jurídica de exmagistrados autoprorrogados</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-18)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_20b'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">19.</span> Bolivia participa en encuentros del Banco Mundial</li><li onclick="scrollToCard('card_7a'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">21.</span> Respaldo internacional al Papa ante críticas de Trump</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:8%;background:var(--c-07)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">17.</span> Incendio de magnitud afecta ferreterías en Sucre</li></ul>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">tarija</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">25</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:91%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">senado</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:76%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">yahuasi</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:76%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">periódico digital</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:49%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">cumplimiento imposible</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">eduardo valdivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">santa cruz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">rodrigo paz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">fiebre amarilla</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Controversia por segunda vuelta electoral en La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">18</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Gobierno logra acuerdos parciales con campesinos del Beni
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:88.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">16</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Presidente del Senado sufre descompensación en Tarija
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:72.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">13</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_4a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Choferes rechazan ampliación de plazos de YPFB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:66.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">12</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Transportistas bloquean carretera al occidente en Cochabamba
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:66.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">12</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_18')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Designan a Eduardo Valdivia como gerente de BoA
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:61.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">11</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Presidente Rodrigo Paz vuela avión de combate K-8
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:55.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">10</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_15')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Presidente respalda al TSE ante conflicto electoral
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:50.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">9</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            FMI proyecta fuerte contracción económica para Bolivia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:50.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">9</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-28); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Recuperan caja negra tras siniestro aéreo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-28))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Senador denuncia hostigamiento político tras cabildo alteño
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_20a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Inicia silencio electoral y Auto de Buen Gobierno
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Diputados evalúan situación jurídica de exmagistrados autoprorrogados
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Tarija conmemora 209 años de la Batalla de La Tablada
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Alerta sanitaria por muerte de fiebre amarilla
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:27.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-28); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Camión arrolla a peatones en zona Alto Chijini
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:27.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-28))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Incendio de magnitud afecta ferreterías en Sucre
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_19')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Bolivia reprueba en transparencia presupuestaria internacional
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_20b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Bolivia participa en encuentros del Banco Mundial
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Bloqueos en San Ignacio exigen elecciones municipales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            Respaldo internacional al Papa ante críticas de Trump
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" id="card_4a" onclick="openModal('modal_4a')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Choferes rechazan ampliación de plazos de YPFB</div>
+<div class="topic-body">Mototaxistas de Santa Cruz se encadenaron en YPFB exigiendo resarcimientos por daños causados por gasolina contaminada y el incumplimiento de compromisos, mientras la estatal amplió los plazos de reclamo, medida rechazada por choferes que piden atención indefinida y verificación de calidad por parte de la UMSA.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_17" onclick="openModal('modal_17')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Transportistas bloquean carretera al occidente en Cochabamba</div>
+<div class="topic-body">Transportistas del sector libre de Cochabamba bloquean la carretera hacia el occidente, principalmente en Parotani, en rechazo a la supuesta invasión de rutas. La medida provocó que las terminales de La Paz, Oruro y El Alto suspendan las salidas de buses hacia el valle cochabambino.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_18" onclick="openModal('modal_18')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Designan a Eduardo Valdivia como gerente de BoA</div>
+<div class="topic-body">La empresa estatal Boliviana de Aviación (BoA) designó a Eduardo Valdivia como su nuevo gerente general. Valdivia, vinculado anteriormente a BAISA y LATAM, asume el cargo en sustitución de la anterior gerencia, marcando una nueva etapa de ajustes institucionales en la aerolínea bandera.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_13c" onclick="openModal('modal_13c')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Presidente Rodrigo Paz vuela avión de combate K-8</div>
+<div class="topic-body">En el aniversario de Tarija, el presidente Rodrigo Paz vuela un avión militar K-8 de la Fuerza Aérea Boliviana. Tras la experiencia, resalta el profesionalismo de la institución y establece una analogía entre pilotar una aeronave y la conducción del país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_15" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Presidente respalda al TSE ante conflicto electoral</div>
+<div class="topic-body">El presidente Rodrigo Paz manifiesta su respaldo absoluto al Tribunal Supremo Electoral (TSE) ante las críticas por el balotaje en La Paz. El mandatario insta a respetar las normas vigentes y cuestiona a los sectores que, según afirma, no quieren aceptar las reglas de juego democráticas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">FMI proyecta fuerte contracción económica para Bolivia</div>
+<div class="topic-body">El Fondo Monetario Internacional (FMI) proyecta una contracción del -3,3% para la economía boliviana en 2026. Los informes advierten sobre la continuidad de la recesión en un contexto global frágil, estimando además que la inflación en el país podría alcanzar el 20,7%.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-28)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-28)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-28)">ACCIDENTES</div>
+<div class="topic-title">Recuperan caja negra tras siniestro aéreo</div>
+<div class="topic-body">Tras el siniestro aéreo en Cochabamba, se recuperó la caja negra para su análisis en el exterior. Mientras la investigación avanza, familiares y allegados despidieron a los pilotos Carlos Moyano y Julio Sardán, en medio de homenajes y pedidos de esclarecimiento sobre las causas del accidente.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Senador denuncia hostigamiento político tras cabildo alteño</div>
+<div class="topic-body">El senador Nilton Condori denunció hostigamiento y represalias políticas en la Asamblea Legislativa tras liderar un polémico cabildo en El Alto. El legislador fue increpado por sus colegas, enfrentó intentos de expulsión de su bancada y negó haber recibido financiamiento para la movilización.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_20a" onclick="openModal('modal_20a')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Inicia silencio electoral y Auto de Buen Gobierno</div>
+<div class="topic-body">Inicia el periodo de silencio electoral y entra en vigencia el Auto de Buen Gobierno en varios departamentos del país, estableciendo restricciones normativas previas a la jornada de votación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">LEGISLATIVA</div>
+<div class="topic-title">Diputados evalúan situación jurídica de exmagistrados autoprorrogados</div>
+<div class="topic-body">Diputados evalúa la situación jurídica de exmagistrados autoprorrogados del TSJ tras recibir sus declaraciones por prevaricato. Mientras algunos comparecieron ante la comisión legislativa, otros fueron advertidos con posibles mandamientos de apremio si no se presentan a declarar.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_13b" onclick="openModal('modal_13b')" role="button" style="border-top:2px solid var(--c-25)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-25)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-25)">SOCIEDAD</div>
+<div class="topic-title">Tarija conmemora 209 años de la Batalla de La Tablada</div>
+<div class="topic-body">El departamento de Tarija conmemora el 209 aniversario de la Batalla de la Tablada con actos cívicos y la participación de autoridades, centrando los festejos en la reactivación del sector productivo, el turismo y la historia regional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-25)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-25)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-25)">SOCIEDAD</div>
+<div class="topic-title">Alerta sanitaria por muerte de fiebre amarilla</div>
+<div class="topic-body">El Servicio Departamental de Salud (Sedes) de Santa Cruz declaró alerta sanitaria y emergencia tras confirmarse el fallecimiento de un joven a causa de fiebre amarilla. Las autoridades activaron protocolos de vigilancia y respuesta ante el deceso en el departamento.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-28)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-28)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-28)">ACCIDENTES</div>
+<div class="topic-title">Camión arrolla a peatones en zona Alto Chijini</div>
+<div class="topic-body">Un camión perdió el control en la zona de Alto Chijini y la avenida 9 de Abril en La Paz, arrollando a varios peatones en la acera. El accidente dejó múltiples personas heridas y generó alarma entre los vecinos, quienes cuestionan la seguridad vial en las pendientes de la ciudad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Incendio de magnitud afecta ferreterías en Sucre</div>
+<div class="topic-body">Un incendio de magnitud registrado en la zona de Villa Armonía, en Sucre, afectó a tres ferreterías. Los bomberos trabajaron durante más de tres horas para sofocar las llamas y controlar el siniestro.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_19" onclick="openModal('modal_19')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Bolivia reprueba en transparencia presupuestaria internacional</div>
+<div class="topic-body">Bolivia obtuvo una calificación de 11 sobre 100 en la evaluación del Presupuesto Abierto 2025, lo que refleja bajos niveles de transparencia presupuestaria y rendición de cuentas según el informe internacional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_20b" onclick="openModal('modal_20b')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Bolivia participa en encuentros del Banco Mundial</div>
+<div class="topic-body">Ministros y delegados de Bolivia participan en encuentros internacionales organizados por el Banco Mundial y el BID en Estados Unidos para discutir agendas de desarrollo y financiamiento.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Bloqueos en San Ignacio exigen elecciones municipales</div>
+<div class="topic-body">Pobladores de San Ignacio de Velasco inician bloqueos de carreteras exigiendo la convocatoria a nuevas elecciones municipales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7a" onclick="openModal('modal_7a')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Respaldo internacional al Papa ante críticas de Trump</div>
+<div class="topic-body">La Iglesia Católica boliviana y líderes regionales como Lula da Silva expresan su respaldo al papa León XIV ante las críticas de Donald Trump. Los pronunciamientos rechazan la postura del mandatario estadounidense y refuerzan el apoyo internacional a la autoridad vaticana.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/gobierno-admite-que-ayudante-de-ministro-oviedo-aparece-en-el-informe-de-felcn-sobre-pagos-por-41-vuelos-en-beni-senala-que-el-caso-esta-en-investigacion/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Gobierno admite que ayudante de ministro Oviedo aparece en el informe de FELCN sobre pagos por 41 vuelos en Beni; señala que el caso está en investigación</a></div>
+<div class="emergente-sum">Involucra directamente a personal del Ministerio de Gobierno en un presunto transporte irregular de 100 millones de dólares.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/sociedad/2026/04/15/la-cob-advierte-con-medidas-de-hecho-tras-vencer-plazo-del-gobierno-para-responder-al-pliego-petitorio-59552" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">La COB advierte con “medidas de hecho” tras vencer plazo del gobierno para responder al pliego petitorio</a></div>
+<div class="emergente-sum">Representa una amenaza inminente de conflicto social y paralización a nivel nacional por parte del mayor ente sindical del país.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/sociedad/2026/04/15/red-dtv-denuncia-cierre-de-plataformas-y-asociacion-de-periodistas-alerta-de-ataque-sistematico--59553" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Red DTV denuncia cierre de plataformas y asociación de periodistas alerta de ataque sistemático</a></div>
+<div class="emergente-sum">Denuncia un ataque a la libertad de prensa y el cierre de plataformas digitales, sugiriendo un acoso sistemático a medios de comunicación.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/econom%C3%ADa/dirigente-denuncia-que-casi-el-80-del-transporte-los-yungas-est%C3%A1-paralizado-por-afectaci%C3%B3n" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Dirigente denuncia que casi el 80% del transporte a los Yungas está paralizado por afectación de la mala gasolina</a></div>
+<div class="emergente-sum">Advierte sobre una crisis de transporte y logística económica provocada por la mala calidad del combustible distribuido.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/crisis-palmasola-advierten-posible-motin-deudas-prediarios_1776284070" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Crisis en Palmasola: advierten de posible motín por deudas de prediarios</a></div>
+<div class="emergente-sum">Alerta sobre un riesgo crítico de seguridad y violencia penitenciaria en la cárcel más grande de Bolivia.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260416 · 2026-04-16</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 168 titulares · 21 temas · 10 categorías · 19 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Controversia por segunda vuelta electoral en La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Controversia por segunda vuelta electoral en La Paz</div>
+<div class="modal-sum">El TSE advirtió que una eventual tutela constitucional a favor de Yahuasi sería de cumplimiento imposible por interferir en sus atribuciones, mientras el excandidato lidera una marcha hacia La Paz para exigir segunda vuelta, en paralelo a la admisión de un amparo que definirá el futuro del balotaje.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">18</strong> titulares</span>
+<span><strong style="color:var(--c-01)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/15/tse-busca-frenar-eventual-fallo-favorable-a-yahuasi-y-advierte-que-seria-de-cumplimiento-imposible-59545" rel="noopener noreferrer" target="_blank">TSE busca frenar eventual fallo favorable a Yahuasi y advierte que sería de “cumplimiento imposible”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/politica/arteaga-advierte-que-la-tutela-a-yahuasi-de-ser-concedida-seria-de-cumplimiento-imposible.html" rel="noopener noreferrer" target="_blank">Arteaga advierte que la tutela a Yahuasi, de ser concedida, sería de “cumplimiento imposible”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/arteaga-advierte-que-si-conceden-la-tutela-yahuasi-ser%C3%ADa-de-%E2%80%9Ccumplimiento-imposible%E2%80%9D" rel="noopener noreferrer" target="_blank">Arteaga advierte que si conceden la tutela a Yahuasi sería de “cumplimiento imposible”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/tse-advierte-que-si-sala-constitucional-concede-tutela-yahuasi-seria" rel="noopener noreferrer" target="_blank">El TSE advierte que si Sala Constitucional concede la tutela a Yahuasi sería de "imposible cumplimiento"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tse-advierte-que-si-sala-constitucional-concede-la-tutela-a-yahuasi-seria-de-imposible-cumplimiento/" rel="noopener noreferrer" target="_blank">El TSE advierte que si Sala Constitucional concede la tutela a Yahuasi sería de “imposible cumplimiento”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tse-cuestiona-recurso-de-yahuasi-y-ve-que-concederle-la-tutela-seria-de-cumplimiento" rel="noopener noreferrer" target="_blank">TSE cuestiona recurso de Yahuasi y ve que concederle la tutela sería de “cumplimiento imposible”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43289-tse-si-justicia-concede-la-tutela-a-yahuasi-seria-de-cumplimiento-imposible" rel="noopener noreferrer" target="_blank">TSE: si justicia concede la tutela a Yahuasi, sería de “cumplimiento imposible”</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260415_la-paz-admiten-el-amparo-de-yahuasi.html" rel="noopener noreferrer" target="_blank">La Paz: admiten el amparo de Yahuasi</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/yahuasi-encabeza-marcha-hacia-la-paz-con-exigencia-de-segunda-vuelta-mientras-justicia-define-futuro-electoral" rel="noopener noreferrer" target="_blank">Yahuasi encabeza marcha hacia La Paz con exigencia de segunda vuelta mientras justicia define futuro electoral</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/4-dias-elecciones-parte-marcha-afines-yahuasi-pedir-segunda-vuelta_1776294280" rel="noopener noreferrer" target="_blank">A 4 días de las elecciones, parte marcha de afines a Yahuasi para pedir segunda vuelta</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/yahuasi-lidera-marcha-partio-puerto-acosta-rumbo-paz_1776276650" rel="noopener noreferrer" target="_blank">Yahuasi lidera una marcha que partió de Puerto Acosta rumbo a La Paz</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/politica/protestas-y-polemicas-decisiones-judiciales-tensionan-la-segunda-vuelta-a-dias-de-la-votacion.html" rel="noopener noreferrer" target="_blank">Protestas y polémicas decisiones judiciales tensionan la segunda vuelta a días de la votación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/a-dias-del-balotaje-yahuasi-lidera-una-marcha-para-exigir-la-contienda-en-la-paz/" rel="noopener noreferrer" target="_blank">A días del balotaje, Yahuasi lidera una marcha para exigir la contienda en La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/afines-a-yahuasi-vuelven-a-instalar-un-punto-de-vigilia-en-puertas-del-tse/" rel="noopener noreferrer" target="_blank">Afines a Yahuasi vuelven a instalar un punto de vigilia en puertas del TSE</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/habra-segunda-vuelta-en-la-paz-este-es-el-escenario-si-se-da-la-razon-yahuasi-en-audiencia" rel="noopener noreferrer" target="_blank">¿Habrá segunda vuelta en La Paz? Este es el escenario si se da la razón a Yahuasi en audiencia</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/parte-la-marcha-por-la-democracia-de-rene-yahuasi-desde-la-provincia-camacho" rel="noopener noreferrer" target="_blank">Parte la “marcha por la democracia” de René Yahuasi desde la provincia Camacho</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43276-equipo-juridico-de-rene-yahuasi-apelara-a-tres-argumentos-en-busca-de-restituir-el-balotaje-en-la-paz" rel="noopener noreferrer" target="_blank">Equipo jurídico de René Yahuasi apelará a tres argumentos en busca de restituir el balotaje en La Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43294-yahuasi-inicia-su-marcha-a-195-kilometros-de-la-paz-preve-llegar-en-seis-dias" rel="noopener noreferrer" target="_blank">Yahuasi inicia su marcha a 195 kilómetros de La Paz; prevé llegar en seis días</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="Gobierno logra acuerdos parciales con campesinos del Beni" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Gobierno logra acuerdos parciales con campesinos del Beni</div>
+<div class="modal-sum">El Gobierno de Rodrigo Paz alcanzó acuerdos parciales con sectores campesinos del Beni sobre la Ley 1720 de conversión de tierras. Mientras algunas facciones levantaron las medidas tras el diálogo en Rurrenabaque, otros grupos mantienen la marcha de protesta que cumple ocho días.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">16</strong> titulares</span>
+<span><strong style="color:var(--c-08)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ley-1720-gobierno-firma-acuerdo-sector-otro-grupo-sigue-marcha_1776273889" rel="noopener noreferrer" target="_blank">Ley 1720: Gobierno firma acuerdo con un sector y otro grupo sigue con la marcha</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-defiende-ley-1720-activa-dialogo-tecnico-pais-marchistas_1776251681" rel="noopener noreferrer" target="_blank">Paz defiende la ley 1720 y activa diálogo técnico en el país con los marchistas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-sector-campesinos-beni-sellan-acuerdo-ley-1720-levantan-medidas-presion_1776270727" rel="noopener noreferrer" target="_blank">Gobierno y un sector de campesinos del Beni sellan acuerdo por Ley 1720 y levantan medidas de presión</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/arroceros-respaldan-ley-1720-aseguran-abre-acceso-credito-pese-protestas_1776268370" rel="noopener noreferrer" target="_blank">Arroceros respaldan Ley 1720 y aseguran que abre acceso a crédito, pese a protestas</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/pais/el-dialogo-entre-el-gobierno-y-campesinos-fracasa-marcha-contra-la-ley-1720-llega-a-su-octavo-dia.html" rel="noopener noreferrer" target="_blank">El diálogo entre el Gobierno y campesinos fracasa; marcha contra la ley 1720 llega a su octavo día</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/gobierno-inicia-dialogo-con-marchistas-sobre-ley-1720/" rel="noopener noreferrer" target="_blank">Gobierno inicia diálogo con marchistas sobre Ley 1720</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_ley-1720-de-reconversion-de-tierras-ya-esta-publicada.html" rel="noopener noreferrer" target="_blank">Ley 1720 de Reconversión de Tierras ya está publicada</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_todo-sobre-la-ley-1720-que-establece-a-quien-beneficia-y-que-no-se-modifica.html" rel="noopener noreferrer" target="_blank">Todo sobre la Ley 1720: ¿Qué establece, a quién beneficia y qué no se modifica?</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/ley-1720-gobierno-logra-acuerda-con-comunidades-de-beni/" rel="noopener noreferrer" target="_blank">Ley 1720: Gobierno logra acuerda con comunidades de Beni - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/gobierno-y-una-faccion-de-campesinos-logran-acuerdo-sobre-ley-1720-la-marcha-continua/" rel="noopener noreferrer" target="_blank">Gobierno y una facción de campesinos logran acuerdo sobre Ley 1720</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/gobierno-marchistas-se-reunen-rurrenabaque-hablar-ley-1720" rel="noopener noreferrer" target="_blank">Gobierno y marchistas se reúnen en Rurrenabaque para hablar de Ley 1720</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/gobierno-sectores-campesinos-del-beni-alcanzan-acuerdo-ley-1720" rel="noopener noreferrer" target="_blank">Gobierno y sectores campesinos del Beni alcanzan acuerdo sobre la Ley 1720</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ley-1720-gobierno-y-campesinos-de-beni-logran-acuerdo-sobre-ley-de-conversion-de-pequena-propiedad-a-mediana-FG20040984" rel="noopener noreferrer" target="_blank">Ley 1720: Gobierno y campesinos de Beni logran acuerdo sobre ley de conversión de pequeña propiedad a mediana</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/fracasa-el-dialogo-entre-el-gobierno-y-campesinos-la-marcha-contra-la-ley-1720-cumple-su" rel="noopener noreferrer" target="_blank">Fracasa el diálogo entre el Gobierno y campesinos; la marcha contra la ley 1720 cumple su octavo día</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-dice-que-se-llego-acuerdos-con-los-marchistas-que-rechazan-la-ley-1720" rel="noopener noreferrer" target="_blank">Gobierno dice que se llegó a acuerdos con los marchistas que rechazan la Ley 1720</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/marcha-contra-la-ley-1720-continua-gobierno-acuerda-solo-con-dos-sectores-campesinos" rel="noopener noreferrer" target="_blank">Marcha contra la Ley 1720 continúa; Gobierno acuerda solo con dos sectores campesinos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Presidente del Senado sufre descompensación en Tarija" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Presidente del Senado sufre descompensación en Tarija</div>
+<div class="modal-sum">El presidente de la Cámara de Senadores sufrió una descompensación de salud durante los actos oficiales por el aniversario de Tarija. Tras ser evacuado de emergencia a un centro médico, los informes oficiales indican que la autoridad se encuentra estable y permanece bajo observación profesional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">13</strong> titulares</span>
+<span><strong style="color:var(--c-05)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/15/presidente-del-senado-sufre-descompensacion-en-tarija-su-salud-es-estable-59533" rel="noopener noreferrer" target="_blank">Presidente del Senado sufre descompensación en Tarija; su salud es estable</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-senado-esta-condiciones-estables-descompensacion_1776263769" rel="noopener noreferrer" target="_blank">Presidente del Senado está en “condiciones estables” tras su descompensación</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-senado-descompensa-acto-aniversario-tarija_1776255896" rel="noopener noreferrer" target="_blank">Presidente del Senado se descompensa en un acto por el aniversario de Tarija</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/pais/el-presidente-del-senado-se-recupera-y-se-encuentra-estable-tras-descompensacion-en-tarija.html" rel="noopener noreferrer" target="_blank">El Presidente del Senado se recupera y se encuentra estable tras descompensación en Tarija</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_presidente-del-senado-se-encuentra-estable-tras-descompensacion-en-acto-en-tarija.html" rel="noopener noreferrer" target="_blank">Presidente del Senado se encuentra estable tras descompensación en acto en Tarija</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/salud-del-presidente-del-senado-es-estable-y-esta-bajo-evaluacion-medica/" rel="noopener noreferrer" target="_blank">Salud del presidente del Senado es estable y está bajo evaluación médica</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/evacuan-a-presidente-del-senado-tras-descompensacion-en-actos-en-tarija/" rel="noopener noreferrer" target="_blank">Presidente del Senado se descompensa en actos en Tarija y es evacuado</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/presidente-del-senado-se-descompensa-pleno-acto-aniversario-tarija" rel="noopener noreferrer" target="_blank">El presidente del Senado se descompensa en pleno acto por el aniversario de Tarija</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/presidente-del-senado-sufrio-una-descompensacion-en-acto-por-aniversario-de-tarija-y-se-encuentra-bajo-evaluacion/" rel="noopener noreferrer" target="_blank">Presidente del Senado sufrió una descompensación en acto por aniversario de Tarija y se encuentra bajo evaluación</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/la-salud-del-presidente-del-senado-es-estable-y-esta-bajo-evaluacion-medica-KA20025960" rel="noopener noreferrer" target="_blank">La salud del presidente del Senado es “estable” y está bajo evaluación médica</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/evacuan-al-presidente-del-senado-tras-sufrir-descompensacion-en-pleno-acto-por-el-aniversario-de-tarija-MA20024495" rel="noopener noreferrer" target="_blank">Evacúan al presidente del Senado tras sufrir descompensación en pleno acto por el aniversario de Tarija</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43254-presidente-del-senado-se-descompensa-en-acto-protocolar-en-tarija-y-es-evacuado-a-un-centro-hospitalario" rel="noopener noreferrer" target="_blank">Presidente del Senado se descompensa en acto protocolar en Tarija y es evacuado a un centro hospitalario</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43271-el-presidente-del-senado-se-encuentra-estable-y-bajo-observacion-tras-una-descompensacion-en-tarija" rel="noopener noreferrer" target="_blank">El presidente del Senado se encuentra estable y bajo observación tras una descompensación en Tarija</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="Choferes rechazan ampliación de plazos de YPFB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Choferes rechazan ampliación de plazos de YPFB</div>
+<div class="modal-sum">Mototaxistas de Santa Cruz se encadenaron en YPFB exigiendo resarcimientos por daños causados por gasolina contaminada y el incumplimiento de compromisos, mientras la estatal amplió los plazos de reclamo, medida rechazada por choferes que piden atención indefinida y verificación de calidad por parte de la UMSA.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">12</strong> titulares</span>
+<span><strong style="color:var(--c-11)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/15/mototaxistas-crucenos-se-encadenan-en-puertas-de-ypfb-por-presunto-incumplimiento-59536" rel="noopener noreferrer" target="_blank">Mototaxistas cruceños se encadenan en puertas de YPFB por presunto incumplimiento</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/mototaxistas-encadenan-ypfb-denuncian-incumplimiento-compromisos-gasolina-defectuosa_1776263006" rel="noopener noreferrer" target="_blank">Mototaxistas se encadenan en YPFB y denuncian incumplimiento de compromisos por gasolina defectuosa</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/economia/mototaxistas-se-encadenan-en-oficinas-de-ypfb-en-santa-cruz-en-protesta-por-combustible.html" rel="noopener noreferrer" target="_blank">Mototaxistas se encadenan en oficinas de YPFB en Santa Cruz en protesta por combustible</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_gasolina-contaminada-mototaxistas-se-encadenan-en-puertas-de-ypfb-para-exigir-resarcimiento.html" rel="noopener noreferrer" target="_blank">Gasolina contaminada: Mototaxistas se encadenan en puertas de YPFB para exigir resarcimiento</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/15/choferes-advierten-con-movilizaciones-por-lenta-compensacion-y-falta-de-combustible-59543" rel="noopener noreferrer" target="_blank">Choferes advierten con movilizaciones por lenta compensación y falta de combustibles</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/amplian-hasta-el-15-de-mayo-solicitud-de-compensacion-por-gasolina-desestabilizada/" rel="noopener noreferrer" target="_blank">Amplían hasta el 15 de mayo solicitud de compensación por gasolina desestabilizada</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_ypfb-amplia-hasta-el-14-de-mayo-el-plazo-para-reclamos-por-la-gasolina-desestabilizada.html" rel="noopener noreferrer" target="_blank">YPFB amplía hasta el 14 de mayo el plazo para reclamos por la gasolina desestabilizada</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/15/ypfb-amplia-plazo-para-los-reclamos-por-mala-gasolina/" rel="noopener noreferrer" target="_blank">YPFB amplía plazo para los reclamos por mala gasolina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/15/choferes-exigen-compensacion-permanente-para-afectados-por-gasolina/" rel="noopener noreferrer" target="_blank">Choferes exigen compensación permanente para afectados por gasolina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/choferes-rechazan-plazos-y-exigen-que-resarcimientos-por-la-mala-gasolina-sea-de-forma-indefinida/" rel="noopener noreferrer" target="_blank">Choferes rechazan plazos y exigen que resarcimientos por la mala gasolina sea de forma indefinida</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-piden-que-la-umsa-sea-el-verificador-neutral-de-la-calidad-del-combustible" rel="noopener noreferrer" target="_blank">Choferes piden que la UMSA sea el verificador neutral de la calidad del combustible</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43275-expresidente-paz-rodrigo-casi-se-pone-a-llorar-al-no-poder-romper-contratos-por-combustible-de-mala-calidad-heredados-de-la-anterior-gestion" rel="noopener noreferrer" target="_blank">Expresidente Paz: Rodrigo “casi se pone a llorar” al no poder romper contratos por combustible de mala calidad heredados de la anterior gestión</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Transportistas bloquean carretera al occidente en Cochabamba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Transportistas bloquean carretera al occidente en Cochabamba</div>
+<div class="modal-sum">Transportistas del sector libre de Cochabamba bloquean la carretera hacia el occidente, principalmente en Parotani, en rechazo a la supuesta invasión de rutas. La medida provocó que las terminales de La Paz, Oruro y El Alto suspendan las salidas de buses hacia el valle cochabambino.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">12</strong> titulares</span>
+<span><strong style="color:var(--c-08)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/15/reportan-bloqueos-en-la-carretera-que-cochabamba-con-oruro-y-la-paz-y-en-san-ignacio-de-velasco-59532" rel="noopener noreferrer" target="_blank">Reportan bloqueos en la carretera que conecta Cochabamba con Oruro y La Paz y en San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cuarto-intermedio-medianoche-bloqueo-domestico-parotani_1776301596" rel="noopener noreferrer" target="_blank">Cuarto intermedio hasta medianoche en bloqueo doméstico de Parotani</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/transportistas-bloquean-carretera-occidente-disputa-rutas_1776268523" rel="noopener noreferrer" target="_blank">Transportistas bloquean la carretera al occidente por una disputa de rutas</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_transporte-libre-de-cochabamba-bloquea-ruta-al-occidente-por-conflicto-sectorial.html" rel="noopener noreferrer" target="_blank">Transporte Libre de Cochabamba bloquea ruta al occidente por conflicto sectorial</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/cochabamba-suspenden-salidas-a-la-paz-y-oruro/" rel="noopener noreferrer" target="_blank">Cochabamba: Suspenden salidas a La Paz y Oruro - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/transporte-libre-bloquea-ruta-cochabamba-oruro-rechazo-invasion-rutas" rel="noopener noreferrer" target="_blank">Transporte libre bloquea la ruta Cochabamba - Oruro en rechazo a "invasión" de rutas de interprovinciales</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/suspenden-horas-bloqueo-parotani" rel="noopener noreferrer" target="_blank">Suspenden por horas bloqueo en Parotani</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/via-libre-al-occidente-declaran-cuarto-intermedio-en-el-bloqueo-de-parotani-y-los-vehiculos-vuelven-a-circular-2026415174934" rel="noopener noreferrer" target="_blank">Declaran cuarto intermedio en el bloqueo de Parotani y los vehículos vuelven a circular</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/conflicto-por-rutas-parotani-vive-un-respiro-temporal-tras-12-horas-de-bloqueo-la-medida-se-retomara-a-medianoche-2026415204257" rel="noopener noreferrer" target="_blank">Parotani vive un respiro temporal tras 12 horas de bloqueo; la medida se retomará a medianoche</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bloqueo-en-parotani-choferes-denuncian-que-los-animales-transportados-sufren-con-calor-extremo-en-la-carretera-FB20036030" rel="noopener noreferrer" target="_blank">Bloqueo en Parotani: Choferes denuncian que los animales transportados sufren con calor extremo en la carretera</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/terminales-de-la-paz-el-alto-y-oruro-suspenden-viajes-a-cochabamba-por-el-bloqueo-en-parotani-MA20029335" rel="noopener noreferrer" target="_blank">Terminales de La Paz, El Alto y Oruro suspenden viajes a Cochabamba por el bloqueo en Parotani</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43264-bloqueo-de-choferes-interrumpe-el-transito-oriente-occidente-en-cochabamba-suspenden-viajes-a-oruro-y-la-paz" rel="noopener noreferrer" target="_blank">Bloqueo de choferes interrumpe el tránsito oriente-occidente; en Cochabamba suspenden viajes a Oruro y La Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_18">
+<div class="modal-backdrop" onclick="closeModal('modal_18')"></div>
+<div aria-label="Designan a Eduardo Valdivia como gerente de BoA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Designan a Eduardo Valdivia como gerente de BoA</div>
+<div class="modal-sum">La empresa estatal Boliviana de Aviación (BoA) designó a Eduardo Valdivia como su nuevo gerente general. Valdivia, vinculado anteriormente a BAISA y LATAM, asume el cargo en sustitución de la anterior gerencia, marcando una nueva etapa de ajustes institucionales en la aerolínea bandera.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">11</strong> titulares</span>
+<span><strong style="color:var(--c-02)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260415_boa-designa-a-eduardo-valdivia-como-nuevo-gerente-general.html" rel="noopener noreferrer" target="_blank">BoA designa a Eduardo Valdivia como nuevo gerente general</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/otro-alto-exdirectivo-de-bolivar-se-pone-al-frente-de-una-empresa-estatal-estrategica-primero-entel-y-ahora-boa" rel="noopener noreferrer" target="_blank">Otro alto exdirectivo de Bolívar se pone al frente de una empresa estatal estratégica; primero Entel y ahora BoA</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/boa-confirma-valdivia-nuevo-gerente-abre-nueva-etapa-relevo-inesperado_1776269470" rel="noopener noreferrer" target="_blank">BoA confirma a Valdivia como nuevo gerente y abre una nueva etapa tras relevo inesperado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/valdivia-asume-gerencia-boa-medio-ajustes-marca-relevo-estatal_1776265410" rel="noopener noreferrer" target="_blank">Valdivia asume la gerencia de BoA en medio de ajustes y marca relevo en la estatal</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/designan-a-eduardo-valdivia-como-nuevo-gerente-general-de-boa/" rel="noopener noreferrer" target="_blank">Designan a Eduardo Valdivia como nuevo gerente general de BoA - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/eduardo-valdivia-asume-gerencia-general-boa-su-paso-baisa-firma-que" rel="noopener noreferrer" target="_blank">Eduardo Valdivia asume la gerencia general de BoA tras su paso por BAISA, firma que administra el club Bolívar y LATAM</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/boa-designa-a-eduardo-valdivia-exdirigente-de-baisa-como-nuevo-gerente-general/" rel="noopener noreferrer" target="_blank">BoA designa a Eduardo Valdivia, exdirigente de BAISA, como nuevo gerente general</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/eduardo-valdivia-asume-la-gerencia-general-de-boliviana-de-aviacion-bo-a" rel="noopener noreferrer" target="_blank">Eduardo Valdivia asume la gerencia general de Boliviana de Aviación (BoA)</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/eduardo-valdivia-figura-como-nuevo-gerente-general-de-boa-DA20022634" rel="noopener noreferrer" target="_blank">Eduardo Valdivia figura como nuevo gerente general de BoA</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/boa-cambia-a-su-gerente-sube-a-14-su-flota-de-aviones-y-alista-nuevas-rutas-PA20028106" rel="noopener noreferrer" target="_blank">BoA cambia a su gerente, sube a 14 su flota de aviones y alista nuevas rutas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43282-eduardo-valdivia-es-designado-como-nuevo-gerente-general-de-la-estatal-boa" rel="noopener noreferrer" target="_blank">Eduardo Valdivia es designado como nuevo gerente general de la estatal BoA</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13c">
+<div class="modal-backdrop" onclick="closeModal('modal_13c')"></div>
+<div aria-label="Presidente Rodrigo Paz vuela avión de combate K-8" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Presidente Rodrigo Paz vuela avión de combate K-8</div>
+<div class="modal-sum">En el aniversario de Tarija, el presidente Rodrigo Paz vuela un avión militar K-8 de la Fuerza Aérea Boliviana. Tras la experiencia, resalta el profesionalismo de la institución y establece una analogía entre pilotar una aeronave y la conducción del país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">10</strong> titulares</span>
+<span><strong style="color:var(--c-05)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/rodrigo-paz-celebra-aniversario-de-tarija-con-sobrevuelo-militar/" rel="noopener noreferrer" target="_blank">Rodrigo Paz celebra aniversario de Tarija con sobrevuelo militar - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rodrigo-paz-viste-uniforme-y-realiza-sobrevuelo-en-aeronave-k-8-en-tarija-2026415123113" rel="noopener noreferrer" target="_blank">Rodrigo Paz viste uniforme y realiza sobrevuelo en aeronave K-8, en Tarija (fotos)</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/rodrigo-paz-se-viste-de-piloto-y-sobrevuela-tarija-en-un-k8-nada-es-comparable-con-ver-la-patria-desde-los-cielos-NB20034339" rel="noopener noreferrer" target="_blank">Rodrigo Paz se viste de piloto y sobrevuela Tarija en un K8: “Nada es comparable con ver la patria desde los cielos”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/nada-se-compara-con-ver-la-patria-desde-los-cielos-paz-realiza-su-primer-sobrevuelo-en" rel="noopener noreferrer" target="_blank">“Nada se compara con ver a la patria desde los cielos”: Paz realiza su primer sobrevuelo en Tarija</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/15/paz-vuela-en-un-avion-militar-de-combate-en-aniversario-de-tarija-59546" rel="noopener noreferrer" target="_blank">Paz vuela en un avión militar de combate en aniversario de Tarija</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-compara-conduccion-pais-pilotar-avion-vuelo-k-8_1776282244" rel="noopener noreferrer" target="_blank">Paz compara la conducción del país con pilotar un avión tras vuelo en un K-8</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/pais/paz-sobrevuela-tarija-en-aeronave-k-8-de-las-fuerzas-armadas.html" rel="noopener noreferrer" target="_blank">Paz sobrevuela Tarija en aeronave K-8 de las Fuerzas Armadas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/paz-vuela-tarija-avion-k-8-fab" rel="noopener noreferrer" target="_blank">Paz vuela sobre Tarija en un avión K-8 de la FAB</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-destaca-profesionalismo-de-la-fuerza-aerea-tras-sobrevuelo-en-aeronave-k-8-en-tarija/" rel="noopener noreferrer" target="_blank">Paz destaca profesionalismo de la Fuerza Aérea tras sobrevuelo en aeronave K-8 en Tarija</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-es-nombrado-miembro-honorario-de-la-fuerza-aerea-boliviana-en-tarija-2026415124336" rel="noopener noreferrer" target="_blank">Presidente es nombrado miembro honorario de la Fuerza Aérea Boliviana en Tarija</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="Presidente respalda al TSE ante conflicto electoral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Presidente respalda al TSE ante conflicto electoral</div>
+<div class="modal-sum">El presidente Rodrigo Paz manifiesta su respaldo absoluto al Tribunal Supremo Electoral (TSE) ante las críticas por el balotaje en La Paz. El mandatario insta a respetar las normas vigentes y cuestiona a los sectores que, según afirma, no quieren aceptar las reglas de juego democráticas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">9</strong> titulares</span>
+<span><strong style="color:var(--c-01)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/15/segunda-vuelta-paz-asegura-que-hay-gente-que-no-quiere-jugar-con-las-reglas-claras-59534" rel="noopener noreferrer" target="_blank">Segunda vuelta: Paz asegura que “hay gente que no quiere jugar con las reglas claras”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/hay-gente-que-no-quiere-jugar-con-las-reglas-claras-y-eso-ya-no-es-un-problema-de-la-ley-o-el-tribunal/" rel="noopener noreferrer" target="_blank">“Hay gente que no quiere jugar con las reglas claras y eso ya no es un problema de la ley o el tribunal”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/hay-gente-no-quiere-jugar-reglas-claras-paz-ratifica-respaldo-tse_1776262853" rel="noopener noreferrer" target="_blank">“Hay gente que no quiere jugar con reglas claras”: Paz ratifica su respaldo al TSE</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/politica/paz-respalda-el-trabajo-del-tse-en-las-subnacionales-hay-gente-que-no-quiere-jugar-con-las-reglas-claras.html" rel="noopener noreferrer" target="_blank">Paz respalda el trabajo del TSE en las subnacionales: “Hay gente que no quiere jugar con las reglas claras”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_paz-expresa-su-respaldo-absoluto-al-tse-ante-polemica-por-segunda-vuelta-en-la-paz.html" rel="noopener noreferrer" target="_blank">Paz expresa su “respaldo absoluto” al TSE ante polémica por segunda vuelta en La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/paz-pide-respetar-las-reglas-tras-freno-judicial-en-la-paz-al-tse/" rel="noopener noreferrer" target="_blank">Paz pide ‘respetar las reglas’ tras freno judicial en La Paz al TSE</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-ratifica-su-respaldo-al-tse-y-dice-que-hay-gente-que-no-quiere-jugar-con-las-reglas-claras/" rel="noopener noreferrer" target="_blank">Paz ratifica su respaldo al TSE y dice que “hay gente que no quiere jugar con las reglas claras”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/rodrigo-paz-al-presidente-del-tse-felicidades-por-su-firme-vision-de-sacar-la-democracia-adelante-BD20016135" rel="noopener noreferrer" target="_blank">Rodrigo Paz al presidente del TSE: “Felicidades por su firme visión de sacar la democracia adelante”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/balotaje-paz-destaca-labor-de-avila-en-el-tse-y-critica-quienes-no-entienden-las-reglas-del" rel="noopener noreferrer" target="_blank">Balotaje: Paz destaca labor de Ávila en el TSE y critica a quienes “no entienden las reglas del juego”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="FMI proyecta fuerte contracción económica para Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">FMI proyecta fuerte contracción económica para Bolivia</div>
+<div class="modal-sum">El Fondo Monetario Internacional (FMI) proyecta una contracción del -3,3% para la economía boliviana en 2026. Los informes advierten sobre la continuidad de la recesión en un contexto global frágil, estimando además que la inflación en el país podría alcanzar el 20,7%.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">9</strong> titulares</span>
+<span><strong style="color:var(--c-02)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260415_el-fmi-proyecta-contraccion-de-3-3-en-bolivia.html" rel="noopener noreferrer" target="_blank">El FMI proyecta contracción de -3,3% en Bolivia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/fmi-proyecta-contraccion-economia-bolivia-escenario-global-fragil_1776252509" rel="noopener noreferrer" target="_blank">FMI proyecta contracción de la economía en Bolivia en un escenario global “frágil”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/fmi-advierte-menor-crecimiento-global-guerra-medio-oriente-riesgos-economias-emergentes_1776289985" rel="noopener noreferrer" target="_blank">FMI advierte menor crecimiento global por guerra en Medio Oriente y riesgos para economías emergentes</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/la-recesion-de-la-economia-boliviana-continuara-con-33-para-este-2026/" rel="noopener noreferrer" target="_blank">La recesión de la economía boliviana continuará con -3,3% para este 2026</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_fmi-tiene-el-peor-pronostico-para-la-economia-de-bolivia.html" rel="noopener noreferrer" target="_blank">FMI tiene el peor pronóstico para la economía de Bolivia</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/15/economia-tendra-una-caida-del-33-el-2026-y-la-inflacion-llegara-al-207/" rel="noopener noreferrer" target="_blank">Economía tendrá una caída del 3,3% el 2026 y la inflación llegará al 20,7%</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260415/fmi-proyecta-que-bolivia-tendra-2026-decrecimiento-su-producto-interno" rel="noopener noreferrer" target="_blank">FMI proyecta que Bolivia tendrá en 2026 un decrecimiento de su Producto Interno Bruto de -3,3%</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/informe-del-fmi-samuel-espera-que-aumento-del-desempleo-no-se-traduzca" rel="noopener noreferrer" target="_blank">Tras informe del FMI, Samuel espera que el aumento del desempleo "no se traduzca en conflicto político"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/tras-informe-del-fmi-samuel-espera-que-el-aumento-del-desempleo-no-se-traduzca-en-conflicto-politico/" rel="noopener noreferrer" target="_blank">Tras informe del FMI, Samuel espera que el aumento del desempleo “no se traduzca en conflicto político”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Recuperan caja negra tras siniestro aéreo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-28)">ACCIDENTES</div>
+<div class="modal-title">Recuperan caja negra tras siniestro aéreo</div>
+<div class="modal-sum">Tras el siniestro aéreo en Cochabamba, se recuperó la caja negra para su análisis en el exterior. Mientras la investigación avanza, familiares y allegados despidieron a los pilotos Carlos Moyano y Julio Sardán, en medio de homenajes y pedidos de esclarecimiento sobre las causas del accidente.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-28)">7</strong> titulares</span>
+<span><strong style="color:var(--c-28)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/recuperan-caja-negra-del-avion-siniestrado-en-cochabamba-y-sera-enviada-al-exterior-para-su-analisis/" rel="noopener noreferrer" target="_blank">Recuperan caja negra del avión siniestrado en Cochabamba y será enviada al exterior para su análisis</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tragedia-aerea-dan-el-ultimo-adios-a-los-pilotos-carlos-moyano-y-julio-sardan-amistades-exigen-investigar-el-accidente/" rel="noopener noreferrer" target="_blank">Tragedia aérea: dan el último adiós a los pilotos Carlos Moyano y Julio Sardan; amistades exigen investigar el accidente</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/recuperan-caja-negra-avion-siniestrado-remiten-exterior-analisis_1776254137" rel="noopener noreferrer" target="_blank">Recuperan la caja negra del avión siniestrado y la remiten al exterior para su análisis</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_copiloto-del-cessna-era-sucrense-parte-de-una-familia-de-aviadores.html" rel="noopener noreferrer" target="_blank">Copiloto del Cessna era sucrense, parte de una familia de aviadores</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/15/recuperan-la-caja-negra-de-aeronave-siniestrada/" rel="noopener noreferrer" target="_blank">Recuperan la caja negra de aeronave siniestrada</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260415/hallan-caja-negra-avion-siniestrado-esperan-analisis-hoy-sepultan" rel="noopener noreferrer" target="_blank">Hallan caja negra de avión siniestrado y esperan análisis; hoy sepultan a pilotos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/dan-el-ultimo-adios-a-los-pilotos-fallecidos-en-accidente-aereo-las-investigaciones-siguen-en-curso-AB20031991" rel="noopener noreferrer" target="_blank">Dan el último adiós a los pilotos fallecidos en accidente aéreo; las investigaciones siguen en curso</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Senador denuncia hostigamiento político tras cabildo alteño" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Senador denuncia hostigamiento político tras cabildo alteño</div>
+<div class="modal-sum">El senador Nilton Condori denunció hostigamiento y represalias políticas en la Asamblea Legislativa tras liderar un polémico cabildo en El Alto. El legislador fue increpado por sus colegas, enfrentó intentos de expulsión de su bancada y negó haber recibido financiamiento para la movilización.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">7</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/nilton-condori-denuncia-represalias-no-me-dejan-sesionar-me-asedian-trataran-de-apresarme-es-lo-malo-cuando-se-revela-contra-esta-elite-ociosa-me-tratan-de-ignorante/" rel="noopener noreferrer" target="_blank">Nilton Condori denuncia represalias: “No me dejan sesionar, me asedian, tratarán de apresarme, es lo malo cuando se revela contra esta élite ociosa, me tratan de IGNORANTE”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gritos-insultos-increpan-senador-nilton-condori-asamblea-polemico-cabildo_1776284601" rel="noopener noreferrer" target="_blank">Entre gritos e insultos, increpan al senador Nilton Condori en la Asamblea tras polémico cabildo</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/cuestionan-financiacion-de-cabildo-en-el-alto/" rel="noopener noreferrer" target="_blank">Cuestionan financiación de cabildo en El Alto</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/senador-condori-defiende-cabildo-en-el-alto-tras-dias-de-criticas/" rel="noopener noreferrer" target="_blank">Senador Condori defiende cabildo en El Alto tras días de críticas - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/nilton-condori-es-increpado-en-la-asamblea-por-liderar-un-cabildo-en-el-alto/" rel="noopener noreferrer" target="_blank">Nilton Condori es increpado en la Asamblea por liderar un cabildo en El Alto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43270-el-senador-condori-niega-financiamiento-al-cabildo-no-se-recogio-dinero-ni-nada" rel="noopener noreferrer" target="_blank">El senador Condori niega financiamiento al cabildo: “no se recogió dinero ni nada”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43283-senador-condori-denuncia-que-no-le-dejan-sesionar-a-pesar-de-que-le-habilitan-como-suplente-y-se-queja-porque-unidad-le-expulso" rel="noopener noreferrer" target="_blank">Senador Condori denuncia que no le dejan sesionar, a pesar de que le habilitan como suplente y se queja porque Unidad le expulsó</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_20a">
+<div class="modal-backdrop" onclick="closeModal('modal_20a')"></div>
+<div aria-label="Inicia silencio electoral y Auto de Buen Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Inicia silencio electoral y Auto de Buen Gobierno</div>
+<div class="modal-sum">Inicia el periodo de silencio electoral y entra en vigencia el Auto de Buen Gobierno en varios departamentos del país, estableciendo restricciones normativas previas a la jornada de votación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">7</strong> titulares</span>
+<span><strong style="color:var(--c-01)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/15/rigen-restricciones-y-silencio-electoral-rumbo-al-balotaje-en-cinco-departamentos-59557" rel="noopener noreferrer" target="_blank">Rigen restricciones y silencio electoral rumbo al balotaje en cinco departamentos</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/decreto-de-auto-de-buen-gobierno-entra-en-vigencia-este-jueves/" rel="noopener noreferrer" target="_blank">Decreto de Auto de Buen Gobierno entra en vigencia este jueves - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/el-silencio-electoral-en-cinco-departamentos-inicia-este-jueves/" rel="noopener noreferrer" target="_blank">El silencio electoral en cinco departamentos inicia este jueves - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/inicia-silencio-electoral-en-oruro-desde-este-jueves/" rel="noopener noreferrer" target="_blank">Inicia silencio electoral en Oruro desde este jueves - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/desde-el-jueves-rige-silencio-electoral-en-rumbo-al-balotaje/" rel="noopener noreferrer" target="_blank">Desde el jueves rige silencio electoral en rumbo al balotaje</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/campanas-rumbo-al-balotaje-se-cierran-hoy-cinco-departamentos" rel="noopener noreferrer" target="_blank">Las campañas rumbo al balotaje se cierran hoy en cinco departamentos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/tse-declara-silencio-electoral-desde-este-jueves-y-establece-restricciones-para-la-segunda-vuelta-subnacional/" rel="noopener noreferrer" target="_blank">TSE declara silencio electoral desde este jueves y establece restricciones para la segunda vuelta subnacional</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Diputados evalúan situación jurídica de exmagistrados autoprorrogados" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Diputados evalúan situación jurídica de exmagistrados autoprorrogados</div>
+<div class="modal-sum">Diputados evalúa la situación jurídica de exmagistrados autoprorrogados del TSJ tras recibir sus declaraciones por prevaricato. Mientras algunos comparecieron ante la comisión legislativa, otros fueron advertidos con posibles mandamientos de apremio si no se presentan a declarar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">6</strong> titulares</span>
+<span><strong style="color:var(--c-21)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/comite-de-diputados-aun-evalua-situacion-juridica-de-exmagistrados-autoprorrogados-del-organo-judicial" rel="noopener noreferrer" target="_blank">Comité de Diputados aún evalúa situación jurídica de exmagistrados autoprorrogados del Órgano Judicial</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tres-exmagistrados-autoprorrogados-declaran-por-prevaricato-y-otros-do-faltan-a-citacion-advierten-posible-apremio/" rel="noopener noreferrer" target="_blank">Tres exmagistrados autoprorrogados declaran por prevaricato y otros do faltan a citación; advierten posible apremio</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/diputados-definira-futuro-exmagistrados-autoprorrogados-dispondra-si-corresponde-juicio-responsabilidades_1776307877" rel="noopener noreferrer" target="_blank">Diputados definirá el futuro de exmagistrados autoprorrogados y dispondrá si corresponde juicio de responsabilidades</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/exmagistrados-del-tsj-declaran-ante-comision-legislativa-por-denuncias-de-prevaricato/" rel="noopener noreferrer" target="_blank">Exmagistrados del TSJ declaran ante comisión legislativa por denuncias de prevaricato</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputados-senalan-que-comite-recibio-declaraciones-de-tres-exmagistrados-prorrogados-del-tsj-EG20044198" rel="noopener noreferrer" target="_blank">Diputados señalan que comité recibió declaraciones de tres exmagistrados prorrogados del TSJ</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/15/43300-comite-en-diputados-recaba-declaraciones-de-exmagistrados-autoprorrogados-del-tsj" rel="noopener noreferrer" target="_blank">Comité en Diputados recaba declaraciones de exmagistrados autoprorrogados del TSJ</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13b">
+<div class="modal-backdrop" onclick="closeModal('modal_13b')"></div>
+<div aria-label="Tarija conmemora 209 años de la Batalla de La Tablada" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Tarija conmemora 209 años de la Batalla de La Tablada</div>
+<div class="modal-sum">El departamento de Tarija conmemora el 209 aniversario de la Batalla de la Tablada con actos cívicos y la participación de autoridades, centrando los festejos en la reactivación del sector productivo, el turismo y la historia regional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">6</strong> titulares</span>
+<span><strong style="color:var(--c-25)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tarija-celebra-209-aniversario-apuesta-fijada-turismo-sector-productivo_1776277737" rel="noopener noreferrer" target="_blank">Tarija celebra su 209 aniversario con una apuesta fijada en el turismo y el sector productivo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/tarija-concentra-1-6-millones-hectareas-potencial-productivo-agropecuario_1776282875" rel="noopener noreferrer" target="_blank">Tarija concentra más de 1,6 millones de hectáreas con potencial productivo agropecuario</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/pais/209-anos-de-la-batalla-de-la-tablada-tarija-revive-su-historia-con-una-emotiva-celebracion.html" rel="noopener noreferrer" target="_blank">209 años de la Batalla de la Tablada: Tarija revive su historia con una emotiva celebración</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/tarija-ahora-busca-generar-energia-para-exportacion/" rel="noopener noreferrer" target="_blank">Tarija ahora busca generar energía para exportación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/con-presencia-de-autoridades-tarija-conmemora-209-anos-de-batalla-de-la-tablada/" rel="noopener noreferrer" target="_blank">Con presencia de autoridades, Tarija conmemora 209 años de Batalla de La Tablada</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-homenaje-de-urgente-bo-tarija-los-vinos-y-singanis-trazan-su-futuro" rel="noopener noreferrer" target="_blank">El homenaje de Urgente.bo a Tarija: los vinos y singanis trazan su futuro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Alerta sanitaria por muerte de fiebre amarilla" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Alerta sanitaria por muerte de fiebre amarilla</div>
+<div class="modal-sum">El Servicio Departamental de Salud (Sedes) de Santa Cruz declaró alerta sanitaria y emergencia tras confirmarse el fallecimiento de un joven a causa de fiebre amarilla. Las autoridades activaron protocolos de vigilancia y respuesta ante el deceso en el departamento.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">5</strong> titulares</span>
+<span><strong style="color:var(--c-25)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/15/sedes-cruceno-declara-alerta-sanitaria-por-fiebre-amarilla-tras-confirmarse-una-muerte--59538" rel="noopener noreferrer" target="_blank">Sedes cruceño declara alerta sanitaria por fiebre amarilla tras confirmarse una muerte por esa enfermedad</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_santa-cruz-muere-un-joven-por-fiebre-amarilla-y-sedes-activa-emergencia.html" rel="noopener noreferrer" target="_blank">Santa Cruz: Muere un joven por fiebre amarilla y Sedes activa emergencia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/04/15/santa-cruz-en-alerta-sanitaria-tras-un-deceso-por-fiebre-amarilla/" rel="noopener noreferrer" target="_blank">Santa Cruz activa alerta sanitaria tras un deceso por fiebre amarilla</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260415/confirman-fallecido-fiebre-amarilla-declaran-alerta-sanitaria-santa-cruz" rel="noopener noreferrer" target="_blank">Confirman un fallecido por fiebre amarilla y declaran alerta sanitaria en Santa Cruz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/santa-cruz-joven-muere-por-fiebre-amarilla-y-declaran-emergencia-de-salud-publica" rel="noopener noreferrer" target="_blank">Santa Cruz: Joven muere por fiebre amarilla y declaran emergencia de salud pública</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Camión arrolla a peatones en zona Alto Chijini" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-28)">ACCIDENTES</div>
+<div class="modal-title">Camión arrolla a peatones en zona Alto Chijini</div>
+<div class="modal-sum">Un camión perdió el control en la zona de Alto Chijini y la avenida 9 de Abril en La Paz, arrollando a varios peatones en la acera. El accidente dejó múltiples personas heridas y generó alarma entre los vecinos, quienes cuestionan la seguridad vial en las pendientes de la ciudad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-28)">5</strong> titulares</span>
+<span><strong style="color:var(--c-28)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/camion-sube-acera-arrolla-cuatro-peatones-paz_1776300779" rel="noopener noreferrer" target="_blank">Camión se sube a la acera y arrolla a cuatro peatones en La Paz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/15/accidentes-de-transito-dejan-muertos-y-heridos-en-la-paz/" rel="noopener noreferrer" target="_blank">Accidentes de tránsito dejan muertos y heridos en La Paz</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/una-nina-sobrevive-tras-ser-rescatada-de-debajo-del-camion-que-la-atropello-BG20045576" rel="noopener noreferrer" target="_blank">Una niña sobrevive tras ser rescatada de debajo del camión que la atropelló</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/grave-accidente-en-la-paz-camion-pierde-el-control-y-atropella-a-cinco-personas-en-la-avenida-9-de-abril-JG20041091" rel="noopener noreferrer" target="_blank">Grave accidente en La Paz: Camión pierde el control y atropella a cinco personas en la avenida 9 de Abril</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/accidente-en-alto-chijini-camion-atropello-cuatro-personas" rel="noopener noreferrer" target="_blank">Accidente en Alto Chijini: Camión atropelló a cuatro personas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Incendio de magnitud afecta ferreterías en Sucre" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Incendio de magnitud afecta ferreterías en Sucre</div>
+<div class="modal-sum">Un incendio de magnitud registrado en la zona de Villa Armonía, en Sucre, afectó a tres ferreterías. Los bomberos trabajaron durante más de tres horas para sofocar las llamas y controlar el siniestro.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/incendio-consume-tres-ferreterias-en-villa-armonia-sucre-bomberos-trabajan-por-mas-de-tres-horas-para-controlar-el-fuego/" rel="noopener noreferrer" target="_blank">Incendio consume tres ferreterías en Villa Armonía, Sucre; bomberos trabajan por más de tres horas para controlar el fuego</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/sucre-voraz-incendio-afecta-a-ferreterias-en-villa-armonia-DG20041893" rel="noopener noreferrer" target="_blank">Sucre: Voraz incendio afecta a ferreterías en Villa Armonía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/incendio-consume-tres-ferreterias-en-sucre-tardaron-mas-de-tres-horas-en-sofocar-el-fuego" rel="noopener noreferrer" target="_blank">Incendio consume tres ferreterías en Sucre; tardaron más de tres horas en sofocar el fuego</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_19">
+<div class="modal-backdrop" onclick="closeModal('modal_19')"></div>
+<div aria-label="Bolivia reprueba en transparencia presupuestaria internacional" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Bolivia reprueba en transparencia presupuestaria internacional</div>
+<div class="modal-sum">Bolivia obtuvo una calificación de 11 sobre 100 en la evaluación del Presupuesto Abierto 2025, lo que refleja bajos niveles de transparencia presupuestaria y rendición de cuentas según el informe internacional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_19')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bolivia-reprueba-en-transparencia-obtiene-11-100-en-presupuesto-abierto-2025" rel="noopener noreferrer" target="_blank">Bolivia reprueba en transparencia: obtiene 11/100 en Presupuesto Abierto 2025</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bolivia-reprueba-transparencia-presupuestaria-mantiene-11-100_1776279122" rel="noopener noreferrer" target="_blank">Bolivia reprueba en transparencia presupuestaria y se mantiene con 11 sobre 100</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/economia/bolivia-se-mantiene-con-baja-transparencia-presupuestaria-obtiene-11-100-en-evaluacion-internacional.html" rel="noopener noreferrer" target="_blank">Bolivia se mantiene con baja transparencia presupuestaria: obtiene 11/100 en evaluación internacional</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_20b">
+<div class="modal-backdrop" onclick="closeModal('modal_20b')"></div>
+<div aria-label="Bolivia participa en encuentros del Banco Mundial" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Bolivia participa en encuentros del Banco Mundial</div>
+<div class="modal-sum">Ministros y delegados de Bolivia participan en encuentros internacionales organizados por el Banco Mundial y el BID en Estados Unidos para discutir agendas de desarrollo y financiamiento.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">3</strong> titulares</span>
+<span><strong style="color:var(--c-18)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/dinero-negocios/bolivia-participa-en-encuentros-clave-del-banco-mundial-y-del-bid/" rel="noopener noreferrer" target="_blank">Bolivia participa en encuentros clave del Banco Mundial y del BID - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ministros-de-bolivia-participan-en-encuentros-del-banco-mundial-y-del-bid-en-eeuu-NG20040814" rel="noopener noreferrer" target="_blank">Ministros de Bolivia participan en encuentros del Banco Mundial y del BID en EEUU</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/bolivia-participa-en-encuentro-internacional-del-banco-mundial-y-el-bid-en-eeuu" rel="noopener noreferrer" target="_blank">Bolivia participa en encuentro internacional del Banco Mundial y el BID en EEUU</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Bloqueos en San Ignacio exigen elecciones municipales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Bloqueos en San Ignacio exigen elecciones municipales</div>
+<div class="modal-sum">Pobladores de San Ignacio de Velasco inician bloqueos de carreteras exigiendo la convocatoria a nuevas elecciones municipales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">3</strong> titulares</span>
+<span><strong style="color:var(--c-01)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-15/politica/bloqueo-en-san-ignacio-de-velasco-como-protesta-por-la-convocatoria-de-nuevas-elecciones-municipales.html" rel="noopener noreferrer" target="_blank">Bloqueo en San Ignacio de Velasco como protesta por la convocatoria de nuevas elecciones municipales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/15/pobladores-de-san-ignacio-de-velasco-activan-bloqueo-y-piden-nuevas-elecciones/" rel="noopener noreferrer" target="_blank">Pobladores de San Ignacio de Velasco activan bloqueo y piden nuevas elecciones</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/bloquean-en-san-ignacio-de-velasco-para-exigir-que-se-realicen-nuevas-elecciones-municipales-IA20023685" rel="noopener noreferrer" target="_blank">Bloquean en San Ignacio de Velasco para exigir que se realicen nuevas elecciones municipales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="Respaldo internacional al Papa ante críticas de Trump" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Respaldo internacional al Papa ante críticas de Trump</div>
+<div class="modal-sum">La Iglesia Católica boliviana y líderes regionales como Lula da Silva expresan su respaldo al papa León XIV ante las críticas de Donald Trump. Los pronunciamientos rechazan la postura del mandatario estadounidense y refuerzan el apoyo internacional a la autoridad vaticana.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">3</strong> titulares</span>
+<span><strong style="color:var(--c-18)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/el-papa-leon-xiv-suma-respaldo-internacional-ante-nuevas-criticas-del-gobierno-de-trump" rel="noopener noreferrer" target="_blank">El papa León XIV suma respaldo internacional ante nuevas críticas del Gobierno de Trump</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/lula-se-solidariza-con-leon-xiv-y-afea-a-trump-por-creerse-una-divinidad" rel="noopener noreferrer" target="_blank">Lula se solidariza con León XIV y afea a Trump por creerse una "divinidad"</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260415_conferencia-episcopal-de-bolivia-expresa-respaldo-al-papa-frente-a-criticas-de-trump.html" rel="noopener noreferrer" target="_blank">Conferencia Episcopal de Bolivia expresa respaldo al Papa frente a críticas de Trump</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+</body>
+</html>
