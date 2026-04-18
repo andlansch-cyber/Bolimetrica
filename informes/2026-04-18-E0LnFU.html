@@ -1,0 +1,2617 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260418</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<meta content="Bolimétrica · 2026-04-18" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-04-18-E0LnFU.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">219</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">30</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">9</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">20</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 18-ABRIL-2026</strong><br/>
+        Reporte N° B24-20260418<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_15a" onclick="openModal('modal_15a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-21)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-21)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="top3-title">Suspenden interpelación a ministro por falta quórum</div>
+<div class="top3-body">El vicepresidente Edmand Lara suspendió la sesión de interpelación al ministro de Economía, Espinoza, por falta de quórum en la Asamblea Legislativa. Ante la inasistencia de la mayoría de los senadores y del propio ministro, Lara anunció que se pedirán informes para sancionar a los ausentes.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">25</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">15</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_16" onclick="openModal('modal_16')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-21)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-21)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="top3-title">Ministro solicita interpelación sobre lucha contra narcotráfico</div>
+<div class="top3-body">El ministro de Gobierno, Oviedo, pidió ser interpelado ante la Asamblea para informar sobre la lucha contra el narcotráfico y desafió a Edmand Lara a convocar la sesión, mientras legisladores también impulsan su interpelación en medio del caso “Maletas” y órdenes de aprehensión contra policías implicados.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">25</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_13" onclick="openModal('modal_13')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-01)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-01)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="top3-title">Ratifican a Luis Revilla como gobernador electo</div>
+<div class="top3-body">El Tribunal Supremo Electoral y la Sala Constitucional ratificaron a Luis Revilla como gobernador electo de La Paz, tras desestimar recursos legales y acciones populares que demandaban una segunda vuelta o la anulación de las elecciones subnacionales.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">23</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-01)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ELECCIONES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-01)"></div>
+<div class="cat-name">ELECCIONES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-01)"></div></div>
+<div class="cat-n">56</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ELECCIONES"><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">3.</span> Ratifican a Luis Revilla como gobernador electo</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">7.</span> Rechazan recursos legales de candidato René Yahuasi</li><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">10.</span> Luis Revilla solicita inicio de transición administrativa</li><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">11.</span> Organización Evo Pueblo cambia nombre a E-Pueblo</li><li onclick="scrollToCard('card_N011'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">13.</span> Entrega de credenciales a nuevas autoridades electas</li><li onclick="scrollToCard('card_N005'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">20.</span> Descartan repetición de elecciones en San Ignacio</li><li onclick="scrollToCard('card_5a'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">30.</span> Suspensión de vuelos nacionales por balotaje electoral</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:89%;background:var(--c-21)"></div></div>
+<div class="cat-n">50</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_15a'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">1.</span> Suspenden interpelación a ministro por falta quórum</li><li onclick="scrollToCard('card_16'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">2.</span> Ministro solicita interpelación sobre lucha contra narcotráfico</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:46%;background:var(--c-02)"></div></div>
+<div class="cat-n">26</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">6.</span> Reducción de deuda externa boliviana en 2026</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">8.</span> Nuevo récord del dólar referencial del BCB</li><li onclick="scrollToCard('card_5b'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">17.</span> Reinicio de vuelos nacionales de la empresa TAMep</li><li onclick="scrollToCard('card_N010'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">28.</span> Modificación de productos en el subsidio prenatal</li><li onclick="scrollToCard('card_N013'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">29.</span> Análisis de Puerto Busch para salida soberana</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:46%;background:var(--c-08)"></div></div>
+<div class="cat-n">26</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">4.</span> Choferes denuncian gasolina de mala calidad</li><li onclick="scrollToCard('card_N006'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">22.</span> Campesinos mantienen marcha tras ruptura de diálogo</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">23.</span> Fracasa diálogo por abrogación de Ley 1720</li><li onclick="scrollToCard('card_N007'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">25.</span> COB ratifica cabildo nacional para mayo</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:45%;background:var(--c-10)"></div></div>
+<div class="cat-n">25</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">12.</span> Capturan a sentenciada prófuga en fiesta patronal</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">14.</span> Sentencia máxima por feminicidio de Odalys Vaquiata</li><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">15.</span> Investigación por accidente de avión de la FAB</li><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">16.</span> Niegan libertad a exdiputada en caso Maletas</li><li onclick="scrollToCard('card_N004'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">21.</span> Conflictos judiciales por fallo sobre Mercado Mutualista</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:29%;background:var(--c-18)"></div></div>
+<div class="cat-n">16</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">5.</span> Retorno de bolivianos expulsados desde Chile</li><li onclick="scrollToCard('card_N002'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">18.</span> Acuerdo de cooperación en salud con Estados Unidos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-05)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_N003'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">19.</span> Primera Dama inicia difusión de labor social</li><li onclick="scrollToCard('card_N008'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">26.</span> Iglesia insta a la protección de familias</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-07)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">9.</span> Investigación de presunto feminicidio en La Paz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MEDIO_AMBIENTE')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">MEDIO AMBIENTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-15)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MEDIO_AMBIENTE"><li onclick="scrollToCard('card_18b'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">24.</span> Bolivia destacada entre lugares más bellos del mundo</li><li onclick="scrollToCard('card_N009'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">27.</span> Inundaciones en Beni obligan a suspender clases</li></ul>
+</div></div>
+</div>
+<div class="freq-table-card">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">ministro</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">36</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:90%"></div>
+</div>
+</td>
+<td class="freq-count">31</td>
+</tr>
+<tr>
+<td class="freq-word">revilla</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:59%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">caso maletas</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:54%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">lara suspende</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">dólar referencial</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">sala constitucional</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">acción popular</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">periódico digital</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">deuda externa</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_15a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Suspenden interpelación a ministro por falta quórum
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">25</div>
+</div>
+<div class="chart-medios">15 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Ministro solicita interpelación sobre lucha contra narcotráfico
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">25</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Ratifican a Luis Revilla como gobernador electo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:92.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">23</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Choferes denuncian gasolina de mala calidad
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:60.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">15</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Retorno de bolivianos expulsados desde Chile
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:48.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">12</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Reducción de deuda externa boliviana en 2026
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:36.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">9</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Rechazan recursos legales de candidato René Yahuasi
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:32.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">8</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Nuevo récord del dólar referencial del BCB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Investigación de presunto feminicidio en La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Luis Revilla solicita inicio de transición administrativa
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Organización Evo Pueblo cambia nombre a E-Pueblo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Capturan a sentenciada prófuga en fiesta patronal
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N011')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Entrega de credenciales a nuevas autoridades electas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Sentencia máxima por feminicidio de Odalys Vaquiata
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Investigación por accidente de avión de la FAB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Niegan libertad a exdiputada en caso Maletas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Reinicio de vuelos nacionales de la empresa TAMep
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N002')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Acuerdo de cooperación en salud con Estados Unidos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N003')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Primera Dama inicia difusión de labor social
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N005')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Descartan repetición de elecciones en San Ignacio
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N004')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            Conflictos judiciales por fallo sobre Mercado Mutualista
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N006')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">22.</span>
+            Campesinos mantienen marcha tras ruptura de diálogo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">23.</span>
+            Fracasa diálogo por abrogación de Ley 1720
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_18b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">24.</span>
+            Bolivia destacada entre lugares más bellos del mundo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N007')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">25.</span>
+            COB ratifica cabildo nacional para mayo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N008')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">26.</span>
+            Iglesia insta a la protección de familias
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N009')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">27.</span>
+            Inundaciones en Beni obligan a suspender clases
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N010')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">28.</span>
+            Modificación de productos en el subsidio prenatal
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N013')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">29.</span>
+            Análisis de Puerto Busch para salida soberana
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">30.</span>
+            Suspensión de vuelos nacionales por balotaje electoral
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label">Todos los temas</div>
+<div class="topics-grid"><div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Choferes denuncian gasolina de mala calidad</div>
+<div class="topic-body">Choferes de La Paz abandonaron el diálogo con el Gobierno ante la ausencia de ministros y denunciaron la distribución de gasolina de mala calidad. El sector inició vigilias en Senkata y la Fiscalía abrió una investigación fiscal por el combustible irregular que habría provocado daños en motores.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>15</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_17" onclick="openModal('modal_17')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Retorno de bolivianos expulsados desde Chile</div>
+<div class="topic-body">El Gobierno de Bolivia activó un operativo en el aeropuerto de Viru Viru para recibir a 17 ciudadanos bolivianos expulsados de Chile. La Cancillería informó que el retorno incluye controles sanitarios y migratorios, y que algunos de los repatriados enfrentan procesos judiciales en el país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Reducción de deuda externa boliviana en 2026</div>
+<div class="topic-body">Bolivia cerró el primer trimestre de 2026 con una deuda externa de 13.430 millones de dólares, equivalente al 24,3% del PIB. Según el Banco Central, esto representa una reducción de 701 millones respecto a inicios de año, destacando a China y organismos multilaterales como principales acreedores.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Rechazan recursos legales de candidato René Yahuasi</div>
+<div class="topic-body">La justicia boliviana rechazó los recursos legales de René Yahuasi, incluyendo una acción popular y un amparo constitucional, ratificando la declinación de su candidatura. Mientras Yahuasi denuncia parcialidad y mantiene movilizaciones, se despeja el camino para la transición en La Paz.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Nuevo récord del dólar referencial del BCB</div>
+<div class="topic-body">El dólar referencial del Banco Central de Bolivia (BCB) alcanzó este viernes una cotización de Bs 9,63 para la venta, marcando su valor más alto desde que entró en vigencia. El nuevo récord genera preocupación por su posible impacto inflacionario y la presión sobre la economía familiar.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Investigación de presunto feminicidio en La Paz</div>
+<div class="topic-body">Las autoridades en La Paz y El Alto investigan un presunto feminicidio tras el hallazgo del cuerpo de una mujer dentro de una bolsa de yute en estado de descomposición. La Fuerza Especial de Lucha Contra la Violencia (FELCV) activó los protocolos para identificar a la víctima y esclarecer el hecho.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Luis Revilla solicita inicio de transición administrativa</div>
+<div class="topic-body">El gobernador electo de La Paz, Luis Revilla, solicitó formalmente a Santos Quispe fijar fecha y hora para iniciar el proceso de transición administrativa. El pedido se produce tras la confirmación de su victoria electoral y el rechazo judicial de los recursos interpuestos por sus detractores.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_14" onclick="openModal('modal_14')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Organización Evo Pueblo cambia nombre a E-Pueblo</div>
+<div class="topic-body">La organización política Evo Pueblo modificó su nombre a “E-Pueblo” para cumplir con las observaciones del Tribunal Supremo Electoral y obtener su personería jurídica, al tiempo que denunció demoras injustificadas por parte del ente electoral en el proceso de registro.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Capturan a sentenciada prófuga en fiesta patronal</div>
+<div class="topic-body">Una mujer que se encontraba prófuga tras ser sentenciada por el asesinato de su pareja fue capturada por la policía mientras bailaba morenada en una fiesta junto a un juez de sentencia; el suceso ha generado cuestionamientos sobre el vínculo de la sentenciada con la autoridad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N011" onclick="openModal('modal_N011')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Entrega de credenciales a nuevas autoridades electas</div>
+<div class="topic-body">El TSE ultima detalles para la segunda vuelta electoral del domingo y prevé resultados preliminares a partir de las 19:00. Se estima que más de 5.000 autoridades electas en los comicios subnacionales recibirán credenciales para asumir funciones el 4 de mayo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Sentencia máxima por feminicidio de Odalys Vaquiata</div>
+<div class="topic-body">La justicia boliviana sentenció a 30 años de prisión sin derecho a indulto a Joel Pérez por el feminicidio de Odalys Vaquiata. La condena máxima fue dictada tras el proceso judicial por la desaparición y muerte de la joven, un caso que generó gran conmoción en el país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6a" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigación por accidente de avión de la FAB</div>
+<div class="topic-body">La Fiscalía investiga el accidente de un avión de la Fuerza Aérea Boliviana (FAB) en El Alto; se han tomado declaraciones a altos mandos militares y se garantiza el resarcimiento de daños, mientras que una de las víctimas del siniestro ya fue dada de alta hospitalaria.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6b" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Niegan libertad a exdiputada en caso Maletas</div>
+<div class="topic-body">La justicia boliviana denegó la solicitud de libertad de la exdiputada Laura Rojas, imputada en el denominado 'caso Maletas'; el juez determinó que persisten los riesgos procesales y de fuga, por lo que la exautoridad deberá continuar bajo detención preventiva.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5b" onclick="openModal('modal_5b')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Reinicio de vuelos nacionales de la empresa TAMep</div>
+<div class="topic-body">La empresa TAMep anunció el reinicio de sus vuelos nacionales en el país, restableciendo oficialmente las conexiones aéreas entre las ciudades de La Paz, Cochabamba, Santa Cruz y Cobija tras retomar sus operaciones comerciales habituales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N002" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Acuerdo de cooperación en salud con Estados Unidos</div>
+<div class="topic-body">Bolivia y Estados Unidos firman un acuerdo de cooperación por 10 millones de dólares destinados al sector salud.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N003" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Primera Dama inicia difusión de labor social</div>
+<div class="topic-body">La Primera Dama, Bibi Urquidi, debuta en redes sociales para difundir su labor social y agenda oficial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N005" onclick="openModal('modal_N005')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Descartan repetición de elecciones en San Ignacio</div>
+<div class="topic-body">El Tribunal Supremo Electoral descarta repetir las elecciones municipales en San Ignacio de Velasco y da por cerrado el proceso.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N004" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Conflictos judiciales por fallo sobre Mercado Mutualista</div>
+<div class="topic-body">El presidente Paz califica de tremendo el caso del Mercado Mutualista mientras persisten conflictos judiciales sobre el fallo del TCP.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N006" onclick="openModal('modal_N006')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Campesinos mantienen marcha tras ruptura de diálogo</div>
+<div class="topic-body">Se rompe el diálogo entre campesinos y Gobierno, manteniendo la marcha hacia La Paz en demanda de la abrogación de la Ley 157.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">23</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Fracasa diálogo por abrogación de Ley 1720</div>
+<div class="topic-body">El diálogo entre el Gobierno y los sectores que marchan exigiendo la abrogación de la Ley 1720 fracasó en Collana pese al intento de mediación de la Defensoría del Pueblo; los movilizados mantienen sus medidas de presión denunciando intereses políticos y falta de acuerdos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_18b" onclick="openModal('modal_18b')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">24</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="topic-title">Bolivia destacada entre lugares más bellos del mundo</div>
+<div class="topic-body">Bolivia ha sido destacada en ránkings internacionales como uno de los 51 lugares más bellos del mundo, resaltando su valor paisajístico y atractivo turístico a nivel global.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N007" onclick="openModal('modal_N007')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">25</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">COB ratifica cabildo nacional para mayo</div>
+<div class="topic-body">La COB ratifica la realización de un cabildo nacional en El Alto para el 1 de mayo con una agenda de 11 temas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N008" onclick="openModal('modal_N008')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">26</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Iglesia insta a la protección de familias</div>
+<div class="topic-body">La Conferencia Episcopal Boliviana insta a la protección de la familia frente a ataques en múltiples dimensiones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N009" onclick="openModal('modal_N009')" role="button" style="border-top:2px solid var(--c-15)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-15)">27</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="topic-title">Inundaciones en Beni obligan a suspender clases</div>
+<div class="topic-body">Inundaciones en Beni obligan a la suspensión de clases en seis unidades educativas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N010" onclick="openModal('modal_N010')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">28</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Modificación de productos en el subsidio prenatal</div>
+<div class="topic-body">El Sedem modifica el subsidio prenatal 2026 excluyendo el 90% de productos ultraprocesados para priorizar granos y semillas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N013" onclick="openModal('modal_N013')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">29</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Análisis de Puerto Busch para salida soberana</div>
+<div class="topic-body">El Gobierno boliviano analiza el potencial de Puerto Busch para consolidar una salida soberana hacia el Océano Atlántico.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5a" onclick="openModal('modal_5a')" role="button" style="border-top:2px solid var(--c-01)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-01)">30</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-01)">ELECCIONES</div>
+<div class="topic-title">Suspensión de vuelos nacionales por balotaje electoral</div>
+<div class="topic-body">El Aeropuerto Internacional de Viru Viru operará exclusivamente para vuelos internacionales este domingo debido a la realización del balotaje electoral; por consiguiente, todos los vuelos nacionales han sido suspendidos para la jornada de votación de la segunda vuelta.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/politica/legisladores-afines-al-presidente-rodrigo-paz-piden-cambiar-al-menos-a-cinco-ministros" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Legisladores afines al presidente Rodrigo Paz piden cambiar al menos a cinco ministros</a></div>
+<div class="emergente-sum">Indica una fractura o crisis interna en el bloque de apoyo al presidente Paz con solicitudes de cambios ministeriales.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/politica/diputado-afirma-que-ajustes-al-acuerdo-entre-ypfb-y-trafigura-reflejan-presunto-sobreprecio-en-compra-de-crudo" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Diputado afirma que ajustes al acuerdo entre YPFB y Trafigura reflejan presunto sobreprecio en compra de crudo</a></div>
+<div class="emergente-sum">Revela posibles irregularidades de corrupción y sobreprecio en la gestión de hidrocarburos vinculando a YPFB.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/general-zuniga-juzgado-cochabamba-caso-2012_1776477603" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">General Zúñiga es juzgado, en Cochabamba, por un caso de 2012</a></div>
+<div class="emergente-sum">Proceso judicial relevante contra una figura militar de alto perfil por hechos del pasado.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.lostiempos.com/actualidad/pais/20260417/samuel-afirma-que-cantidad-divisas-reservas-es-ridicula-no-permitira" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Samuel afirma que la cantidad de divisas en las reservas es "ridícula" y no permitirá modificar el tipo de cambio</a></div>
+<div class="emergente-sum">Análisis crítico de la oposición sobre la fragilidad de las reservas internacionales y su impacto en el tipo de cambio.</div>
+<div class="emergente-source">Fuente: Los Tiempos</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260418 · 2026-04-18</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 219 titulares · 30 temas · 9 categorías · 20 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_15a">
+<div class="modal-backdrop" onclick="closeModal('modal_15a')"></div>
+<div aria-label="Suspenden interpelación a ministro por falta quórum" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Suspenden interpelación a ministro por falta quórum</div>
+<div class="modal-sum">El vicepresidente Edmand Lara suspendió la sesión de interpelación al ministro de Economía, Espinoza, por falta de quórum en la Asamblea Legislativa. Ante la inasistencia de la mayoría de los senadores y del propio ministro, Lara anunció que se pedirán informes para sancionar a los ausentes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">25</strong> titulares</span>
+<span><strong style="color:var(--c-21)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260417_lara-llama-a-interpelacion-contra-espinoza.html" rel="noopener noreferrer" target="_blank">Lara llama a interpelación contra Espinoza</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260417_por-falta-de-quorum-lara-suspende-la-interpelacion-a-espinoza-y-pide-informes-para-sancionar-a-los-ausentes.html" rel="noopener noreferrer" target="_blank">Por falta de quorum, Lara suspende la interpelación a Espinoza y pide informes para sancionar a los ausentes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/por-falta-de-quorum-lara-suspende-sesion-convocada-para-interpelar-a-espinoza-59607" rel="noopener noreferrer" target="_blank">Por falta de quorum, Lara suspende sesión convocada para interpelar a Espinoza</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/vicepresidencia-asegura-que-tramito-con-anticipacion-el-proceso-para-interpelar-a-espinoza-59602" rel="noopener noreferrer" target="_blank">Vicepresidencia asegura que tramitó con anticipación el proceso para interpelar a Espinoza</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/diputada-critica-falta-de-quorum-en-senadores-durante-la-interpelacion-al-ministro-de-economia.html" rel="noopener noreferrer" target="_blank">Diputada critica falta de quórum en Senadores durante la interpelación al ministro de Economía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/lara-suspende-interpelacion-al-ministro-espinoza-por-falta-de-quorum.html" rel="noopener noreferrer" target="_blank">Lara suspende interpelación al ministro Espinoza por falta de quórum</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/no-hay-quorum-en-la-asamblea-para-la-interpelacion-al-ministro-de-economia.html" rel="noopener noreferrer" target="_blank">No hay quórum en la Asamblea para la interpelación al Ministro de Economía</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/lara-suspende-interpelacion-ministro-economia-falta-quorum-parlamentario_1776439099" rel="noopener noreferrer" target="_blank">Lara suspende interpelación al Ministro de Economía por falta de quórum parlamentario</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/lara-suspende-interpelacion-no-hubo-quorum-ni-presencia-del-ministro-cuestionado.html" rel="noopener noreferrer" target="_blank">Lara suspende interpelación: no hubo quórum ni presencia del ministro cuestionado</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_se-suspende-interpelacion-por-falta-de-quorum-e-inasistencia-del-ministro-de-economia.html" rel="noopener noreferrer" target="_blank">Se suspende interpelación por falta de quórum e inasistencia del ministro de Economía</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/suspenden-sesion-de-la-asamblea-por-falta-de-quorum-asistieron-siete-senadores/" rel="noopener noreferrer" target="_blank">Suspenden sesión de la Asamblea por falta de quórum, asistieron siete senadores</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-alp-no-alcanza-el-quorum-y-suspende-la-interpelacion-al-ministro-de-economia-lara-advierte-sanciones/" rel="noopener noreferrer" target="_blank">La ALP no alcanza el quórum y suspende la interpelación al Ministro de Economía; Lara advierte sanciones</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/ausencia-de-legisladores-y-del-ministro-de-economia-paraliza-la-labor-parlamentaria-en-la-asamblea-legislativa" rel="noopener noreferrer" target="_blank">Ausencia de legisladores y del ministro de Economía paraliza la labor parlamentaria en la Asamblea Legislativa</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-suspende-sesion-de-interpelacion-por-falta-de-quorum-y-ausencia-de-espinoza" rel="noopener noreferrer" target="_blank">Lara suspende sesión de interpelación por falta de quórum y ausencia de Espinoza</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43506-mayoria-de-senadores-no-asiste-y-lara-suspende-sesion-del-legislativo-para-interpelar-al-ministro-espinoza" rel="noopener noreferrer" target="_blank">Mayoría de senadores no asiste y Lara suspende sesión del Legislativo para interpelar al ministro Espinoza</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/senado-denuncia-que-falta-de-coordinacion-de-lara-impidio-instalar-sesion-en-la-asamblea-59616" rel="noopener noreferrer" target="_blank">Senado denuncia que falta de coordinación de Lara impidió instalar sesión en la Asamblea</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/acusan-a-libre-y-lara-por-interpelaciones-sin-sentido/" rel="noopener noreferrer" target="_blank">Acusan a Libre y Lara por interpelaciones “sin sentido”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/lara-le-genera-gastos-innecesarios-a-la-alp/" rel="noopener noreferrer" target="_blank">Lara le genera gastos innecesarios a la ALP</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/presidencia-del-senado-acusa-lara-de-%E2%80%9Cfalta-de-previsi%C3%B3n%E2%80%9D-e-incumplir-sus-obligaciones" rel="noopener noreferrer" target="_blank">Presidencia del Senado acusa a Lara de “falta de previsión” e incumplir sus obligaciones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/senado-observa-a-lara-por-falta-de-prevision-y-fallas-en-su-funciones/" rel="noopener noreferrer" target="_blank">Senado observa a Lara por falta de previsión y fallas en sus funciones</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/ministro-espinoza-expondra-vision-de-bolivia-sobre-economia-global/" rel="noopener noreferrer" target="_blank">Ministro Espinoza expondrá visión de Bolivia sobre economía global</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/suspenden-interpelacion-a-ministro-de-economia-jose-espinoza/" rel="noopener noreferrer" target="_blank">Suspenden interpelación a Ministro de Economia José Espinoza - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/suspension-de-interpelacion-al-ministro-de-economia-divide-la-alp/" rel="noopener noreferrer" target="_blank">Suspensión de interpelación al ministro de Economía divide la ALP - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/senadora-tomasa-yarhui-pide-reprogramar-interpelacion-al-ministro-de-economia-tras-su-inasistencia" rel="noopener noreferrer" target="_blank">Senadora tomasa yarhui pide reprogramar interpelación al ministro de economía tras su inasistencia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/legisladores-dicen-que-interpelaciones-a-ministros-de-economia-e-hidrocarburos-se-realizaran-la-proxima-semana-GL20092756" rel="noopener noreferrer" target="_blank">Legisladores dicen que interpelaciones a ministros de Economía e Hidrocarburos se realizarán la próxima semana</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="Ministro solicita interpelación sobre lucha contra narcotráfico" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Ministro solicita interpelación sobre lucha contra narcotráfico</div>
+<div class="modal-sum">El ministro de Gobierno, Oviedo, pidió ser interpelado ante la Asamblea para informar sobre la lucha contra el narcotráfico y desafió a Edmand Lara a convocar la sesión, mientras legisladores también impulsan su interpelación en medio del caso “Maletas” y órdenes de aprehensión contra policías implicados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">25</strong> titulares</span>
+<span><strong style="color:var(--c-21)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/ministro-oviedo-desafia-al-vicepresidente-lara-a-que-convoque-una-sesion-para-interpelarlo" rel="noopener noreferrer" target="_blank">Ministro Oviedo desafía al vicepresidente Lara a que convoque una sesión para interpelarlo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/17/ministro-oviedo-pide-ser-interpelado-en-la-alp-para-informar-sobre-la-lucha-antidrogas-59627" rel="noopener noreferrer" target="_blank">Ministro Oviedo pide ser interpelado en la ALP para informar sobre la lucha contra el narcotráfico</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/min-oviedo-envia-carta-a-edmand-lara-y-exige-ser-convocado-a-interpelacion-ante-el-pleno-de-alp/" rel="noopener noreferrer" target="_blank">Caso Maletas y otros: Min. Oviedo envía carta a Edmand Lara y exige ser convocado a interpelación ante el pleno de ALP</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-oviedo-solicita-interpele-asamblea-legislativa-plurinacional_1776462054" rel="noopener noreferrer" target="_blank">Ministro Oviedo solicita que se lo interpele en la Asamblea Legislativa Plurinacional</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/ministro-de-gobierno-pide-ser-interpelado-sobre-la-lucha-antidrogas-y-solicita-a-lara-priorizar-el-tema.html" rel="noopener noreferrer" target="_blank">Ministro de Gobierno pide ser interpelado sobre la lucha antidrogas y solicita a Lara priorizar el tema</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/ministro-de-gobierno-pide-ser-interpelado-y-hace-la-solicitud-urgente-lara" rel="noopener noreferrer" target="_blank">Ministro de Gobierno pide ser interpelado y hace la solicitud urgente a Lara</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/ministro-oviedo-solicita-a-lara-ser-interpelado-en-la-asamblea/" rel="noopener noreferrer" target="_blank">Ministro Oviedo solicita a Lara ser interpelado en la Asamblea</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/ministro-gobierno-pide-lara-que-interpelen" rel="noopener noreferrer" target="_blank">Ministro de Gobierno pide a Lara que lo interpelen</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ministro-de-gobierno-pide-ser-interpelado-por-la-alp-con-caracter-de-urgencia/" rel="noopener noreferrer" target="_blank">Ministro de Gobierno pide ser interpelado por la ALP “con carácter de urgencia”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ministro-oviedo-solicito-a-la-asamblea-que-lo-convoque-para-su-interpelacion-2026417173453" rel="noopener noreferrer" target="_blank">Ministro Oviedo solicitó a la Asamblea que lo convoque para su interpelación</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/ministro-de-gobierno-pide-a-lara-ser-convocado-a-una-interpelacion-sobre-la-lucha-contra-el-narcotrafico-LL20095592" rel="noopener noreferrer" target="_blank">Ministro de Gobierno pide a Lara ser convocado a una interpelación sobre la lucha contra el narcotráfico</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ministro-oviedo-manda-carta-lara-para-pedir-ser-interpelado-sobre-la-lucha-contra-el-narco" rel="noopener noreferrer" target="_blank">Ministro Oviedo manda carta a Lara para pedir ser interpelado sobre la lucha contra el narco</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ante-las-criticas-de-la-oposicion-oviedo-pide-ser-interpelado-por-el-narcotrafico" rel="noopener noreferrer" target="_blank">Ante las críticas de la oposición, Oviedo pide ser interpelado por el narcotráfico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43578-oviedo-desafia-a-la-asamblea-legislativa-a-ser-convocado-a-una-interpelacion-sobre-la-lucha-contra-el-narcotrafico" rel="noopener noreferrer" target="_blank">Oviedo desafía a la Asamblea Legislativa a ser convocado a una interpelación sobre la lucha contra el narcotráfico</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ministro-oviedo-tendria-que-aclarar-situacion-no-se-tiene-que-ocultar-nada-el-no-es-nuevo-en-la-politica-fue-parte-del-gobierno-de-jaime-paz/" rel="noopener noreferrer" target="_blank">“Ministro (Oviedo) tendría que aclarar situación, no se tiene que ocultar nada, él no es nuevo en la política fue parte del gobierno de Jaime Paz”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/solicitaremos-un-pliego-interpelatorio-el-ministro-oviedo-debera-responder-a-las-preguntas-ante-la-alp/" rel="noopener noreferrer" target="_blank">“Solicitaremos un pliego interpelatorio; el ministro Oviedo deberá responder a las preguntas ante la ALP”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-maletas-mientras-se-esconda-informacion-son-y-hay-y-van-a-haber-responsables-con-nombre-y-apellido-y-van-a-tener-que-aclarar/" rel="noopener noreferrer" target="_blank">Caso Maletas: “Mientras se esconda información son y hay y van a haber responsables con nombre y apellido y van a tener que aclarar”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-maletas-tte-manzaneda-ya-declaro-como-testigo-cap-rodriguez-ya-fue-citado-pero-solicito-suspension-por-enfermedad/" rel="noopener noreferrer" target="_blank">Caso “Maletas”: “Tte. Manzaneda ya declaró como TESTIGO; Cap. Rodriguez ya fue citado, pero solicitó suspensión por enfermedad”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/emiten-orden-de-aprehension-contra-el-exedecan-del-ministro-oviedo-no-reporto-el-caso-maletas/" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra el exedecán del ministro Oviedo; no reportó el caso maletas</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/paz-pongase-las-pilas-y-apriete-a-su-min-de-gobierno-esclarezca-esto-caso-maletas-en-otros-paises-min-oviedo-ya-deberia-estar-fuera-y-preso/" rel="noopener noreferrer" target="_blank">“Paz, póngase las pilas y apriete a su min. de Gobierno; esclarezca esto (caso maletas). En otros países, min. (Oviedo) ya debería estar fuera y preso”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-maletas-se-tomaron-tantos-dias-para-intentar-armar-la-novela-estoy-segura-que-nos-van-a-seguir-sacando-fasciculos-de-novela-de-condorito/" rel="noopener noreferrer" target="_blank">Caso maletas; “se tomaron tantos días para intentar armar la novela, estoy segura que nos van a seguir sacando fascículos de novela de Condorito”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/emiten-orden-aprehension-capitan-no-reporto-caso-maletas_1776446301" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra el capitán que no reportó el caso maletas</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/libre-pide-la-interpelacion-del-ministro-oviedo-por-el-caso-maletas.html" rel="noopener noreferrer" target="_blank">Libre pide la interpelación del ministro Oviedo por el caso maletas</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/preparan-interpelacion-a-ministro-oviedo-por-caso-maletas/" rel="noopener noreferrer" target="_blank">Preparan interpelación a ministro Oviedo por caso maletas - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/libre-impulsa-interpelacion-a-ministro-de-gobierno-por-el-caso-maletas/" rel="noopener noreferrer" target="_blank">Libre impulsa interpelación a ministro de Gobierno por el caso ‘maletas’</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Ratifican a Luis Revilla como gobernador electo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Ratifican a Luis Revilla como gobernador electo</div>
+<div class="modal-sum">El Tribunal Supremo Electoral y la Sala Constitucional ratificaron a Luis Revilla como gobernador electo de La Paz, tras desestimar recursos legales y acciones populares que demandaban una segunda vuelta o la anulación de las elecciones subnacionales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">23</strong> titulares</span>
+<span><strong style="color:var(--c-01)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260417_descartan-balotaje-en-la-paz-tse-esta-satisfecho.html" rel="noopener noreferrer" target="_blank">Descartan balotaje en La Paz: TSE está satisfecho</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/justicia-de-la-paz-trata-este-viernes-otro-recurso-que-busca-el-balotaje-en-el-departamento-59605" rel="noopener noreferrer" target="_blank">Justicia de La Paz trata este viernes otro recurso que busca el balotaje en el departamento</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/justicia-descarta-balotaje-y-legitima-a-revilla-con-20.html" rel="noopener noreferrer" target="_blank">Justicia descarta balotaje y legitima a Revilla con 20%</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/para-evo-la-paz-tendra-un-gobernador-de-facto.html" rel="noopener noreferrer" target="_blank">Para Evo, “La Paz tendrá un gobernador de facto”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/sala-constitucional-deniega-accion-popular-que-pedia-segunda-vuelta-en-la-paz.html" rel="noopener noreferrer" target="_blank">Sala Constitucional deniega acción popular que pedía segunda vuelta en La Paz</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/tse-no-hay-segunda-vuelta-en-la-paz-se-proclamara-como-gobernador-a-revilla.html" rel="noopener noreferrer" target="_blank">TSE: No hay segunda vuelta en La Paz; se proclamará como gobernador a Revilla</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/un-nuevo-recurso-intenta-revertir-la-suspension-de-la-segunda-vuelta-en-la-paz.html" rel="noopener noreferrer" target="_blank">Un nuevo recurso intenta revertir la suspensión de la segunda vuelta en La Paz</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tse-cierra-debate-en-la-paz-descarta-segunda-vuelta-y-ratifica-a-luis-revilla-como-gobernador-electo/" rel="noopener noreferrer" target="_blank">TSE cierra debate en La Paz; descarta segunda vuelta y ratifica a Luis Revilla como gobernador electo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tuve-voto-disidente-vocal-goitia-confirma-revilla-recibira-credencial-28-abril_1776430969" rel="noopener noreferrer" target="_blank">“Tuve voto disidente”: Vocal Goitia confirma que Revilla recibirá su credencial el 28 de abril</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/luis-revilla-gobernador-electo-de-la-paz-el-tse-emite-su-confirmacion-oficial.html" rel="noopener noreferrer" target="_blank">Luis Revilla, gobernador electo de La Paz: El TSE emite su confirmación oficial</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/sala-constitucional-confirma-que-el-tse-cumplio-la-norma/" rel="noopener noreferrer" target="_blank">Sala Constitucional confirma que el TSE cumplió la norma</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/17/la-paz-sala-constitucional-ratifica-triunfo-de-revilla/" rel="noopener noreferrer" target="_blank">La Paz: Sala Constitucional ratifica triunfo de Revilla</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/tras-fallo-legisladores-piden-priorizar-gestion-por-la-paz/" rel="noopener noreferrer" target="_blank">Tras fallo: Legisladores piden priorizar gestión por La Paz - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/tse-ratifica-revilla-es-gobernador-electo-de-la-paz-y-recibira-su-credencial/" rel="noopener noreferrer" target="_blank">TSE ratifica: Revilla es gobernador electo de La Paz y recibirá su credencial</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/tse-confirma-entrega-credenciales-descarta-segunda-vuelta-paz" rel="noopener noreferrer" target="_blank">TSE confirma entrega de credenciales y descarta segunda vuelta en La Paz</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/sala-constitucional-rechaza-accion-popular-2a-vuelta-paz" rel="noopener noreferrer" target="_blank">Sala Constitucional rechaza acción popular para 2ª vuelta en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/presidente-del-tse-ratifica-que-no-habra-segunda-vuelta-en-la-paz-y-proclama-a-luis-revilla-como-gobernador/" rel="noopener noreferrer" target="_blank">Presidente del TSE ratifica que no habrá segunda vuelta en La Paz y proclama a Luis Revilla como Gobernador</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/sala-constitucional-vuelve-a-fallar-a-favor-del-tse-y-deniega-accion-popular-que-pedia-el-balotaje-en-la-paz/" rel="noopener noreferrer" target="_blank">Sala Constitucional vuelve a fallar a favor del TSE y deniega Acción Popular que pedía el balotaje en La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/un-nuevo-recurso-pide-anular-las-elecciones-de-marzo-y-convocar-otras-para-definir-sobre-la" rel="noopener noreferrer" target="_blank">Un nuevo recurso pide anular las elecciones de marzo y convocar a otras para definir sobre la gobernación paceña</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/luis-revilla-tendra-una-asamblea-dispersa-y-el-reto-de-construir-legitimidad" rel="noopener noreferrer" target="_blank">Luis Revilla tendrá una Asamblea dispersa y el reto de construir legitimidad</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/hay-dos-acciones-sobre-las-elecciones-subnacionales-en-la-paz" rel="noopener noreferrer" target="_blank">Hay dos acciones sobre las elecciones subnacionales en La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/sala-constitucional-rechaza-la-accion-popular-que-pedia-nuevas-elecciones-subnacionales" rel="noopener noreferrer" target="_blank">Sala Constitucional rechaza la acción popular que pedía nuevas elecciones subnacionales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43575-la-sala-constitucional-deniega-amparo-para-pedir-nuevas-elecciones-subnacionales" rel="noopener noreferrer" target="_blank">La Sala Constitucional deniega amparo para pedir nuevas elecciones subnacionales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Choferes denuncian gasolina de mala calidad" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Choferes denuncian gasolina de mala calidad</div>
+<div class="modal-sum">Choferes de La Paz abandonaron el diálogo con el Gobierno ante la ausencia de ministros y denunciaron la distribución de gasolina de mala calidad. El sector inició vigilias en Senkata y la Fiscalía abrió una investigación fiscal por el combustible irregular que habría provocado daños en motores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">15</strong> titulares</span>
+<span><strong style="color:var(--c-08)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/17/choferes-denuncian-llegada-de-combustible-irregular-y-abandonan-reunion-por-ausencia-del-ministro--59634" rel="noopener noreferrer" target="_blank">Choferes denuncian llegada de combustible irregular y abandonan reunión por ausencia del ministro</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260417/gasolina-contaminada-transporte-rompe-dialogo-con-el-gobierno-y-anuncia-vigilia-en-senkata.html" rel="noopener noreferrer" target="_blank">Gasolina contaminada: Transporte rompe diálogo con el Gobierno y anuncia vigilia en Senkata</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/k4raj0-por-que-no-investigan-las-maletas-y-la-gasolina-basura-condori-llama-a-luchar-contra-corruptos-y-ladrones/" rel="noopener noreferrer" target="_blank">“K4RAJ0, ¿por qué no investigan las maletas y la gasolina basura?”: Condori llama a luchar contra “corruptos” y “ladrones”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/combustible-basura-y-motores-danados-inicia-investigacion-fiscal-tras-denuncia-de-la-diputada-lissa-claros/" rel="noopener noreferrer" target="_blank">Combustible basura y motores dañados: Inicia investigación fiscal tras denuncia de la diputada Lissa Claros</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/mas-de-6-300-vehiculos-recibieron-pago-por-gasolina-desestabilizada-2/" rel="noopener noreferrer" target="_blank">Más de 6.300 vehículos recibieron pago por gasolina desestabilizada</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/sector-transporte-abandona-reunion-por-la-ausencia-de-autoridades/" rel="noopener noreferrer" target="_blank">Sector transporte abandona reunión por la ausencia de autoridades - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/17/choferes-denuncian-que-20-cisternas-llegaron-a-la-paz-con-gasolina-de-mala-calidad/" rel="noopener noreferrer" target="_blank">Choferes denuncian que 20 cisternas llegaron a La Paz con gasolina de ‘mala calidad’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/fiscalia-admite-denuncia-contra-medinaceli-calidad-gasolina-anuncia-libre" rel="noopener noreferrer" target="_blank">Fiscalía admite la denuncia contra Medinaceli por la calidad de la gasolina, anuncia Libre</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/choferes-de-la-paz-se-retiran-de-reunion-por-ausencia-de-ministros-y-denuncian-sigue-la-mala-calidad-de-la-gasolina/" rel="noopener noreferrer" target="_blank">Choferes de La Paz se retiran de reunión por ausencia de ministros y denuncian sigue la mala calidad de la gasolina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputada-de-libre-dice-que-la-fiscalia-admitio-denuncia-contra-medinaceli-por-la-gasolina-y-contratos-GF20076220" rel="noopener noreferrer" target="_blank">Diputada de Libre dice que la Fiscalía admitió denuncia contra Medinaceli por la gasolina y contratos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/cisternas-que-estuvieron-paradas-afuera-de-la-refineria-de-cochabamba-fueron-trasladadas-a-la-planta-de-senkata-OL20090439" rel="noopener noreferrer" target="_blank">Cisternas que estuvieron paradas afuera de la refinería de Cochabamba fueron trasladadas a la planta de Senkata</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/transporte-abandona-reunion-por-la-ausencia-de-autoridades-y-denuncia-que-a-la-paz-envian-gasolina-de-mala-calidad-HK20087536" rel="noopener noreferrer" target="_blank">Transporte abandona reunión por la “ausencia” de autoridades y denuncia que a La Paz envían gasolina de “mala calidad”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/puede-la-gasolina-de-mala-calidad-provocar-fallas-y-accidentes-vehiculares-esto-responden" rel="noopener noreferrer" target="_blank">¿Puede la gasolina de mala calidad provocar fallas y accidentes vehiculares? Esto responden expertos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-pacenos-abandonan-reunion-con-el-gobierno-por-ausencia-de-autoridades" rel="noopener noreferrer" target="_blank">Choferes paceños abandonan reunión con el Gobierno por ausencia de autoridades</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43539-choferes-abandonan-reunion-sobre-combustibles-ante-la-ausencia-de-ministros" rel="noopener noreferrer" target="_blank">Choferes abandonan reunión sobre combustibles ante la ausencia de ministros</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Retorno de bolivianos expulsados desde Chile" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Retorno de bolivianos expulsados desde Chile</div>
+<div class="modal-sum">El Gobierno de Bolivia activó un operativo en el aeropuerto de Viru Viru para recibir a 17 ciudadanos bolivianos expulsados de Chile. La Cancillería informó que el retorno incluye controles sanitarios y migratorios, y que algunos de los repatriados enfrentan procesos judiciales en el país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">12</strong> titulares</span>
+<span><strong style="color:var(--c-18)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/llegan-al-pais-17-bolivianos-expulsados-de-chile-informa-cancilleria-59612" rel="noopener noreferrer" target="_blank">Llegan al país 17 bolivianos expulsados de Chile, informa Cancillería</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260417/bolivia-activa-operativo-para-recibir-a-17-migrantes-deportados-desde-chile.html" rel="noopener noreferrer" target="_blank">Bolivia activa operativo para recibir a 17 migrantes deportados desde Chile</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/llegan-a-santa-cruz-17-bolivianos-expulsados-de-chile-en-el-marco-de-una-nueva-politica-migratoria/" rel="noopener noreferrer" target="_blank">Llegan a Santa Cruz 17 bolivianos expulsados de Chile en el marco de una nueva política migratoria</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/arriban-17-bolivianos-expulsados-de-chile-tres-eran-requeridos-por-la-felcv-y-la-felcc/" rel="noopener noreferrer" target="_blank">Arriban 17 bolivianos expulsados de Chile; tres eran requeridos por la FELCV y la FELCC</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/expulsados-chile-remitidos-justicia-boliviana-casos-puntuales_1776435489" rel="noopener noreferrer" target="_blank">Expulsados de Chile son remitidos ante la justicia boliviana en “casos puntuales”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/chile-expulso-17-bolivianos-marco-plan-migratorio-kast_1776422716" rel="noopener noreferrer" target="_blank">Chile expulsó a 17 bolivianos en el marco del plan migratorio de Kast</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/17-bolivianos-expulsados-de-chile-llegan-a-viru-viru/" rel="noopener noreferrer" target="_blank">17 bolivianos expulsados de Chile llegan a Viru Viru - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/gobierno-activa-operativo-para-asistir-a-bolivianos-expulsados-de-chile/" rel="noopener noreferrer" target="_blank">Gobierno activa operativo para asistir a bolivianos expulsados de Chile</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/gobierno-activo-operativo-para-garantizar-el-retorno-de-17-connacionales-de-chile/" rel="noopener noreferrer" target="_blank">Gobierno activó operativo para garantizar el retorno de 17 connacionales de Chile</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/activan-operativo-para-retorno-de-17-bolivianos-desde-chile-con-control-migratorio-y-sanitario-202641791051" rel="noopener noreferrer" target="_blank">Activan operativo para retorno de 17 bolivianos desde Chile con control migratorio y sanitario</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/bolivia-activa-operativo-interinstitucional-para-garantizar-el-retorno-de-connacionales" rel="noopener noreferrer" target="_blank">Bolivia activa operativo interinstitucional para garantizar el retorno de connacionales desde Chile</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43497-chile-expulsa-a-17-bolivianos-entre-ellos-12-estan-vinculados-con-delitos" rel="noopener noreferrer" target="_blank">Chile expulsa a 17 bolivianos; entre ellos 12 están vinculados con delitos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Reducción de deuda externa boliviana en 2026" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Reducción de deuda externa boliviana en 2026</div>
+<div class="modal-sum">Bolivia cerró el primer trimestre de 2026 con una deuda externa de 13.430 millones de dólares, equivalente al 24,3% del PIB. Según el Banco Central, esto representa una reducción de 701 millones respecto a inicios de año, destacando a China y organismos multilaterales como principales acreedores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">9</strong> titulares</span>
+<span><strong style="color:var(--c-02)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/la-deuda-externa-de-bolivia-se-situo-en-13-429-millones-de-dolares-al-31-de-marzo" rel="noopener noreferrer" target="_blank">La deuda externa de Bolivia se situó en 13.429 millones de dólares al 31 de marzo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/17/la-deuda-externa-asciende-a-us-13430-millones-un-243-del-pib-59618" rel="noopener noreferrer" target="_blank">La deuda externa asciende a $us 13,430 millones; un 24,3 % del PIB</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/china-multilaterales-dominan-deuda-externa-boliviana_1776461477" rel="noopener noreferrer" target="_blank">China y multilaterales dominan la deuda externa boliviana</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-17/economia/deuda-externa-de-bolivia-baja-us-701-millones-en-el-primer-trimestre-del-2026-y-se-situa-en-us-13429-millones.html" rel="noopener noreferrer" target="_blank">Deuda externa de Bolivia baja $us 701 millones en el primer trimestre del 2026 y se sitúa en $us 13.429 millones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260417/bcb-deuda-externa-bolivia-alcanza-us-13430-millones-marzo-2026" rel="noopener noreferrer" target="_blank">BCB: Deuda externa de Bolivia alcanza $us 13.430 millones a marzo de 2026</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-deuda-externa-de-bolivia-alcanza-us-13430-millones-al-mes-de-marzo-de-la-presente-gestion-CL20091542" rel="noopener noreferrer" target="_blank">BCB: Deuda externa de Bolivia alcanza $us 13.430 millones al mes de marzo de la presente gestión</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/reservas-llegan-us-3-542-millones-oro-queda-95-activo_1776423380" rel="noopener noreferrer" target="_blank">Reservas llegan a $us 3.542 millones; el oro se queda con el 95% del activo</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/reservas-bajaron-mas-de-us-800-millones/" rel="noopener noreferrer" target="_blank">Reservas bajaron más de $us 800 millones</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_reservas-del-bcb-caen-un-4-6-en-primeros-tres-meses-del-ano.html" rel="noopener noreferrer" target="_blank">Reservas del BCB caen un 4,6% en primeros tres meses del año</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Rechazan recursos legales de candidato René Yahuasi" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Rechazan recursos legales de candidato René Yahuasi</div>
+<div class="modal-sum">La justicia boliviana rechazó los recursos legales de René Yahuasi, incluyendo una acción popular y un amparo constitucional, ratificando la declinación de su candidatura. Mientras Yahuasi denuncia parcialidad y mantiene movilizaciones, se despeja el camino para la transición en La Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">8</strong> titulares</span>
+<span><strong style="color:var(--c-01)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/fallo-contra-yahuasi-analista-cuestiona-el-sistema-electoral-y-advierte-crisis-de-representacion-59619" rel="noopener noreferrer" target="_blank">Fallo contra Yahuasi: analista cuestiona el sistema electoral y advierte crisis de representación</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/nuevo-reves-para-yahuasi-deniegan-accion-popular-que-buscaba-reponer-balotaje-59621" rel="noopener noreferrer" target="_blank">Nuevo revés para Yahuasi: deniegan acción popular que buscaba reponer balotaje</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/abogado-vasquez-presenta-accion-popular-contra-resolucion-del-tse-que-acepta-declinacion-de-ngp-exige-segunda-vuelta/" rel="noopener noreferrer" target="_blank">Abogado Vásquez presenta acción popular contra resolución del TSE que acepta declinación de NGP, exige segunda vuelta</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/rene-yahuasi-denuncia-imparcialidad-en-fallo-que-ratifico-declinacion-de-ngp-jose-rodolfo-sainz-paz-uno-de-los-vocales-fue-abogado-de-revilla/" rel="noopener noreferrer" target="_blank">Rene Yahuasi denuncia parcialidad en fallo que ratificó declinación de NGP: “José Rodolfo Saínz Paz, uno de los vocales, fue abogado de Revilla”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/yahuasi-pierde-accion-popular-revilla-pide-proceso-transicion-paz_1776468576" rel="noopener noreferrer" target="_blank">Yahuasi pierde acción popular y Revilla pide proceso de transición en La Paz</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/yahuasi-persiste-con-marcha-%E2%80%9Cno-necesitamos-estar-en-la-gobernaci%C3%B3n-para-seguir-peleando%E2%80%9D" rel="noopener noreferrer" target="_blank">Yahuasi persiste con marcha: “no necesitamos estar en la Gobernación para seguir peleando”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/afines-a-yahuasi-levantan-vigilia-en-plaza-abaroa-y-se-restablece-la-circulacion/" rel="noopener noreferrer" target="_blank">Afines a Yahuasi levantan vigilia en plaza Abaroa y se restablece la circulación</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/rechazan-amparo-yahuasi-este-acudira-cidh-tse-celebra-fallo" rel="noopener noreferrer" target="_blank">Rechazan amparo a Yahuasi, éste acudirá a la CIDH y TSE celebra fallo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Nuevo récord del dólar referencial del BCB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Nuevo récord del dólar referencial del BCB</div>
+<div class="modal-sum">El dólar referencial del Banco Central de Bolivia (BCB) alcanzó este viernes una cotización de Bs 9,63 para la venta, marcando su valor más alto desde que entró en vigencia. El nuevo récord genera preocupación por su posible impacto inflacionario y la presión sobre la economía familiar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">7</strong> titulares</span>
+<span><strong style="color:var(--c-02)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/dolar-referencial-llega-a-bs-9-63-y-marca-su-cotizacion-mas-alta-desde-diciembre" rel="noopener noreferrer" target="_blank">Dólar referencial llega a Bs 9,63 y marca su cotización más alta desde diciembre</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/17/en-ocho-dias-el-dolar-referencial-vuelve-a-alcanzar-su-precio-mas-alto-con-bs-963-59611" rel="noopener noreferrer" target="_blank">En ocho días, el dólar referencial vuelve a alcanzar su precio más alto con Bs 9,63</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260417/dolar-referencial-del-bcb-alcanza-su-valor-mas-alto-desde-su-vigencia-cotizandose-en-bs-9-63.html" rel="noopener noreferrer" target="_blank">Dólar referencial del BCB alcanza su valor más alto desde su vigencia, cotizándose en Bs 9,63</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/dolar-referencial-marca-record-anticipa-mayor-presion-economia-familiar_1776440253" rel="noopener noreferrer" target="_blank">Dólar referencial marca récord y anticipa mayor presión sobre la economía familiar</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-17/economia/dolar-referencial-alcanza-su-valor-mas-alto-desde-su-vigencia-se-cotiza-a-bs-963-para-la-venta-este-viernes.html" rel="noopener noreferrer" target="_blank">Dólar referencial alcanza su valor más alto desde su vigencia: se cotiza a Bs 9,63 para la venta este viernes</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-dolar-referencial-se-cotiza-este-viernes-en-bs-963-para-la-venta-el-valor-mas-alto-desde-su-vigencia-GK20084992" rel="noopener noreferrer" target="_blank">El dólar referencial se cotiza este viernes en Bs 9,63 para la venta, el valor más alto desde su vigencia</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tipo-de-cambio-referencial-del-dolar-del-bcb-alcanza-su-maxima-cotizacion-este-viernes" rel="noopener noreferrer" target="_blank">Tipo de cambio referencial del dólar del BCB alcanza su máxima cotización este viernes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Investigación de presunto feminicidio en La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Investigación de presunto feminicidio en La Paz</div>
+<div class="modal-sum">Las autoridades en La Paz y El Alto investigan un presunto feminicidio tras el hallazgo del cuerpo de una mujer dentro de una bolsa de yute en estado de descomposición. La Fuerza Especial de Lucha Contra la Violencia (FELCV) activó los protocolos para identificar a la víctima y esclarecer el hecho.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">7</strong> titulares</span>
+<span><strong style="color:var(--c-07)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/17/hallan-el-cuerpo-de-una-mujer-en-una-bolsa-de-yute-y-activan-investigacion-por-feminicidio-59614" rel="noopener noreferrer" target="_blank">Hallan el cuerpo de una mujer en una bolsa de yute y activan investigación por feminicidio</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260417/hallan-cadaver-de-una-mujer-en-estado-de-descomposicion-dentro-de-una-bolsa-de-yute.html" rel="noopener noreferrer" target="_blank">Hallan cadáver de una mujer en estado de descomposición dentro de una bolsa de yute</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/alto-hallan-cuerpo-vida-mujer-dentro-bolsas-yute_1776441548" rel="noopener noreferrer" target="_blank">En El Alto hallan el cuerpo sin vida de una mujer dentro de bolsas de yute</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/macabro-hallazgo-encuentran-restos-mujer-bolsa-yute_1776461340" rel="noopener noreferrer" target="_blank">Macabro hallazgo: encuentran los restos de una mujer en una bolsa de yute</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/pais/hallan-el-cadaver-de-una-mujer-en-una-bolsa-de-yute-y-activan-investigacion.html" rel="noopener noreferrer" target="_blank">Hallan el cadáver de una mujer en una bolsa de yute y activan investigación</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_la-paz-hallan-el-cuerpo-de-una-mujer-dentro-de-una-bolsa-de-yute.html" rel="noopener noreferrer" target="_blank">La Paz: Hallan el cuerpo de una mujer dentro de una bolsa de yute</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_mujer-es-hallada-sin-vida-dentro-de-una-bolsa-en-la-paz.html" rel="noopener noreferrer" target="_blank">Mujer es hallada sin vida dentro de una bolsa en La Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Luis Revilla solicita inicio de transición administrativa" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Luis Revilla solicita inicio de transición administrativa</div>
+<div class="modal-sum">El gobernador electo de La Paz, Luis Revilla, solicitó formalmente a Santos Quispe fijar fecha y hora para iniciar el proceso de transición administrativa. El pedido se produce tras la confirmación de su victoria electoral y el rechazo judicial de los recursos interpuestos por sus detractores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">6</strong> titulares</span>
+<span><strong style="color:var(--c-01)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/revilla-pide-reunirse-con-santos-quispe-para-iniciar-la-transicion--59628" rel="noopener noreferrer" target="_blank">Revilla pide reunirse con el gobernador Santos Quispe para iniciar la transición</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_luis-revilla-inicia-tramites-para-la-transicion-en-la-gobernacion-de-la-paz.html" rel="noopener noreferrer" target="_blank">Luis Revilla inicia trámites para la transición en la Gobernación de La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/17/revilla-le-pide-a-quispe-fijar-hora-y-fecha-para-inicio-de-la-transicion/" rel="noopener noreferrer" target="_blank">Revilla le pide a Quispe fijar hora y fecha para inicio de la transición</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/tras-confirmarse-es-el-gobernador-electo-de-la-paz-revilla-pide-a-santos-quispe-iniciar-el-proceso-de-transicion/" rel="noopener noreferrer" target="_blank">Tras confirmarse es el Gobernador electo de La Paz, Revilla pide a Santos Quispe iniciar el proceso de transición</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/revilla-solicita-iniciar-el-proceso-de-transicion-en-la-gobernacion-de-la-paz-JL20097394" rel="noopener noreferrer" target="_blank">Revilla solicita iniciar el proceso de transición en la Gobernación de La Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43587-revilla-solicita-a-quispe-iniciar-el-proceso-de-transicion-despues-de-que-la-justicia-denego-tutela-a-amparo-constitucional-a-yahuasi" rel="noopener noreferrer" target="_blank">Revilla solicita a Quispe iniciar el proceso de transición después de que la justicia denegó tutela a amparo constitucional a Yahuasi</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Organización Evo Pueblo cambia nombre a E-Pueblo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Organización Evo Pueblo cambia nombre a E-Pueblo</div>
+<div class="modal-sum">La organización política Evo Pueblo modificó su nombre a “E-Pueblo” para cumplir con las observaciones del Tribunal Supremo Electoral y obtener su personería jurídica, al tiempo que denunció demoras injustificadas por parte del ente electoral en el proceso de registro.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">6</strong> titulares</span>
+<span><strong style="color:var(--c-01)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/evo-pueblo-cambia-%E2%80%9Ce-pueblo%E2%80%9D-para-subsanar-observaciones-su-personer%C3%ADa-y-denuncia-demora" rel="noopener noreferrer" target="_blank">Evo Pueblo se renueva como “E-Pueblo” para subsanar observaciones a su personería y denuncia demora del TSE</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/evo-pueblo-cambio-de-nombre-a-e-pueblo-y-cuestiona-rechazo-a-su-personeria-juridica-59631" rel="noopener noreferrer" target="_blank">Evo Pueblo cambió de nombre a E-Pueblo y cuestiona rechazo a su personería jurídica</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/evo-pueblo-cambia-a-e-pueblo-para-subsanar-observaciones-a-su-personeria.html" rel="noopener noreferrer" target="_blank">Evo Pueblo cambia a “E-Pueblo” para subsanar observaciones a su personería</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/no-pueden-jugar-asi-con-la-democracia-evo-pueblo-denuncia-demoras-del-tse-en-la-entrega-de-su-personeria-juridica-tras-cambio-a-e-pueblo/" rel="noopener noreferrer" target="_blank">“No pueden jugar así con la democracia”: Evo Pueblo denuncia demoras del TSE en la entrega de su personería jurídica tras cambio a “E-Pueblo”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-pueblo-cambia-a-e-pueblo-y-reclama-al-tse-por-no-darle-su-personeria-juridica/" rel="noopener noreferrer" target="_blank">‘Evo Pueblo’ cambia a ‘E-Pueblo’ y reclama al TSE por no darle su personería jurídica</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43581-evo-pueblo-cambia-a-e-pueblo-y-denuncian-demoras-del-tse-para-subsanar-observaciones-sobre-su-personeria" rel="noopener noreferrer" target="_blank">“Evo Pueblo” cambia a “E-Pueblo” y denuncian demoras del TSE para subsanar observaciones sobre su personería</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Capturan a sentenciada prófuga en fiesta patronal" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Capturan a sentenciada prófuga en fiesta patronal</div>
+<div class="modal-sum">Una mujer que se encontraba prófuga tras ser sentenciada por el asesinato de su pareja fue capturada por la policía mientras bailaba morenada en una fiesta junto a un juez de sentencia; el suceso ha generado cuestionamientos sobre el vínculo de la sentenciada con la autoridad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">6</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/mujer-condenada-por-asesinar-a-su-pareja-fue-descubierta-libre-y-bailando-morenada-con-un-juez-de-sentencia" rel="noopener noreferrer" target="_blank">Mujer condenada por asesinar a su pareja fue descubierta libre y bailando morenada con un juez de sentencia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/17/profuga-de-asesinato-es-atrapada-cuando-bailaba-en-la-calle-con-un-juez-59609" rel="noopener noreferrer" target="_blank">Prófuga de asesinato es atrapada cuando bailaba en la calle con un juez</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260417/capturan-a-una-mujer-sentenciada-por-asesinato-cuando-bailaba-morenada-con-un-juez.html" rel="noopener noreferrer" target="_blank">Capturan a una mujer sentenciada por asesinato cuando bailaba morenada con un juez</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/profuga-sentenciada-asesinato-fue-capturada-cuando-bailaba-juez_1776423719" rel="noopener noreferrer" target="_blank">Una prófuga y sentenciada por asesinato fue capturada cuando bailaba con un juez</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260417/capturan-profuga-sentenciada-asesinato-su-pareja-fue-hallada-juez" rel="noopener noreferrer" target="_blank">Capturan a prófuga y sentenciada por el asesinato de su pareja; fue hallada con un juez</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260417/capturan-asesina-sentenciada-estaba-fiesta-juez" rel="noopener noreferrer" target="_blank">Capturan a asesina sentenciada, estaba de fiesta con un juez</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N011">
+<div class="modal-backdrop" onclick="closeModal('modal_N011')"></div>
+<div aria-label="Entrega de credenciales a nuevas autoridades electas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Entrega de credenciales a nuevas autoridades electas</div>
+<div class="modal-sum">El TSE ultima detalles para la segunda vuelta electoral del domingo y prevé resultados preliminares a partir de las 19:00. Se estima que más de 5.000 autoridades electas en los comicios subnacionales recibirán credenciales para asumir funciones el 4 de mayo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">6</strong> titulares</span>
+<span><strong style="color:var(--c-01)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N011')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/17/avila-el-4-de-mayo-tenemos-que-tener-a-estas-autoridades-trabajando-posesionadas-59610" rel="noopener noreferrer" target="_blank">Ávila: "El 4 de mayo tenemos que tener a estas autoridades trabajando, posesionadas”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/subnacionales-mas-de-5-000-autoridades-electas-asumiran-funciones-el-4-de-mayo.html" rel="noopener noreferrer" target="_blank">Subnacionales: Más de 5.000 autoridades electas asumirán funciones el 4 de mayo</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tenemos-que-entregar-credenciales-a-mas-de-5-000-autoridades-electas-tse-preve-posesion-oficial-el-4-de-mayo-y-cierre-del-proceso-electoral/" rel="noopener noreferrer" target="_blank">“Tenemos que entregar credenciales a más de 5.000 autoridades electas”: TSE prevé posesión oficial el 4 de mayo y cierre del proceso electoral</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/segunda-vuelta-subnacional-tse-preve-resultados-preliminares-desde-las-1900-del-domingo-y-refuerza-restricciones/" rel="noopener noreferrer" target="_blank">Segunda vuelta subnacional: TSE prevé resultados preliminares desde las 19:00 del domingo y refuerza restricciones</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/segunda-vuelta-tse-estima-tener-resultados-votacion-19-00-domingo_1776428742" rel="noopener noreferrer" target="_blank">Segunda vuelta: TSE estima tener resultados de la votación a las 19:00 del domingo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_bolivia-afina-detalles-para-la-segunda-vuelta-en-cinco-departamentos.html" rel="noopener noreferrer" target="_blank">Bolivia afina detalles para la segunda vuelta en cinco departamentos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Sentencia máxima por feminicidio de Odalys Vaquiata" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Sentencia máxima por feminicidio de Odalys Vaquiata</div>
+<div class="modal-sum">La justicia boliviana sentenció a 30 años de prisión sin derecho a indulto a Joel Pérez por el feminicidio de Odalys Vaquiata. La condena máxima fue dictada tras el proceso judicial por la desaparición y muerte de la joven, un caso que generó gran conmoción en el país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/17/dictan-30-anos-de-carcel-para-principal-acusado-en-el-caso-odalys-vaquiata-59635" rel="noopener noreferrer" target="_blank">Condenan a 30 años de cárcel al exnovio de Odalys Vaquiata</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dictan-30-anos-carcel-sentencia-joel-perez-caso-odalys_1776476417" rel="noopener noreferrer" target="_blank">Dictan 30 años de cárcel como sentencia para Joel Pérez, por el caso Odalys</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/sentencian-30-a%C3%B1os-de-c%C3%A1rcel-joel-p%C3%A9rez-por-el-feminicidio-de-odalys" rel="noopener noreferrer" target="_blank">Sentencian a 30 años de cárcel a Joel Pérez por el feminicidio de Odalys</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/04/17/sentencian-a-30-anos-a-joel-perez-por-el-caso-odalys/" rel="noopener noreferrer" target="_blank">Sentencian a 30 años a Joel Pérez por el caso Odalys</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260417/sentencian-30-anos-carcel-joel-perez-muerte-odalys" rel="noopener noreferrer" target="_blank">Sentencian a 30 años de cárcel a Joel Pérez por muerte de Odalys</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Investigación por accidente de avión de la FAB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigación por accidente de avión de la FAB</div>
+<div class="modal-sum">La Fiscalía investiga el accidente de un avión de la Fuerza Aérea Boliviana (FAB) en El Alto; se han tomado declaraciones a altos mandos militares y se garantiza el resarcimiento de daños, mientras que una de las víctimas del siniestro ya fue dada de alta hospitalaria.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260417/accidente-aereo-en-el-alto-comandante-declara-en-la-fiscalia-y-garantiza-reparacion-de-danos.html" rel="noopener noreferrer" target="_blank">Accidente aéreo en El Alto: Comandante declara en la Fiscalía y garantiza reparación de daños</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-avion-siniestrado-existe-una-estrategia-fiscalia-mantiene-en-reserva-declaraciones-de-jefes-de-fab-y-citara-a-otras-15-personas/" rel="noopener noreferrer" target="_blank">Caso avión siniestrado: “Existe una estrategia”, Fiscalía mantiene en reserva declaraciones de jefes de FAB y citará a otras 15 personas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dos-altos-mandos-militares-declaran-accidente-aereo-alto_1776438857" rel="noopener noreferrer" target="_blank">Dos altos mandos militares declaran por el accidente aéreo en El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/caso-avion-siniestrado-en-el-alto-dos-militares-de-la-fab-declaran-ante-la-fiscalia" rel="noopener noreferrer" target="_blank">Caso avión siniestrado en El Alto: Dos militares de la FAB declaran ante la Fiscalía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/luche-por-mi-vida-una-de-las-victimas-del-avion-siniestrado-en-el-alto-es-dada-de-alta" rel="noopener noreferrer" target="_blank">“Luché por mi vida”: Una de las víctimas del avión siniestrado en El Alto es dada de alta</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Niegan libertad a exdiputada en caso Maletas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Niegan libertad a exdiputada en caso Maletas</div>
+<div class="modal-sum">La justicia boliviana denegó la solicitud de libertad de la exdiputada Laura Rojas, imputada en el denominado 'caso Maletas'; el juez determinó que persisten los riesgos procesales y de fuga, por lo que la exautoridad deberá continuar bajo detención preventiva.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/niegan-libertad-a-exdiputada-rojas-en-el-caso-maletas-juez-concluye-que-persisten-riesgos-procesales/" rel="noopener noreferrer" target="_blank">Niegan libertad a exdiputada Rojas en el caso “maletas”: juez concluye que persisten riesgos procesales</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-maletas-fiscalia-sostiene-que-imputados-deben-seguir-detenidos-por-riesgo-de-fuga/" rel="noopener noreferrer" target="_blank">Caso “Maletas”: Fiscalía sostiene que imputados deben seguir detenidos por riesgo de fuga</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/caso-maletas-legisladores-de-libre-solicitan-informe-oral-al-ministro-de-gobierno-IL20098154" rel="noopener noreferrer" target="_blank">Caso maletas: Legisladores de Libre solicitan informe oral al ministro de Gobierno</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/caso-maletas-justicia-niega-solicitud-de-cesacion-de-detencion-de-la-exdiputada-laura-rojas-EL20092475" rel="noopener noreferrer" target="_blank">Caso maletas: Justicia niega solicitud de cesación de detención de la exdiputada Laura Rojas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43551-comandante-sokol-califica-de-noticia-antigua-el-vinculo-de-dos-policias-con-el-caso-maletas-uno-tiene-orden-de-aprehension" rel="noopener noreferrer" target="_blank">Comandante Sokol califica de “noticia antigua” el vínculo de dos policías con el caso Maletas; uno tiene orden de aprehensión</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5b">
+<div class="modal-backdrop" onclick="closeModal('modal_5b')"></div>
+<div aria-label="Reinicio de vuelos nacionales de la empresa TAMep" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Reinicio de vuelos nacionales de la empresa TAMep</div>
+<div class="modal-sum">La empresa TAMep anunció el reinicio de sus vuelos nacionales en el país, restableciendo oficialmente las conexiones aéreas entre las ciudades de La Paz, Cochabamba, Santa Cruz y Cobija tras retomar sus operaciones comerciales habituales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">4</strong> titulares</span>
+<span><strong style="color:var(--c-02)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-17/economia/tamep-reanuda-vuelos-nacionales-y-restablece-conexiones-entre-la-paz-cochabamba-santa-cruz-y-cobija.html" rel="noopener noreferrer" target="_blank">TAMep reanuda vuelos nacionales y restablece conexiones entre La Paz, Cochabamba, Santa Cruz y Cobija</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/17/tam-ep-reactiva-sus-operaciones-aereas-en-el-pais/" rel="noopener noreferrer" target="_blank">Tam EP reactiva sus operaciones aéreas en el país</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tamep-reanuda-vuelos-nacionales-y-restablece-conexiones-entre-cuatro-ciudades-del-pais-2026417162250" rel="noopener noreferrer" target="_blank">Tamep reanuda vuelos nacionales y restablece conexiones entre cuatro ciudades del país</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/tamep-reanuda-vuelos-nacionales-con-conexiones-entre-la-paz-cochabamba-santa-cruz-y-cobija-AL20094994" rel="noopener noreferrer" target="_blank">TAMep reanuda vuelos nacionales con conexiones entre La Paz, Cochabamba, Santa Cruz y Cobija</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="Acuerdo de cooperación en salud con Estados Unidos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Acuerdo de cooperación en salud con Estados Unidos</div>
+<div class="modal-sum">Bolivia y Estados Unidos firman un acuerdo de cooperación por 10 millones de dólares destinados al sector salud.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">4</strong> titulares</span>
+<span><strong style="color:var(--c-18)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/17/eeuu-compromete-us-10-millones-para-programas-de-salud-59630" rel="noopener noreferrer" target="_blank">EEUU compromete $us 10 millones para programas de salud</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/estados-unidos-garantiza-us-10-millones-invertir-salud-bolivia_1776469461" rel="noopener noreferrer" target="_blank">Estados Unidos garantiza $us 10 millones para invertir en la salud de Bolivia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_bolivia-y-estados-unidos-firman-acuerdo-de-cooperacion-en-salud-por-us-10-millones.html" rel="noopener noreferrer" target="_blank">Bolivia y Estados Unidos firman acuerdo de cooperación en salud por $us 10 millones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/04/17/bolivia-y-eeuu-firman-acuerdo-por-us-10-millones-para-salud/" rel="noopener noreferrer" target="_blank">Bolivia y EEUU firman acuerdo por $us 10 millones para salud</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="Primera Dama inicia difusión de labor social" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Primera Dama inicia difusión de labor social</div>
+<div class="modal-sum">La Primera Dama, Bibi Urquidi, debuta en redes sociales para difundir su labor social y agenda oficial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">4</strong> titulares</span>
+<span><strong style="color:var(--c-05)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260417/primera-dama-estrena-cuentas-en-redes-sociales-y-rodrigo-paz-le-da-la-bienvenida.html" rel="noopener noreferrer" target="_blank">Primera Dama estrena cuentas en redes sociales y Rodrigo Paz le da la bienvenida</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bibi-urquidi-estrena-red-social-x-presidente-paz-le-hace-guino-bienvenida-primera-dama_1776445017" rel="noopener noreferrer" target="_blank">Bibi Urquidi se estrena en la red social X y el presidente Paz le hace un guiño: "Bienvenida primera dama"</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/primera-dama-abre-cuentas-en-redes-sociales-para-difundir-su-labor-social/" rel="noopener noreferrer" target="_blank">Primera dama abre cuentas en redes sociales para difundir su labor social</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/primera-dama-estrena-cuentas-redes-sociales-informar-su-agenda-e" rel="noopener noreferrer" target="_blank">Primera Dama estrena cuentas en redes sociales para informar su agenda e iniciativas sociales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N005">
+<div class="modal-backdrop" onclick="closeModal('modal_N005')"></div>
+<div aria-label="Descartan repetición de elecciones en San Ignacio" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Descartan repetición de elecciones en San Ignacio</div>
+<div class="modal-sum">El Tribunal Supremo Electoral descarta repetir las elecciones municipales en San Ignacio de Velasco y da por cerrado el proceso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">4</strong> titulares</span>
+<span><strong style="color:var(--c-01)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N005')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/no-hubo-irregularidades-en-san-ignacio-dice-tse.html" rel="noopener noreferrer" target="_blank">No hubo irregularidades en San Ignacio, dice TSE</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/no-hay-vuelta-atras-tse-descarta-repetir-eleccion-municipal-en-san-ignacio-de-velasco.html" rel="noopener noreferrer" target="_blank">“No hay vuelta atrás”: TSE descarta repetir elección municipal en San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/tse-descarta-repetir-elecciones-en-san-ignacio-de-velasco/" rel="noopener noreferrer" target="_blank">TSE descarta repetir elecciones en San Ignacio de Velasco - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/tse-descarta-repetir-eleccion-en-san-ignacio-de-velasco-y-da-por-cerrado-el-proceso/" rel="noopener noreferrer" target="_blank">TSE descarta repetir elección en San Ignacio de Velasco y da por cerrado el proceso</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="Conflictos judiciales por fallo sobre Mercado Mutualista" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Conflictos judiciales por fallo sobre Mercado Mutualista</div>
+<div class="modal-sum">El presidente Paz califica de tremendo el caso del Mercado Mutualista mientras persisten conflictos judiciales sobre el fallo del TCP.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">4</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/politica/presidente-paz-califica-de-tremendo-el-caso-mercado-mutualista-y-destaca-senales-para-que-no-vuelva-a-ocurrir.html" rel="noopener noreferrer" target="_blank">Presidente Paz califica de “tremendo” el caso Mercado Mutualista y destaca señales para que no vuelva a ocurrir</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_caso-mercado-mutualista-presidente-paz-destaca-senales-para-que-no-vuelva-a-ocurrir-una-situacion-similar.html" rel="noopener noreferrer" target="_blank">Caso Mercado Mutualista: Presidente Paz destaca señales para que no vuelva a ocurrir una situación similar</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_mutualista-fallo-del-tcp-cae-en-prevaricato-segun-el-tsj.html" rel="noopener noreferrer" target="_blank">Mutualista: Fallo del TCP cae en prevaricato, según el TSJ</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-califica-de-tremendo-el-caso-mercado-mutualista-y-destaca-senales-para-que-no-vuelva-a-ocurrir/" rel="noopener noreferrer" target="_blank">Paz califica de “tremendo” el caso Mercado Mutualista y destaca señales para que no vuelva a ocurrir</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N006">
+<div class="modal-backdrop" onclick="closeModal('modal_N006')"></div>
+<div aria-label="Campesinos mantienen marcha tras ruptura de diálogo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Campesinos mantienen marcha tras ruptura de diálogo</div>
+<div class="modal-sum">Se rompe el diálogo entre campesinos y Gobierno, manteniendo la marcha hacia La Paz en demanda de la abrogación de la Ley 157.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N006')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260417/cob-exige-abrogar-la-ley-157-antes-de-iniciar-el-dialogo.html" rel="noopener noreferrer" target="_blank">COB exige abrogar la Ley 157 antes de iniciar el diálogo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/viceministro-vaca-d%C3%ADez-ve-motivaci%C3%B3n-pol%C3%ADtica-en-la-marcha-y-plantea-llevar-la-ley-157-al" rel="noopener noreferrer" target="_blank">Viceministro Vaca Díez ve motivación política en la marcha y plantea llevar la Ley 157 al TCP</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/se-rompe-otra-vez-el-di%C3%A1logo-campesinos-gobierno-y-la-marcha-contra-la-ley-157-sigue-hacia" rel="noopener noreferrer" target="_blank">Se rompe otra vez el diálogo campesinos-Gobierno y la marcha contra la Ley 157 sigue hacia La Paz</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/17/sin-la-abrogacion-de-la-ley-157-no-hay-dialogo/" rel="noopener noreferrer" target="_blank">Sin la abrogación de la Ley 157 no hay diálogo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Fracasa diálogo por abrogación de Ley 1720" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Fracasa diálogo por abrogación de Ley 1720</div>
+<div class="modal-sum">El diálogo entre el Gobierno y los sectores que marchan exigiendo la abrogación de la Ley 1720 fracasó en Collana pese al intento de mediación de la Defensoría del Pueblo; los movilizados mantienen sus medidas de presión denunciando intereses políticos y falta de acuerdos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/fracasa-dialogo-con-sectores-movilizados-por-la-ley-1720/" rel="noopener noreferrer" target="_blank">Fracasa diálogo con sectores movilizados por la Ley 1720</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/gobierno-instala-mesa-de-dialogo-en-collana-por-conflicto-en-torno-a-la-ley-1720/" rel="noopener noreferrer" target="_blank">Gobierno instala mesa de diálogo en Collana por conflicto en torno a la Ley 1720</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/defensoria-llega-a-collana-para-reactivar-dialogo-entre-gobierno-y-movilizados-por-ley-1720/" rel="noopener noreferrer" target="_blank">Defensoría llega a Collana para reactivar diálogo entre Gobierno y movilizados por Ley 1720</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/17/43602-gobierno-no-convence-a-marcha-campesina-e-indigena-que-pide-abrogar-la-ley-1720-y-denuncia-intereses-politicos" rel="noopener noreferrer" target="_blank">Gobierno no convence a marcha campesina e indígena que pide abrogar la Ley 1720 y denuncia intereses políticos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_18b">
+<div class="modal-backdrop" onclick="closeModal('modal_18b')"></div>
+<div aria-label="Bolivia destacada entre lugares más bellos del mundo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Bolivia destacada entre lugares más bellos del mundo</div>
+<div class="modal-sum">Bolivia ha sido destacada en ránkings internacionales como uno de los 51 lugares más bellos del mundo, resaltando su valor paisajístico y atractivo turístico a nivel global.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260417/bolivia-entre-los-51-lugares-mas-bellos-del-mundo.html" rel="noopener noreferrer" target="_blank">Bolivia, entre los 51 lugares más bellos del mundo</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/17/bolivia-entre-51-lugares-mas-bellos-del-mundo/" rel="noopener noreferrer" target="_blank">Bolivia entre 51 lugares más bellos del mundo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_bolivia-entre-los-paises-mas-bellos-del-mundo.html" rel="noopener noreferrer" target="_blank">Bolivia, entre los países más bellos del mundo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N007">
+<div class="modal-backdrop" onclick="closeModal('modal_N007')"></div>
+<div aria-label="COB ratifica cabildo nacional para mayo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">COB ratifica cabildo nacional para mayo</div>
+<div class="modal-sum">La COB ratifica la realización de un cabildo nacional en El Alto para el 1 de mayo con una agenda de 11 temas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N007')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260417_cob-ratifica-cabildo-nacional-en-el-alto-para-el-1-de-mayo.html" rel="noopener noreferrer" target="_blank">COB ratifica cabildo nacional en El Alto para el 1 de mayo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/cob-ratifica-cabildo-nacional-en-el-alto-para-el-1-de-mayo-con-11-temas-de-agenda" rel="noopener noreferrer" target="_blank">COB ratifica cabildo nacional en El Alto para el 1 de mayo con 11 temas de agenda</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/17/cob-ratifica-gran-cabildo-para-el-1-de-mayo-en-el-alto/" rel="noopener noreferrer" target="_blank">COB ratifica ‘gran cabildo’ para el 1 de mayo en El Alto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N008">
+<div class="modal-backdrop" onclick="closeModal('modal_N008')"></div>
+<div aria-label="Iglesia insta a la protección de familias" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Iglesia insta a la protección de familias</div>
+<div class="modal-sum">La Conferencia Episcopal Boliviana insta a la protección de la familia frente a ataques en múltiples dimensiones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">3</strong> titulares</span>
+<span><strong style="color:var(--c-05)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N008')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260417/obispos-instan-a-proteger-a-la-familia-frente-a-ataques-en-multiples-dimensiones.html" rel="noopener noreferrer" target="_blank">Obispos instan a proteger a la familia frente a ataques en múltiples dimensiones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/pais/obispos-piden-proteger-a-la-familia-ante-ataques-en-multiples-dimensiones.html" rel="noopener noreferrer" target="_blank">Obispos piden proteger a la familia ante ataques en múltiples dimensiones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260417/ceb-ve-ataques-multiples-dimensiones-familia" rel="noopener noreferrer" target="_blank">CEB ve ataques en múltiples dimensiones a la familia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N009">
+<div class="modal-backdrop" onclick="closeModal('modal_N009')"></div>
+<div aria-label="Inundaciones en Beni obligan a suspender clases" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Inundaciones en Beni obligan a suspender clases</div>
+<div class="modal-sum">Inundaciones en Beni obligan a la suspensión de clases en seis unidades educativas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N009')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260417/suspenden-por-inundaciones-las-clases-en-seis-unidades-educativas-de-beni.html" rel="noopener noreferrer" target="_blank">Suspenden por inundaciones las clases en seis unidades educativas de Beni</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-17/pais/suspenden-clases-en-seis-unidades-educativas-en-beni-por-inundaciones.html" rel="noopener noreferrer" target="_blank">Suspenden clases en seis unidades educativas en Beni por inundaciones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/17/suspenden-clases-en-seis-colegios-de-beni-por-inundaciones/" rel="noopener noreferrer" target="_blank">Suspenden clases en seis colegios de Beni por inundaciones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N010">
+<div class="modal-backdrop" onclick="closeModal('modal_N010')"></div>
+<div aria-label="Modificación de productos en el subsidio prenatal" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Modificación de productos en el subsidio prenatal</div>
+<div class="modal-sum">El Sedem modifica el subsidio prenatal 2026 excluyendo el 90% de productos ultraprocesados para priorizar granos y semillas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N010')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260417_subsidio-2026-lista-completa-de-alimentos-que-recibiran-las-beneficiarias.html" rel="noopener noreferrer" target="_blank">Subsidio 2026: lista completa de alimentos que recibirán las beneficiarias</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260417/sedem-excluye-mas-del-90-de-productos-ultraprocesados-del-subsidio-prenatal.html" rel="noopener noreferrer" target="_blank">Sedem excluye más del 90% de productos “ultraprocesados” del subsidio prenatal</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/menos-galletas-brownies-granos-semillas-cambian-90-productos-ultraprocesados-subsidio_1776440029" rel="noopener noreferrer" target="_blank">Menos galletas y brownies y más granos y semillas: cambian el 90% de los productos ultraprocesados del subsidio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_N013">
+<div class="modal-backdrop" onclick="closeModal('modal_N013')"></div>
+<div aria-label="Análisis de Puerto Busch para salida soberana" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Análisis de Puerto Busch para salida soberana</div>
+<div class="modal-sum">El Gobierno boliviano analiza el potencial de Puerto Busch para consolidar una salida soberana hacia el Océano Atlántico.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N013')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-senala-puerto-busch-eje-conectividad-acceder-atlantico_1776468053" rel="noopener noreferrer" target="_blank">Gobierno señala a Puerto Busch como un eje de conectividad para acceder al Atlántico</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-17/economia/bolivia-busca-reimpulsar-el-proyecto-de-salida-soberana-al-atlantico-a-traves-de-puerto-busch.html" rel="noopener noreferrer" target="_blank">Bolivia busca reimpulsar el proyecto de salida soberana al Atlántico a través de Puerto Busch</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260417_ministerios-de-obras-publicas-y-desarrollo-productivo-analizan-el-potencial-de-puerto-busch.html" rel="noopener noreferrer" target="_blank">Ministerios de Obras Públicas y Desarrollo Productivo analizan el potencial de puerto Busch</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="Suspensión de vuelos nacionales por balotaje electoral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">Suspensión de vuelos nacionales por balotaje electoral</div>
+<div class="modal-sum">El Aeropuerto Internacional de Viru Viru operará exclusivamente para vuelos internacionales este domingo debido a la realización del balotaje electoral; por consiguiente, todos los vuelos nacionales han sido suspendidos para la jornada de votación de la segunda vuelta.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">3</strong> titulares</span>
+<span><strong style="color:var(--c-01)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260417/aeropuerto-de-viru-viru-atendera-solo-vuelos-internacionales-el-domingo-del-balotaje.html" rel="noopener noreferrer" target="_blank">Aeropuerto de Viru Viru atenderá solo vuelos internacionales el domingo del balotaje</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/viru-viru-solo-operara-vuelos-internacionales-este-domingo-por-balotaje-2026417121722" rel="noopener noreferrer" target="_blank">Viru Viru solo operará vuelos internacionales este domingo por balotaje</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/atencion-viajeros-no-habra-vuelos-nacionales-este-domingo-por-la-segunda-vuelta-electoral-2026417124256" rel="noopener noreferrer" target="_blank">Atención viajeros: no habrá vuelos nacionales este domingo por la segunda vuelta electoral</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+</body>
+</html>
