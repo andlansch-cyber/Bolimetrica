@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolimétrica · Líneas de tiempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand-blue:#0f2137; --brand-blue2:#152b45; --brand-amber:#c8880a;
+  --brand-amber2:#f0c060; --paper:#f4f1ea; --paper2:#ebe6da; --ink:#0a1726;
+  --c-01:#1a4471; --c-02:#27ac3d; --c-03:#C05621; --c-04:#805AD5;
+  --c-05:#792155; --c-07:#bb2727; --c-08:#603b11; --c-10:#2b7bc7;
+  --c-11:#133321; --c-15:#52c889; --c-18:#71757c; --c-21:#c6822e;
+  --c-25:#d89696; --c-28:#90CDF4;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ background:var(--paper); font-family:'Barlow',system-ui,sans-serif; color:#1f2a3a; }
+.lm-tape{ background:#0a1726; color:#c8880a; border-top:1px solid rgba(200,136,10,.3); border-bottom:1px solid rgba(200,136,10,.3); padding:8px 0; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; overflow:hidden; white-space:nowrap; }
+.lm-tape-track{ display:inline-flex; gap:48px; padding-left:24px; animation:lm-scroll 60s linear infinite; }
+@keyframes lm-scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.lm-hero{ background:radial-gradient(900px 500px at 85% -10%, rgba(200,136,10,.18), transparent 60%), linear-gradient(180deg,#0a1726 0%, #0f2137 100%); padding:24px 32px 56px; position:relative; }
+.lm-hero-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:48px; }
+.lm-brand{ font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:28px; letter-spacing:.04em; text-transform:uppercase; color:#fff; line-height:1; text-decoration:none; }
+.lm-brand span{ color:#f0c060; }
+.lm-nav{ display:flex; gap:28px; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:#cbd5e1; }
+.lm-nav a{ color:#cbd5e1; text-decoration:none; }
+.lm-nav .active{ color:#f0c060; }
+.lm-sec-label{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#7e8a9c; }
+.lm-sec-label::before{ content:"// "; color:#c8880a; }
+.lm-hero-title{ font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.005em; line-height:.92; color:#fff; font-size:72px; margin:18px 0 0; }
+.lm-hero-title em{ font-style:normal; font-weight:300; color:#f0c060; }
+.lm-hero-sub{ color:#cbd5e1; font-size:16px; line-height:1.65; max-width:580px; margin-top:28px; font-weight:300; }
+.lm-hero-meta{ margin-top:32px; display:flex; gap:36px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:#7e8a9c; flex-wrap:wrap; }
+.lm-hero-meta strong{ color:#f0c060; font-weight:600; }
+.lm-hairline{ height:1px; background:linear-gradient(to right, transparent, #c8880a 20%, #c8880a 80%, transparent); opacity:.4; }
+.lm-grid-section{ padding:48px 32px 64px; background:var(--paper); }
+.lm-grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1px; background:#d6cfb8; border:1px solid #d6cfb8; }
+.lm-card{ background:#fff; padding:24px 24px 22px; position:relative; cursor:pointer; transition:background .2s ease; display:flex; flex-direction:column; min-height:170px; text-decoration:none; }
+.lm-card:hover{ background:#fbf8f0; }
+.lm-card-bar{ position:absolute; top:0; left:0; right:0; height:3px; background:var(--cat-color, #c8880a); }
+.lm-card-num{ font-family:'JetBrains Mono',monospace; font-size:10px; color:#9ca3af; letter-spacing:.16em; }
+.lm-card-name{ font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:24px; color:var(--brand-blue); text-transform:uppercase; letter-spacing:.01em; line-height:1.05; margin:14px 0 0; }
+.lm-card-foot{ display:flex; justify-content:space-between; align-items:flex-end; margin-top:auto; padding-top:20px; }
+.lm-card-count{ display:flex; flex-direction:column; gap:2px; }
+.lm-card-count-n{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:22px; color:var(--brand-blue); line-height:1; letter-spacing:-.02em; }
+.lm-card-count-l{ font-family:'JetBrains Mono',monospace; font-size:9px; color:#9ca3af; letter-spacing:.16em; text-transform:uppercase; }
+.lm-card-arrow{ width:32px; height:32px; border:1px solid #e6dfce; display:flex; align-items:center; justify-content:center; transition:all .2s ease; color:#7e8a9c; }
+.lm-card:hover .lm-card-arrow{ border-color:var(--cat-color, #c8880a); background:var(--cat-color, #c8880a); color:#fff; }
+.lm-card-arrow svg{ width:14px; height:14px; }
+.lm-foot{ background:var(--brand-blue); color:#94a3b8; padding:28px 32px; border-top:2px solid var(--brand-amber); display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.lm-foot .lm-brand{ font-size:22px; }
+.lm-foot-meta{ font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:#64748b; }
+@media (max-width:900px){
+  .lm-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .lm-hero-title{ font-size:52px; }
+}
+@media (max-width:600px){
+  .lm-grid{ grid-template-columns:1fr; }
+  .lm-hero{ padding:20px 20px 40px; }
+  .lm-grid-section{ padding:36px 20px 48px; }
+  .lm-foot{ padding:20px; }
+  .lm-hero-title{ font-size:42px; }
+}
+</style>
+</head>
+<body>
+  <div class="lm-tape">
+    <div class="lm-tape-track">
+      <span>● Bolimétrica · Líneas de tiempo</span>
+      <span>// 14 categorías activas</span>
+      <span>// Cobertura desde 13 feb 2026</span>
+      <span>// Actualización diaria · 09:00 BOT</span>
+      <span>● Bolimétrica · Líneas de tiempo</span>
+      <span>// 14 categorías activas</span>
+      <span>// Cobertura desde 13 feb 2026</span>
+      <span>// Actualización diaria · 09:00 BOT</span>
+    </div>
+  </div>
+
+  <header class="lm-hero">
+    <div class="lm-hero-top">
+      <a class="lm-brand" href="/">Boli<span>métrica</span></a>
+      <nav class="lm-nav">
+        <a href="/">Inicio</a>
+        <a href="/#metodologia">Metodología</a>
+        <a class="active" href="/lineas/">Líneas de tiempo</a>
+        <a href="/informes/">Informes</a>
+      </nav>
+    </div>
+    <div>
+      <div class="lm-sec-label">01 — Líneas de tiempo</div>
+      <h1 class="lm-hero-title">14<br><em>líneas</em> activas</h1>
+      <p class="lm-hero-sub">
+        Cada categoría temática del clustering diario se acumula como una línea de tiempo.
+        Una cronología viva de cómo la agenda mediática boliviana se mueve, semana a semana,
+        en torno a los grandes ejes del país.
+      </p>
+      <div class="lm-hero-meta">
+        <div><strong>1.214</strong> · temas</div>
+        <div><strong>12.131</strong> · titulares</div>
+        <div><strong>67</strong> · días cubiertos</div>
+      </div>
+    </div>
+  </header>
+
+  <div style="background:var(--paper); padding:0 32px;"><div class="lm-hairline"></div></div>
+
+  <section class="lm-grid-section">
+    <div class="lm-grid" id="lm-grid"></div>
+  </section>
+
+  <footer class="lm-foot">
+    <a class="lm-brand" href="/">Boli<span>métrica</span></a>
+    <div class="lm-foot-meta">© 2026 Bolimétrica · Todos los derechos reservados</div>
+  </footer>
+
+<script>
+(function(){
+  var cats = [{"name": "Elecciones", "slug": "elecciones", "n": 164, "color": "#1a4471"}, {"name": "Violencia y seguridad", "slug": "violencia-y-seguridad", "n": 163, "color": "#bb2727"}, {"name": "Hidrocarburos", "slug": "hidrocarburos", "n": 135, "color": "#133321"}, {"name": "Política", "slug": "politica", "n": 124, "color": "#792155"}, {"name": "Narcotráfico", "slug": "narcotrafico", "n": 119, "color": "#805AD5"}, {"name": "Justicia", "slug": "justicia", "n": 112, "color": "#2b7bc7"}, {"name": "Economía", "slug": "economia", "n": 107, "color": "#27ac3d"}, {"name": "Relaciones internacionales", "slug": "relaciones-internacionales", "n": 90, "color": "#71757c"}, {"name": "Sociedad", "slug": "sociedad", "n": 56, "color": "#d89696"}, {"name": "Gobierno", "slug": "gobierno", "n": 45, "color": "#C05621"}, {"name": "Movimientos sociales", "slug": "movimientos-sociales", "n": 27, "color": "#603b11"}, {"name": "Medio ambiente", "slug": "medio-ambiente", "n": 25, "color": "#52c889"}, {"name": "Accidentes", "slug": "accidentes", "n": 24, "color": "#90CDF4"}, {"name": "Legislativa", "slug": "legislativa", "n": 17, "color": "#c6822e"}];
+  var arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>';
+  var html = "";
+  cats.forEach(function(c, i){
+    var num = String(i+1).padStart(2,"0");
+    html += '<a class="lm-card" href="'+c.slug+'.html" style="--cat-color:'+c.color+';">'
+         +    '<div class="lm-card-bar"></div>'
+         +    '<div class="lm-card-num">'+num+'</div>'
+         +    '<div class="lm-card-name">'+c.name+'</div>'
+         +    '<div class="lm-card-foot">'
+         +      '<div class="lm-card-count">'
+         +        '<div class="lm-card-count-n">'+c.n+'</div>'
+         +        '<div class="lm-card-count-l">temas</div>'
+         +      '</div>'
+         +      '<div class="lm-card-arrow">'+arrow+'</div>'
+         +    '</div>'
+         +  '</a>';
+  });
+  document.getElementById("lm-grid").innerHTML = html;
+})();
+</script>
+</body>
+</html>
