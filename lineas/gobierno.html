@@ -133,6 +133,29 @@ body{ background:var(--paper); font-family:'Barlow',system-ui,sans-serif; color:
 .lc-foot-meta{ font-family:'JetBrains Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:#64748b; }
 .lc-empty{ text-align:center; padding:80px 24px; color:#7e8a9c; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; }
 
+/* ── FAB + Sheet (solo mobile) ── */
+.lc-fab{ display:none; position:fixed; right:18px; bottom:18px; z-index:40; width:56px; height:56px; border-radius:50%; background:var(--cat); color:#fff; border:none; box-shadow:0 8px 22px rgba(0,0,0,.22); cursor:pointer; align-items:center; justify-content:center; transition:transform .15s; }
+.lc-fab:active{ transform:scale(.95); }
+.lc-fab svg{ width:22px; height:22px; }
+.lc-sheet-backdrop{ display:none; position:fixed; inset:0; background:rgba(10,23,38,.55); z-index:50; opacity:0; transition:opacity .22s; }
+.lc-sheet-backdrop.open{ display:block; opacity:1; }
+.lc-sheet{ position:fixed; left:0; right:0; bottom:0; z-index:60; background:#fff; border-top:3px solid var(--cat); border-radius:14px 14px 0 0; max-height:72vh; transform:translateY(100%); transition:transform .28s cubic-bezier(.2,.7,.2,1); display:flex; flex-direction:column; }
+.lc-sheet.open{ transform:translateY(0); }
+.lc-sheet-grab{ width:44px; height:4px; background:#d6cfb8; border-radius:2px; margin:10px auto 6px; flex-shrink:0; }
+.lc-sheet-head{ display:flex; justify-content:space-between; align-items:center; padding:8px 20px 14px; border-bottom:1px solid #e6dfce; flex-shrink:0; }
+.lc-sheet-title{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--brand-blue); font-weight:600; }
+.lc-sheet-close{ background:transparent; border:none; color:#7e8a9c; padding:6px; cursor:pointer; }
+.lc-sheet-close svg{ width:18px; height:18px; }
+.lc-sheet-body{ overflow-y:auto; padding:6px 0 18px; -webkit-overflow-scrolling:touch; }
+.lc-sheet-item{ display:flex; justify-content:space-between; align-items:center; padding:14px 20px; border-bottom:1px solid #f0ece0; cursor:pointer; background:transparent; width:100%; border-left:none; border-right:none; border-top:none; text-align:left; font-family:inherit; }
+.lc-sheet-item:active{ background:rgba(var(--cat-r),.06); }
+.lc-sheet-item-left{ display:flex; flex-direction:column; gap:3px; }
+.lc-sheet-item-date{ font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--brand-blue); }
+.lc-sheet-item-count{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9ca3af; }
+.lc-sheet-item-tag{ font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--brand-amber); border:1px solid var(--brand-amber); padding:2px 6px; margin-left:6px; }
+.lc-sheet-item-arrow{ color:var(--cat); flex-shrink:0; }
+.lc-sheet-item-arrow svg{ width:14px; height:14px; }
+
 @media (max-width:640px){
   .lc-main{ grid-template-columns:1fr; }
   .lc-rail{ display:none; }
@@ -141,6 +164,7 @@ body{ background:var(--paper); font-family:'Barlow',system-ui,sans-serif; color:
   .lc-hero, .lc-cal-section, .lc-main{ padding-left:18px; padding-right:18px; }
   .lc-fuente{ flex-direction:column; gap:3px; }
   .lc-fuente-medio{ min-width:0; }
+  .lc-fab{ display:flex; }
 }
 </style>
 </head>
@@ -220,6 +244,22 @@ body{ background:var(--paper); font-family:'Barlow',system-ui,sans-serif; color:
     <a class="lc-brand" href="/">Boli<span>métrica</span></a>
     <div class="lc-foot-meta">© 2026 Bolimétrica</div>
   </footer>
+
+  <!-- FAB + Sheet (solo visible en mobile) -->
+  <button class="lc-fab" id="lc-fab" aria-label="Ir a fecha">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  </button>
+  <div class="lc-sheet-backdrop" id="lc-sheet-backdrop"></div>
+  <div class="lc-sheet" id="lc-sheet" role="dialog" aria-label="Ir a fecha">
+    <div class="lc-sheet-grab"></div>
+    <div class="lc-sheet-head">
+      <div class="lc-sheet-title" id="lc-sheet-title">Ir a fecha</div>
+      <button class="lc-sheet-close" id="lc-sheet-close" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lc-sheet-body" id="lc-sheet-body"></div>
+  </div>
 
 <script>
 (function(){
@@ -349,6 +389,43 @@ body{ background:var(--paper); font-family:'Barlow',system-ui,sans-serif; color:
     var tgt=document.getElementById("day-"+cell.getAttribute("data-day"));
     if(tgt)tgt.scrollIntoView({behavior:"smooth",block:"start"});
   });
+  // ── FAB + Sheet (mobile) ──
+  var fab=document.getElementById("lc-fab");
+  var sheet=document.getElementById("lc-sheet");
+  var sheetBackdrop=document.getElementById("lc-sheet-backdrop");
+  var sheetBody=document.getElementById("lc-sheet-body");
+  var sheetClose=document.getElementById("lc-sheet-close");
+  var sheetTitle=document.getElementById("lc-sheet-title");
+  if(fab && sheet && DIAS.length>0){
+    sheetTitle.textContent="Ir a fecha · "+DIAS.length+(DIAS.length===1?" día":" días");
+    var arrowR='<div class="lc-sheet-item-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></div>';
+    var shtml="";
+    DIAS.forEach(function(d){
+      var fecha=parseYMD(d.fecha);
+      var fechaCorta=fecha.toLocaleDateString("es-BO",{day:"2-digit",month:"short",year:"numeric"}).replace(/\./g,"");
+      var tag=d.ultimo?'<span class="lc-sheet-item-tag">Último</span>':'';
+      shtml+='<button class="lc-sheet-item" data-target="day-'+d.fecha+'">'
+          +'<div class="lc-sheet-item-left">'
+          +'<div class="lc-sheet-item-date">'+fechaCorta+tag+'</div>'
+          +'<div class="lc-sheet-item-count">'+d.temas.length+(d.temas.length===1?" tema":" temas")+'</div>'
+          +'</div>'+arrowR+'</button>';
+    });
+    sheetBody.innerHTML=shtml;
+    function openSheet(){sheet.classList.add("open");sheetBackdrop.classList.add("open");document.body.style.overflow="hidden";}
+    function closeSheet(){sheet.classList.remove("open");sheetBackdrop.classList.remove("open");document.body.style.overflow="";}
+    fab.addEventListener("click",openSheet);
+    sheetBackdrop.addEventListener("click",closeSheet);
+    sheetClose.addEventListener("click",closeSheet);
+    sheetBody.addEventListener("click",function(e){
+      var b=e.target.closest(".lc-sheet-item");
+      if(!b)return;
+      var tgt=document.getElementById(b.getAttribute("data-target"));
+      closeSheet();
+      if(tgt)setTimeout(function(){tgt.scrollIntoView({behavior:"smooth",block:"start"});},120);
+    });
+  } else if(fab){
+    fab.style.display="none";
+  }
 })();
 </script>
 </body>
