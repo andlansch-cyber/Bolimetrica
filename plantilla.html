@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bolimétrica | Historial</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Barlow+Condensed:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
           theme: {
@@ -29,6 +29,46 @@
             padding: 1rem 1.5rem;
             text-align: center;
         }
+
+        /* ── Paywall visual (archivo) ── */
+        body:not(.bm-unlocked) [data-bm-premium] {
+            filter: blur(7px);
+            -webkit-filter: blur(7px);
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #bm-paywall-overlay {
+            position: relative;
+            z-index: 50;
+        }
+        body.bm-unlocked #bm-paywall-overlay {
+            display: none !important;
+        }
+
+        /* Badge de suscriptor */
+        #bm-badge {
+            display: none;
+        }
+        body.bm-unlocked #bm-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #c8880a;
+            background: rgba(200,136,10,0.08);
+            border: 1px solid rgba(200,136,10,0.2);
+            padding: 4px 10px;
+            border-radius: 999px;
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 999;
+        }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen">
@@ -49,7 +89,7 @@
 
             <div class="p-8 border-b border-slate-100 bg-slate-50/50">
                 <h1 class="font-display text-4xl font-bold text-brandBlue uppercase tracking-tight">Archivo de Informes</h1>
-                <p class="text-slate-500 text-sm">Cronología de monitoreo digital en Bolivia. Mostrando solo los informes de los últimos 7 días.</p>
+                <p class="text-slate-500 text-sm">Cronología de monitoreo digital en Bolivia. Mostrando solo los informes de los últimos 15 días.</p>
             </div>
 
             <div class="divide-y divide-slate-100">
@@ -65,33 +105,33 @@
         </div>
     </main>
 
+    <!-- Badge de suscriptor -->
+    <div id="bm-badge">✦ Suscriptor</div>
+
     <script>
+      // ── Countdown del informe de hoy ──
       (function () {
         const btnHoy       = document.getElementById("btn-hoy");
         const countdownBox = document.getElementById("countdown-box");
         const timer        = document.getElementById("countdown-timer");
 
-        // Si no hay informe de hoy en la página, no hacer nada
         if (!btnHoy) return;
 
         function ahoraBolivia() {
-          // Bolivia es UTC-4, sin horario de verano
           const ahora = new Date();
           return new Date(ahora.toLocaleString("en-US", { timeZone: "America/La_Paz" }));
         }
 
         function actualizarEstado() {
           const ahora   = ahoraBolivia();
-          const hora9   = new Date(ahora);
-          hora9.setHours(9, 0, 0, 0);
-          const diff    = hora9 - ahora;
+          const hora7   = new Date(ahora);
+          hora7.setHours(7, 0, 0, 0);
+          const diff    = hora7 - ahora;
 
           if (diff <= 0) {
-            // Ya pasaron las 9:00 AM → mostrar botón, ocultar countdown
             btnHoy.style.display       = "inline-block";
             countdownBox.style.display = "none";
           } else {
-            // Antes de las 9:00 AM → ocultar botón, mostrar countdown
             btnHoy.style.display       = "none";
             countdownBox.style.display = "block";
 
@@ -109,27 +149,121 @@
         setInterval(actualizarEstado, 1000);
       })();
 
-      // Countdown global (banner superior)
+      // ── Countdown global (banner superior) ──
       (function () {
         const cdEl = document.getElementById("plantilla-countdown-text");
         if (!cdEl) return;
         function actualizar() {
             const ahora = new Date(new Date().toLocaleString("en-US", { timeZone: "America/La_Paz" }));
             const meta  = new Date(ahora);
-            if (ahora.getHours() >= 9) meta.setDate(meta.getDate() + 1);
-            meta.setHours(9, 0, 0, 0);
+            if (ahora.getHours() >= 7) meta.setDate(meta.getDate() + 1);
+            meta.setHours(7, 0, 0, 0);
             const diff = meta - ahora;
             const h = String(Math.floor(diff / 3600000)).padStart(2, "0");
             const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
             const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
-            const prefijo = ahora.getHours() >= 9 ? "Próxima actualización en" : "Disponible en";
+            const prefijo = ahora.getHours() >= 7 ? "Próxima actualización en" : "Disponible en";
             cdEl.textContent = `${prefijo} ${h}:${m}:${s}`;
         }
         actualizar();
         setInterval(actualizar, 1000);
       })();
+
+      // ══════════════════════════════════════════════════════════
+      // Paywall — Activación por código (mismo localStorage)
+      // ══════════════════════════════════════════════════════════
+      (function() {
+        // Utilidad SHA-256
+        async function sha256(text) {
+          var enc = new TextEncoder().encode(text.trim().toUpperCase());
+          var buf = await crypto.subtle.digest('SHA-256', enc);
+          return Array.from(new Uint8Array(buf)).map(function(b) {
+            return b.toString(16).padStart(2, '0');
+          }).join('');
+        }
+
+        // Verificar localStorage
+        function checkStored() {
+          try {
+            var stored    = localStorage.getItem('bm_code');
+            var storedExp = localStorage.getItem('bm_expires');
+            if (stored && storedExp) {
+              var now = new Date().toISOString().slice(0, 10);
+              if (now <= storedExp) {
+                document.body.classList.add('bm-unlocked');
+                return true;
+              } else {
+                localStorage.removeItem('bm_code');
+                localStorage.removeItem('bm_expires');
+              }
+            }
+          } catch(e) {}
+          return false;
+        }
+
+        // Activación por código (sin hashes embebidos — valida contra
+        // el mismo localStorage que ya fue activado en un reporte).
+        // Si el usuario llega aquí sin haber activado antes, ingresa
+        // su código; lo hasheamos y guardamos. La validación real
+        // ocurrió en el reporte (que tiene los hashes). Aquí solo
+        // necesitamos que bm_code exista y no haya expirado.
+        //
+        // Para permitir activación directa desde esta página también,
+        // aceptamos cualquier código con formato BM-XXXXX y lo
+        // guardamos por 30 días. La validación definitiva ocurre
+        // cuando abren un reporte con los hashes embebidos.
+        window.bmActivar = async function() {
+          var input = document.getElementById('bm-code-input');
+          var msg   = document.getElementById('bm-code-msg');
+          if (!input || !msg) return;
+
+          var code = input.value.trim().toUpperCase();
+          if (!code) {
+            msg.textContent = 'Ingresa un código';
+            msg.style.color = '#ba3030';
+            return;
+          }
+
+          // Validar formato mínimo
+          if (!/^BM-[A-Z0-9]{4,}$/.test(code)) {
+            msg.textContent = 'Formato inválido (BM-XXXX)';
+            msg.style.color = '#ba3030';
+            input.value = '';
+            return;
+          }
+
+          var hash = await sha256(code);
+
+          // Guardar en localStorage (mismo que usan reportes y líneas)
+          // Expiración: 30 días desde hoy como fallback.
+          // Cuando abran un reporte, el JS de ese reporte validará
+          // contra los hashes reales y ajustará la fecha si corresponde.
+          var expDate = new Date();
+          expDate.setDate(expDate.getDate() + 30);
+          var expStr = expDate.toISOString().slice(0, 10);
+
+          try {
+            localStorage.setItem('bm_code', hash);
+            localStorage.setItem('bm_expires', expStr);
+          } catch(e) {}
+
+          document.body.classList.add('bm-unlocked');
+          msg.textContent = '✓ Código activado';
+          msg.style.color = '#27ac3d';
+        };
+
+        // Enter key
+        var inp = document.getElementById('bm-code-input');
+        if (inp) {
+          inp.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') bmActivar();
+          });
+        }
+
+        // Check al cargar
+        checkStored();
+      })();
     </script>
 </body>
 </html>
 
-// esto continuara...
