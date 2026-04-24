@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260424</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+</style>
+<meta content="Bolimétrica · 2026-04-24" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-04-24-M9qY7V.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">168</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">21</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">20</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 24-ABRIL-2026</strong><br/>
+        Reporte N° B24-20260424<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_8" onclick="openModal('modal_8')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-11)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-11)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="top3-title">Escasez de diésel genera bloqueos</div>
+<div class="top3-body">Persiste el desabastecimiento de diésel con largas filas y reducción de suministro denunciada por Asosur, lo que derivó en bloqueos de transportistas en La Paz; en paralelo, productores y surtidores en Cochabamba se declaran en emergencia y piden autorización para importar directamente el carburante y evitar la paralización productiva.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">23</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_14" onclick="openModal('modal_14')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-18)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-18)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="top3-title">Bolivia y Chile reactivan agenda bilateral</div>
+<div class="top3-body">Los cancilleres de Bolivia y Chile sostuvieron encuentros en el paso fronterizo de Tambo Quemado y en La Paz para reactivar la agenda bilateral y restablecer mecanismos de diálogo. Se suscribieron acuerdos de cooperación estratégica y económica para fortalecer la relación entre ambas naciones.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-18)">19</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-18)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_11" onclick="openModal('modal_11')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-11)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-11)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="top3-title">Nuevo ministro asume en crisis energética</div>
+<div class="top3-body">La crisis de combustibles derivó en cambios en el sector hidrocarburos, con la posesión de Marcelo Blanco como nuevo ministro en reemplazo de Medinaceli; tras asumir, anunció una reingeniería institucional y reestructuración de personal, mientras se proyecta una nueva ley y persisten exigencias de soluciones al desabastecimiento de diésel.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">18</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-11)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-11)"></div></div>
+<div class="cat-n">57</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">1.</span> Escasez de diésel genera bloqueos</li><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">3.</span> Nuevo ministro asume en crisis energética</li><li onclick="scrollToCard('card_16'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">4.</span> Designan presidente interino de YPFB en medio de crisis</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOMIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:60%;background:var(--c-02)"></div></div>
+<div class="cat-n">34</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOMIA"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">5.</span> Empresas públicas en quiebra técnica</li><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">6.</span> Diputados aprueban ley de alivio tributario</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">8.</span> Procuraduría investiga fallo arbitral millonario</li><li onclick="scrollToCard('card_N009'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">21.</span> Aprueban créditos para energía renovable</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:33%;background:var(--c-18)"></div></div>
+<div class="cat-n">19</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">2.</span> Bolivia y Chile reactivan agenda bilateral</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:28%;background:var(--c-05)"></div></div>
+<div class="cat-n">16</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">9.</span> Inicia transición en Gobernación de La Paz</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">12.</span> Paz plantea desideologizar Fuerzas Armadas</li><li onclick="scrollToCard('card_N005'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">16.</span> Proponen sede parlamentaria en UNIPOL</li><li onclick="scrollToCard('card_N007'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">18.</span> Aprueban ley de reintegración familiar</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:23%;background:var(--c-07)"></div></div>
+<div class="cat-n">13</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">10.</span> Denuncian agresión policial a periodistas</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">13.</span> Estudiante apuñala a profesor en Oruro</li><li onclick="scrollToCard('card_N008'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">19.</span> Investigan asaltos vinculados al oro</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:21%;background:var(--c-08)"></div></div>
+<div class="cat-n">12</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">11.</span> Mineros rompen diálogo con el Gobierno</li><li onclick="scrollToCard('card_N004'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">15.</span> Magisterio convoca marchas salariales</li><li onclick="scrollToCard('card_3b'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">20.</span> Gobierno frena ley agraria tras protestas</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:18%;background:var(--c-21)"></div></div>
+<div class="cat-n">10</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_3a'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">7.</span> Suspenden sesión legislativa en Santa Cruz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-10)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">14.</span> Investigan caso Mutualista en Santa Cruz</li><li onclick="scrollToCard('card_N006'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">17.</span> Sentencian exfuncionarios por corrupción</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye los 29 temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">26</td>
+</tr>
+<tr>
+<td class="freq-word">diésel</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:86%"></div>
+</div>
+</td>
+<td class="freq-count">21</td>
+</tr>
+<tr>
+<td class="freq-word">alivio tributario</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">quiebra técnica</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">ley de alivio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">sebastián daroca</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:48%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">ministro de hidrocarburos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:48%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">empresas públicas</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:44%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">cancilleres de chile</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:44%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">ministro blanco</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:40%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Escasez de diésel genera bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">23</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Bolivia y Chile reactivan agenda bilateral
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:82.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">19</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Nuevo ministro asume en crisis energética
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:78.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">18</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Designan presidente interino de YPFB en medio de crisis
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:69.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">16</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Empresas públicas en quiebra técnica
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:56.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">13</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Diputados aprueban ley de alivio tributario
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:47.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">11</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Suspenden sesión legislativa en Santa Cruz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:43.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">10</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Procuraduría investiga fallo arbitral millonario
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:30.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Inicia transición en Gobernación de La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Denuncian agresión policial a periodistas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Mineros rompen diálogo con el Gobierno
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Paz plantea desideologizar Fuerzas Armadas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Estudiante apuñala a profesor en Oruro
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Investigan caso Mutualista en Santa Cruz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N004')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Magisterio convoca marchas salariales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N005')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Proponen sede parlamentaria en UNIPOL
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N006')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Sentencian exfuncionarios por corrupción
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N007')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Aprueban ley de reintegración familiar
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N008')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Investigan asaltos vinculados al oro
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Gobierno frena ley agraria tras protestas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N009')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            Aprueban créditos para energía renovable
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_16" onclick="openModal('modal_16')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Designan presidente interino de YPFB en medio de crisis</div>
+<div class="topic-body">Rodrigo Paz posesionó a Sebastián Daroca como presidente interino de YPFB en medio de una crisis institucional tras la renuncia de su antecesor y críticas a la gestión; Daroca se comprometió a resolver el desabastecimiento de combustibles y encarar cambios en la estatal.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>13</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMIA</div>
+<div class="topic-title">Empresas públicas en quiebra técnica</div>
+<div class="topic-body">El Gobierno y la OFEP informaron que 15 empresas públicas bolivianas se encuentran en quiebra técnica, acumulando pérdidas superiores a los Bs 2.655 millones. El reporte describe una situación financiera crítica heredada, señalando que varias de estas firmas operan con deudas millonarias.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>13</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_4" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMIA</div>
+<div class="topic-title">Diputados aprueban ley de alivio tributario</div>
+<div class="topic-body">La Cámara de Diputados aprobó en sus estaciones en grande y detalle el proyecto de Ley de Alivio Tributario. La norma, que contempla la condonación y regularización de deudas impositivas, fue remitida al Senado para su tratamiento tras ser impulsada por el Ejecutivo liderado por Rodrigo Paz.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3a" onclick="openModal('modal_3a')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">LEGISLATIVA</div>
+<div class="topic-title">Suspenden sesión legislativa en Santa Cruz</div>
+<div class="topic-body">La Asamblea Legislativa Departamental de Santa Cruz suspendió su sesión tras incidentes y falta de quórum. La reunión pretendía tratar modificaciones a la Ley de Organización Legislativa y el reglamento interno, acciones cuestionadas por el MAS y otros sectores en pleno proceso de transición.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMIA</div>
+<div class="topic-title">Procuraduría investiga fallo arbitral millonario</div>
+<div class="topic-body">La Procuraduría General del Estado activa auditorías y busca determinar responsables tras el fallo arbitral millonario a favor del BBVA.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Inicia transición en Gobernación de La Paz</div>
+<div class="topic-body">Santos Quispe y Luis Revilla iniciaron formalmente el proceso de transición en la Gobernación de La Paz en un ambiente de cordialidad. El gobernador electo y el saliente se comprometieron a realizar un traspaso de mando técnico y sin persecuciones políticas, priorizando la gestión regional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Denuncian agresión policial a periodistas</div>
+<div class="topic-body">La dirigencia de la prensa paceña y el Gobierno nacional se pronunciaron tras la agresión policial a periodistas que cubrían una protesta de maestros en La Paz. Mientras el gremio anuncia procesos penales por el uso de gases, el Ejecutivo rechaza los hechos y garantiza la seguridad del sector.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Mineros rompen diálogo con el Gobierno</div>
+<div class="topic-body">Mineros cooperativistas de Fencomin rompieron el diálogo con el Gobierno ante la inasistencia del presidente Rodrigo Paz a la reunión pactada. El sector, que demanda soluciones por la falta de diésel y explosivos, advirtió consecuencias tras abandonar la mesa de negociación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Paz plantea desideologizar Fuerzas Armadas</div>
+<div class="topic-body">El presidente Rodrigo Paz cuestionó el sesgo ideológico de los últimos 20 años en las Fuerzas Armadas y llamó a recuperar el compromiso institucional con la patria. Paz marcó el año 2026 como un punto de cambio para desideologizar la entidad y fortalecer su rol constitucional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Estudiante apuñala a profesor en Oruro</div>
+<div class="topic-body">Un estudiante de secundaria fue aprehendido en Oruro tras apuñalar a su profesor durante una entrevista sobre su rendimiento académico. El ataque ocurrió luego de que el docente citara a los padres del menor. El hecho ha generado alarma por los niveles de violencia en el entorno educativo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigan caso Mutualista en Santa Cruz</div>
+<div class="topic-body">La Fiscalía de Santa Cruz evalúa citar al alcalde y a funcionarios municipales como testigos en la investigación del caso Mutualista. En el marco de estas pesquisas, una jueza acusada se presentó ante las autoridades, mientras la parte denunciante destaca avances en el proceso judicial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N004" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Magisterio convoca marchas salariales</div>
+<div class="topic-body">El magisterio urbano y rural convoca a marchas y medidas de presión en demanda de incremento salarial y atención a su pliego sectorial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N005" onclick="openModal('modal_N005')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Proponen sede parlamentaria en UNIPOL</div>
+<div class="topic-body">Propuesta de transferir la sede del Parlamento de la UNASUR a la Universidad Policial (UNIPOL).</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N006" onclick="openModal('modal_N006')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Sentencian exfuncionarios por corrupción</div>
+<div class="topic-body">Sentencian a exfuncionarios de la Agencia Estatal de Vivienda por manipular datos para favorecer irregularmente a una constructora.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N007" onclick="openModal('modal_N007')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Aprueban ley de reintegración familiar</div>
+<div class="topic-body">Aprobación de una nueva ley de reintegración familiar que busca garantizar el derecho de niños y adolescentes a vivir en familia.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N008" onclick="openModal('modal_N008')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Investigan asaltos vinculados al oro</div>
+<div class="topic-body">Investigación y procesos judiciales contra los autores de asaltos millonarios vinculados al comercio de oro en la ciudad de La Paz.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3b" onclick="openModal('modal_3b')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Gobierno frena ley agraria tras protestas</div>
+<div class="topic-body">El Gobierno nacional frenó la reglamentación de la Ley 1720 y alcanzó acuerdos con la Cidob para modificar la normativa agraria. En paralelo, la agrupación Alianza Popular impulsa la abrogación de dicha ley en respaldo a las movilizaciones y marchas del sector campesino.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N009" onclick="openModal('modal_N009')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMIA</div>
+<div class="topic-title">Aprueban créditos para energía renovable</div>
+<div class="topic-body">La Cámara de Diputados aprueba diversos créditos internacionales para proyectos de energía renovable, plantas solares y empleos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260423_ine-economia-boliviana-cayo-1-58-el-ano-2025.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">INE: Economía boliviana cayó 1,58% el año 2025</a></div>
+<div class="emergente-sum">El INE reporta que la economía boliviana sufrió una contracción del 1,58% durante la gestión 2025.</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/defensa-de-marset-denuncia-espionaje-ilegal-de-la-dea-en-bolivia-y-busca-anular-juicio-en-ee-uu/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Defensa de Marset denuncia “ESPIONAJE ILEGAL de la DEA en BOLIVIA” y busca anular juicio en EE.UU.</a></div>
+<div class="emergente-sum">La defensa de Sebastián Marset denuncia espionaje ilegal de la DEA en Bolivia para anular juicios en EE.UU.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpais.bo/nacional/20260423_paz-se-reune-con-los-comandantes-del-ejercito-en-plena-ola-de-protestas-sociales.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Paz se reune con los comandantes del Ejército en plena ola de protestas sociales</a></div>
+<div class="emergente-sum">El presidente Rodrigo Paz se reúne con los comandantes del Ejército en medio de una ola de protestas sociales.</div>
+<div class="emergente-source">Fuente: El País (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/economia/impuestos-corrige-una-resolucion-normativa-con-un-post-en-facebook-especialista-alerta-controversia-juridica" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Impuestos corrige una Resolución Normativa con un post en Facebook; especialista alerta controversia jurídica</a></div>
+<div class="emergente-sum">Controversia jurídica por la corrección de una Resolución Normativa de Impuestos a través de un post en Facebook.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://dtv.bo/gobernaciones-en-bancarrota-autoridades-buscan-50-50-con-paz/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">“Gobernaciones en bancarrota”: autoridades buscan 50/50 con Paz</a></div>
+<div class="emergente-sum">Gobernaciones se declaran en bancarrota y exigen al Gobierno nacional una coparticipación del 50/50.</div>
+<div class="emergente-source">Fuente: DTV</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260424 · 2026-04-24</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 168 titulares · 21 temas · 8 categorías · 20 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Escasez de diésel genera bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Escasez de diésel genera bloqueos</div>
+<div class="modal-sum">Persiste el desabastecimiento de diésel con largas filas y reducción de suministro denunciada por Asosur, lo que derivó en bloqueos de transportistas en La Paz; en paralelo, productores y surtidores en Cochabamba se declaran en emergencia y piden autorización para importar directamente el carburante y evitar la paralización productiva.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">23</strong> titulares</span>
+<span><strong style="color:var(--c-11)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/23/productores-de-cochabamba-piden-al-gobierno-importar-diesel-ante-la-falta-del-carburante-59862" rel="noopener noreferrer" target="_blank">Productores de Cochabamba piden al gobierno importar diesel ante la falta del carburante</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/pais/duenos-de-surtidores-en-cochabamba-se-declaran-en-emergencia-por-falta-de-diesel.html" rel="noopener noreferrer" target="_blank">Dueños de surtidores en Cochabamba se declaran en emergencia por falta de diésel</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/comercializadores-de-combustibles-en-cochabamba-se-declaran-en-emergencia-por" rel="noopener noreferrer" target="_blank">Comercializadores de combustibles en Cochabamba se declaran en emergencia por desabastecimiento de diésel</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/productores-de-cochabamba-buscaran-permiso-para-importar-diesel/" rel="noopener noreferrer" target="_blank">Productores de Cochabamba buscarán permiso para importar diésel - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/agropecuarios-de-cochabamba-piden-importacion-directa-de-diesel-para-evitar-la-paralizacion-de-la-produccion-DC20220416" rel="noopener noreferrer" target="_blank">Agropecuarios de Cochabamba piden importación directa de diésel para “evitar la paralización de la producción”</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/desabastecimiento-de-diesel-en-varios-departamentos-se-agrava-y-aumenta-presion-para-el-gobierno" rel="noopener noreferrer" target="_blank">Desabastecimiento de diésel en varios departamentos se agrava y aumenta presión para el Gobierno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/se-agrava-la-crisis-del-combustible-bloqueos-en-la-autopista-filas-en-surtidores-y-reclamos-de-asosur-59883" rel="noopener noreferrer" target="_blank">Se agrava la crisis del combustible: bloqueos en la autopista, filas en surtidores y reclamos de Asosur</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/regresan-las-filas-por-diesel-en-surtidores-de-la-paz-cochabamba-y-santa-cruz-59852" rel="noopener noreferrer" target="_blank">Regresan las filas por diésel en surtidores de La Paz, Cochabamba y Santa Cruz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/23/pumakatari-reduce-su-servicio-al-50-por-falta-de-diesel-y-advierten-que-solo-priorizaran-cuatro-rutas-59853" rel="noopener noreferrer" target="_blank">Pumakatari reduce su servicio al 50% por falta de diésel y advierten que solo priorizarán cuatro rutas</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/no-hemos-cargado-ni-un-solo-bus-falta-de-diesel-afecta-al-servicio-de-pumakatari-dice-la-paz-bus/" rel="noopener noreferrer" target="_blank">“No hemos cargado ni un solo bus”: Falta de diésel afecta al servicio de PumaKatari, dice La Paz Bus</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/levantan-bloqueo-en-bermejo-pero-persisten-protestas-por-combustible-y-carreteras-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Levantan bloqueo en Bermejo, pero persisten protestas por combustible y carreteras en Santa Cruz</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/estaciones-de-servicio-en-la-paz-denuncian-corte-de-diesel-y-grave-reduccion-de-combustibles/" rel="noopener noreferrer" target="_blank">Estaciones de servicio en La Paz denuncian corte de diésel y grave reducción de combustibles</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/pais/surtidores-en-emergencia-mas-colas-y-merma-de-los-volumenes-agravan-la-crisis-por-falta-de-diesel.html" rel="noopener noreferrer" target="_blank">Surtidores en emergencia, más colas y merma de los volúmenes agravan la crisis por falta de diésel</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/23/asosur-denuncia-falta-de-diesel-en-la-paz-y-exige-provision-inmediata/" rel="noopener noreferrer" target="_blank">Asosur denuncia falta de diésel en La Paz y exige provisión inmediata</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/asosur-denuncia-una-reduccion-sostenida-de-combustible-y-no-recibe-diesel-desde-el-22-de-abril/" rel="noopener noreferrer" target="_blank">Asosur denuncia una “reducción sostenida” de combustible y no recibe diésel desde el 22 de abril</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-paz-transportistas-activan-bloqueos-en-demanda-de-diesel-e-impiden-el-paso-a-la-terminal/" rel="noopener noreferrer" target="_blank">La Paz: Transportistas activan bloqueos en demanda de diésel e impiden el paso a la Terminal</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/transportistas-levantan-bloqueos-y-esperan-respuestas-del-nuevo-ministro-de-hidrocarburos-2026423135821" rel="noopener noreferrer" target="_blank">Transportistas levantan bloqueos y esperan respuestas del nuevo ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/transportistas-activan-bloqueo-en-la-autopista-de-la-paz-por-las-filas-por-diesel-LC20224690" rel="noopener noreferrer" target="_blank">Transportistas activan bloqueo en la autopista de La Paz por las filas por diésel</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44529-asosur-denuncia-reduccion-en-el-suministro-de-combustibles-y-alerta-que-no-se-despacha-diesel-en-la-paz-desde-el-22-de-abril" rel="noopener noreferrer" target="_blank">Asosur denuncia reducción en el suministro de combustibles y alerta que no se despacha diésel en La Paz desde el 22 de abril</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/gobierno-garantiza-normalizacion-del-diesel-desde-este-viernes/" rel="noopener noreferrer" target="_blank">Gobierno garantiza normalización del diésel desde este viernes - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/crisis-por-combustible-en-bolivia-renuncias-y-advertencias/" rel="noopener noreferrer" target="_blank">Crisis por combustible en Bolivia: renuncias y advertencias - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/crisis-de-diesel-en-bolivia-afecta-produccion-canera/" rel="noopener noreferrer" target="_blank">Crisis de diésel en Bolivia afecta producción cañera - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/escasez-de-diesel-en-bolivia-afecta-produccion-agricola/" rel="noopener noreferrer" target="_blank">Escasez de diésel en Bolivia afecta producción agrícola - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Bolivia y Chile reactivan agenda bilateral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Bolivia y Chile reactivan agenda bilateral</div>
+<div class="modal-sum">Los cancilleres de Bolivia y Chile sostuvieron encuentros en el paso fronterizo de Tambo Quemado y en La Paz para reactivar la agenda bilateral y restablecer mecanismos de diálogo. Se suscribieron acuerdos de cooperación estratégica y económica para fortalecer la relación entre ambas naciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">19</strong> titulares</span>
+<span><strong style="color:var(--c-18)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/cancilleres-de-bolivia-y-chile-destacan-mirada-al-futuro-e-impulso-para-restablecer-relaciones" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile destacan mirada al futuro e impulso para restablecer relaciones</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bolivia-y-chile-acuerdan-abrir-negociacion-para-nuevo-convenio-comercial" rel="noopener noreferrer" target="_blank">Bolivia y Chile acuerdan abrir negociación para nuevo convenio comercial</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/23/cancilleres-de-chile-y-bolivia-se-dieron-un-apreton-de-manos-en-chungaratambo-quemado-para-fortalecer-los-lazos-economicos--59856" rel="noopener noreferrer" target="_blank">Cancilleres de Chile y Bolivia se dieron un apretón de manos en Tambo Quemado para fortalecer los lazos económicos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/23/bolivia-y-chile-suscriben-un-acuerdo-de-cooperacion-en-cuatro-temas-estrategicos-59881" rel="noopener noreferrer" target="_blank">Bolivia y Chile suscriben un acuerdo de cooperación en cuatro temas estratégicos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cancilleres-bolivia-chile-reunen-tambo-quemado-trasladan-delegaciones-paz_1776953900" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile se reúnen en Tambo Quemado y trasladan delegaciones a La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-chile-apuestan-cooperacion-mutua-pese-diferencias-historicas_1776991841" rel="noopener noreferrer" target="_blank">Bolivia y Chile apuestan por la cooperación mutua pese a sus "diferencias históricas"</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-23/politica/cancilleres-de-chile-y-bolivia-se-encuentran-en-frontera-sostendran-reuniones-en-la-paz-y-santa-cruz.html" rel="noopener noreferrer" target="_blank">Cancilleres de Chile y Bolivia se encuentran en frontera; sostendrán reuniones en La Paz y Santa Cruz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_cancilleres-de-chile-y-bolivia-se-encuentran-en-frontera-y-sostendran-reuniones.html" rel="noopener noreferrer" target="_blank">Cancilleres de Chile y Bolivia se encuentran en frontera y sostendrán reuniones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/bolivia-y-chile-impulsan-agenda-bilateral-en-la-sede-de-gobierno/" rel="noopener noreferrer" target="_blank">Bolivia y Chile impulsan agenda bilateral en la sede de Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/cancilleres-de-bolivia-y-chile-inician-reuniones-bilaterales-en-tambo-quemado/" rel="noopener noreferrer" target="_blank">Cancilleres de Bolivia y Chile inician reuniones bilaterales en Tambo Quemado</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260423/chile-anuncia-avance-tratado-libre-comercio-bolivia" rel="noopener noreferrer" target="_blank">Chile anuncia avance hacia tratado de libre comercio con Bolivia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/canciller-de-bolivia-y-chile-se-reunen-en-la-frontera-antes-de-trasladarse-a-la-paz/" rel="noopener noreferrer" target="_blank">Canciller de Bolivia y Chile se reúnen en la frontera antes de trasladarse a La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/bolivia-y-chile-suscriben-acuerdos-de-cooperacion-y-restablecen-mecanismos-de-dialogo-bilateral/" rel="noopener noreferrer" target="_blank">Bolivia y Chile suscriben acuerdos de cooperación y restablecen mecanismos de diálogo bilateral</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/bolivia-y-chile-inician-acercamiento-diplomatico-con-reunion-en-frontera" rel="noopener noreferrer" target="_blank">Bolivia y chile inician acercamiento diplomático con reunión en frontera</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/encuentro-en-frontera-marca-inicio-de-acercamiento-diplomatico-entre-bolivia-y-chile-202642310127" rel="noopener noreferrer" target="_blank">Encuentro en frontera marca inicio de acercamiento diplomático entre Bolivia y Chile</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/mirando-al-futuro-medios-chilenos-resaltan-encuentro-con-bolivia-2026423133745" rel="noopener noreferrer" target="_blank">"Mirando al futuro": Medios chilenos resaltan encuentro con Bolivia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44451-los-cancilleres-de-bolivia-y-chile-se-reunen-en-la-frontera-y-dan-paso-a-una-renovada-agenda-bilateral" rel="noopener noreferrer" target="_blank">Los cancilleres de Bolivia y Chile se reúnen en la frontera y dan paso a una renovada agenda bilateral</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44502-los-cancilleres-de-bolivia-y-chile-se-reunen-en-la-paz-y-dan-inicio-a-una-nueva-etapa-con-mirada-al-futuro" rel="noopener noreferrer" target="_blank">Los cancilleres de Bolivia y Chile se reúnen en La Paz y dan inicio a una nueva etapa con mirada al futuro</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44562-bolivia-y-chile-estrechan-lazos-firman-acuerdos-de-lucha-contra-el-crimen-organizado-y-coordinan-una-agenda-politica-y-economica" rel="noopener noreferrer" target="_blank">Bolivia y Chile estrechan lazos, firman acuerdos de lucha contra el crimen organizado y coordinan una agenda política y económica</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Nuevo ministro asume en crisis energética" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Nuevo ministro asume en crisis energética</div>
+<div class="modal-sum">La crisis de combustibles derivó en cambios en el sector hidrocarburos, con la posesión de Marcelo Blanco como nuevo ministro en reemplazo de Medinaceli; tras asumir, anunció una reingeniería institucional y reestructuración de personal, mientras se proyecta una nueva ley y persisten exigencias de soluciones al desabastecimiento de diésel.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">18</strong> titulares</span>
+<span><strong style="color:var(--c-11)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/23/legisladores-ven-tardio-el-cambio-en-hidrocarburos-y-exigen-soluciones-por-crisis-de-combustibles-59866" rel="noopener noreferrer" target="_blank">Legisladores ven tardío el cambio en Hidrocarburos y exigen soluciones a la crisis de combustibles</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/presidenta-ypfb-ministro-salen-crisis-combustibles_1776943024" rel="noopener noreferrer" target="_blank">Presidenta de YPFB y un ministro salen por crisis de combustibles</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/dos-ministros-y-dos-presidentes-de-ypfb-en-cinco-meses-la-crisis-de-combustibles-se-profundiza/" rel="noopener noreferrer" target="_blank">Dos ministros y dos presidentes de YPFB en cinco meses: la crisis de combustibles se profundiza</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260423/oposicion-pide-solucion-carburantes-antes-reingenieria-ypfb-anunciada-paz" rel="noopener noreferrer" target="_blank">Oposición pide solución sobre carburantes antes de la reingeniería en YPFB anunciada por Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/estamos-en-un-momento-critico-ministro-justiniano-espera-que-ypfb-garantice-el-diesel-para-el-sector-productivo/" rel="noopener noreferrer" target="_blank">“Estamos en un momento crítico”: Ministro Justiniano espera que YPFB garantice el diésel para el sector productivo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/respaldan-cambio-en-hidrocarburos-y-exigen-resultados-inmediatos-a-blanco-2026423134325" rel="noopener noreferrer" target="_blank">Respaldan cambio en Hidrocarburos y exigen resultados inmediatos a Blanco</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ministro-blanco-anuncia-cambios-estructurales-en-ypfb-tras-asumir-el-cargo-2026423224536" rel="noopener noreferrer" target="_blank">Ministro Blanco proyecta reingeniería en YPFB y nueva Ley de Hidrocarburos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/legisladores-piden-solucion-sobre-carburantes-antes-de-la-reingenieria-en-ypfb-anunciada-por" rel="noopener noreferrer" target="_blank">Legisladores piden solución sobre carburantes antes de la reingeniería en YPFB anunciada por Paz</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260423/argollo-califica-momia-al-nuevo-ministro-hidrocarburos-ve-improvisacion-del" rel="noopener noreferrer" target="_blank">Argollo califica de “momia” al nuevo ministro de Hidrocarburos y ve improvisación del Gobierno</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260423_paz-cesa-a-medinaceli-y-nombra-ministro-de-hidrocarburos-a-marcelo-blanco.html" rel="noopener noreferrer" target="_blank">Paz cesa a Medinaceli y nombra Ministro de Hidrocarburos a Marcelo Blanco</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/nuevo-ministro-de-hidrocarburos-las-personas-que-han-trabajado-en-el-anterior-gobierno-se-tienen-que-ir" rel="noopener noreferrer" target="_blank">Nuevo ministro de Hidrocarburos: Las personas que han trabajado en el anterior gobierno, se tienen que ir</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/blanco-advierte-depuracion-en-hidrocarburos-quienes-hicieron-dano-al-gobierno-deben-irse-a-su-casa-59848" rel="noopener noreferrer" target="_blank">Blanco advierte depuración en Hidrocarburos: “Quienes hicieron daño al Gobierno deben irse a su casa”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/aquellas-personas-que-han-estado-trabajando-en-el-anterior-gobierno-se-tienen-que-ir-a-su-casa/" rel="noopener noreferrer" target="_blank">“Aquellas personas que han estado trabajando en el anterior gobierno, se tienen que ir a su casa”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/marcelo-blanco-posesionado-como-ministro-de-hidrocarburos/" rel="noopener noreferrer" target="_blank">Marcelo Blanco posesionado como Ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_blanco-asume-como-nuevo-ministro-de-hidrocarburos.html" rel="noopener noreferrer" target="_blank">Blanco asume como nuevo ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_marcelo-blanco-quintanilla-el-nuevo-ministro-de-hidrocarburos-en-datos.html" rel="noopener noreferrer" target="_blank">Marcelo Blanco Quintanilla, el nuevo ministro de Hidrocarburos, en datos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/quien-es-marcelo-blanco-conoce-al-nuevo-ministro-de-hidrocarburos" rel="noopener noreferrer" target="_blank">¿Quién es Marcelo Blanco?: Conoce al nuevo ministro de Hidrocarburos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44403-marcelo-blanco-no-es-ajeno-al-poder-fue-hombre-de-confianza-de-medinaceli-y-viceministro-de-goni" rel="noopener noreferrer" target="_blank">Marcelo Blanco no es ajeno al poder: fue hombre de confianza de Medinaceli y viceministro de Goni</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="Designan presidente interino de YPFB en medio de crisis" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Designan presidente interino de YPFB en medio de crisis</div>
+<div class="modal-sum">Rodrigo Paz posesionó a Sebastián Daroca como presidente interino de YPFB en medio de una crisis institucional tras la renuncia de su antecesor y críticas a la gestión; Daroca se comprometió a resolver el desabastecimiento de combustibles y encarar cambios en la estatal.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">16</strong> titulares</span>
+<span><strong style="color:var(--c-11)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260423/sebastian-daroca-es-presidente-ypfb" rel="noopener noreferrer" target="_blank">Sebastián Daroca es presidente de YPFB</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260423_sebastian-daroca-asume-la-presidencia-de-ypfb-anuncia-solucion-a-la-demanda-de-diesel.html" rel="noopener noreferrer" target="_blank">Sebastián Daroca asume la presidencia de YPFB; anuncia solución a la demanda de diésel</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/diputada-le-recuerda-al-presidente-que-el-ejecutivo-de-ypfb-debe-ser-elegido-de-una-terna-que-envie-el-legislativo" rel="noopener noreferrer" target="_blank">Diputada le recuerda al presidente que el ejecutivo de YPFB debe ser elegido de una terna que envíe el Legislativo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/rodrigo-paz-posesiona-sebastian-daroca-presidente-interino-ypfb_1776999313" rel="noopener noreferrer" target="_blank">Rodrigo Paz posesiona a Sebastián Daroca como presidente interino de YPFB</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/sebasti%C3%A1n-daroca-asume-la-presidencia-de-ypfb-y-promete-un-cambio-%E2%80%9Creal%E2%80%9D-en-la-estatal" rel="noopener noreferrer" target="_blank">Sebastián Daroca asume la presidencia de YPFB y promete un cambio “real” en la estatal</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/04/23/paz-posesiona-a-sebastian-daroca-como-presidente-de-ypfb/" rel="noopener noreferrer" target="_blank">Paz posesiona a Sebastián Daroca como presidente de YPFB</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/sebatian-daroca-es-posesionado-como-presidente-de-ypfb-y-garantiza-abastecimiento-de-combustible/" rel="noopener noreferrer" target="_blank">Sebastián Daroca es posesionado como Presidente de YPFB y garantiza abastecimiento de combustible</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/quien-es-sebastian-daroca-el-nuevo-presidente-interino-de-ypfb-202642323537" rel="noopener noreferrer" target="_blank">¿Quién es Sebastián Daroca? El nuevo presidente interino de YPFB</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/quien-es-sebastian-daroca-el-presidente-interino-de-ypfb-HA20201701" rel="noopener noreferrer" target="_blank">¿Quién es Sebastián Daroca, el presidente interino de YPFB?</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/urgente-sebastian-daroca-sera-el-nuevo-presidente-de-ypfb" rel="noopener noreferrer" target="_blank">Urgente: Sebastián Daroca será el nuevo presidente de YPFB</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44625-daroca-asume-la-presidencia-ai-de-ypfb-con-la-promesa-de-resolver-el-problema-de-la-gasolina-desestabilizada" rel="noopener noreferrer" target="_blank">Daroca asume la presidencia a.i. de YPFB con la promesa de resolver el problema de la "gasolina desestabilizada”</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260423_ypfb-suma-16-presidentes-en-20-anos-crece-la-presion-por-una-reforma-estructural.html" rel="noopener noreferrer" target="_blank">YPFB suma 16 presidentes en 20 años, crece la presión por una reforma estructural</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/quien-nuevo-presidente-ypfb_1777002062" rel="noopener noreferrer" target="_blank">¿Quién es el nuevo presidente de YPFB?</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-no-empresa-petrolera-botin-politico-asegura-analista-dellius_1776950242" rel="noopener noreferrer" target="_blank">“YPFB no es una empresa petrolera, es un botín político”, asegura el analista Delius</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/economia/doria-medina-el-manejo-de-hidrocarburos-se-convirtio-en-el-talon-de-aquiles-no-solo-de-este-gobierno-sino-de-la-economia-del-pais.html" rel="noopener noreferrer" target="_blank">Doria Medina: “El manejo de hidrocarburos se convirtió en el talón de Aquiles no solo de este gobierno, sino de la economía del país”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/renuncia-presidente-de-ypfb-y-deja-en-manos-del-gobierno-la-reingenieria-de-la-petrolera/" rel="noopener noreferrer" target="_blank">Renuncia presidente de YPFB y deja en manos del Gobierno la reingeniería de la petrolera</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Empresas públicas en quiebra técnica" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMIA</div>
+<div class="modal-title">Empresas públicas en quiebra técnica</div>
+<div class="modal-sum">El Gobierno y la OFEP informaron que 15 empresas públicas bolivianas se encuentran en quiebra técnica, acumulando pérdidas superiores a los Bs 2.655 millones. El reporte describe una situación financiera crítica heredada, señalando que varias de estas firmas operan con deudas millonarias.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">13</strong> titulares</span>
+<span><strong style="color:var(--c-02)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260423_diagnostico-de-empresas-publicas-15-estan-en-quiebra-tecnica-y-acumulan-perdidas-por-bs-2-665-millones.html" rel="noopener noreferrer" target="_blank">Diagnóstico de empresas públicas: 15 están en quiebra técnica y acumulan pérdidas por Bs 2.665 millones</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/la-empresa-estatal-del-litio-se-encuentra-entre-las-15-empresas-en-quiebra-tecnica-y-solo-opera-al-17-de-su-capacidad" rel="noopener noreferrer" target="_blank">La empresa estatal del litio se encuentra entre las 15 empresas en quiebra técnica y solo opera al 17% de su capacidad</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/empresa-estatal-de-fertilizantes-se-cae-a-pedazos-por-mal-diseno-y-solo-logro-operar-al-10-de-su-capacidad" rel="noopener noreferrer" target="_blank">Empresa estatal de fertilizantes “se cae a pedazos” por mal diseño y sólo logró operar al 10% de su capacidad</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/15-empresas-estatales-estan-en-quiebra-tecnica-y-acumulan-perdidas-por-bs-2655-millones-59857" rel="noopener noreferrer" target="_blank">15 empresas estatales están en quiebra técnica y acumulan pérdidas por Bs 2.655 millones</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/nos-dejaron-una-bomba-molotov-con-la-mecha-encendida-reportan-15-empresas-publicas-en-quiebra-tecnica/" rel="noopener noreferrer" target="_blank">“Nos dejaron una bomba molotov con la mecha encendida”: reportan 15 empresas públicas en quiebra técnica</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/empresas-publicas-rojo-15-firmas-estan-quiebra-tecnica_1776961322" rel="noopener noreferrer" target="_blank">Empresas públicas en rojo: Al menos 15 firmas están en quiebra técnica</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/conozca-16-empresas-estatales-trabajan-perdida-deudoras_1776969930" rel="noopener noreferrer" target="_blank">Conozca las 16 empresas estatales que trabajan a pérdida y que son las más deudoras</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/economia/al-menos-15-empresas-publicas-registran-quiebra-tecnica-y-perdidas-por-bs-2655-millones.html" rel="noopener noreferrer" target="_blank">Al menos 15 empresas públicas registran quiebra técnica y pérdidas por Bs 2.655 millones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/gobierno-revela-datos-de-quiebras-y-p%C3%A9rdidas-de-empresas-p%C3%BAblicas-%E2%80%9Cnos-dejaron-una-bomba" rel="noopener noreferrer" target="_blank">Gobierno revela datos de quiebras y pérdidas de empresas públicas: “nos dejaron una bomba Molotov”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260423/hay-15-empresas-publicas-quiebra-tecnica-perdida-millonaria-ofep" rel="noopener noreferrer" target="_blank">Hay 15 empresas públicas en "quiebra técnica" y con una pérdida millonaria, según OFEP</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-detecta-15-empresas-publicas-en-quiebra-tecnica-y-perdidas-de-mas-de-bs-2-mil-millones/" rel="noopener noreferrer" target="_blank">El Gobierno detecta 15 empresas públicas en “quiebra técnica” y pérdidas de más de Bs 2 mil millones</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/hay-15-empresas-publicas-en-quiebra-tecnica-y-con-una-perdida-millonaria-segun-ofep" rel="noopener noreferrer" target="_blank">Hay 15 empresas públicas en “quiebra técnica” y con una pérdida millonaria, según OFEP</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44475-las-empresas-estatales-tienen-deudas-por-bs-55386-millones-y-15-se-encuentran-en-quiebra-tecnica" rel="noopener noreferrer" target="_blank">Las empresas estatales tienen deudas por Bs 55.386 millones y 15 se encuentran en quiebra técnica</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Diputados aprueban ley de alivio tributario" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMIA</div>
+<div class="modal-title">Diputados aprueban ley de alivio tributario</div>
+<div class="modal-sum">La Cámara de Diputados aprobó en sus estaciones en grande y detalle el proyecto de Ley de Alivio Tributario. La norma, que contempla la condonación y regularización de deudas impositivas, fue remitida al Senado para su tratamiento tras ser impulsada por el Ejecutivo liderado por Rodrigo Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">11</strong> titulares</span>
+<span><strong style="color:var(--c-02)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/diputados-aprueban-proyecto-de-ley-de-condonacion-de-deudas-tributarias" rel="noopener noreferrer" target="_blank">Diputados aprueban proyecto de ley de condonación de deudas tributarias</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/23/diputados-aprobo-en-grande-y-en-detalle-el-proyecto-de-ley-de-alivio-tributario-59880" rel="noopener noreferrer" target="_blank">Diputados aprobó en grande y en detalle el proyecto de ley de alivio tributario</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/gobierno-espera-recaudar-hasta-bs-20000-millones-mediante-una-ley-de-alivio-tributario--59865" rel="noopener noreferrer" target="_blank">Gobierno espera recaudar hasta Bs 20.000 millones mediante una ley de alivio tributario</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/diputados-aprueban-grande-ley-alivio-tributario-claves-efectos-economicos_1776976143" rel="noopener noreferrer" target="_blank">Diputados aprueban en grande ley de alivio tributario: claves y efectos económicos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/economia/camara-de-diputados-aprueba-ley-de-alivio-tributario-que-incluye-condonacion-y-regularizacion-de-impuestos.html" rel="noopener noreferrer" target="_blank">Cámara de Diputados aprueba Ley de Alivio Tributario que incluye condonación y regularización de impuestos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diputados-aprueban-el-proyecto-de-ley-de-alivio-tributario-presentado-por-el-ejecutivo/" rel="noopener noreferrer" target="_blank">Diputados aprueban el Proyecto de Ley de Alivio Tributario presentado por el Ejecutivo</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/diputados-trataran-ley-de-alivio-tributario-con-presencia-del-ministro-de-economia" rel="noopener noreferrer" target="_blank">Diputados tratarán ley de alivio tributario con presencia del ministro de economía</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/inicia-tratamiento-de-proyecto-de-ley-de-transparencia-y-alivio-tributario-en-diputados-2026423121259" rel="noopener noreferrer" target="_blank">Inicia tratamiento de proyecto de Ley de Transparencia y Alivio Tributario en Diputados</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/diputados-aprueban-el-proyecto-de-ley-de-alivio-tributario-y-lo-remite-al-senado-202642320048" rel="noopener noreferrer" target="_blank">Diputados aprueban el Proyecto de Ley de Alivio Tributario y lo remite al Senado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputados-aprueban-ley-de-alivio-tributario-con-modificaciones-y-la-remiten-al-senado-NB20218489" rel="noopener noreferrer" target="_blank">Diputados aprueban ley de alivio tributario con modificaciones y la remiten al Senado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44535-camara-de-diputados-aprueba-en-grande-el-proyecto-de-ley-de-alivio-tributario-impulsado-por-el-ejecutivo" rel="noopener noreferrer" target="_blank">Cámara de Diputados aprueba en grande el proyecto de ley de alivio tributario impulsado por el Ejecutivo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="Suspenden sesión legislativa en Santa Cruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Suspenden sesión legislativa en Santa Cruz</div>
+<div class="modal-sum">La Asamblea Legislativa Departamental de Santa Cruz suspendió su sesión tras incidentes y falta de quórum. La reunión pretendía tratar modificaciones a la Ley de Organización Legislativa y el reglamento interno, acciones cuestionadas por el MAS y otros sectores en pleno proceso de transición.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">10</strong> titulares</span>
+<span><strong style="color:var(--c-21)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/mas-rechaza-intento-de-modificar-ley-de-organizacion-legislativa-en-plena-transicion-cuestiona-legalidad-del-proceso/" rel="noopener noreferrer" target="_blank">MAS rechaza intento de modificar Ley de Organización Legislativa en plena transición, cuestiona legalidad del proceso</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/sesion-de-la-ald-que-pretendia-modificar-la-ley-de-organizacion-legislativa-queda-suspendida-por-falta-de-quorum/" rel="noopener noreferrer" target="_blank">Sesión de la ALD que pretendía modificar la Ley de Organización Legislativa queda suspendida por falta de quórum</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/no-habia-condiciones-de-seguridad-suspenden-sesion-por-bochorno/" rel="noopener noreferrer" target="_blank">“No había condiciones de seguridad: suspenden sesión por bochorno’”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-04-23/politica/tras-incidentes-suspenden-sesion-de-la-ald-que-pretendia-tratar-ley-sobre-la-nueva-directiva.html" rel="noopener noreferrer" target="_blank">Tras incidentes, suspenden sesión de la ALD que pretendía tratar ley sobre la nueva directiva</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/04/23/denuncian-intento-de-modificar-el-reglamento-en-la-ald-crucena/" rel="noopener noreferrer" target="_blank">Denuncian intento de modificar el reglamento en la ALD cruceña</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/23/tras-incidentes-asamblea-legislativa-crucena-suspende-sesion/" rel="noopener noreferrer" target="_blank">Tras incidentes, Asamblea Legislativa cruceña suspende sesión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/23/aguirre-denuncia-que-asamblea-saliente-intenta-cambiar-normas/" rel="noopener noreferrer" target="_blank">Aguirre denuncia que Asamblea saliente intenta cambiar normas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/suspenden-sesion-en-la-ald-de-santa-cruz-por-falta-de-quorum-2026423165222" rel="noopener noreferrer" target="_blank">Suspenden sesión en la ALD de Santa Cruz por falta de quórum</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/presidente-de-la-asamblea-crucena-anuncia-que-sesion-del-pleno-sera-postergada-para-el-sabado-LC20223448" rel="noopener noreferrer" target="_blank">Presidente de la Asamblea cruceña anuncia que sesión del pleno será postergada para el sábado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/tras-incidentes-asamblea-crucena-suspende-sesion-convocada-para-este-jueves-LB20218355" rel="noopener noreferrer" target="_blank">Tras incidentes, Asamblea cruceña suspende sesión convocada para este jueves</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Procuraduría investiga fallo arbitral millonario" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMIA</div>
+<div class="modal-title">Procuraduría investiga fallo arbitral millonario</div>
+<div class="modal-sum">La Procuraduría General del Estado activa auditorías y busca determinar responsables tras el fallo arbitral millonario a favor del BBVA.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">7</strong> titulares</span>
+<span><strong style="color:var(--c-02)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260423_indemnizacion-a-bbva-buscaran-responsables.html" rel="noopener noreferrer" target="_blank">Indemnización a BBVA: Buscarán responsables</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/04/23/procuraduria-alista-sanciones-por-arbitrajes-internacionales-en-los-que-perdio-el-pais-59855" rel="noopener noreferrer" target="_blank">Procuraduría alista sanciones por arbitrajes internacionales en los que perdió el país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-activa-auditorias-arbitrajes-fallo-caso-bbva_1776944063" rel="noopener noreferrer" target="_blank">Gobierno activa auditorías a los arbitrajes tras fallo por caso BBVA</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/economia/procuraduria-inicia-auditorias-a-arbitrajes-perdidos-por-bolivia-para-identificar-y-sancionar-a-los-responsables.html" rel="noopener noreferrer" target="_blank">Procuraduría inicia auditorías a arbitrajes perdidos por Bolivia para identificar y “sancionar” a los responsables</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/buscaran-responsables-para-recuperar-el-dano-economico/" rel="noopener noreferrer" target="_blank">Buscarán responsables para recuperar el daño económico</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/evaluaran-vias-para-resolver-fallo-a-favor-del-bbva-sin-afectar-al-pais/" rel="noopener noreferrer" target="_blank">Evaluarán vías para resolver fallo a favor del BBVA sin afectar al país</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_gobierno-pagara-al-bbva-sin-afectar-las-pensiones.html" rel="noopener noreferrer" target="_blank">Gobierno pagará al BBVA sin afectar las pensiones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Inicia transición en Gobernación de La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Inicia transición en Gobernación de La Paz</div>
+<div class="modal-sum">Santos Quispe y Luis Revilla iniciaron formalmente el proceso de transición en la Gobernación de La Paz en un ambiente de cordialidad. El gobernador electo y el saliente se comprometieron a realizar un traspaso de mando técnico y sin persecuciones políticas, priorizando la gestión regional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">6</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/04/23/quispe-y-revilla-se-comprometen-a-una-transicion-transparente-y-sin-persecuciones-59879" rel="noopener noreferrer" target="_blank">Quispe y Revilla se comprometen a una transición transparente y sin persecuciones</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/santos-quispe-y-luis-revilla-inician-transicion-con-compromiso-de-cooperacion-y-sin-show-mediatico/" rel="noopener noreferrer" target="_blank">Santos Quispe y Luis Revilla inician transición con compromiso de cooperación y sin “show” mediático</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/transicion-gobernacion-paz-inicia-marco-colaboracion_1776984395" rel="noopener noreferrer" target="_blank">La transición en la Gobernación de La Paz inicia en un marco de colaboración</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/23/quispe-y-revilla-inician-transicion-en-la-gobernacion-de-la-paz/" rel="noopener noreferrer" target="_blank">Quispe y Revilla inician transición en la Gobernación de La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-paz-quispe-y-revilla-inician-proceso-de-transicion-y-el-gobernador-entrante-promete-no-hacer-persecucion/" rel="noopener noreferrer" target="_blank">La Paz: Quispe y Revilla inician proceso de transición y el Gobernador entrante promete no hacer “persecución”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44553-en-un-ambiente-cordial-santos-quispe-y-luis-revilla-inician-transicion-en-la-gobernacion-pacena" rel="noopener noreferrer" target="_blank">En un ambiente cordial, Santos Quispe y Luis Revilla inician transición en la Gobernación paceña</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Denuncian agresión policial a periodistas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Denuncian agresión policial a periodistas</div>
+<div class="modal-sum">La dirigencia de la prensa paceña y el Gobierno nacional se pronunciaron tras la agresión policial a periodistas que cubrían una protesta de maestros en La Paz. Mientras el gremio anuncia procesos penales por el uso de gases, el Ejecutivo rechaza los hechos y garantiza la seguridad del sector.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">6</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/dirigencia-de-la-prensa-pacena-condena-represion-policial-a-periodistas-en-plaza-murillo-y-anuncia-proceso-penal" rel="noopener noreferrer" target="_blank">Dirigencia de la prensa paceña condena represión policial a periodistas en Plaza Murillo y anuncia proceso penal</a></span></li>
+<li><span class="m-src">ATB Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.atb.com.bo/2026/04/23/periodistas-son-gasificados-durante-cobertura-y-generan-condena-del-sector" rel="noopener noreferrer" target="_blank">Periodistas son gasificados durante cobertura y generan condena del sector</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-nacional-rechaza-agresion-periodistas-manifestacion-paz_1776990626" rel="noopener noreferrer" target="_blank">Gobierno nacional rechaza agresión a periodistas durante manifestación en La Paz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_violencia-policial-carga-contra-periodistas-que-cubrian-una-protesta-de-maestros.html" rel="noopener noreferrer" target="_blank">Violencia policial carga contra periodistas que cubrían una protesta de maestros</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/gobierno-rechaza-agresiones-a-periodistas-y-garantiza-proteccion/" rel="noopener noreferrer" target="_blank">Gobierno rechaza agresiones a periodistas y garantiza protección</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-garantiza-seguridad-para-periodistas-y-proteccion-a-su-trabajo-2026423201747" rel="noopener noreferrer" target="_blank">Gobierno garantiza seguridad para periodistas y protección a su trabajo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Mineros rompen diálogo con el Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Mineros rompen diálogo con el Gobierno</div>
+<div class="modal-sum">Mineros cooperativistas de Fencomin rompieron el diálogo con el Gobierno ante la inasistencia del presidente Rodrigo Paz a la reunión pactada. El sector, que demanda soluciones por la falta de diésel y explosivos, advirtió consecuencias tras abandonar la mesa de negociación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">5</strong> titulares</span>
+<span><strong style="color:var(--c-08)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/23/el-gobierno-no-logra-contener-a-mineros-y-maestros-y-se-vienen-mas-movilizaciones-59876" rel="noopener noreferrer" target="_blank">El gobierno no logra contener a mineros y maestros, y se vienen más movilizaciones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/economia/mineros-de-fencomin-rompen-dialogo-con-el-gobierno-por-inasistencia-de-paz-a-reunion-agendada.html" rel="noopener noreferrer" target="_blank">Mineros de Fencomin rompen diálogo con el Gobierno por inasistencia de Paz a reunión agendada</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260423/mineros-cooperativas-rompen-dialogo-gobierno" rel="noopener noreferrer" target="_blank">Mineros de cooperativas rompen diálogo con el Gobierno</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/cooperativistas-mineros-abandonan-el-dialogo-y-advierten-que-el-gobierno-se-atendra-a-las-consecuencias/" rel="noopener noreferrer" target="_blank">Cooperativistas mineros abandonan el diálogo y advierten que el Gobierno “se atendrá a las consecuencias”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44607-diesel-y-explosivos-cooperativistas-rompen-el-dialogo-con-el-gobierno-ante-la-ausencia-de-paz-y-sus-ministros" rel="noopener noreferrer" target="_blank">Diésel y explosivos: cooperativistas rompen el diálogo con el Gobierno ante la ausencia de Paz y sus ministros</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Paz plantea desideologizar Fuerzas Armadas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Paz plantea desideologizar Fuerzas Armadas</div>
+<div class="modal-sum">El presidente Rodrigo Paz cuestionó el sesgo ideológico de los últimos 20 años en las Fuerzas Armadas y llamó a recuperar el compromiso institucional con la patria. Paz marcó el año 2026 como un punto de cambio para desideologizar la entidad y fortalecer su rol constitucional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">4</strong> titulares</span>
+<span><strong style="color:var(--c-05)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/paz-cuestiona-20-anos-de-sesgo-ideologico-en-las-ffaa/" rel="noopener noreferrer" target="_blank">Paz cuestiona 20 años de sesgo ideológico en las FFAA</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-en-20-anos-peso-mas-la-ideologia-que-el-compromiso-con-la-patria-en-las-ffaa/" rel="noopener noreferrer" target="_blank">Paz: “En 20 años pesó más la ideología que el compromiso con la patria en las FFAA”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/presidente-rodrigo-paz-en-20-anos-peso-mas-la-ideologia-que-el-compromiso-con-la-patria-en-las-ffaa" rel="noopener noreferrer" target="_blank">Presidente Rodrigo Paz: &amp;quot;En 20 años pesó más la ideología que el compromiso con la patria en las FFAA&amp;quot;</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/04/23/44490-paz-traza-este-2026-como-un-punto-de-cambio-en-las-ffaa-de-un-alto-grado-ideologico-al-compromiso-con-la-patria" rel="noopener noreferrer" target="_blank">Paz traza este 2026 como un punto de cambio en las FFAA: de un alto grado ideológico al compromiso con la Patria</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Estudiante apuñala a profesor en Oruro" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Estudiante apuñala a profesor en Oruro</div>
+<div class="modal-sum">Un estudiante de secundaria fue aprehendido en Oruro tras apuñalar a su profesor durante una entrevista sobre su rendimiento académico. El ataque ocurrió luego de que el docente citara a los padres del menor. El hecho ha generado alarma por los niveles de violencia en el entorno educativo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/estudiante-ataca-hiere-cuchillo-maestro_1776950484" rel="noopener noreferrer" target="_blank">Estudiante ataca y hiere con un cuchillo a su maestro</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/capturan-estudiante-apunalo-profesor-cito-padres_1776983650" rel="noopener noreferrer" target="_blank">Capturan a estudiante que apuñaló a profesor que citó a sus padres</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/oruro-adolescente-apu%C3%B1ala-su-profesor-durante-entrevista-acad%C3%A9mica%C2%A0" rel="noopener noreferrer" target="_blank">Oruro: adolescente apuñala a su profesor durante entrevista académica</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/profesor-es-apunalado-por-estudiante-tras-reunion-por-su-rendimiento-escolar-DC20221471" rel="noopener noreferrer" target="_blank">Profesor es apuñalado por estudiante tras reunión por su rendimiento escolar</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Investigan caso Mutualista en Santa Cruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigan caso Mutualista en Santa Cruz</div>
+<div class="modal-sum">La Fiscalía de Santa Cruz evalúa citar al alcalde y a funcionarios municipales como testigos en la investigación del caso Mutualista. En el marco de estas pesquisas, una jueza acusada se presentó ante las autoridades, mientras la parte denunciante destaca avances en el proceso judicial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">4</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/04/23/caso-mutualista-fiscalia-analiza-citar-al-alcalde-cruceno/" rel="noopener noreferrer" target="_blank">Caso Mutualista: Fiscalía analiza citar al alcalde cruceño</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/caso-mutualista-saucedo-afirma-que-se-aceptaron-sus-denuncias-y-busca-demostrar-que-la-justicia-esta-cambiando/" rel="noopener noreferrer" target="_blank">Caso Mutualista: Saucedo afirma que se aceptaron sus denuncias y busca demostrar que la justicia “está cambiando”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/caso-mutualista-fiscalia-no-descarta-citar-como-testigos-a-funcionarios-municipales-PB20217844" rel="noopener noreferrer" target="_blank">Caso Mutualista: Fiscalía no descarta citar como testigos a funcionarios municipales</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/jueza-acusada-en-el-caso-mutualista-se-presenta-en-la-delcc-la-causa-llego-a-mi-juzgado-y-la-remiti-OB20211942" rel="noopener noreferrer" target="_blank">Jueza acusada en el caso Mutualista se presenta en la Delcc: “La causa llegó a mi juzgado y la remití”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="Magisterio convoca marchas salariales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Magisterio convoca marchas salariales</div>
+<div class="modal-sum">El magisterio urbano y rural convoca a marchas y medidas de presión en demanda de incremento salarial y atención a su pliego sectorial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/23/magisterio-tomara-las-calles-de-la-paz-este-jueves-y-viernes-el-lunes-iniciara-marcha-desde-patacamaya-y-preve-cabildo-el-1-de-mayo-59854" rel="noopener noreferrer" target="_blank">Magisterio tomará las calles de La Paz este jueves y viernes; el lunes iniciará marcha desde Patacamaya y prevé cabildo el 1 de Mayo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/pais/maestros-marchan-este-jueves-y-viernes-el-lunes-inician-marcha-y-preven-cabildo-el-1-de-mayo.html" rel="noopener noreferrer" target="_blank">Maestros marchan este jueves y viernes; el lunes inician marcha y prevén cabildo el 1 de Mayo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_ministerio-de-educacion-atribuye-movilizaciones-a-demanda-salarial-y-conflicto-interno-del-magisterio-rural.html" rel="noopener noreferrer" target="_blank">Ministerio de Educación atribuye movilizaciones a demanda salarial y conflicto interno del magisterio rural</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_ministra-de-educacion-preve-reunirse-con-el-magisterio-urbano-para-abordar-demandas.html" rel="noopener noreferrer" target="_blank">Ministra de Educación prevé reunirse con el magisterio urbano para abordar demandas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N005">
+<div class="modal-backdrop" onclick="closeModal('modal_N005')"></div>
+<div aria-label="Proponen sede parlamentaria en UNIPOL" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Proponen sede parlamentaria en UNIPOL</div>
+<div class="modal-sum">Propuesta de transferir la sede del Parlamento de la UNASUR a la Universidad Policial (UNIPOL).</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">3</strong> titulares</span>
+<span><strong style="color:var(--c-05)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N005')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/proponen-transferir-la-sede-del-parlamento-de-la-unasur-la-universidad-policial" rel="noopener noreferrer" target="_blank">Proponen transferir la sede del Parlamento de la UNASUR a la Universidad Policial</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/se-impulsa-transferir-sede-de-unasur-a-la-universidad-policial/" rel="noopener noreferrer" target="_blank">Se impulsa transferir sede de Unasur a la Universidad Policial</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260423/estudian-ceder-sede-del-parlamento-unasur-unipol" rel="noopener noreferrer" target="_blank">Estudian ceder sede del Parlamento de la Unasur a Unipol</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N006">
+<div class="modal-backdrop" onclick="closeModal('modal_N006')"></div>
+<div aria-label="Sentencian exfuncionarios por corrupción" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Sentencian exfuncionarios por corrupción</div>
+<div class="modal-sum">Sentencian a exfuncionarios de la Agencia Estatal de Vivienda por manipular datos para favorecer irregularmente a una constructora.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">3</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N006')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/23/exfuncionarios-de-aevivienda-manipularon-datos-para-favorecer-a-una-constructora-y-son-condenados-hasta-5-anos-de-prision-59863" rel="noopener noreferrer" target="_blank">Exfuncionarios de AEVivienda manipularon datos para favorecer a una constructora y son condenados hasta 5 años de prisión</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-04-23/pais/sentencian-a-dos-exfuncionarios-de-aevivienda-que-manipularon-datos-para-favorecer-a-una-constructora.html" rel="noopener noreferrer" target="_blank">Sentencian a dos exfuncionarios de AEVivienda que manipularon datos para favorecer a una constructora</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/sentencian-dos-exfuncionarios-de-la-aevivienda-por-favorecer-una-empresa-en-2024" rel="noopener noreferrer" target="_blank">Sentencian a dos exfuncionarios de la AEVivienda por favorecer a una empresa en 2024</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N007">
+<div class="modal-backdrop" onclick="closeModal('modal_N007')"></div>
+<div aria-label="Aprueban ley de reintegración familiar" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Aprueban ley de reintegración familiar</div>
+<div class="modal-sum">Aprobación de una nueva ley de reintegración familiar que busca garantizar el derecho de niños y adolescentes a vivir en familia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">3</strong> titulares</span>
+<span><strong style="color:var(--c-05)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N007')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/04/23/aprueban-proyecto-de-ley-para-reintegracion-familiar-en-medio-de-observaciones-a-centros-de-acogida-59867" rel="noopener noreferrer" target="_blank">Aprueban proyecto de ley para reintegración familiar en medio de observaciones a centros de acogida</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/aprueban-ley-que-garantiza-el-derecho-de-ninas-ninos-y-adolescentes-a-vivir-en-familia/" rel="noopener noreferrer" target="_blank">Aprueban ley que garantiza el derecho de niñas, niños y adolescentes a vivir en familia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_nueva-ley-garantiza-que-ninos-tengan-una-familia.html" rel="noopener noreferrer" target="_blank">Nueva ley garantiza que niños tengan una familia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N008">
+<div class="modal-backdrop" onclick="closeModal('modal_N008')"></div>
+<div aria-label="Investigan asaltos vinculados al oro" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Investigan asaltos vinculados al oro</div>
+<div class="modal-sum">Investigación y procesos judiciales contra los autores de asaltos millonarios vinculados al comercio de oro en la ciudad de La Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N008')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/04/23/segundo-robo-millonario-en-la-paz-esta-vez-se-llevaron-5-millones-de-bolivianos-59858" rel="noopener noreferrer" target="_blank">Segundo robo millonario en La Paz, esta vez se llevaron 5 millones de bolivianos</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/envian-a-prision-a-dos-implicados-por-millonario-asalto-a-compradores-de-oro-en-la-paz-actuaron-como-nexo-entre-los-autores-del-robo-y-la-victima/" rel="noopener noreferrer" target="_blank">Envían a prisión a dos implicados por millonario r0b0 a compradores de oro en La Paz: “Actuaron como nexo entre los autores del r0b0 y la víctima”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/dos-asaltos-millonarios-ligados-al-comercio-de-oro-2/" rel="noopener noreferrer" target="_blank">Dos asaltos millonarios ligados al comercio de oro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3b">
+<div class="modal-backdrop" onclick="closeModal('modal_3b')"></div>
+<div aria-label="Gobierno frena ley agraria tras protestas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Gobierno frena ley agraria tras protestas</div>
+<div class="modal-sum">El Gobierno nacional frenó la reglamentación de la Ley 1720 y alcanzó acuerdos con la Cidob para modificar la normativa agraria. En paralelo, la agrupación Alianza Popular impulsa la abrogación de dicha ley en respaldo a las movilizaciones y marchas del sector campesino.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-firma-acuerdo-cidob-modificar-ley-1720-aumentar-articulo_1777001281" rel="noopener noreferrer" target="_blank">Gobierno firma acuerdo con Cidob para modificar la Ley 1720 y aumentar un artículo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/alianza-popular-impulsa-abrogacion-de-la-ley-1720-en-apoyo-a-marcha-campesina/" rel="noopener noreferrer" target="_blank">Alianza Popular impulsa abrogación de la Ley 1720 en apoyo a marcha campesina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/04/23/gobierno-frena-reglamentacion-de-ley-1720-y-busca-acuerdo-con-campesinos/" rel="noopener noreferrer" target="_blank">Gobierno frena reglamentación de Ley 1720 y busca acuerdo con campesinos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N009">
+<div class="modal-backdrop" onclick="closeModal('modal_N009')"></div>
+<div aria-label="Aprueban créditos para energía renovable" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMIA</div>
+<div class="modal-title">Aprueban créditos para energía renovable</div>
+<div class="modal-sum">La Cámara de Diputados aprueba diversos créditos internacionales para proyectos de energía renovable, plantas solares y empleos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N009')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/04/23/aprueban-credito-de-34-millones-de-euros-para-energia-renovable/" rel="noopener noreferrer" target="_blank">Aprueban crédito de 34 millones de euros para “energía renovable”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_camara-de-diputados-aprueba-creditos-para-empleos-y-energia-temas-de-limites-cultura-y-familia.html" rel="noopener noreferrer" target="_blank">Cámara de Diputados aprueba créditos para empleos y energía, temas de límites, cultura y familia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260423_la-camara-baja-aprueba-credito-para-planta-solar.html" rel="noopener noreferrer" target="_blank">La Cámara Baja aprueba crédito para planta solar</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+  // Códigos válidos (hasheados con SHA-256)
+  var CODES = [{"hash": "dd7cee604ffa65030826fe822829b21e3cb903310a02eedb32411ff4b1406e6f", "expires": "2026-05-22"}, {"hash": "62aa2547c0dc70f7809d5dc305f7e3547753c1bda75432f5174ea960bbdc689f", "expires": "2026-05-22"}, {"hash": "240081c6d806f3dfebe7b021efbf400efe91c78409262c91d6ae004a7ca2d739", "expires": "2026-05-23"}, {"hash": "13a11a07d1068f5b89f1a0af332c7449a38cac8109d74bc9202a194285bc4bf8", "expires": "2026-04-30"}];
+
+  // Utilidad: SHA-256
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // Verificar si ya está activado
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          // Código expirado
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  // Desbloqueo por hash en URL (para link oculto de suscriptores)
+  // Si el archivo se accede con el hash (ej: 2026-04-22-aB3xZ1.html),
+  // se desbloquea automáticamente (es el link que ya reciben por WhatsApp)
+  function checkHashAccess() {
+    var path = window.location.pathname;
+    // Patrón: /informes/YYYY-MM-DD-HASH.html (6+ caracteres de hash)
+    if (/\/informes\/\d{4}-\d{2}-\d{2}-[A-Za-z0-9]{6,}\.html/.test(path)) {
+      document.body.classList.add('bm-unlocked');
+      return true;
+    }
+    return false;
+  }
+
+  // Activación por código
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    var hash = await sha256(code);
+    var now = new Date().toISOString().slice(0,10);
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  // Enter key en el input
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  // Ejecutar checks al cargar
+  if (!checkStored()) {
+    checkHashAccess();
+  }
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
