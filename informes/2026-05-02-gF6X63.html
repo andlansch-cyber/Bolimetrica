@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260502</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix móvil: reducir paddings y ancho fijo que desbordan */
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+}
+ 
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-05-02" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-05-02-gF6X63.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">148</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">15</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 02-MAYO-2026</strong><br/>
+        Reporte N° B24-20260502<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_9" onclick="openModal('modal_9')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-07)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-07)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="top3-title">Investigan asesinato de magistrado Claure</div>
+<div class="top3-body">Asesinato del decano del Tribunal Agroambiental Víctor Hugo Claure en Santa Cruz. La Policía investiga un posible vínculo con conflictos de tierras. Instituciones del Estado exigen esclarecimiento y justicia; se activan comisiones de investigación en Ministerio Público y Defensoría.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">51</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">15</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_7" onclick="openModal('modal_7')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-08)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-08)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="top3-title">COB declara paro indefinido nacional</div>
+<div class="top3-body">La COB declara paro general indefinido con movilizaciones desde el  sábado, exigiendo al Gobierno que atienda su pliego petitorio y amenazando con radicalizar medidas.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">14</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_3" onclick="openModal('modal_3')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-07)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-07)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="top3-title">Aprehenden pilotos del avión Hércules</div>
+<div class="top3-body">Aprehenden al piloto y copiloto del avión Hércules que se accidentó en El Alto el 27 de febrero causando más de 20 fallecidos; Fiscalía ordena detención en investigación del siniestro.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">11</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">10</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-07)"></div></div>
+<div class="cat-n">68</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">1.</span> Investigan asesinato de magistrado Claure</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">3.</span> Aprehenden pilotos del avión Hércules</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">12.</span> Refuerzan seguridad de magistrados en Santa Cruz</li><li onclick="scrollToCard('card_N002'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">13.</span> Accidentes dejan muertos en carreteras</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:44%;background:var(--c-08)"></div></div>
+<div class="cat-n">30</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">2.</span> COB declara paro indefinido nacional</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">4.</span> Gobierno rechaza paro convocado por COB</li><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">10.</span> COB realiza cabildo en El Alto</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:21%;background:var(--c-10)"></div></div>
+<div class="cat-n">14</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_5a'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">8.</span> TSJ alerta avance del sicariato</li><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">9.</span> Trasladan restos del magistrado Claure</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-05)"></div></div>
+<div class="cat-n">11</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">7.</span> Paz convoca encuentro nacional por crisis</li><li onclick="scrollToCard('card_N004'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">15.</span> Gobierno convoca diálogo ante paro COB</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:13%;background:var(--c-11)"></div></div>
+<div class="cat-n">9</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">5.</span> Paz anuncia llegada de combustible</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTRAFICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRAFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:12%;background:var(--c-04)"></div></div>
+<div class="cat-n">8</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTRAFICO"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">6.</span> Avioneta investigada despega sin autorización</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_SOCIEDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-25)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:7%;background:var(--c-25)"></div></div>
+<div class="cat-n">5</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_SOCIEDAD"><li onclick="scrollToCard('card_14a'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">11.</span> Defensoría alerta aumento de acoso laboral</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOMIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-02)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOMIA"><li onclick="scrollToCard('card_N003'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">14.</span> Auditan planta de Ecebol en Potosí</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">magistrado</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">40</td>
+</tr>
+<tr>
+<td class="freq-word">claure</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:82%"></div>
+</div>
+</td>
+<td class="freq-count">30</td>
+</tr>
+<tr>
+<td class="freq-word">asesinato</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:80%"></div>
+</div>
+</td>
+<td class="freq-count">29</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:59%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:55%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">decano</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:55%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">agroambiental</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:50%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">paro indefinido</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:48%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">tribunal</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">13</td>
+</tr>
+<tr>
+<td class="freq-word">santa cruz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Investigan asesinato de magistrado Claure
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">51</div>
+</div>
+<div class="chart-medios">15 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            COB declara paro indefinido nacional
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:27.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">14</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Aprehenden pilotos del avión Hércules
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">11</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Gobierno rechaza paro convocado por COB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:19.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">10</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Paz anuncia llegada de combustible
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">9</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Avioneta investigada despega sin autorización
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:15.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">8</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Paz convoca encuentro nacional por crisis
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:15.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">8</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            TSJ alerta avance del sicariato
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Trasladan restos del magistrado Claure
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            COB realiza cabildo en El Alto
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">6</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Defensoría alerta aumento de acoso laboral
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Refuerzan seguridad de magistrados en Santa Cruz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N002')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Accidentes dejan muertos en carreteras
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N003')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Auditan planta de Ecebol en Potosí
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N004')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Gobierno convoca diálogo ante paro COB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Gobierno rechaza paro convocado por COB</div>
+<div class="topic-body">El Gobierno rechaza el paro convocado por la COB, argumentando que no representa a los trabajadores y enfatiza que el progreso se logra trabajando, no parando. Reitera invitación al diálogo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Paz anuncia llegada de combustible</div>
+<div class="topic-body">Presidente Paz critica gestión de YPFB y anuncia llegada de combustible. YPFB programa despacho de 30,7 millones de litros de gasolina y diésel para abastecimiento del país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">NARCOTRAFICO</div>
+<div class="topic-title">Avioneta investigada despega sin autorización</div>
+<div class="topic-body">Viceministro y autoridades denuncian que una avioneta bajo investigación por narcotráfico despegó sin autorización del aeropuerto El Trompillo, calificado como hecho grave.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_13" onclick="openModal('modal_13')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Paz convoca encuentro nacional por crisis</div>
+<div class="topic-body">Presidente Paz propone encuentro nacional para definir agenda del país y atender crisis social. Convoca al diálogo como respuesta a demandas de sectores sociales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5a" onclick="openModal('modal_5a')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">TSJ alerta avance del sicariato</div>
+<div class="topic-body">El presidente del Tribunal Supremo de Justicia, Romer Saucedo, afirma que el sicariato le 'dobló el brazo al Estado' tras el asesinato de un magistrado, evidenciando ausencia estatal.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Trasladan restos del magistrado Claure</div>
+<div class="topic-body">Los restos del magistrado Víctor Hugo Claure son trasladados a Cochabamba para ser velados por su familia en medio de pedidos de justicia y advertencias gubernamentales contra especulaciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">COB realiza cabildo en El Alto</div>
+<div class="topic-body">COB realiza cabildo en El Alto con participación de magisterio y organizaciones sociales. Policía resguarda el centro paceño durante la concentración.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_14a" onclick="openModal('modal_14a')" role="button" style="border-top:2px solid var(--c-25)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-25)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-25)">SOCIEDAD</div>
+<div class="topic-title">Defensoría alerta aumento de acoso laboral</div>
+<div class="topic-body">La Defensoría del Pueblo alerta sobre el aumento de conflictos laborales en Bolivia e insta al Legislativo a acelerar la aprobación de una ley específica contra el acoso laboral.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Refuerzan seguridad de magistrados en Santa Cruz</div>
+<div class="topic-body">Policía refuerza seguridad de 13 magistrados en Santa Cruz tras asesinato de decano del Tribunal Agroambiental</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N002" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Accidentes dejan muertos en carreteras</div>
+<div class="topic-body">Accidentes de tránsito en rutas del país dejan fallecidos y heridos durante feriado</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N003" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMIA</div>
+<div class="topic-title">Auditan planta de Ecebol en Potosí</div>
+<div class="topic-body">Sedem audita planta de Ecebol en Potosí tras investigación por presunta malversación</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N004" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Gobierno convoca diálogo ante paro COB</div>
+<div class="topic-body">Gobierno convoca diálogo amplio y califica de capricho el paro indefinido de la COB</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://elpais.bo/nacional/20260501_emiten-otra-orden-de-aprehension-contra-montano.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Emiten otra orden de aprehensión contra Montaño</a></div>
+<div class="emergente-sum">Segunda orden de aprehensión contra Montaño sugiere desarrollo crítico en investigación de caso de corrupción</div>
+<div class="emergente-source">Fuente: El País (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/senado-aprueba-solicitar-extradicion-exfiscal-marcelo-soza_1777651128" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Senado aprueba solicitar la extradición del exfiscal Marcelo Soza</a></div>
+<div class="emergente-sum">Senado avanza en proceso de extradición de exfiscal, hito importante en lucha anticorrupción</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260501_dictan-detencion-domiciliaria-para-el-expresidente-del-bcb-y-exejecutivos.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Dictan detención domiciliaria para el expresidente del BCB y exejecutivos</a></div>
+<div class="emergente-sum">Detención de expresidente del BCB y exejecutivos revela crisis institucional en banca central</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/acuartelan-100-policias-paz_1777663765" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Acuartelan al 100% de los policías de La Paz</a></div>
+<div class="emergente-sum">Acuartelamiento del 100% de la Policía de La Paz indica crisis de seguridad sin precedentes</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260502 · 2026-05-02</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 148 titulares · 15 temas · 8 categorías · 17 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Investigan asesinato de magistrado Claure" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Investigan asesinato de magistrado Claure</div>
+<div class="modal-sum">Asesinato del decano del Tribunal Agroambiental Víctor Hugo Claure en Santa Cruz. La Policía investiga un posible vínculo con conflictos de tierras. Instituciones del Estado exigen esclarecimiento y justicia; se activan comisiones de investigación en Ministerio Público y Defensoría.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">51</strong> titulares</span>
+<span><strong style="color:var(--c-07)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/policia-presume-que-asesinato-de-magistrado-del-agroambiental-este-vinculado-a-un-problema-por-tierras" rel="noopener noreferrer" target="_blank">Policía presume que asesinato de magistrado del Agroambiental esté vinculado a un problema por tierras</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/acribillan-al-magistrado-decano-del-tribunal-agroambiental-en-santa-cruz" rel="noopener noreferrer" target="_blank">Acribillan al magistrado decano del Tribunal Agroambiental en Santa Cruz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/asesinan-a-tiros-al-decano-del-tribunal-agroambiental-en-santa-cruz-60133" rel="noopener noreferrer" target="_blank">Asesinan a tiros al decano del Tribunal Agroambiental en Santa Cruz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/fiscalia-informa-que-se-activaron-los-mecanismos-para-investigar-el-asesinato-del-decano-del-agroambiental-60135" rel="noopener noreferrer" target="_blank">Fiscalía informa que se activaron los mecanismos para investigar el asesinato del decano del Agroambiental</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/policia-maneja-la-hipotesis-de-que-asesinato-del-decano-agroambiental-esta-ligado-a-conflicto-de-tierras-60138" rel="noopener noreferrer" target="_blank">Policía maneja la hipótesis de que asesinato del decano Agroambiental está ligado a conflicto de tierras</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/2-s1crios-a-bordo-de-una-motocicleta-as3sinar0n-al-magistrado-del-tribunal-agroambiental/" rel="noopener noreferrer" target="_blank">2 s1c@rios a bordo de una motocicleta as3sinar0n al magistrado del Tribunal Agroambiental</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tribunal-agroambiental-exige-justicia-y-seguridad-tras-4s3s1n4t0-de-su-decano-no-puede-ni-debe-quedar-en-la-impunidad/" rel="noopener noreferrer" target="_blank">Tribunal Agroambiental exige justicia y seguridad tras 4s3s1n4t0 de su decano: “no puede ni debe quedar en la impunidad”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/con-4-damas-se-constituyo-a-cenar-luego-se-retiraron-decano-claure-abordo-taxi-con-una-acompanante-antes-de-ser-b4l34d0/" rel="noopener noreferrer" target="_blank">“Con 4 damas se constituyó a cenar, luego se retiraron”: Decano Claure abordó taxi con una acompañante antes de ser b4l34d0</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/jp-sobre-decano-4ses1n4d0-no-podemos-vivir-asi-levantandonos-un-feriado-y-conociendo-estos-hechos-de-s1c4r14t0-y-cr1m3n-organizado/" rel="noopener noreferrer" target="_blank">JP sobre decano 4ses1n4d0, “no podemos vivir así, levantándonos un feriado y conociendo estos hechos de s1c4r14t0 y cr1m3n organizado”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/investigan-posible-vinculo-con-conflicto-de-tierras-tras-4s3s1n4t0-de-decano-seria-por-alguna-resolucion-en-cuanto-a-posesion-o-aprovechamiento/" rel="noopener noreferrer" target="_blank">Investigan posible vínculo con conflicto de tierras tras 4s3s1n4t0 de decano, “sería por alguna resolución en cuanto a posesión o aprovechamiento”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/crimen-de-magistrado-desata-alarma-en-la-justicia-denuncian-que-jueces-y-vocales-estan-en-la-linea-de-mayor-riesgo/" rel="noopener noreferrer" target="_blank">Crimen de magistrado desata alarma en la Justicia: denuncian que jueces y vocales están “en la línea de mayor riesgo”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/le-hicieron-victor-hugo-claure-sobrepaso-limites-afirma-presidente-tribunal-supremo-justicia_1777634661" rel="noopener noreferrer" target="_blank">"Lo que le hicieron a Víctor Hugo Claure sobrepasó los límites", afirma el presidente del Tribunal Supremo de Justicia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/devolver-justicia-pueblo-quien-era-victor-hugo-claure_1777673033" rel="noopener noreferrer" target="_blank">“Devolver la justicia al pueblo”: quién era Víctor Hugo Claure</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/no-descartan-asesinato-magistrado-claure-este-ligado-tema-tierras_1777649639" rel="noopener noreferrer" target="_blank">No descartan que asesinato de magistrado Claure esté ligado al tema tierras</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-01/pais/asesinato-de-un-magistrado-causa-remezon-y-preocupacion-en-el-organo-judicial.html" rel="noopener noreferrer" target="_blank">Asesinato de un magistrado causa remezón y preocupación en el Órgano Judicial</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_deceso-violento-de-un-magistrado-en-santa-cruz-causa-alarma-en-el-organo-judicial.html" rel="noopener noreferrer" target="_blank">Deceso violento de un magistrado en Santa Cruz causa alarma en el Órgano Judicial</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_defensor-del-pueblo-pide-que-asesinato-del-decano-del-tribunal-agroambiental-no-quede-en-la-impunidad.html" rel="noopener noreferrer" target="_blank">Defensor del Pueblo pide que asesinato del decano del Tribunal Agroambiental no quede en la impunidad</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/asesinato-de-claure-causa-revuelo-en-los-organos-del-estado/" rel="noopener noreferrer" target="_blank">Asesinato de Claure causa revuelo en los órganos del Estado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/un-tema-de-tierras-pudo-ser-la-causa-para-el-ataque-a-magistrado/" rel="noopener noreferrer" target="_blank">Un tema de tierras pudo ser la causa para el ataque a Magistrado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/defensoria-pide-investigacion-exhaustiva-por-el-asesinato-del-magistrado-claure/" rel="noopener noreferrer" target="_blank">Defensoría pide investigación exhaustiva por el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/saucedo-asesinato-de-claure-sobrepaso-los-limites-y-el-sicariato-se-apodero-del-estado/" rel="noopener noreferrer" target="_blank">Saucedo: asesinato de Claure ‘sobrepasó los límites’ y el sicariato se apoderó del Estado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/ministerio-publico-despliega-comision-de-fiscales-por-asesinato-de-magistrado-claure/" rel="noopener noreferrer" target="_blank">Ministerio Público despliega comisión de fiscales por asesinato de magistrado Claure</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/asesinan-al-magistrado-victor-hugo-claure-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Asesinan al magistrado del Tribunal Agroambiental Víctor Hugo Claure</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260501/matan-al-decano-del-tribunal-agroambiental-victor-hugo-claure-santa-cruz" rel="noopener noreferrer" target="_blank">Matan al decano del Tribunal Agroambiental, Víctor Hugo Claure, en Santa Cruz</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260501/que-le-hicieron-victor-hugo-claure-sobrepaso-limites-denuncia-presidente" rel="noopener noreferrer" target="_blank">“Lo que le hicieron a Víctor Hugo Claure, sobrepasó los límites”, denuncia presidente del TSJ tras asesinato de decano</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260501/ministerio-publico-activa-comision-esclarecer-asesinato-del-magistrado" rel="noopener noreferrer" target="_blank">El Ministerio Público activa una comisión para esclarecer el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/decano-del-tribunal-agroambiental-muere-acribillado-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Decano del Tribunal Agroambiental muere acribillado en Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/no-puede-quedar-impune-tribunal-agroambiental-exige-esclarecer-asesinato-de-su-decano-20265193532" rel="noopener noreferrer" target="_blank">"No puede quedar impune": Tribunal Agroambiental exige esclarecer asesinato de su decano</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/es-inaceptable-esta-sucesion-de-asesinatos-tuto-sobre-la-muerte-del-magistrado-claure-GH20412765" rel="noopener noreferrer" target="_blank">“Es inaceptable esta sucesión de asesinatos”: Tuto sobre la muerte del magistrado Claure</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/tribunal-agroambiental-advierte-que-el-asesinato-del-magistrado-claure-es-una-afrenta-a-la-independencia-judicial-EG20409386" rel="noopener noreferrer" target="_blank">Tribunal Agroambiental advierte que el asesinato del magistrado Claure “es una afrenta a la independencia judicial”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/quien-era-victor-hugo-claure-el-magistrado-que-murio-acribillado-en-santa-cruz-OG20409117" rel="noopener noreferrer" target="_blank">¿Quién era Víctor Hugo Claure, el magistrado que murió acribillado en Santa Cruz?</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/presumimos-que-seria-un-problema-de-tierras-dice-la-policia-sobre-el-asesinato-del-magistrado-claure-HG20405552" rel="noopener noreferrer" target="_blank">“Presumimos que sería un problema de tierras”, dice la Policía sobre el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/sicarios-asesinan-magistrado-agroambiental-en-santa-cruz-con-4-impactos-de-bala" rel="noopener noreferrer" target="_blank">Sicarios asesinan a magistrado agroambiental en Santa Cruz con 4 impactos de bala</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45900-una-comision-de-fiscales-investiga-el-asesinato-del-magistrado-claure" rel="noopener noreferrer" target="_blank">Una comisión de fiscales investiga el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45903-cancilleria-afirma-que-el-asesinato-del-magistrado-claure-es-un-atentado-a-la-institucionalidad-democratica-y-exige-su-pronto-esclarecimiento" rel="noopener noreferrer" target="_blank">Cancillería afirma que el asesinato del magistrado Claure es un atentado a la institucionalidad democrática y exige su pronto esclarecimiento</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45915-asesinato-del-decano-del-tribunal-agroambiental-enciende-alarmas-por-la-creciente-violencia-y-el-riesgo-para-el-estado-de-derecho" rel="noopener noreferrer" target="_blank">Asesinato del decano del Tribunal Agroambiental enciende alarmas por la creciente violencia y el riesgo para el Estado de derecho</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45918-defensoria-del-pueblo-exige-investigacion-rigurosa-del-asesinato-del-magistrado-victor-hugo-claure" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo exige investigación rigurosa del asesinato del magistrado Víctor Hugo Claure</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260501_el-crimen-sobrepaso-los-limites-tsj-pide-celeridad-en-investigacion-por-magistrado-acribillado.html" rel="noopener noreferrer" target="_blank">“El crimen sobrepasó los límites”: TSJ pide celeridad en investigación por magistrado acribillado</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/paz-pide-respeto-a-la-investigacion-del-asesinato-de-magistrado-60141" rel="noopener noreferrer" target="_blank">Paz pide respeto a la investigación del asesinato de magistrado</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cuando-ya-empiezan-a-haber-este-tipo-de-4s3s1n4t0s-a-s4ngr3-fria-a-jueces-a-magistrados-a-autoridades-de-la-justicia-tan-importantes-imaginense-lo-que-esta-pasando/" rel="noopener noreferrer" target="_blank">“Cuando ya empiezan a haber este tipo de 4s3s1n4t0s a s4ngr3 fría a jueces, a magistrados, a autoridades de la justicia tan importantes, imagínense lo que está pasando”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/autopsia-confirma-4-1mp4ct0s-de-b4l4-y-dano-l3tal-en-organos-vitales-en-4s3sinat0-de-magistrado-claure-vamos-a-actuar-con-todo-el-rigor-y-peso-de-la-ley/" rel="noopener noreferrer" target="_blank">Autopsia confirma 4 1mp4ct0s de b4l4 y daño l3tal en órganos vitales en 4s3sinat0 de magistrado Claure; “Vamos a actuar con todo el rigor y peso de la ley”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/asi-empezo-la-colombia-de-pablo-escobar-tsj-advierte-ausencia-del-estado-tras-ataque-a-magistrado-alerta-posible-recurso-internacional/" rel="noopener noreferrer" target="_blank">“Así empezó la Colombia de Pablo Escobar”: TSJ advierte “ausencia del Estado” tras ataque a magistrado, alerta posible recurso internacional</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cuatro-orificios-de-entrada-y-salida-autopsia-confirma-4-1mp4ctos-de-bal4-y-d4no-l3tal-en-organos-vitales-en-4ses1nat0-de-magistrado-claure/" rel="noopener noreferrer" target="_blank">“Cuatro orificios de entrada y salida”: Autopsia confirma 4 1mp4ctos de bal4 y d4ño l3tal en órganos vitales en 4ses1nat0 de magistrado Claure</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/se-ha-perdido-el-total-control-con-las-m4fias-no-podemos-tener-sic4ri4tos-en-bolivia-civico-exige-acciones-urgentes-tras-as3sin4to-del-magistrado-claure/" rel="noopener noreferrer" target="_blank">“Se ha perdido el total control con las m4fias. No podemos tener sic4ri4tos en Bolivia”: cívico exige acciones urgentes tras as3sin4to del magistrado Claure</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/bolivia-no-puede-tolerar-que-la-vol3ncia-se-convierta-en-lenguaje-aceptable-contra-sus-jueces-decano-de-la-magistratura-condena-as3sin4to-de-claure/" rel="noopener noreferrer" target="_blank">“Bolivia no puede tolerar que la v!ol3ncia se convierta en lenguaje aceptable contra sus jueces”: Decano de la Magistratura condena as3sin4to de Claure</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/asesinato-magistrado-tribunal-pide-medios-considerar-pertinencia-uso-imagenes_1777669916" rel="noopener noreferrer" target="_blank">Asesinato de magistrado: Tribunal pide a medios “considerar la pertinencia del uso de imágenes”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/organo-judicial-declara-nueve-dias-duelo-institucional-asesinato-claure_1777661639" rel="noopener noreferrer" target="_blank">Órgano Judicial declara nueve días de duelo institucional por asesinato de Claure</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/asi-empezo-colombia-pablo-escobar-crimen-claure-desata-alerta-maxima-justicia-boliviana_1777666230" rel="noopener noreferrer" target="_blank">“Así empezó la Colombia de Pablo Escobar”: el crimen de Claure desata alerta máxima en la justicia boliviana</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-insta-esperar-investigacion-asesinato-claure-politicos-ven-avance-crimen-organizado_1777666666" rel="noopener noreferrer" target="_blank">Paz insta a esperar la investigación por asesinato de Claure y políticos ven avance del crimen organizado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/onu-pide-investigacion-pronta-exhaustiva-asesinato-magistrado-bolivia_1777682409" rel="noopener noreferrer" target="_blank">ONU pide una investigación "pronta y exhaustiva" sobre asesinato de magistrado en Bolivia</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/asesinato-magistrado-alarma-pone-vilo-seguridad-organo-judicial-bolivia/20260501105535990978.html" rel="noopener noreferrer" target="_blank">Asesinato de magistrado alarma y pone el vilo la seguridad del Órgano Judicial en Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="COB declara paro indefinido nacional" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">COB declara paro indefinido nacional</div>
+<div class="modal-sum">La COB declara paro general indefinido con movilizaciones desde el  sábado, exigiendo al Gobierno que atienda su pliego petitorio y amenazando con radicalizar medidas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">14</strong> titulares</span>
+<span><strong style="color:var(--c-08)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260501_cabildo-de-la-cob-declara-paro-indefinido-movilizado-desde-este-sabado.html" rel="noopener noreferrer" target="_blank">Cabildo de la COB declara paro indefinido movilizado desde este sábado</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/cob-convoca-a-paro-indefinido-hasta-que-el-gobierno-atienda-su-pliego-petitorio" rel="noopener noreferrer" target="_blank">COB convoca a paro indefinido hasta que el Gobierno atienda su pliego petitorio</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/01/cob-anuncia-paro-y-movilizaciones-indefinidas-desde-el-sabado-60140" rel="noopener noreferrer" target="_blank">COB anuncia paro y movilizaciones indefinidas desde este sábado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/cob-declara-paro-general-indefinido-advierte-radicalizar-medidas-gobierno_1777656964" rel="noopener noreferrer" target="_blank">COB declara paro general indefinido y advierte con radicalizar medidas contra el Gobierno</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-01/pais/la-cob-anuncia-paro-indefinido-con-movilizaciones-a-partir-de-este-viernes.html" rel="noopener noreferrer" target="_blank">La COB anuncia paro indefinido con movilizaciones a partir de este viernes</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_la-cob-declara-paro-general-indefinido-con-movilizaciones-desde-este-viernes.html" rel="noopener noreferrer" target="_blank">La COB declara paro general indefinido con movilizaciones desde este viernes</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/cob-declara-paro-indefinido-con-movilizaciones-desde-este-viernes" rel="noopener noreferrer" target="_blank">COB declara paro indefinido con movilizaciones desde este viernes</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260501/cabildo-cob-determina-iniciar-paro-indefinido-movilizado-este-sabado-contra" rel="noopener noreferrer" target="_blank">Cabildo de la COB determina iniciar un “paro indefinido movilizado” desde este sábado en contra el Gobierno</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/cabildo-cob-declara-paro-indefinido-movilizaciones-viernes/20260501193934990983.html" rel="noopener noreferrer" target="_blank">Cabildo de la COB declara paro indefinido con movilizaciones desde este viernes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-cob-declara-paro-general-indefinido-hasta-ser-atendido-por-el-gobierno/" rel="noopener noreferrer" target="_blank">La COB declara paro general indefinido hasta que el Gobierno atienda sus demandas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cob-declara-paro-general-indefinido-y-movilizaciones-desde-este-sabado-202651131937" rel="noopener noreferrer" target="_blank">COB declara paro general indefinido y movilizaciones desde este sábado</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/en-el-cabildo-la-cob-decreta-el-paro-general-e-indefinido" rel="noopener noreferrer" target="_blank">En el cabildo, la COB decreta el paro general e indefinido</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45942-cabildo-de-la-cob-decide-ir-al-paro-indefinido-hasta-que-el-gobierno-atienda-sus-demandas" rel="noopener noreferrer" target="_blank">Cabildo de la COB decide ir al paro indefinido hasta que el Gobierno atienda sus demandas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45945-la-cob-presiona-a-paz-con-un-extenso-pliego-un-paro-indefinido-y-la-amenaza-de-que-deba-dejar-el-cargo" rel="noopener noreferrer" target="_blank">La COB presiona a Paz con un extenso pliego, un paro indefinido y la amenaza de que deba dejar el cargo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Aprehenden pilotos del avión Hércules" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Aprehenden pilotos del avión Hércules</div>
+<div class="modal-sum">Aprehenden al piloto y copiloto del avión Hércules que se accidentó en El Alto el 27 de febrero causando más de 20 fallecidos; Fiscalía ordena detención en investigación del siniestro.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">11</strong> titulares</span>
+<span><strong style="color:var(--c-07)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45963-aprehenden-a-erick-rojas-piloto-del-avion-hercules-siniestrado-en-febrero-en-el-alto" rel="noopener noreferrer" target="_blank">Aprehenden a piloto del avión Hércules siniestrado en El Alto</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260501_aprehenden-a-piloto-del-avion-hercules-que-cayo-en-el-alto.html" rel="noopener noreferrer" target="_blank">Aprehenden a piloto del avión Hércules que cayó en El Alto</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/policia-aprehende-al-piloto-de-la-aeronave-hercules-siniestrada-en-el-alto" rel="noopener noreferrer" target="_blank">Policía aprehende al piloto de la aeronave Hércules siniestrada en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/aprehenden-a-piloto-del-avion-hercules-accidentado-en-el-alto-60146" rel="noopener noreferrer" target="_blank">Aprehenden a piloto del avión Hércules accidentado en El Alto</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/caso-avion-siniestrado-hercules-fiscalia-ordena-aprehension-del-piloto-y-copiloto-uno-quedo-aprehendido/" rel="noopener noreferrer" target="_blank">Caso avión siniestrado Hércules: Fiscalía ordena aprehensión del piloto y copiloto; uno quedó aprehendido</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/piloto-y-copiloto-del-hercules-declararon-ante-la-fiscalia-en-medio-de-investigacion-por-22-mu3rt3s-en-el-alto/" rel="noopener noreferrer" target="_blank">Piloto y copiloto del Hércules declararon ante la Fiscalía en medio de investigación por 22 mu3rt3s en El Alto</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-01/pais/aprehenden-al-piloto-del-hercules-siniestrado-en-el-alto-el-27-de-febrero.html" rel="noopener noreferrer" target="_blank">Aprehenden al piloto del Hércules siniestrado en El Alto el 27 de febrero</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_piloto-del-hercules-siniestrado-en-el-alto-es-aprehendido-y-llevado-a-la-felcc.html" rel="noopener noreferrer" target="_blank">Piloto del Hércules siniestrado en El Alto es aprehendido y llevado a la Felcc</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260501/aprehenden-al-piloto-del-avion-hercules-que-se-accidento-alto" rel="noopener noreferrer" target="_blank">Aprehenden al piloto del avión Hércules que se accidentó en El Alto</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/aprehenden-piloto-hercules-involucrado-accidente-27-febrero/20260501185907990981.html" rel="noopener noreferrer" target="_blank">Aprehenden al piloto del Hércules involucrado en el accidente del 27 de febrero en El Alto</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/aprehenden-al-piloto-del-avion-hercules-que-dejo-mas-de-20-fallecidos-en-el-alto-BH20411536" rel="noopener noreferrer" target="_blank">Aprehenden al piloto del avión Hércules que dejó más de 20 fallecidos en El Alto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Gobierno rechaza paro convocado por COB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Gobierno rechaza paro convocado por COB</div>
+<div class="modal-sum">El Gobierno rechaza el paro convocado por la COB, argumentando que no representa a los trabajadores y enfatiza que el progreso se logra trabajando, no parando. Reitera invitación al diálogo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">10</strong> titulares</span>
+<span><strong style="color:var(--c-08)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/gobierno-afirma-que-la-cob-no-representa-a-los-trabajadores-del-pais-e-insiste-en-convocarlos-al-dialogo" rel="noopener noreferrer" target="_blank">Gobierno afirma que la COB no representa a los trabajadores del país e insiste en convocarlos al diálogo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/01/gobierno-fustiga-el-cabildo-pero-reitera-invitacion-a-dialogar-60149" rel="noopener noreferrer" target="_blank">Gobierno fustiga el cabildo, pero reitera invitación a dialogar</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cod-marcha-en-scz-todos-los-anos-hemos-tenido-incremento-salarial-no-hay-voluntad-del-gobierno-la-unica-salida-son-las-calles/" rel="noopener noreferrer" target="_blank">COD marcha en SCZ: “Todos los años hemos tenido incremento salarial. No hay voluntad del Gobierno, la única salida son las calles”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cob-responde-a-evo-morales-y-al-mas-y-tambien-a-lara-el-primer-momento-que-se-pongan-a-tratar-de-confrontar-al-pais-deben-ser-aprehendidos/" rel="noopener noreferrer" target="_blank">“COB responde a Evo Morales y al MAS y también a LARA; el primer momento que se pongan a tratar de confrontar al país deben ser APREHENDIDOS”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/gobierno-sobre-cabildo-de-cob-no-representan-a-los-que-queremos-trabajar-porque-lo-que-nos-han-planteado-es-un-paro-nacional-no-de-trabajo/" rel="noopener noreferrer" target="_blank">Gobierno sobre cabildo de COB: “No representan a los que queremos trabajar, porque lo que nos han planteado es un paro nacional, no de trabajo”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/no-vivimos-conflicto-vivimos-trabajo-dicen-gremiales-rechazan-paro-cob_1777680454" rel="noopener noreferrer" target="_blank">“No vivimos del conflicto, vivimos del trabajo”, dicen gremiales y rechazan paro de la COB</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/gobierno-responde-cabildo-de-la-cob-%E2%80%9Cse-avanza-trabajando-no-parando-no-bloqueando%E2%80%9D" rel="noopener noreferrer" target="_blank">Gobierno responde a cabildo de la COB: “se avanza trabajando, no parando, no bloqueando”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/gobierno-rechaza-paro-de-la-cob-y-reitera-convocatoria-al-dialogo/" rel="noopener noreferrer" target="_blank">Gobierno rechaza paro de la COB y reitera convocatoria al diálogo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260501/gobierno-rechaza-paro-cob-e-insiste-dialogo" rel="noopener noreferrer" target="_blank">Gobierno rechaza paro de la COB e insiste en el diálogo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-rechaza-el-paro-anunciado-por-la-cob-se-sale-adelante-trabajando-no-bloqueando/" rel="noopener noreferrer" target="_blank">El Gobierno rechaza el paro anunciado por la COB: “Se sale adelante trabajando, no bloqueando”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Paz anuncia llegada de combustible" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Paz anuncia llegada de combustible</div>
+<div class="modal-sum">Presidente Paz critica gestión de YPFB y anuncia llegada de combustible. YPFB programa despacho de 30,7 millones de litros de gasolina y diésel para abastecimiento del país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">9</strong> titulares</span>
+<span><strong style="color:var(--c-11)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/01/paz-ya-esta-llegando-la-gasolina-buena-y-la-cantidad-de-diesel-que-necesitamos-60143" rel="noopener noreferrer" target="_blank">Paz: “Ya está llegando la gasolina buena y la cantidad de diésel que necesitamos”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-01/economia/paz-critica-a-ypfb-por-su-gestion-y-confirma-que-ya-esta-llegando-la-gasolina-buena-y-la-cantidad-de-diesel-que-necesita-bolivia.html" rel="noopener noreferrer" target="_blank">Paz critica a YPFB por su gestión y confirma que “ya está llegando la gasolina buena y la cantidad de diésel” que necesita Bolivia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_ypfb-programa-despacho-de-30-7-millones-de-litros-de-combustibles-para-el-pais.html" rel="noopener noreferrer" target="_blank">YPFB programa despacho de 30,7 millones de litros de combustibles para el país</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/ypfb-asegura-despacho-de-307-millones-de-litros-de-combustibles/" rel="noopener noreferrer" target="_blank">YPFB asegura despacho de 30,7 millones de litros de combustibles - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/paz-afirma-que-lo-de-ypfb-es-imperdonable-y-que-ahora-llega-buen-combustible/" rel="noopener noreferrer" target="_blank">Paz afirma que ‘lo de YPFB es imperdonable’ y que ahora llega buen combustible</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/01/ypfb-despacha-de-307-millones-de-litros-de-combustible-para-abastecimiento/" rel="noopener noreferrer" target="_blank">YPFB despacha 30,7 millones de litros de combustible para abastecimiento</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260501/ypfb-anuncia-despacho-307-millones-litros-combustibles-garantiza" rel="noopener noreferrer" target="_blank">YPFB anuncia el despacho de 30,7 millones de litros de combustibles y garantiza suministro en Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lo-que-hizo-ypfb-es-imperdonable-paz-dice-que-ya-esta-llegando-la-gasolina-buena-y-la-cantidad-de-diesel-que-necesita-bolivia-PG20409134" rel="noopener noreferrer" target="_blank">“Lo que hizo YPFB es imperdonable”: Paz dice que “ya está llegando la gasolina buena y la cantidad de diésel” que necesita Bolivia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45921-ypfb-programa-despacho-de-30_7-millones-de-litros-de-combustibles-y-garantiza-abastecimiento-en-bolivia" rel="noopener noreferrer" target="_blank">YPFB programa despacho de 30,7 millones de litros de combustibles y garantiza abastecimiento en Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Avioneta investigada despega sin autorización" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRAFICO</div>
+<div class="modal-title">Avioneta investigada despega sin autorización</div>
+<div class="modal-sum">Viceministro y autoridades denuncian que una avioneta bajo investigación por narcotráfico despegó sin autorización del aeropuerto El Trompillo, calificado como hecho grave.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">8</strong> titulares</span>
+<span><strong style="color:var(--c-04)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/viceministro-denuncia-que-avioneta-vinculada-al-narcotrafico-despego-del-aeropuerto-el-trompillo" rel="noopener noreferrer" target="_blank">Viceministro denuncia que avioneta vinculada al narcotráfico despegó del aeropuerto El Trompillo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/justiniano-denuncia-salida-no-autorizada-de-avioneta-precintada-por-investigacion-de-narcotrafico-60142" rel="noopener noreferrer" target="_blank">Justiniano denuncia salida no autorizada de avioneta precintada por investigación de narcotráfico</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/fiscalia-y-felcn-inspeccionan-hangar-116-tras-fuga-de-avioneta-bajo-custodia-estatal/" rel="noopener noreferrer" target="_blank">Fiscalía y FELCN inspeccionan hangar 116 tras fuga de avioneta bajo custodia estatal</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/avioneta-sustraida-en-el-trompillo-no-tenia-custodia-y-era-investigada-por-n4rc0tr4f1c0/" rel="noopener noreferrer" target="_blank">Avioneta sustraída en El Trompillo no tenía custodia y era investigada por n4rc0tr4f1c0</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_zar-antidrogas-denuncia-salida-no-autorizada-de-avioneta-bajo-investigacion.html" rel="noopener noreferrer" target="_blank">Zar antidrogas denuncia salida no autorizada de avioneta bajo investigación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/avioneta-sale-sin-autorizacion-del-aeropuerto-el-trompillo/" rel="noopener noreferrer" target="_blank">Avioneta sale sin autorización del aeropuerto El Trompillo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/hay-responsabilidades-viceministro-denuncia-que-una-avioneta-investigada-salio-del-trompillo-sin-autorizacion-MG20403285" rel="noopener noreferrer" target="_blank">“Hay responsabilidades”: Viceministro denuncia que una avioneta investigada salió del Trompillo sin autorización</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45933-aeronave-investigada-por-narcotrafico-despega-de-el-trompillo-sin-autorizacion-viceministro-advierte-que-es-grave" rel="noopener noreferrer" target="_blank">Aeronave investigada por narcotráfico despega de El Trompillo sin autorización; Viceministro advierte que “es grave"</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Paz convoca encuentro nacional por crisis" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Paz convoca encuentro nacional por crisis</div>
+<div class="modal-sum">Presidente Paz propone encuentro nacional para definir agenda del país y atender crisis social. Convoca al diálogo como respuesta a demandas de sectores sociales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">8</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/01/bolivia-con-los-conflictos-no-va-a-avanzar-si-con-el-dialogo-y-las-soluciones-dice-paz-en-su-mensaje-por-el-dia-del-trabajador-60137" rel="noopener noreferrer" target="_blank">“Bolivia con los conflictos no va a avanzar, sí con el diálogo y las soluciones”, dice Paz en su mensaje por el Día del Trabajador</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/paz-primero-debe-reunirse-con-el-lara-dip-pdc-plantea-dialogo-previo-con-lara-antes-del-encuentro-nacional/" rel="noopener noreferrer" target="_blank">“Paz primero debe reunirse con el Lara”: Dip PDC plantea diálogo previo con Lara antes del encuentro nacional</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-paz-anuncia-leyes-proximos-dias-remarca-no-pasado-solucion_1777644094" rel="noopener noreferrer" target="_blank">El presidente Paz anuncia leyes para los próximos días y remarca que "no es el pasado la solución"</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-01/politica/el-presidente-paz-anuncia-un-encuentro-nacional-para-definir-la-agenda-del-pais.html" rel="noopener noreferrer" target="_blank">El presidente Paz anuncia un encuentro nacional para definir la agenda del país</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_paz-anuncia-un-encuentro-nacional-como-respuesta-a-una-bolivia-quebrada.html" rel="noopener noreferrer" target="_blank">Paz anuncia un encuentro nacional como respuesta a una Bolivia “quebrada”</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/rodrigo-paz-propone-encuentro-nacional-ante-crisis-en-bolivia/" rel="noopener noreferrer" target="_blank">Rodrigo Paz propone encuentro nacional ante crisis en Bolivia - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/gobierno-de-bolivia-llama-al-dialogo-ante-crisis-social/" rel="noopener noreferrer" target="_blank">Gobierno de Bolivia llama al diálogo ante crisis social - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/presidente-paz-anuncia-encuentro-nacional-y-nuevo-paquete-de-leyes/" rel="noopener noreferrer" target="_blank">Presidente Paz anuncia encuentro nacional y nuevo paquete de leyes - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="TSJ alerta avance del sicariato" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">TSJ alerta avance del sicariato</div>
+<div class="modal-sum">El presidente del Tribunal Supremo de Justicia, Romer Saucedo, afirma que el sicariato le 'dobló el brazo al Estado' tras el asesinato de un magistrado, evidenciando ausencia estatal.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/tras-asesinato-de-magistrado-presidente-del-tsj-afirma-que-el-sicariato-le-doblo-el-brazo-al-estado" rel="noopener noreferrer" target="_blank">Tras asesinato de magistrado, presidente del TSJ afirma que el sicariato le “dobló el brazo al Estado”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/01/el-sicariato-le-doblo-el-brazo-al-estado-dice-romer-saucedo-60134" rel="noopener noreferrer" target="_blank">El sicariato "le dobló el brazo al Estado", dice Romer Saucedo</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/en-menos-de-5-dias-se-registran-4-as3sntos-crim3n-organizado-esta-desafiando-al-estado-nadie-los-puede-frenar-as3snato-del-magistrado-es-por-encargo/" rel="noopener noreferrer" target="_blank">“En menos de 5 días se registran 4 as3s!n@tos; crim3n organizado está desafiando al Estado. Nadie los puede frenar. As3s!nato (del magistrado) es por encargo”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/no-puede-vivir-pais-donde-sicariato-le-doblo-brazo-estado_1777647123" rel="noopener noreferrer" target="_blank">“No se puede vivir en un país donde el sicariato le dobló el brazo al Estado”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-01/pais/el-sicariato-le-doblo-el-brazo-al-estado-dice-romer-saucedo.html" rel="noopener noreferrer" target="_blank">El sicariato “le dobló el brazo al Estado”, dice Romer Saucedo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/presidente-del-tsj-advierte-que-el-sicariato-se-apodera-del-pais-y-ve-una-ausencia-de-estado/" rel="noopener noreferrer" target="_blank">Presidente del TSJ advierte que el sicariato se apodera del país y ve una “ausencia de Estado”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/presidente-del-supremo-el-sicariato-le-doblo-el-brazo-al-estado" rel="noopener noreferrer" target="_blank">Presidente del Supremo: El sicariato le dobló el brazo al Estado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Trasladan restos del magistrado Claure" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Trasladan restos del magistrado Claure</div>
+<div class="modal-sum">Los restos del magistrado Víctor Hugo Claure son trasladados a Cochabamba para ser velados por su familia en medio de pedidos de justicia y advertencias gubernamentales contra especulaciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/familiares-del-decano-4s3s1n4d0-en-scz-llegan-a-morgue-para-trasladar-el-cuerpo-a-cbba-queremos-justicia-por-que-han-m4t4d0-a-mi-hermano/" rel="noopener noreferrer" target="_blank">Familiares del decano 4s3s1n4d0 en SCZ llegan a morgue para trasladar el cuerpo a CBBA, “queremos justicia por qué han m4t4d0 a mi hermano”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/r3st0s-del-magistrado-victor-hugo-claure-son-trasladados-a-cochabamba-y-son-velados-por-su-familia/" rel="noopener noreferrer" target="_blank">R3st0s del magistrado Víctor Hugo Claure son trasladados a Cochabamba y son velados por su familia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cuerpo-magistrado-asesinado-trasladado-cochabamba-medio-pedidos-justicia_1777676724" rel="noopener noreferrer" target="_blank">Cuerpo del magistrado asesinado es trasladado a Cochabamba en medio de pedidos de justicia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/magistrado-claure-velado-cochabamba-gobierno-insta-evitar-especulaciones_1777687581" rel="noopener noreferrer" target="_blank">Magistrado Claure es velado en Cochabamba y el Gobierno insta a evitar las especulaciones</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_trasladan-a-cochabamba-el-cuerpo-de-victor-hugo-claure.html" rel="noopener noreferrer" target="_blank">Trasladan a Cochabamba el cuerpo de Víctor Hugo Claure</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260501/llegan-cochabamba-restos-del-magistrado-acribillado-santa-cruz" rel="noopener noreferrer" target="_blank">Llegan a Cochabamba los restos del magistrado acribillado en Santa Cruz</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/el-cuerpo-del-magistrado-claure-llega-a-cochabamba-en-medio-de-pedidos-de-justicia-NH20412861" rel="noopener noreferrer" target="_blank">El cuerpo del magistrado Claure llega a Cochabamba en medio de pedidos de justicia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="COB realiza cabildo en El Alto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">COB realiza cabildo en El Alto</div>
+<div class="modal-sum">COB realiza cabildo en El Alto con participación de magisterio y organizaciones sociales. Policía resguarda el centro paceño durante la concentración.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">6</strong> titulares</span>
+<span><strong style="color:var(--c-08)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260501_magisterio-y-organizaciones-se-movilizan-hacia-el-cabildo-de-la-cob-en-el-alto.html" rel="noopener noreferrer" target="_blank">Magisterio y organizaciones se movilizan hacia el cabildo de la COB en El Alto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/01/se-inicia-cabildo-de-la-cob-en-el-alto-con-11-demandas-entre-ellas-el-incremento-salarial-60139" rel="noopener noreferrer" target="_blank">Se inicia cabildo de la COB en El Alto con 11 demandas, entre ellas el incremento salarial</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cob-inicia-cabildo-alto-mientras-policia-resguarda-centro-paceno_1777652078" rel="noopener noreferrer" target="_blank">COB inicia cabildo en El Alto, mientras la Policía resguarda el centro paceño</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/critican-mitin-cob-alto_1777682095" rel="noopener noreferrer" target="_blank">Critican mitin de la COB en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/comienza-el-anunciado-cabildo-de-la-cob-en-el-alto/" rel="noopener noreferrer" target="_blank">Comienza el anunciado cabildo de la COB en El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/organizaciones-sociales-comienzan-a-llegar-al-cabildo-de-la-cob-en-el-alto/" rel="noopener noreferrer" target="_blank">Organizaciones sociales comienzan a llegar al cabildo de la COB en El Alto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14a">
+<div class="modal-backdrop" onclick="closeModal('modal_14a')"></div>
+<div aria-label="Defensoría alerta aumento de acoso laboral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Defensoría alerta aumento de acoso laboral</div>
+<div class="modal-sum">La Defensoría del Pueblo alerta sobre el aumento de conflictos laborales en Bolivia e insta al Legislativo a acelerar la aprobación de una ley específica contra el acoso laboral.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">5</strong> titulares</span>
+<span><strong style="color:var(--c-25)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/defensoria-alerta-aumento-conflictos-laborales-pide-ley-acoso-bolivia_1777653401" rel="noopener noreferrer" target="_blank">Defensoría alerta aumento de conflictos laborales y pide ley contra el acoso en Bolivia</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-01/pais/defensoria-del-pueblo-insta-a-acelerar-la-creacion-de-una-ley-contra-el-acoso-laboral.html" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo insta a acelerar la creación de una ley contra el acoso laboral</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/defensor%C3%ADa-del-pueblo-exhorta-impulsar-y-aprobar-una-ley-espec%C3%ADfica-contra-el-acoso-laboral" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo exhorta impulsar y aprobar una ley específica contra el acoso laboral</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/defensoria-pide-garantizar-derechos-y-aprobar-ley-contra-el-acoso/" rel="noopener noreferrer" target="_blank">Defensoría pide garantizar derechos y aprobar ley contra el acoso - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/01/defensoria-del-pueblo-reclama-ley-contra-el-acoso-laboral/" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo reclama ley contra el acoso laboral</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Refuerzan seguridad de magistrados en Santa Cruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Refuerzan seguridad de magistrados en Santa Cruz</div>
+<div class="modal-sum">Policía refuerza seguridad de 13 magistrados en Santa Cruz tras asesinato de decano del Tribunal Agroambiental</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/polic%C3%ADa-despliega-c%C3%A1psulas-de-seguridad-para-13-magistrados-tras-asesinato-en-santa-cruz" rel="noopener noreferrer" target="_blank">Policía despliega cápsulas de seguridad para 13 magistrados tras asesinato en Santa Cruz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/01/policia-refuerza-seguridad-de-13-magistrados-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Policía refuerza seguridad de 13 magistrados en Santa Cruz</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/tras-el-asesinato-de-decano-la-policia-refuerza-la-seguridad-de-13-magistrados-que-se-encuentran-en-santa-cruz-JG20404683" rel="noopener noreferrer" target="_blank">Tras el asesinato de decano, la Policía refuerza la seguridad de 13 magistrados que se encuentran en Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="Accidentes dejan muertos en carreteras" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Accidentes dejan muertos en carreteras</div>
+<div class="modal-sum">Accidentes de tránsito en rutas del país dejan fallecidos y heridos durante feriado</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/dos-accid3nt3s-enlut4n-feriado-cuatro-f4llecid0s-y-mas-de-30-h3rid0s-en-rutas-del-pais/" rel="noopener noreferrer" target="_blank">Dos accid3nt3s enlut4n feriado: cuatro f4llecid0s y más de 30 h3rid0s en rutas del país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/reportan-dos-aparatosos-accidentes-transito-dejan-saldo-cuatro-fallecidos-varios-heridos_1777654313" rel="noopener noreferrer" target="_blank">Cuatro fallecidos y varios heridos en dos accidentes de tránsito</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260501_bus-que-partio-de-potosi-a-oruro-y-volqueta-chocaron-hay-un-fallecido.html" rel="noopener noreferrer" target="_blank">Bus que partió de Potosí a Oruro y volqueta chocaron; hay un fallecido</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="Auditan planta de Ecebol en Potosí" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMIA</div>
+<div class="modal-title">Auditan planta de Ecebol en Potosí</div>
+<div class="modal-sum">Sedem audita planta de Ecebol en Potosí tras investigación por presunta malversación</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/sedem-profundiza-auditoria-cementera-potosi-fiscalia-apunta-varias-exautoridades_1777663911" rel="noopener noreferrer" target="_blank">Sedem profundiza auditoría a cementera de Potosí; Fiscalía apunta a varias exautoridades</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/fiscal%C3%ADa-investiga-una-exgerente-del-sedem-por-presunta-malversaci%C3%B3n-en-planta-de-ecebol" rel="noopener noreferrer" target="_blank">Fiscalía investiga a una exgerente del Sedem por presunta malversación en planta de Ecebol</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/01/sedem-lleva-adelante-auditoria-en-la-planta-de-ecebol-en-potosi/" rel="noopener noreferrer" target="_blank">Sedem lleva adelante auditoría en la planta de Ecebol en Potosí</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="Gobierno convoca diálogo ante paro COB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Gobierno convoca diálogo ante paro COB</div>
+<div class="modal-sum">Gobierno convoca diálogo amplio y califica de capricho el paro indefinido de la COB</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">3</strong> titulares</span>
+<span><strong style="color:var(--c-05)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/paro-indefinido-de-la-cob-se-activa-tras-cabildo-en-el-alto/" rel="noopener noreferrer" target="_blank">Paro indefinido de la COB se activa tras cabildo en El Alto - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-califica-de-capricho-las-amenazas-de-paro-y-ratifica-convocatoria-al-dialogo-amplio-202651194147" rel="noopener noreferrer" target="_blank">Gobierno califica de "capricho" las amenazas de paro y ratifica convocatoria al diálogo amplio</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/01/45984-gobierno-asegura-que-la-cob-no-representa-a-la-gran-bolivia-y-la-convoca-al-dialogo-nacional" rel="noopener noreferrer" target="_blank">Gobierno asegura que la COB no representa a la "gran Bolivia" y la convoca al diálogo nacional</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+  // Códigos válidos (hasheados con SHA-256)
+  var CODES = [{"hash": "dd7cee604ffa65030826fe822829b21e3cb903310a02eedb32411ff4b1406e6f", "expires": "2026-05-22"}, {"hash": "62aa2547c0dc70f7809d5dc305f7e3547753c1bda75432f5174ea960bbdc689f", "expires": "2026-05-22"}, {"hash": "240081c6d806f3dfebe7b021efbf400efe91c78409262c91d6ae004a7ca2d739", "expires": "2026-05-23"}, {"hash": "6e90df223bf424abf4e8853ab388aec7e90d65ccadfc6c883a53ecf95698f0f3", "expires": "2026-05-24"}, {"hash": "63561a49b45bf001aecb70c101639fad505196820890126fdae110b71e6f4aab", "expires": "2026-05-02"}, {"hash": "6beaff3f5a876744ce95fa2e8280548a26a05e5d49ff8b357941d5792031b355", "expires": "2026-05-02"}, {"hash": "50aac44354b589edd8aabec75d75d4013cced94df988d9652e76ec7f95f479d4", "expires": "2026-05-02"}, {"hash": "01a402ed03f519c2ffb3900128a36a34fe8da7c2d4bdaf1cf78d7ed71fff48c4", "expires": "2026-05-06"}, {"hash": "eb01fe84f3ecd12bf2dd0f6dfc52e2cfd9ae4eb2866661dcc16150a8e7ba851c", "expires": "2026-05-06"}, {"hash": "cb8832c58c92b3eeef575d66beb7afa131fb05edaead150173bc67412e993bd7", "expires": "2026-05-06"}];
+
+  // Utilidad: SHA-256
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // Verificar si ya está activado
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          // Código expirado
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+
+  // Activación por código
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    var hash = await sha256(code);
+    var now = new Date().toISOString().slice(0,10);
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  // Enter key en el input
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  // Ejecutar checks al cargar
+  checkStored();  
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
