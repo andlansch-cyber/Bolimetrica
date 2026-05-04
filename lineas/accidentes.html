@@ -527,6 +527,19 @@ body.bm-unlocked #bm-tl-overlay { display: none !important; }
 <script>
 // ── Paywall: activación por código ──
 (function(){
+  var CODES_URL="https://bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text){
+    var enc=new TextEncoder().encode(text.trim().toUpperCase());
+    var buf=await crypto.subtle.digest("SHA-256",enc);
+    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");
+  }
+
+  async function cargarCodigos(){
+    try{var r=await fetch(CODES_URL+"?t="+Date.now());return await r.json();}
+    catch(e){return[];}
+  }
+
   function isUnlocked(){
     try{
       var code=localStorage.getItem("bm_code");
@@ -543,12 +556,19 @@ body.bm-unlocked #bm-tl-overlay { display: none !important; }
     if(!input||!msg)return;
     var code=input.value.trim().toUpperCase();
     if(!code){msg.textContent="Ingresa un código";msg.className="bm-tl-msg err";return;}
-    var enc=new TextEncoder().encode(code);
-    var buf=await crypto.subtle.digest("SHA-256",enc);
-    var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");
-    try{localStorage.setItem("bm_code",hash);localStorage.setItem("bm_expires","2099-12-31");}catch(e){}
-    document.body.classList.add("bm-unlocked");
-    msg.textContent="✓ Desbloqueado";msg.className="bm-tl-msg ok";
+    msg.textContent="...";msg.className="bm-tl-msg";
+    var hash=await sha256(code);
+    var now=new Date().toISOString().slice(0,10);
+    var CODES=await cargarCodigos();
+    var match=CODES.find(function(c){return c.hash===hash&&now<=c.expires;});
+    if(match){
+      try{localStorage.setItem("bm_code",hash);localStorage.setItem("bm_expires",match.expires);}catch(e){}
+      document.body.classList.add("bm-unlocked");
+      msg.textContent="✓ Desbloqueado";msg.className="bm-tl-msg ok";
+    }else{
+      msg.textContent="Código inválido o expirado";msg.className="bm-tl-msg err";
+      input.value="";
+    }
   };
   var inp=document.getElementById("bm-tl-input");
   if(inp)inp.addEventListener("keydown",function(e){if(e.key==="Enter")bmActivarTL();});
