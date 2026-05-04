@@ -224,32 +224,33 @@
             return;
           }
 
-          // Validar formato mínimo
-          if (!/^BM-[A-Z0-9]{4,}$/.test(code)) {
-            msg.textContent = 'Formato inválido (BM-XXXX)';
-            msg.style.color = '#ba3030';
-            input.value = '';
-            return;
-          }
+          msg.textContent = '...';
+          msg.style.color = '#7e8a9c';
 
           var hash = await sha256(code);
+          var now  = new Date().toISOString().slice(0, 10);
 
-          // Guardar en localStorage (mismo que usan reportes y líneas)
-          // Expiración: 30 días desde hoy como fallback.
-          // Cuando abran un reporte, el JS de ese reporte validará
-          // contra los hashes reales y ajustará la fecha si corresponde.
-          var expDate = new Date();
-          expDate.setDate(expDate.getDate() + 30);
-          var expStr = expDate.toISOString().slice(0, 10);
-
+          var CODES = [];
           try {
-            localStorage.setItem('bm_code', hash);
-            localStorage.setItem('bm_expires', expStr);
+            var r = await fetch('https://bolimetrica.com/codigos_validos.json?t=' + Date.now());
+            CODES = await r.json();
           } catch(e) {}
 
-          document.body.classList.add('bm-unlocked');
-          msg.textContent = '✓ Código activado';
-          msg.style.color = '#27ac3d';
+          var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+          if (match) {
+            try {
+              localStorage.setItem('bm_code', hash);
+              localStorage.setItem('bm_expires', match.expires);
+            } catch(e) {}
+            document.body.classList.add('bm-unlocked');
+            msg.textContent = '✓ Código activado';
+            msg.style.color = '#27ac3d';
+          } else {
+            msg.textContent = 'Código inválido o expirado';
+            msg.style.color = '#ba3030';
+            input.value = '';
+          }
         };
 
         // Enter key
@@ -266,4 +267,6 @@
     </script>
 </body>
 </html>
+
+
 
