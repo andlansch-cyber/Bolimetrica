@@ -1,0 +1,2597 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260505</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix móvil: reducir paddings y ancho fijo que desbordan */
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+}
+ 
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-05-05" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-05-05-hYewFv.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">216</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">22</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">7</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 05-MAYO-2026</strong><br/>
+        Reporte N° B24-20260505<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_10" onclick="openModal('modal_10')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-08)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-08)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="top3-title">Choferes ratifican paro nacional con bloqueos</div>
+<div class="top3-body">La Confederación de Choferes de Bolivia ratificó un paro nacional con bloqueos para este martes, tras rechazar la convocatoria al diálogo del Gobierno para este lunes. El sector gremial mantiene su postura de movilización y descarta asistir a reuniones previas con el Ejecutivo nacional.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">26</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_8a" onclick="openModal('modal_8a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-08)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-08)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="top3-title">Marcha indígena llega a La Paz</div>
+<div class="top3-body">Tras más de 27 días de caminata desde el oriente, la marcha indígena y campesina llega a la ciudad de La Paz para exigir la abrogación de la Ley 1720 de tierras. Los manifestantes, recibidos por la COB, instalaron un mitin calificando la norma de inconstitucional.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">18</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">11</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_11" onclick="openModal('modal_11')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-05)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-05)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="top3-title">César Dockweiler asume la alcaldía de La Paz</div>
+<div class="top3-body">César Dockweiler asume formalmente la Alcaldía de La Paz, comprometiendo una gestión enfocada en resultados técnicos e innovación política antes que en ideologías. El nuevo alcalde hizo un llamado a la unidad de la población para mejorar la calidad de vida en el municipio.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">16</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">8</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-05)"></div></div>
+<div class="cat-n">79</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">3.</span> César Dockweiler asume la alcaldía de La Paz</li><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">4.</span> Nuevas autoridades de Santa Cruz asumen funciones</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">5.</span> Posesión de nuevas autoridades subnacionales en Bolivia</li><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">10.</span> Eliser Roca asume la alcaldía de El Alto</li><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">11.</span> Luis Revilla asume gobernación de La Paz</li><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">14.</span> Manfred Reyes Villa asume alcaldía de Cochabamba</li><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">18.</span> Leonardo Loza asume gobernación de Cochabamba</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:89%;background:var(--c-08)"></div></div>
+<div class="cat-n">70</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">1.</span> Choferes ratifican paro nacional con bloqueos</li><li onclick="scrollToCard('card_8a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">2.</span> Marcha indígena llega a La Paz</li><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">8.</span> COB ratifica movilizaciones y rechaza diálogo</li><li onclick="scrollToCard('card_15'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">9.</span> Persiste bloqueo de transporte en tranca Urujara</li><li onclick="scrollToCard('card_8b'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">19.</span> Manifestantes indígenas expulsan a activista María Galindo</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:41%;background:var(--c-02)"></div></div>
+<div class="cat-n">32</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">6.</span> Dólar supera barrera de diez bolivianos</li><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">7.</span> Gobierno inicia devolución de depósitos en dólares</li><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">12.</span> Presidente advierte crisis financiera en gobiernos subnacionales</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:22%;background:var(--c-07)"></div></div>
+<div class="cat-n">17</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">13.</span> Investigan sicariato contra magistrado y juez</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">15.</span> Presidente vincula sicariatos con mafia y política</li><li onclick="scrollToCard('card_N006'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">22.</span> Cárcel para padres que quemaron a hija</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-11)"></div></div>
+<div class="cat-n">9</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_16'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">16.</span> Reporte diario sobre abastecimiento de combustibles</li><li onclick="scrollToCard('card_N005'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">21.</span> YPFB perforará nuevos pozos en Surubí Mamoré</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:8%;background:var(--c-18)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">17.</span> Bolivia y Chile homologan licencias de conducir</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-10)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_N003'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">20.</span> Amplían detención preventiva para exministro Édgar Montaño</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">45</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:75%"></div>
+</div>
+</td>
+<td class="freq-count">30</td>
+</tr>
+<tr>
+<td class="freq-word">gobernador</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:55%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">choferes</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:53%"></div>
+</div>
+</td>
+<td class="freq-count">18</td>
+</tr>
+<tr>
+<td class="freq-word">periódico digital</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">patria</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">alcalde</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">17</td>
+</tr>
+<tr>
+<td class="freq-word">referencial</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">marcha</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">dockweiler</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:44%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Choferes ratifican paro nacional con bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">26</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Marcha indígena llega a La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:69.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">18</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            César Dockweiler asume la alcaldía de La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:61.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">16</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Nuevas autoridades de Santa Cruz asumen funciones
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:61.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">16</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Posesión de nuevas autoridades subnacionales en Bolivia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:61.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">16</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Dólar supera barrera de diez bolivianos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:46.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">12</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Gobierno inicia devolución de depósitos en dólares
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:46.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">12</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            COB ratifica movilizaciones y rechaza diálogo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:46.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">12</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_15')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Persiste bloqueo de transporte en tranca Urujara
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:42.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">11</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Eliser Roca asume la alcaldía de El Alto
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">10</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Luis Revilla asume gobernación de La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:30.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Presidente advierte crisis financiera en gobiernos subnacionales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:30.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">8</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Investigan sicariato contra magistrado y juez
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Manfred Reyes Villa asume alcaldía de Cochabamba
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Presidente vincula sicariatos con mafia y política
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Reporte diario sobre abastecimiento de combustibles
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Bolivia y Chile homologan licencias de conducir
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Leonardo Loza asume gobernación de Cochabamba
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Manifestantes indígenas expulsan a activista María Galindo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N003')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Amplían detención preventiva para exministro Édgar Montaño
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N005')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            YPFB perforará nuevos pozos en Surubí Mamoré
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N006')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">22.</span>
+            Cárcel para padres que quemaron a hija
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">3</div>
+</div>
+<div class="chart-medios">2 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Nuevas autoridades de Santa Cruz asumen funciones</div>
+<div class="topic-body">Juan Pablo Velasco y Paola Aguirre juraron como nuevas autoridades de Santa Cruz. Durante el acto, el gobernador Velasco anunció una reestructuración institucional y manifestó que mantendrá una relación de diálogo con firmeza ante el Gobierno nacional, destacando su llegada en un Cybertruck.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Posesión de nuevas autoridades subnacionales en Bolivia</div>
+<div class="topic-body">Bolivia inicia una nueva etapa institucional con la posesión y juramentación de autoridades en los gobiernos subnacionales. El cambio de mando se desarrolla a nivel nacional en un contexto de retos económicos y demandas sociales por parte de la ciudadanía.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Dólar supera barrera de diez bolivianos</div>
+<div class="topic-body">El tipo de cambio referencial del dólar en Bolivia alcanzó un máximo histórico al superar por primera vez los Bs 10,01 para la venta. Analistas atribuyen este fenómeno a la alta demanda de divisas, mientras que el BCB fijó la nueva tasa rompiendo la barrera de los dos dígitos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Gobierno inicia devolución de depósitos en dólares</div>
+<div class="topic-body">El Gobierno dispuso la devolución escalonada de depósitos en dólares superiores a $us 1.000 a partir del 15 de julio, bajo un cronograma de montos. Asimismo, se autorizó el cobro de remesas al tipo de cambio referencial y el retiro de hasta $us 3.000 en el sistema financiero nacional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">COB ratifica movilizaciones y rechaza diálogo</div>
+<div class="topic-body">La Central Obrera Boliviana (COB) ratifica el inicio de movilizaciones ante el Gobierno de Rodrigo Paz, mientras el Ministerio de Trabajo convoca a una mesa de diálogo no tripartita (sin empresarios) para este viernes, con el fin de evitar la radicalización de las protestas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_15" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Persiste bloqueo de transporte en tranca Urujara</div>
+<div class="topic-body">El Gobierno y transportistas de los Yungas suscribieron un acuerdo para levantar los bloqueos de carreteras, permitiendo el paso de maquinaria y cisternas. Sin embargo, la situación en las rutas es incierta, pues algunos sectores reportan que la medida de presión aún persiste en ciertos puntos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_13" onclick="openModal('modal_13')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Eliser Roca asume la alcaldía de El Alto</div>
+<div class="topic-body">Eliser Roca juró como alcalde de El Alto, prometiendo orden y una gestión incansable. En el marco de la posesión de autoridades locales en La Paz y El Alto, Roca también presentó a su equipo de secretarios municipales para iniciar acciones administrativas inmediatas tras asumir el cargo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Luis Revilla asume gobernación de La Paz</div>
+<div class="topic-body">Luis Revilla asume formalmente como gobernador de La Paz, describiendo al departamento como una región postergada y golpeada. Durante su juramentación, prometió una transformación institucional para superar la crisis y convertir la región en un departamento "maravilloso".</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_14" onclick="openModal('modal_14')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Presidente advierte crisis financiera en gobiernos subnacionales</div>
+<div class="topic-body">El presidente Rodrigo Paz advirtió que alcaldías y gobernaciones están "quebradas" y anticipó semanas "complicadas" por bloqueos y protestas. Paz cuestionó las medidas de presión de los dirigentes y pidió confianza en el futuro ante la crisis financiera del sistema institucional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Investigan sicariato contra magistrado y juez</div>
+<div class="topic-body">La Fiscalía investiga los asesinatos del magistrado Víctor Claure y del juez Wilber Cruz, ocurridos en hechos de sicariato en un periodo de seis meses. Entre las actuaciones procesales, se realizó el desprecintado de las oficinas de Claure en Sucre para recolectar evidencias.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6a" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Manfred Reyes Villa asume alcaldía de Cochabamba</div>
+<div class="topic-body">Manfred Reyes Villa asumió oficialmente su segundo mandato consecutivo como alcalde de Cercado, Cochabamba. Durante su posesión, la autoridad destacó el respaldo de la ciudadanía, hizo un llamado a la unidad para evitar confrontaciones y manifestó su disposición para trabajar junto a la Gobernación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Presidente vincula sicariatos con mafia y política</div>
+<div class="topic-body">El presidente Rodrigo Paz vincula a Evo Morales y a la reorganización de la mafia de Marset con una ola de sicariatos que ha dejado 90 muertos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_16" onclick="openModal('modal_16')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Reporte diario sobre abastecimiento de combustibles</div>
+<div class="topic-body">El Gobierno boliviano implementó un sistema de reporte diario para informar sobre el abastecimiento de diésel y gasolina en el país. Esta medida busca transparentar el suministro de combustibles y mantener informada a la población sobre la disponibilidad en las estaciones de servicio.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_17" onclick="openModal('modal_17')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Bolivia y Chile homologan licencias de conducir</div>
+<div class="topic-body">Bolivia y Chile pusieron en vigencia un acuerdo para la homologación y reconocimiento recíproco de licencias de conducir. El convenio permite a los ciudadanos de ambos países validar sus documentos de conducción sin necesidad de realizar nuevos exámenes técnicos o prácticos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6b" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Leonardo Loza asume gobernación de Cochabamba</div>
+<div class="topic-body">Leonardo Loza fue posesionado como el nuevo gobernador de Cochabamba. En su discurso, Loza prometió combatir la corrupción y la flojera en su gestión, además de expresar su intención de fortalecer los lazos de cooperación y trabajo con socios estratégicos como Rusia, Irán y China.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8b" onclick="openModal('modal_8b')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Manifestantes indígenas expulsan a activista María Galindo</div>
+<div class="topic-body">Durante el ingreso de la movilización indígena a la ciudad de La Paz, la activista María Galindo fue expulsada por los manifestantes. Los marchistas justificaron la acción acusándola de actitudes discriminatorias y exigieron disculpas públicas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N003" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Amplían detención preventiva para exministro Édgar Montaño</div>
+<div class="topic-body">La justicia determina seis meses de detención preventiva adicional para el exministro Édgar Montaño por un nuevo proceso judicial en su contra.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N005" onclick="openModal('modal_N005')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">YPFB perforará nuevos pozos en Surubí Mamoré</div>
+<div class="topic-body">YPFB anuncia la perforación de nuevos pozos en el campo Surubí-Mamoré para incrementar las reservas de hidrocarburos y reducir la importación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N006" onclick="openModal('modal_N006')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Cárcel para padres que quemaron a hija</div>
+<div class="topic-body">Una pareja en Oruro es enviada a la cárcel preventivamente tras ser acusada de quemar a su hija de 15 años con alcohol.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>2</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/economia/el-67-7-del-pge-reformulado-sera-para-el-gasto-corriente-superior-al-presupuestado-por-arce" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">El 67,7% del PGE reformulado será para el gasto corriente, superior al presupuestado por Arce</a></div>
+<div class="emergente-sum">Revela una alta presión fiscal al destinar la gran mayoría del presupuesto reformulado a gastos de funcionamiento estatal.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/economia-y-empresa/2026/05/04/riesgo-pais-de-bolivia-cae-a-378-puntos-y-espinoza-destaca-gestion/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Riesgo país de Bolivia cae a 378 puntos; Espinoza destaca gestión</a></div>
+<div class="emergente-sum">Refleja una mejora sorpresiva en la percepción de los mercados internacionales sobre la solvencia financiera de Bolivia.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://correodelsur.com/sociedad/20260504/embajador-de-iran-dice-que-cochabamba-deberia-ser-la-capital-de-bolivia-y-desata-criticas.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Embajador de Irán dice que Cochabamba debería ser la capital de Bolivia y desata críticas</a></div>
+<div class="emergente-sum">Involucra declaraciones diplomáticas polémicas sobre la soberanía y la sede de gobierno que generan fricción institucional.</div>
+<div class="emergente-source">Fuente: Correo del Sur</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/politica/2026/05/04/exvicecanciller-chileno-revela-que-antes-de-acudir-a-la-haya-garcia-linera-propuso-un-acercamiento--60241" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">García Linera propuso acercamiento a Chile antes de La Haya, revela exvicecanciller de ese país</a></div>
+<div class="emergente-sum">Aporta una revelación histórica sensible sobre las negociaciones bilaterales previas al litigio marítimo internacional.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/04/05/revelan-red-de-propaganda-a-favor-de-arce/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Revelan red de propaganda a favor de Arce</a></div>
+<div class="emergente-sum">Expone una supuesta estructura de manipulación de opinión pública vinculada directamente con el actual mandatario.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260505 · 2026-05-05</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 216 titulares · 22 temas · 7 categorías · 19 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Choferes ratifican paro nacional con bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Choferes ratifican paro nacional con bloqueos</div>
+<div class="modal-sum">La Confederación de Choferes de Bolivia ratificó un paro nacional con bloqueos para este martes, tras rechazar la convocatoria al diálogo del Gobierno para este lunes. El sector gremial mantiene su postura de movilización y descarta asistir a reuniones previas con el Ejecutivo nacional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">26</strong> titulares</span>
+<span><strong style="color:var(--c-08)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/el-gobierno-dice-que-atendio-demandas-de-los-transportistas-e-insiste-en-dialogar-60244" rel="noopener noreferrer" target="_blank">El gobierno dice que atendió demandas de los transportistas e insiste en dialogar</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/gobierno-afirma-que-resolvi%C3%B3-todos-los-pedidos-de-los-choferes-y-que-el-paro-no-tiene-raz%C3%B3n" rel="noopener noreferrer" target="_blank">Gobierno afirma que resolvió todos los pedidos de los choferes y que el paro no tiene razón de ser</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/gobierno-expone-soluciones-al-sector-transporte-tras-inasistencia-de-choferes/" rel="noopener noreferrer" target="_blank">Gobierno expone soluciones al sector transporte tras inasistencia de chóferes - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/gobierno-asegura-que-resolvio-todos-pedidos-choferes" rel="noopener noreferrer" target="_blank">Gobierno asegura que resolvió todos los pedidos de choferes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-afirma-que-ya-atendio-la-demanda-de-los-choferes-y-dice-dialogara-el-dia-que-ellos-dispongan/" rel="noopener noreferrer" target="_blank">El Gobierno afirma que ya atendió la demanda de los choferes y dice dialogará “el día que ellos dispongan”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-dice-que-solucionaron-todas-las-demandas-del-sector-transporte-y-que-esta-abierto-al-dialogo-JA20466186" rel="noopener noreferrer" target="_blank">Gobierno dice que solucionaron todas las demandas del sector transporte y que está abierto al diálogo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/confederacion-de-choferes-descarta-dialogo-con-el-gobierno-y-ratifica-paro-para-este-martes-NA20462618" rel="noopener noreferrer" target="_blank">Confederación de Choferes ratifica paro este martes y descarta diálogo previo con el Gobierno</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/choferes-van-al-paro-este-martes-y-exigen-soluciones-por-combustible-y-resarcimiento" rel="noopener noreferrer" target="_blank">Choferes van al paro este martes y exigen soluciones por combustible y resarcimiento</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/confederacion-de-choferes-rechaza-asistir-a-reunion-y-asegura-que-se-dialogara-en-medio-del-paro--60223" rel="noopener noreferrer" target="_blank">Confederación de choferes rechaza asistir a reunión y asegura que se dialogará en medio del paro</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/confederacion-de-choferes-descarta-dialogo-con-el-gobierno-y-ratifica-paro.html" rel="noopener noreferrer" target="_blank">Confederación de Choferes descarta diálogo con el Gobierno y ratifica su paro nacional con bloqueos para este martes</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/choferes-van-paro-rechazan-invitacion-gobierno-dialogar-este-lunes_1777924901" rel="noopener noreferrer" target="_blank">Choferes van al paro y rechazan invitación del Gobierno a dialogar este lunes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-04/economia/choferes-mantienen-paro-nacional-y-rechazan-dialogo-con-el-gobierno-este-lunes.html" rel="noopener noreferrer" target="_blank">Choferes mantienen paro nacional y rechazan diálogo con el Gobierno este lunes</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/gobierno-vuelve-a-convoca-al-dialogo-a-los-choferes-este-lunes/" rel="noopener noreferrer" target="_blank">Gobierno vuelve a convocar al diálogo a los choferes este lunes - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/choferes-ratifican-paro-desde-este-martes-por-combustibles-y-carreteras/" rel="noopener noreferrer" target="_blank">Choferes ratifican paro desde este martes por combustibles y carreteras</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-vuelve-a-convocar-al-dialogo-a-los-choferes-pero-estos-ratifican-su-paro-del-martes/" rel="noopener noreferrer" target="_blank">El Gobierno vuelve a convocar al diálogo a los choferes, pero éstos ratifican su paro del martes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/choferes-ratifican-el-paro-general-del-martes-y-dice-es-para-el-bien-de-todos-los-habitantes-del-pais/" rel="noopener noreferrer" target="_blank">Choferes ratifican el paro general del martes y dicen es “para el bien de todos los habitantes del país”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/transporte-confirma-paro-nacional-con-bloqueo-total-y-advierte-medidas-escalonadas-202654101217" rel="noopener noreferrer" target="_blank">Transporte confirma paro nacional con bloqueo total y advierte medidas escalonadas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ministerio-de-trabajo-dispone-tolerancia-laboral-para-este-martes-ante-el-paro-nacional-de-choferes-202654193925" rel="noopener noreferrer" target="_blank">Ministerio de Trabajo dispone tolerancia laboral para este martes ante el paro nacional de chóferes</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/choferes-de-la-paz-acataran-paro-de-24-horas-este-martes-por-la-calidad-de-la-gasolina-y-el-resarcimiento-HA20464672" rel="noopener noreferrer" target="_blank">Choferes de La Paz acatarán paro de 24 horas este martes por la calidad de la gasolina y el resarcimiento</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/habra-micros-este-martes-en-santa-cruz-de-la-sierra-esto-responden-desde-la-dirigencia-del-sector-FA20463204" rel="noopener noreferrer" target="_blank">¿Habrá micros este martes en Santa Cruz de la Sierra? Esto responden desde la dirigencia del sector</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-ratifican-paro-nacional-y-anuncian-que-no-asistiran-al-dialogo-con-el-gobierno-este" rel="noopener noreferrer" target="_blank">Choferes ratifican paro nacional y anuncian que no asistirán al diálogo con el Gobierno este lunes</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-anuncian-20-puntos-de-bloqueo-en-la-paz-para-este-martes" rel="noopener noreferrer" target="_blank">Choferes anuncian 20 puntos de bloqueo en La Paz para este martes</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46425-choferes-de-la-paz-y-el-alto-confirman-paro-de-24-horas-con-88-puntos-de-bloqueo-este-martes" rel="noopener noreferrer" target="_blank">Choferes de La Paz y El Alto confirman paro de 24 horas con 88 puntos de bloqueo este martes</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/bolivia-se-preven-marchas-bloqueos-y-paros-desde-hoy.html" rel="noopener noreferrer" target="_blank">Bolivia: Se prevén marchas, bloqueos y paros desde hoy</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/ocho-puntos-de-bloqueo-en-la-paz-y-beni-en-el-inicio-de-la-semana.html" rel="noopener noreferrer" target="_blank">Ocho puntos de bloqueo en La Paz y Beni en el inicio de la semana</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/transporte-de-oruro-se-suma-al-bloqueo-nacional-con-35-puntos/" rel="noopener noreferrer" target="_blank">Transporte de Oruro se suma al bloqueo nacional con 35 puntos - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="Marcha indígena llega a La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Marcha indígena llega a La Paz</div>
+<div class="modal-sum">Tras más de 27 días de caminata desde el oriente, la marcha indígena y campesina llega a la ciudad de La Paz para exigir la abrogación de la Ley 1720 de tierras. Los manifestantes, recibidos por la COB, instalaron un mitin calificando la norma de inconstitucional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">18</strong> titulares</span>
+<span><strong style="color:var(--c-08)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260504_ley-1720-marchistas-ingresaran-hoy-a-la-paz.html" rel="noopener noreferrer" target="_blank">Ley 1720: Marchistas ingresarán hoy a La Paz</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/paz-descarta-abrogacion-de-la-ley-1720-pero-se-abre-a-revisiones-en-consenso-nacional" rel="noopener noreferrer" target="_blank">Paz descarta abrogación de la Ley 1720, pero se abre a revisiones en consenso nacional</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/la-marcha-indigena-se-dirige-al-centro-de-la-ciudad-de-la-paz-60224" rel="noopener noreferrer" target="_blank">La marcha indígena se dirige al centro de la ciudad de La Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/no-vamos-a-negociar-queremos-abrogacion-total-de-ley-1720-advierte-dirigenta-de-mujeres-indigenas-60231" rel="noopener noreferrer" target="_blank">“No vamos a negociar, queremos abrogación total" de Ley 1720, advierte dirigenta de mujeres indígenas</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/llega-la-marcha-indigena-a-la-paz-y-es-recibida-por-la-cob.html" rel="noopener noreferrer" target="_blank">Llega la marcha indígena a La Paz y es recibida por la COB</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/marcha-indigena-campesina-llega-paz-despues-27-dias-caminata_1777911863" rel="noopener noreferrer" target="_blank">Marcha indígena y campesina llega a La Paz después de 27 días de caminata</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/medio-ambiente/con-muestras-de-apoyo-la-marcha-llega-su-destino-el-%C3%BAltimo-grupo-ingresa-la-paz-y" rel="noopener noreferrer" target="_blank">Con muestras de apoyo, la marcha llega a su destino: el último grupo ingresa a La Paz y refuerza su demanda de abrogar la Ley 1720</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/medio-ambiente/%E2%80%9Cnuestro-mayor-temor-es-perder-la-tierra%E2%80%9D-la-marcha-que-lleg%C3%B3-la-paz" rel="noopener noreferrer" target="_blank">“Nuestro mayor temor es perder la tierra”: la marcha que llegó a La Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/cob-recibe-a-marcha-indigena-que-exige-anulacion-de-ley-de-tierras/" rel="noopener noreferrer" target="_blank">COB recibe a marcha indígena que exige anulación de ley de tierras</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/senador-suarez-cuestiona-la-ley-1720-y-pide-a-paz-escuchar-a-la-marcha-esta-a-tiempo/" rel="noopener noreferrer" target="_blank">Senador Suárez cuestiona la Ley 1720 y pide a Paz escuchar a la marcha: ‘Está a tiempo’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/marcha-campesina-llega-a-la-paz-tras-28-dias-de-caminata-para-exigir-la-abrogacion-de-la-ley-1720/" rel="noopener noreferrer" target="_blank">Marcha campesina llega a La Paz tras 28 días de caminata por abrogación de Ley 1720</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/28-dias-caminata-marcha-campesino-indigena-pando-beni-llega-paz-rechazo-ley" rel="noopener noreferrer" target="_blank">Tras 28 días de caminata, marcha campesino-indígena de Pando y Beni llega a La Paz en rechazo a la Ley 1720</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-se-abre-a-revisar-la-ley-1720-pero-sin-abrogarla-hay-que-abrirla-y-perfeccionarla/" rel="noopener noreferrer" target="_blank">Paz se abre a “revisar” la Ley 1720, pero sin abrogarla: “Hay que abrirla y perfeccionarla”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/marinkovic-defiende-la-ley-1720-y-dice-que-la-marcha-indigena-campesina-es-politica-y-busca-mas-tierras/" rel="noopener noreferrer" target="_blank">Marinkovic defiende la Ley 1720 y dice que la marcha indígena- campesina es “política” y busca “más tierras”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-ley-1720-es-inconstitucional-marcha-indigena-llega-al-centro-paceno-e-instalan-un-mitin" rel="noopener noreferrer" target="_blank">“La Ley 1720 es inconstitucional”: Marcha indígena llega al centro paceño e instalan un mitin de protesta</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/marchistas-dan-ultimatum-de-24-horas-al-gobierno-y-exigen-reunion-directa-con-el-presidente.html" rel="noopener noreferrer" target="_blank">Marchistas dan ultimátum de 24 horas al Gobierno y exigen reunión directa con el Presidente</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/marchistas-entregan-pliego-de-12-puntos-al-gobierno-dan-24-horas-y-exigen-reunion-con-paz.html" rel="noopener noreferrer" target="_blank">Marchistas entregan pliego de 12 puntos al Gobierno, dan 24 horas y exigen reunión con Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/marchistas-campesinos-dan-24-horas-al-gobierno-para-reunion-directa-con-paz/" rel="noopener noreferrer" target="_blank">Marchistas campesinos dan 24 horas al Gobierno para reunión directa con Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="César Dockweiler asume la alcaldía de La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">César Dockweiler asume la alcaldía de La Paz</div>
+<div class="modal-sum">César Dockweiler asume formalmente la Alcaldía de La Paz, comprometiendo una gestión enfocada en resultados técnicos e innovación política antes que en ideologías. El nuevo alcalde hizo un llamado a la unidad de la población para mejorar la calidad de vida en el municipio.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">16</strong> titulares</span>
+<span><strong style="color:var(--c-05)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/cesar-dockweiler-compromete-trabajo-y-pide-unidad-para-hacer-de-la-paz-la-mejor-ciudad-60235" rel="noopener noreferrer" target="_blank">César Dockweiler compromete trabajo y pide unidad para hacer de La Paz “la mejor ciudad”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/dockweiler-asume-la-alcaldia-de-la-paz-y-plantea-gestion-basada-en-resultados-no-en-ideologias.html" rel="noopener noreferrer" target="_blank">Dockweiler asume la Alcaldía de La Paz y plantea gestión basada en resultados, no en ideologías</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/opositores-toman-concejo-paz-dockweiler-denuncia-chantaje-alto-no-sesionan_1777943382" rel="noopener noreferrer" target="_blank">Opositores toman Concejo de La Paz, Dockweiler denuncia chantaje; y en El Alto no sesionan</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/arias-entrega-simbolos-mando-alcaldia-pacena-cuestiona-ausencia-dockweiler/20260504171501991036.html" rel="noopener noreferrer" target="_blank">Arias entrega símbolos de mando de la Alcaldía paceña y cuestiona ausencia de Dockweiler</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/paz-dockweiler-afirma-que-vecinos-esperan-ideologias-resultados/20260504161936991027.html" rel="noopener noreferrer" target="_blank">La Paz: Dockweiler afirma que los vecinos no esperan ideologías, sino resultados</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/nos-salimos-por-la-puerta-ancha-arias-cierra-su-gestion-en-acto-marcado-por-la-ausencia-de-dockweiler/" rel="noopener noreferrer" target="_blank">“Nos salimos por la puerta ancha”: Arias cierra su gestión en acto marcado por la ausencia de Dockweiler</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dockweiler-jura-como-alcalde-de-la-paz-y-pide-trabajar-en-busca-de-resultados-y-sin-ideologias/" rel="noopener noreferrer" target="_blank">Dockweiler jura como Alcalde de La Paz y pide trabajar en busca de resultados y sin ideologías</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/primera-polemica-concejo-de-la-paz-elije-a-su-presidenta-en-medio-del-abandono-de-concejales-oficialistas/" rel="noopener noreferrer" target="_blank">Primera polémica: Concejo de La Paz elije a su Presidenta en medio del abandono de concejales oficialistas</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dockweiler-denuncia-ilegalidad-y-presiones-en-la-eleccion-del-concejo-municipal-de-la-paz/" rel="noopener noreferrer" target="_blank">Dockweiler denuncia ilegalidad y presiones en la elección del Concejo Municipal de La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/dockweiler-anuncia-que-basura-transporte-y-seguridad-seran-su-prioridad-20265411410" rel="noopener noreferrer" target="_blank">Dockweiler anuncia que basura, transporte y seguridad serán su prioridad</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/dockweiler-asume-la-alcaldia-de-la-paz-y-marca-el-inicio-de-una-nueva-gestion-202654143754" rel="noopener noreferrer" target="_blank">Dockweiler asume la Alcaldía de La Paz y marca el inicio de una nueva gestión</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/dockweiler-propone-innovacion-politica-y-llama-a-la-unidad-para-gobernar-la-paz-202654152959" rel="noopener noreferrer" target="_blank">Dockweiler propone “Innovación Política” y llama a la unidad para gobernar La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/waldy-caballero-asume-la-presidencia-del-concejo-municipal-de-la-paz-202654201938" rel="noopener noreferrer" target="_blank">Waldy Caballero asume la presidencia del Concejo Municipal de La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/dockweiler-asume-como-alcalde-de-la-paz-y-promete-una-gestion-basada-en-resultados" rel="noopener noreferrer" target="_blank">Dockweiler asume como alcalde de La Paz y promete una gestión basada en resultados</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/revilla-dockweiler-y-roca-fueron-posesionados-en-la-paz-y-proponen-trabajo-en-unidad" rel="noopener noreferrer" target="_blank">Revilla, Dockweiler y Roca fueron posesionados en La Paz y proponen trabajo en unidad</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46329-dockweiler-juro-como-alcalde-en-el-tribunal-de-justicia-donde-hubo-un-minuto-de-silencio-por-el-magistrado-claure" rel="noopener noreferrer" target="_blank">Dockweiler juró como alcalde en el Tribunal de Justicia, donde hubo un minuto de silencio por el magistrado Claure</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Nuevas autoridades de Santa Cruz asumen funciones" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Nuevas autoridades de Santa Cruz asumen funciones</div>
+<div class="modal-sum">Juan Pablo Velasco y Paola Aguirre juraron como nuevas autoridades de Santa Cruz. Durante el acto, el gobernador Velasco anunció una reestructuración institucional y manifestó que mantendrá una relación de diálogo con firmeza ante el Gobierno nacional, destacando su llegada en un Cybertruck.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">16</strong> titulares</span>
+<span><strong style="color:var(--c-05)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/velasco-pide-paciencia-para-enfrentar-la-crisis-no-vengo-a-prometer-milagros.html" rel="noopener noreferrer" target="_blank">Velasco pide paciencia para enfrentar la crisis: “No vengo a prometer milagros”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/juan-pablo-velasco-y-paola-aguirre-son-posesionados-en-la-gobernacion-de-santa-cruz.html" rel="noopener noreferrer" target="_blank">Juan Pablo Velasco y Paola Aguirre son posesionados en la Gobernación de Santa Cruz</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/04/jp-velasco-sera-posesionado-hoy-como-gobernador-de-santa-cruz/" rel="noopener noreferrer" target="_blank">JP Velasco será posesionado hoy como Gobernador de Santa Cruz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/velasco-es-posesionado-en-la-gobernacion-de-santa-cruz-y-anuncia-reestructuracion/" rel="noopener noreferrer" target="_blank">Velasco es posesionado en la Gobernación de Santa Cruz y anuncia reestructuración</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/velasco-jura-como-gobernador-santa-cruz-vamos-reclamar-firmeza-que-nos" rel="noopener noreferrer" target="_blank">Velasco jura como gobernador de Santa Cruz: 'Vamos a reclamar con firmeza lo que nos corresponde'</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/jp-velasco-dice-vengo-prometer-milagros-pide-paciencia-enfrentar-crisis/20260504132541991019.html" rel="noopener noreferrer" target="_blank">JP Velasco dice “no vengo a prometer milagros”; pide paciencia para enfrentar la crisis</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nueva-etapa-pero-compleja-analista-perfila-desafios-para-velasco-y-saavedra-20265472557" rel="noopener noreferrer" target="_blank">“Nueva etapa, pero compleja”: analista perfila desafíos para Velasco y Saavedra</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/santa-cruz-posesiona-hoy-a-su-nuevo-gobernador-y-alcalde-en-una-jornada-historica-20265482522" rel="noopener noreferrer" target="_blank">Santa Cruz posesiona hoy a su nuevo gobernador y alcalde en una jornada histórica</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paola-aguirre-santa-cruz-vera-la-gestion-hecha-trabajo-20265493234" rel="noopener noreferrer" target="_blank">Paola Aguirre: “Santa Cruz verá la gestión hecha trabajo”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/castedo-destaca-inicio-de-nueva-gestion-en-santa-cruz-con-compromiso-y-expectativa-20265491637" rel="noopener noreferrer" target="_blank">Castedo destaca inicio de nueva gestión en Santa Cruz con “compromiso y expectativa”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/jorge-quiroga-asiste-a-la-posesion-de-velasco-y-destaca-la-renovacion-departamental-20265491748" rel="noopener noreferrer" target="_blank">Jorge Quiroga asiste a la posesión de Velasco y destaca la renovación departamental</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/inicia-la-posesion-de-velasco-y-aguirre-en-santa-cruz-20265494328" rel="noopener noreferrer" target="_blank">Juan Pablo Velasco fue posesionado como gobernador de Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/velasco-y-aguirre-asumen-como-nuevas-autoridades-de-santa-cruz-202654101632" rel="noopener noreferrer" target="_blank">Velasco y Aguirre asumen como nuevas autoridades de Santa Cruz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/trabajaremos-con-el-gobierno-con-dialogo-pero-tambien-con-firmeza-el-mensaje-de-velasco-al-asumir-el-mando-20265411143" rel="noopener noreferrer" target="_blank">“Trabajaremos con el Gobierno con diálogo, pero también con firmeza”: el mensaje de Velasco al asumir el mando</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/velasco-llega-en-un-cybertruck-a-su-posesion-como-gobernador-20265415540" rel="noopener noreferrer" target="_blank">Tecnología y política: Velasco llega en un Cybertruck a su posesión como gobernador</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/saavedra-estoy-seguro-que-vamos-a-trabajar-con-el-gobernador-y-con-el-presidente-NA20468342" rel="noopener noreferrer" target="_blank">Saavedra: “Estoy seguro que vamos a trabajar con el gobernador y con el presidente”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Posesión de nuevas autoridades subnacionales en Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Posesión de nuevas autoridades subnacionales en Bolivia</div>
+<div class="modal-sum">Bolivia inicia una nueva etapa institucional con la posesión y juramentación de autoridades en los gobiernos subnacionales. El cambio de mando se desarrolla a nivel nacional en un contexto de retos económicos y demandas sociales por parte de la ciudadanía.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">16</strong> titulares</span>
+<span><strong style="color:var(--c-05)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/04/comienza-un-nuevo-ciclo-para-los-gobiernos-subnacionales-nuevas-autoridades-ejercen-sus-funciones-60216" rel="noopener noreferrer" target="_blank">Comienza un nuevo ciclo para los gobiernos subnacionales, autoridades electas ejercen sus funciones</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/04/avanza-la-posesion-de-las-autoridades-subnacionales-60226" rel="noopener noreferrer" target="_blank">Avanza la posesión de las autoridades subnacionales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/gobiernos-subnacionales-inician-nueva-etapa-entre-crisis-y-demandas/" rel="noopener noreferrer" target="_blank">Gobiernos subnacionales inician nueva etapa entre crisis y demandas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/el-pais-inicia-nueva-gestion-subnacional-con-posesion-de-autoridades-electas/" rel="noopener noreferrer" target="_blank">El país inicia nueva etapa con posesión de autoridades subnacionales</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/se-inicia-nueva-etapa-en-gobiernos-subnacionales-a-que-hora-juran-las-autoridades/" rel="noopener noreferrer" target="_blank">Se inicia nueva etapa en gobiernos subnacionales, ¿a qué hora juran las autoridades?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/autoridades-asumen-y-abren-un-nuevo-tiempo-en-gobiernos-subnacionales-20265465643" rel="noopener noreferrer" target="_blank">Autoridades asumen y abren un "nuevo tiempo" en gobiernos subnacionales</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/edgar-sanchez-es-posesionado-como-gobernador-de-oruro-para-el-periodo-2026-2031.html" rel="noopener noreferrer" target="_blank">Edgar Sánchez es posesionado como gobernador de Oruro para el período 2026-2031</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/bolivia-autoridades-electas-asumen-cargos-en-acto-protocolar/" rel="noopener noreferrer" target="_blank">Bolivia: Autoridades electas asumen cargos en acto protocolar - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/edgar-sanchez-promete-transparencia-y-reconstruccion-en-oruro/" rel="noopener noreferrer" target="_blank">Edgar Sánchez promete transparencia y reconstrucción en Oruro - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gabinete-municipal-de-ivan-quispe-toma-posesion-en-oruro/" rel="noopener noreferrer" target="_blank">Gabinete municipal de Iván Quispe toma posesión en Oruro - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/ivan-quispe-inicia-su-mandato-como-alcalde-de-oruro/" rel="noopener noreferrer" target="_blank">Iván Quispe inicia su mandato como alcalde de Oruro - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/tse-acompana-posesiones-y-destaca-cierre-del-proceso-electoral-subnacional/" rel="noopener noreferrer" target="_blank">TSE acompaña posesiones y destaca cierre del proceso electoral subnacional</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/posesion-autoridades-electas-inicia-nuevo-ciclo-politico-bolivia" rel="noopener noreferrer" target="_blank">Posesión de autoridades electas inicia nuevo ciclo político en Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-del-tse-destaca-posesion-de-5-400-autoridades-electas-en-el-pais-20265494539" rel="noopener noreferrer" target="_blank">Presidente del TSE destaca posesión de 5.400 autoridades electas en el país</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bolivia-renueva-autoridades-subnacionales-en-una-jornada-de-posesiones-simultaneas-202654121233" rel="noopener noreferrer" target="_blank">Bolivia renueva autoridades subnacionales en una jornada de posesiones simultáneas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46299-bolivia-estrena-autoridades-los-nuevos-gobernadores-juran-e-inician-su-mandato-hasta-el-2031" rel="noopener noreferrer" target="_blank">Bolivia estrena autoridades: Los nuevos Gobernadores juran e inician su mandato hasta el 2031</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Dólar supera barrera de diez bolivianos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Dólar supera barrera de diez bolivianos</div>
+<div class="modal-sum">El tipo de cambio referencial del dólar en Bolivia alcanzó un máximo histórico al superar por primera vez los Bs 10,01 para la venta. Analistas atribuyen este fenómeno a la alta demanda de divisas, mientras que el BCB fijó la nueva tasa rompiendo la barrera de los dos dígitos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">12</strong> titulares</span>
+<span><strong style="color:var(--c-02)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/valor-dolar-referencial-supera-bs10/20260504091208991006.html" rel="noopener noreferrer" target="_blank">El valor del dólar referencial supera los Bs 10</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/dolar-referencial-llega-hoy-a-bs-10-analista-explica-tres-posibles-razones-de-la-alta-demanda" rel="noopener noreferrer" target="_blank">Dólar referencial llega hoy a Bs 10; analista explica tres posibles razones de la alta demanda</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/el-dolar-referencial-cruza-los-bs-10-para-la-venta-y-alcanza-su-nivel-mas-alto-historico-60220" rel="noopener noreferrer" target="_blank">El dólar referencial cruza los Bs 10 para la venta y alcanza su nivel más alto histórico</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260504/el-dolar-referencial-rompe-la-barrera-de-los-bs-10-por-primera-vez.html" rel="noopener noreferrer" target="_blank">El dólar referencial rompe la barrera de los Bs 10 por primera vez</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/dolar-referencial-del-bcb-supera-los-bs-10-y-se-fija-en-bs-1001-para-la-venta/" rel="noopener noreferrer" target="_blank">Dólar referencial del BCB supera los Bs 10 y se fija en Bs 10,01 para la venta</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/dolar-referencial-bcb-alcanza-nuevo-record-supera-bs-10_1777895472" rel="noopener noreferrer" target="_blank">El dólar referencial del BCB alcanza un nuevo récord y supera los Bs 10</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-04/economia/a-que-se-debe-la-subida-del-dolar-referencial-analista-apunta-a-dos-factores.html" rel="noopener noreferrer" target="_blank">¿A qué se debe la subida del dólar referencial? Analista apunta a dos factores</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/el-valor-del-d%C3%B3lar-referencial-supera-los-bs10" rel="noopener noreferrer" target="_blank">El valor del dólar referencial supera los Bs10</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-valor-del-dolar-referencial-supera-la-barrera-de-los-10-dolares/" rel="noopener noreferrer" target="_blank">El valor del dólar referencial supera la barrera de los 10 bolivianos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/por-primera-vez-el-dolar-referencial-supera-los-bs-10" rel="noopener noreferrer" target="_blank">Por primera vez, el dólar referencial supera los Bs 10</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/que-se-debe-la-subida-del-dolar-referencial-experto-apunta-dos-factores" rel="noopener noreferrer" target="_blank">¿A qué se debe la subida del dólar referencial? Experto apunta a dos factores</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46248-el-dolar-referencial-escala-hasta-los-bs-10_01-y-rompe-la-barrera-de-los-dos-digitos" rel="noopener noreferrer" target="_blank">El dólar referencial escala hasta los Bs 10,01 y rompe la barrera de los dos dígitos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Gobierno inicia devolución de depósitos en dólares" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Gobierno inicia devolución de depósitos en dólares</div>
+<div class="modal-sum">El Gobierno dispuso la devolución escalonada de depósitos en dólares superiores a $us 1.000 a partir del 15 de julio, bajo un cronograma de montos. Asimismo, se autorizó el cobro de remesas al tipo de cambio referencial y el retiro de hasta $us 3.000 en el sistema financiero nacional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">12</strong> titulares</span>
+<span><strong style="color:var(--c-02)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260504_gobierno-dispone-devolucion-de-depositos-en-dolares-y-normaliza-el-sistema-de-remesas.html" rel="noopener noreferrer" target="_blank">Gobierno dispone devolución de depósitos en dólares y normaliza el sistema de remesas</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/autoridades-anuncian-que-se-devolvera-a-ahorristas-depositos-por-encima-de-1-000-dolares" rel="noopener noreferrer" target="_blank">Autoridades anuncian que se devolverá a ahorristas depósitos por encima de 1.000 dólares</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/gobierno-anuncia-devolucion-escalonada-de-dolares-desde-el-15-de-julio-60239" rel="noopener noreferrer" target="_blank">Gobierno anuncia devolución escalonada de dólares desde el 15 de julio</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/la-banca-volvera-a-aceptar-remesas-del-exterior-al-tipo-de-cambio-referencial--60243" rel="noopener noreferrer" target="_blank">La banca volverá a aceptar remesas del exterior, al tipo de cambio referencial</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bolivia-habilita-retiro-remesas-cambio-referencial-devolucion-dolares-us-3-000_1777933385" rel="noopener noreferrer" target="_blank">Bolivia habilita retiro de remesas al cambio referencial y devolución de dólares hasta $us 3.000</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-04/economia/anuncian-devolucion-de-depositos-en-dolares-de-manera-escalonada-a-partir-del-15-de-julio.html" rel="noopener noreferrer" target="_blank">Anuncian devolución de depósitos en dólares de manera escalonada a partir del 15 de julio</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/programan-devoluci%C3%B3n-de-d%C3%B3lares-desde-el-15-de-julio-y-normalizar%C3%A1n-el-env%C3%ADo-de-remesas" rel="noopener noreferrer" target="_blank">Programan devolución de dólares desde el 15 de julio y normalizarán el envío de remesas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/04/el-estado-anuncia-devolucion-de-dolares-desde-julio-y-facilidades-para-remesas/" rel="noopener noreferrer" target="_blank">El Estado anuncia devolución de dólares desde julio y facilidades para remesas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260504/reanudaran-devolucion-depositos-dolares" rel="noopener noreferrer" target="_blank">Reanudarán devolución de depósitos en dólares</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/devolucion-de-mayores-cantidades-de-dolares-iniciara-el-15-de-julio-se-hara-con-cronograma-segun-los-montos/" rel="noopener noreferrer" target="_blank">Devolución de mayores cantidades de dólares iniciará el 15 de julio: se hará con cronograma según los montos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-autoriza-retiros-de-hasta-us-3000-del-sistema-financiero-y-remesas-al-cambio-referencial-MA20468325" rel="noopener noreferrer" target="_blank">Gobierno autoriza retiros de hasta $us 3.000 del sistema financiero y remesas al cambio referencial</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46392-gobierno-empezara-a-devolver-ahorros-desde-los-1000-dolares-y-las-remesas-podran-ser-cobradas-en-el-sistema-financiero" rel="noopener noreferrer" target="_blank">Gobierno empezará a devolver ahorros desde los 1.000 dólares y las remesas podrán ser cobradas en el sistema financiero</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="COB ratifica movilizaciones y rechaza diálogo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">COB ratifica movilizaciones y rechaza diálogo</div>
+<div class="modal-sum">La Central Obrera Boliviana (COB) ratifica el inicio de movilizaciones ante el Gobierno de Rodrigo Paz, mientras el Ministerio de Trabajo convoca a una mesa de diálogo no tripartita (sin empresarios) para este viernes, con el fin de evitar la radicalización de las protestas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">12</strong> titulares</span>
+<span><strong style="color:var(--c-08)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/la-cob-amenaza-con-movilizaciones-escalonadas-y-advierte-con-radicalizacion-si-paz-no-participa-del-dialogo-60227" rel="noopener noreferrer" target="_blank">La COB amenaza con movilizaciones escalonadas y advierte con radicalización si Paz no participa del diálogo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/reiteran-convocatoria-dialogo-cob-este-viernes-14-00_1777945056" rel="noopener noreferrer" target="_blank">Reiteran la convocatoria al diálogo a la COB para este viernes, a las 14:00</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/ministro-de-trabajo-convoca-la-cob-al-di%C3%A1logo-y-dice-que-no-ve-ning%C3%BAn-paro-indefinido" rel="noopener noreferrer" target="_blank">Ministro de Trabajo convoca a la COB al diálogo y dice que no ve ningún paro indefinido</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/04/la-cob-ratifica-movilizaciones-el-gobierno-insiste-en-dialogar/" rel="noopener noreferrer" target="_blank">La COB ratifica movilizaciones; el Gobierno insiste en diálogar</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/cob-sectores-sociales-empiezan-movilizaciones-gobierno-pide-dialogo" rel="noopener noreferrer" target="_blank">La COB y sectores sociales empiezan movilizaciones; Gobierno pide diálogo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/gobierno-convoca-cob-dialogar-empresarios" rel="noopener noreferrer" target="_blank">Gobierno convoca a la COB a dialogar, sin empresarios</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ministro-de-trabajo-convoca-a-la-cob-a-dialogar-el-proximo-viernes-y-afirma-no-sera-tripartito/" rel="noopener noreferrer" target="_blank">Ministro de Trabajo convoca a la COB a dialogar el próximo viernes y afirma no será tripartito</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-insiste-en-dialogo-nacional-y-cuestiona-medidas-de-la-cob-202654860" rel="noopener noreferrer" target="_blank">Gobierno insiste en diálogo nacional y cuestiona medidas de la COB</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/la-cob-impulsa-huelga-indefinida-y-pedido-salarial/" rel="noopener noreferrer" target="_blank">La COB impulsa huelga indefinida y pedido salarial - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/paro-de-la-cob-criticas-y-acusaciones-surgen-desde-el-parlamento/" rel="noopener noreferrer" target="_blank">Paro de la COB: Críticas y acusaciones surgen desde el Parlamento - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/viceministro-paredes-cuestiona-medidas-de-presion-en-bolivia/" rel="noopener noreferrer" target="_blank">Viceministro Paredes cuestiona medidas de presión en Bolivia - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gobierno-bolivia-convoca-a-la-cob-para-retomar-dialogo/" rel="noopener noreferrer" target="_blank">Gobierno Bolivia convoca a la COB para retomar diálogo - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="Persiste bloqueo de transporte en tranca Urujara" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Persiste bloqueo de transporte en tranca Urujara</div>
+<div class="modal-sum">El Gobierno y transportistas de los Yungas suscribieron un acuerdo para levantar los bloqueos de carreteras, permitiendo el paso de maquinaria y cisternas. Sin embargo, la situación en las rutas es incierta, pues algunos sectores reportan que la medida de presión aún persiste en ciertos puntos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">11</strong> titulares</span>
+<span><strong style="color:var(--c-08)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/mientras-no-existan-hechos-reales-no-se-levanta-bloqueo-en-los-yungas-persiste-pese-a-acuerdo-con-el-gobierno" rel="noopener noreferrer" target="_blank">“Mientras no existan hechos reales, no se levanta”: Bloqueo en los Yungas persiste pese a acuerdo con el Gobierno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/se-levanto-el-bloqueo-hacia-yungas-gobierno-envio-cisternas-y-maquinaria-para-arreglar-carreteras-60249" rel="noopener noreferrer" target="_blank">Se levantó el bloqueo hacia Yungas: gobierno envió cisternas y maquinaria para arreglar carreteras</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-asegura-logro-acuerdo-choferes-estos-dicen-solo-yungas_1777946950" rel="noopener noreferrer" target="_blank">Gobierno asegura que logró acuerdo con choferes, estos dicen que solo es con Los Yungas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/carretera-yungas-sigue-bloqueada-pese-acuerdo-suscrito-gobierno_1777897395" rel="noopener noreferrer" target="_blank">La carretera a Yungas sigue bloqueada pese al acuerdo suscrito con el Gobierno</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/levantan-bloqueos-yungas-tras-acuerdo-entre-el-gobierno-y-transportistas" rel="noopener noreferrer" target="_blank">Levantan bloqueos a Yungas tras acuerdo entre el Gobierno y transportistas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/urujara-gobierno-y-transporte-de-yungas-acuerda-levantar-el-bloqueo/" rel="noopener noreferrer" target="_blank">Urujara: Gobierno y transporte de Yungas acuerda levantar el bloqueo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-y-transportistas-de-los-yungas-llegan-un-acuerdo-pero-continuan-puntos-de-bloqueo" rel="noopener noreferrer" target="_blank">Gobierno y transportistas de los Yungas llegan a un acuerdo, pero continúan puntos de bloqueo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/pese-al-acuerdo-suscrito-con-el-gobierno-transportistas-mantienen-bloqueo-en-tranca-de-urujara-60218" rel="noopener noreferrer" target="_blank">Pese al acuerdo suscrito con el gobierno, transportistas mantienen bloqueo en tranca de Urujara</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-04/economia/transportistas-mantienen-bloqueo-en-la-tranca-de-urujara-pese-a-acuerdo-firmado-con-el-gobierno.html" rel="noopener noreferrer" target="_blank">Transportistas mantienen bloqueo en la tranca de Urujara pese a acuerdo firmado con el Gobierno</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/transportistas-mantienen-bloqueo-en-urujara-pese-a-acuerdo/" rel="noopener noreferrer" target="_blank">Transportistas mantienen bloqueo en Urujara pese a acuerdo - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/levantan-bloqueo-norte-paz" rel="noopener noreferrer" target="_blank">Levantan bloqueo en vía hacia el norte de La Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Eliser Roca asume la alcaldía de El Alto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Eliser Roca asume la alcaldía de El Alto</div>
+<div class="modal-sum">Eliser Roca juró como alcalde de El Alto, prometiendo orden y una gestión incansable. En el marco de la posesión de autoridades locales en La Paz y El Alto, Roca también presentó a su equipo de secretarios municipales para iniciar acciones administrativas inmediatas tras asumir el cargo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">10</strong> titulares</span>
+<span><strong style="color:var(--c-05)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/roca-asume-en-el-alto-con-la-promesa-de-establecer-autoridad-y-poner-orden-60237" rel="noopener noreferrer" target="_blank">Roca asume en El Alto con la promesa de “establecer autoridad” y “poner orden”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/eliser-roca-asume-la-alcaldia-de-el-alto-y-promete-una-gestion-incansable.html" rel="noopener noreferrer" target="_blank">Eliser Roca asume la Alcaldía de El Alto y promete una gestión “incansable”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/juran-alcaldes-paz-alto-volatil-gobernabilidad_1777928851" rel="noopener noreferrer" target="_blank">Juran los alcaldes de La Paz y El Alto con una volátil gobernabilidad</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/eliser-roca-jura-alcalde-alto-promete-trabajo-incansable-mancomunado_1777916652" rel="noopener noreferrer" target="_blank">Eliser Roca jura como alcalde de El Alto y promete un trabajo “incansable y mancomunado”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/eliser-roca-jura-como-nuevo-alcalde-de-el-alto.html" rel="noopener noreferrer" target="_blank">Eliser Roca jura como nuevo alcalde de El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/eliser-roca-afirma-tomar-acciones-inmediatas-tras-posesion-como-alcalde-de-el-alto-20265412560" rel="noopener noreferrer" target="_blank">Eliser Roca afirma tomar acciones inmediatas tras posesión como alcalde de El Alto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/eliseo-roca-alcalde-de-el-alto-presenta-a-sus-nuevos-secretarios-20265419328" rel="noopener noreferrer" target="_blank">Eliser Roca, alcalde de El Alto, presenta a sus nuevos secretarios</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/alcalde-roca-posesiona-a-su-equipo-de-secretarios-en-el-municipio-de-el-alto-PA20468272" rel="noopener noreferrer" target="_blank">Alcalde Roca posesiona a su equipo de secretarios en el municipio de El Alto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/principales-autoridades-de-la-paz-y-el-alto-asumen-sus-cargos-en-distintos-actos-oficiales" rel="noopener noreferrer" target="_blank">Principales autoridades de La Paz y El Alto asumen sus cargos en distintos actos oficiales</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/prometemos-trabajar-de-manera-incansable-eliser-roca-es-posesionado-como-alcalde-de-el-alto" rel="noopener noreferrer" target="_blank">“Prometemos trabajar de manera incansable”: Eliser Roca es posesionado como alcalde de El Alto</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Luis Revilla asume gobernación de La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Luis Revilla asume gobernación de La Paz</div>
+<div class="modal-sum">Luis Revilla asume formalmente como gobernador de La Paz, describiendo al departamento como una región postergada y golpeada. Durante su juramentación, prometió una transformación institucional para superar la crisis y convertir la región en un departamento "maravilloso".</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">8</strong> titulares</span>
+<span><strong style="color:var(--c-05)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260504_luis-revilla-asume-como-nuevo-gobernador-de-la-paz.html" rel="noopener noreferrer" target="_blank">Luis Revilla asume como nuevo gobernador de La Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/04/revilla-jura-como-gobernador-de-la-paz-y-promete-transformar-un-departamento-golpeado-y-colapsado-60240" rel="noopener noreferrer" target="_blank">Revilla jura como gobernador de La Paz y promete transformar un departamento “golpeado y colapsado”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/comite-ad-hoc-asamblea-paz-toma-juramento-luis-revilla-falta-directiva_1777933543" rel="noopener noreferrer" target="_blank">El comité ad hoc de la Asamblea de La Paz toma juramento a Luis Revilla por falta de directiva</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/revilla-asume-como-gobernador-de-la-paz-y-senala-que-recibe-un-departamento-postergado-y-relegado.html" rel="noopener noreferrer" target="_blank">Revilla asume como gobernador de La Paz y señala que recibe un departamento postergado y relegado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/04/revilla-jura-como-gobernador-de-la-paz-y-advierte-crisis-institucional-seria/" rel="noopener noreferrer" target="_blank">Revilla jura como gobernador de La Paz y advierte crisis institucional seria</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/revilla-jura-como-gobernador-dice-recibe-un-departamento-golpeado-y-postergado-y-promete-hacerla-maravillosa/" rel="noopener noreferrer" target="_blank">Revilla jura como Gobernador, dice recibe un departamento “golpeado y postergado” y promete hacerla “maravillosa”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/luis-revilla-toma-posesion-como-nuevo-gobernador-de-la-paz-202654175025" rel="noopener noreferrer" target="_blank">Luis Revilla toma posesión como nuevo gobernador de La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/revilla-asume-la-gobernacion-de-la-paz-y-plantea-construir-un-departamento-maravilloso" rel="noopener noreferrer" target="_blank">Revilla asume la Gobernación de La Paz y plantea “construir un departamento maravilloso”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Presidente advierte crisis financiera en gobiernos subnacionales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Presidente advierte crisis financiera en gobiernos subnacionales</div>
+<div class="modal-sum">El presidente Rodrigo Paz advirtió que alcaldías y gobernaciones están "quebradas" y anticipó semanas "complicadas" por bloqueos y protestas. Paz cuestionó las medidas de presión de los dirigentes y pidió confianza en el futuro ante la crisis financiera del sistema institucional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">8</strong> titulares</span>
+<span><strong style="color:var(--c-02)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/04/paz-advierte-que-todas-las-alcaldias-y-gobernaciones-estan-quebradas-60229" rel="noopener noreferrer" target="_blank">Paz advierte que todas las alcaldías y gobernaciones están “quebradas”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/04/paz-ante-las-protestas-estas-semanas-van-a-ser-semanas-complicadas-60225" rel="noopener noreferrer" target="_blank">Paz advierte semanas “complicadas” por protestas y pide confiar en el futuro</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/estas-semanas-van-a-ser-complicadas-advierte-el-presidente-paz.html" rel="noopener noreferrer" target="_blank">“Estas semanas van a ser complicadas”, advierte el presidente Paz</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/rodrigo-paz-cumple-medio-ano-en-medio-de-crisis-y-protestas.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz cumple medio año en medio de crisis y protestas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/van-ser-semanas-complicadas-paz-cuestiona-bloqueos-insiste-todo-sistema-esta-quebrado_1777903691" rel="noopener noreferrer" target="_blank">“Van a ser semanas complicadas”: Paz cuestiona bloqueos e insiste que todo el sistema está quebrado</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/paz-advierte-sobre-semanas-complicadas-y-lamenta-que-los-dirigentes-opten-por-el-bloqueo.html" rel="noopener noreferrer" target="_blank">Paz advierte sobre “semanas complicadas” y lamenta que los dirigentes opten por el bloqueo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-no-va-a-haber-ningun-alcalde-o-gobernador-que-no-diga-que-sus-instituciones-estan-quebradas/" rel="noopener noreferrer" target="_blank">Paz: No va a haber ningún alcalde o gobernador que no diga que sus instituciones están quebradas</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/paz-sobre-los-nuevos-alcaldes-y-gobernadores-no-habra-uno-que-no-diga-que-sus-instituciones-estan-quebradas-GD20458916" rel="noopener noreferrer" target="_blank">Paz sobre los nuevos alcaldes y gobernadores: “No habrá uno que no diga que sus instituciones están quebradas”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Investigan sicariato contra magistrado y juez" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Investigan sicariato contra magistrado y juez</div>
+<div class="modal-sum">La Fiscalía investiga los asesinatos del magistrado Víctor Claure y del juez Wilber Cruz, ocurridos en hechos de sicariato en un periodo de seis meses. Entre las actuaciones procesales, se realizó el desprecintado de las oficinas de Claure en Sucre para recolectar evidencias.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">7</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260504/en-6-meses-sicarios-matan-a-un-juez-y-a-un-magistrado.html" rel="noopener noreferrer" target="_blank">En 6 meses, sicarios matan a un juez y a un magistrado</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260504_santa-cruz-comision-de-investigacion-desprecinta-oficinas-del-magistrado-claure.html" rel="noopener noreferrer" target="_blank">Santa cruz: Comisión de investigación desprecinta oficinas del magistrado Claure</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/alp-advierte-crisis-de-seguridad-tras-asesinato-de-magistrado/" rel="noopener noreferrer" target="_blank">ALP advierte crisis de seguridad tras asesinato de magistrado - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/tsj-exige-al-estado-proteccion-para-jueces-y-alerta-a-la-onu-tras-asesinato-de-magistrado/" rel="noopener noreferrer" target="_blank">TSJ exige al Estado protección para jueces y alerta a la ONU tras asesinato de magistrado</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/asesinato-magistrado-claure-comision-fiscales-desprecinta-oficina-sucre/20260504154648991025.html" rel="noopener noreferrer" target="_blank">Asesinato de magistrado Claure: comisión de fiscales desprecinta su oficina en Sucre</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/victor-hugo-claure-wilber-cruz-dos-autoridades-judiciales-asesinadas-tiros-apenas-seis-meses/20260504084501991002.html" rel="noopener noreferrer" target="_blank">Víctor Claure y Wilber Cruz: autoridades judiciales asesinadas a tiros en seis meses</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/que-se-sabe-de-las-investigaciones-por-los-asesinatos-del-magistrado-claure-y-del-extranjero-esto-dice-la-fiscalia-PA20464795" rel="noopener noreferrer" target="_blank">¿Qué se sabe de las investigaciones por los asesinatos del magistrado Claure y del extranjero? Esto dice la Fiscalía</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Manfred Reyes Villa asume alcaldía de Cochabamba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Manfred Reyes Villa asume alcaldía de Cochabamba</div>
+<div class="modal-sum">Manfred Reyes Villa asumió oficialmente su segundo mandato consecutivo como alcalde de Cercado, Cochabamba. Durante su posesión, la autoridad destacó el respaldo de la ciudadanía, hizo un llamado a la unidad para evitar confrontaciones y manifestó su disposición para trabajar junto a la Gobernación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">7</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/cochabamba-manfred-asume-la-alcaldia-de-cercado-y-destaca-respaldo-ciudadano-en-su-posesion.html" rel="noopener noreferrer" target="_blank">Cochabamba: Manfred asume la Alcaldía de Cercado y destaca respaldo ciudadano en su posesión</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/manfred-reasume-alcaldia-cochabamba-insta-gobernacion-trabajar-juntos_1777918544" rel="noopener noreferrer" target="_blank">Manfred reasume la Alcaldía de Cochabamba e insta a la Gobernación a trabajar juntos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/manfred-reyes-villa-es-posesionado-para-su-segundo-mandato-al-frente-de-la-alcaldia-de-cochabamba.html" rel="noopener noreferrer" target="_blank">Manfred Reyes Villa es posesionado para su segundo mandato al frente de la Alcaldía de Cochabamba</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/cochabamba/20260504/manfred-reyes-villa-asume-su-segundo-mandato-como-alcalde-cochabamba" rel="noopener noreferrer" target="_blank">Manfred Reyes Villa asume su segundo mandato como alcalde de Cochabamba</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/no-queremos-confrontacion-manfred-asume-como-alcalde-de-cochabamba-y-llama-a-la-unidad-202654121313" rel="noopener noreferrer" target="_blank">“No queremos confrontación”: Manfred asume como alcalde de Cochabamba y llama a la unidad</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/manfred-asegura-solucion-progresiva-a-problema-de-la-basura-en-cochabamba-emsa-activa-plan-por-emergencia-202654131245" rel="noopener noreferrer" target="_blank">Manfred asegura solución progresiva a problema de la basura en Cochabamba; EMSA activa plan por emergencia</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cochabamba-manfred-es-posesionado-como-alcalde-del-municipio-de-cercado" rel="noopener noreferrer" target="_blank">Cochabamba: Manfred es posesionado como alcalde del municipio de Cercado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Presidente vincula sicariatos con mafia y política" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Presidente vincula sicariatos con mafia y política</div>
+<div class="modal-sum">El presidente Rodrigo Paz vincula a Evo Morales y a la reorganización de la mafia de Marset con una ola de sicariatos que ha dejado 90 muertos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">7</strong> titulares</span>
+<span><strong style="color:var(--c-07)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/no-es-sospecha-es-una-afirmacion-presidente-paz-asegura-que-evo-morales-esta-detras-de-la-ola-de-sicariatos" rel="noopener noreferrer" target="_blank">“No es sospecha, es una afirmación”: Presidente Paz asegura que Evo Morales está detrás de la ola de sicariatos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/04/paz-revela-que-hubo-90-muertos-por-sicariato-ligado-a-brasil-y-advierte-ofensiva-contra-mafias-60248" rel="noopener noreferrer" target="_blank">Paz revela que hubo 90 muertos por sicariato ligado a Brasil y advierte ofensiva contra mafias</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/04/paz-afirma-que-morales-esta-detras-de-la-ola-de-violencia-y-sicariato-60221" rel="noopener noreferrer" target="_blank">Paz afirma que Morales está detrás de la ola de violencia y sicariato</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260504/paz-acusa-a-evo-por-sicariatos-pero-dice-que-la-debilidad-institucional-impide-su-detencion.html" rel="noopener noreferrer" target="_blank">Paz acusa a Evo por sicariatos, pero dice que la debilidad institucional impide su detención</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260504/paz-atribuye-sicariato-en-bolivia-a-la-reorganizacion-de-mafia-de-marset.html" rel="noopener noreferrer" target="_blank">Paz atribuye sicariatos en Bolivia a la reorganización de mafia de Marset</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-paz-dice-sicariatos-bolivia-parte-reorganizacion-mafia-marset_1777905586" rel="noopener noreferrer" target="_blank">Presidente Paz dice que los sicariatos en Bolivia son parte de la reorganización de la mafia de Marset</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/rodrigo-paz-destaca-la-lucha-contra-el-sicariato-en-bolivia/" rel="noopener noreferrer" target="_blank">Rodrigo Paz destaca la lucha contra el sicariato en Bolivia - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_16">
+<div class="modal-backdrop" onclick="closeModal('modal_16')"></div>
+<div aria-label="Reporte diario sobre abastecimiento de combustibles" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Reporte diario sobre abastecimiento de combustibles</div>
+<div class="modal-sum">El Gobierno boliviano implementó un sistema de reporte diario para informar sobre el abastecimiento de diésel y gasolina en el país. Esta medida busca transparentar el suministro de combustibles y mantener informada a la población sobre la disponibilidad en las estaciones de servicio.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">6</strong> titulares</span>
+<span><strong style="color:var(--c-11)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/04/gobierno-activa-un-reporte-diario-para-informar-sobre-el-abastecimiento-de-combustibles-60245" rel="noopener noreferrer" target="_blank">Gobierno activa un reporte diario para informar sobre el abastecimiento de combustibles</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gobierno-anuncia-sistema-de-informacion-diaria-de-combustible/" rel="noopener noreferrer" target="_blank">Gobierno anuncia sistema de información diaria de combustible - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/04/gobierno-implementa-sistema-de-informacion-diaria-sobre-suministro-de-combustibles/" rel="noopener noreferrer" target="_blank">Gobierno implementa sistema de información diaria sobre suministro de combustibles</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/gobierno-activa-sistema-de-informacion-diaria-para-transparentar-el-abastecimiento-de-combustibles/" rel="noopener noreferrer" target="_blank">Gobierno activa sistema de información diaria para transparentar el abastecimiento de combustibles</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-anuncia-un-sistema-de-informacion-diaria-sobre-el-abastecimiento-de-diesel-y-gasolina-BA20466755" rel="noopener noreferrer" target="_blank">Gobierno anuncia un sistema de información diaria sobre el abastecimiento de diésel y gasolina</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46401-gobierno-decide-establecer-sistema-diario-de-informacion-en-relacion-con-el-abastecimiento-de-diesel-y-gasolina" rel="noopener noreferrer" target="_blank">Gobierno decide establecer sistema diario de información en relación con el abastecimiento de diésel y gasolina</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Bolivia y Chile homologan licencias de conducir" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Bolivia y Chile homologan licencias de conducir</div>
+<div class="modal-sum">Bolivia y Chile pusieron en vigencia un acuerdo para la homologación y reconocimiento recíproco de licencias de conducir. El convenio permite a los ciudadanos de ambos países validar sus documentos de conducción sin necesidad de realizar nuevos exámenes técnicos o prácticos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">6</strong> titulares</span>
+<span><strong style="color:var(--c-18)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/bolivia-y-chile-activan-acuerdo-para-homologar-licencias-de-conducir" rel="noopener noreferrer" target="_blank">Bolivia y Chile activan acuerdo para homologar licencias de conducir</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-chile-habilitan-homologacion-licencias-conducir-examenes_1777928215" rel="noopener noreferrer" target="_blank">Bolivia y Chile habilitan homologación de licencias de conducir sin exámenes</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/acuerdo-bolivia-chile-facilita-homologacion-de-licencias-de-conducir/" rel="noopener noreferrer" target="_blank">Acuerdo Bolivia-Chile facilita homologación de licencias de conducir - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/bolivia-y-chile-activan-acuerdo-que-reconoce-licencias-de-conducir-entre-ambos-paises/" rel="noopener noreferrer" target="_blank">Bolivia y Chile activan acuerdo que reconoce licencias de conducir entre ambos países</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/bolivia-chile-activan-homologacion-licencias-conducir" rel="noopener noreferrer" target="_blank">Bolivia y Chile activan homologación de licencias de conducir</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/04/46416-bolivia-y-chile-ponen-en-vigencia-acuerdo-de-reconocimiento-de-licencias-de-conducir" rel="noopener noreferrer" target="_blank">Bolivia y Chile ponen en vigencia acuerdo de reconocimiento de licencias de conducir</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Leonardo Loza asume gobernación de Cochabamba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Leonardo Loza asume gobernación de Cochabamba</div>
+<div class="modal-sum">Leonardo Loza fue posesionado como el nuevo gobernador de Cochabamba. En su discurso, Loza prometió combatir la corrupción y la flojera en su gestión, además de expresar su intención de fortalecer los lazos de cooperación y trabajo con socios estratégicos como Rusia, Irán y China.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">6</strong> titulares</span>
+<span><strong style="color:var(--c-05)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/loza-jura-como-gobernador-de-cochabamba-y-promete-combatir-la-flojera-y-la-corrupcion.html" rel="noopener noreferrer" target="_blank">Loza jura como gobernador de Cochabamba y promete combatir la flojera y la corrupción</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/no-soy-flojo-ladron-loza-asume-gobernacion-quiere-trabajar-rusia-iran-china_1777915060" rel="noopener noreferrer" target="_blank">“No soy flojo ni ladrón”: Loza asume la Gobernación y quiere trabajar con Rusia, Irán y China</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/leonardo-loza-es-posesionado-como-gobernador-de-cochabamba.html" rel="noopener noreferrer" target="_blank">Leonardo Loza es posesionado como gobernador de Cochabamba</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/04/loza-asume-gobernacion-y-pide-unidad-para-enfrentar-rezago/" rel="noopener noreferrer" target="_blank">Loza asume gobernación y pide unidad para enfrentar rezago</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/04/delegaciones-de-rusia-india-e-iran-llegan-a-cochabamba-para-la-posesion-de-loza/" rel="noopener noreferrer" target="_blank">Delegaciones de Rusia, India e Irán llegan a Cochabamba para la posesión de Loza</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/no-soy-flojo-ni-soy-ladron-vengo-trabajar-loza-jura-como-gobernador-de-cochabamba" rel="noopener noreferrer" target="_blank">“No soy flojo ni soy ladrón; vengo a trabajar”: Loza jura como gobernador de Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8b">
+<div class="modal-backdrop" onclick="closeModal('modal_8b')"></div>
+<div aria-label="Manifestantes indígenas expulsan a activista María Galindo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Manifestantes indígenas expulsan a activista María Galindo</div>
+<div class="modal-sum">Durante el ingreso de la movilización indígena a la ciudad de La Paz, la activista María Galindo fue expulsada por los manifestantes. Los marchistas justificaron la acción acusándola de actitudes discriminatorias y exigieron disculpas públicas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260504/maria-galindo-es-expulsada-de-la-marcha-indigena-que-ingresa-a-la-paz.html" rel="noopener noreferrer" target="_blank">María Galindo es expulsada de la marcha indígena que ingresa a La Paz</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldia.com.bo/2026-05-04/politica/indigenas-expulsan-de-su-marcha-a-maria-galindo-discriminadora-pida-disculpas-de-rodillas.html" rel="noopener noreferrer" target="_blank">Indígenas expulsan de su marcha a María Galindo: “Discriminadora, pida disculpas de rodillas”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260504/indigenas-expulsan-su-marcha-maria-galindo-discriminadora-pida-disculpas" rel="noopener noreferrer" target="_blank">Indígenas expulsan de su marcha a María Galindo: "Discriminadora, pida disculpas de rodillas"</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="Amplían detención preventiva para exministro Édgar Montaño" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Amplían detención preventiva para exministro Édgar Montaño</div>
+<div class="modal-sum">La justicia determina seis meses de detención preventiva adicional para el exministro Édgar Montaño por un nuevo proceso judicial en su contra.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">3</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/exministro-montano-seguira-carcel-dictan-detencion-preventiva-nuevo-proceso/20260504150427991022.html" rel="noopener noreferrer" target="_blank">Exministro Montaño seguirá en la cárcel; le dictan detención preventiva por nuevo proceso</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/exministro-edgar-montano-recibe-nueva-detencion-carcel-seis-meses_1777932184" rel="noopener noreferrer" target="_blank">Exministro Édgar Montaño recibe nueva detención en la cárcel por seis meses</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-04/pais/exministro-montano-continuara-en-la-carcel-tras-dictarse-detencion-preventiva-por-nuevo-proceso.html" rel="noopener noreferrer" target="_blank">Exministro Montaño continuará en la cárcel tras dictarse detención preventiva por nuevo proceso</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N005">
+<div class="modal-backdrop" onclick="closeModal('modal_N005')"></div>
+<div aria-label="YPFB perforará nuevos pozos en Surubí Mamoré" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">YPFB perforará nuevos pozos en Surubí Mamoré</div>
+<div class="modal-sum">YPFB anuncia la perforación de nuevos pozos en el campo Surubí-Mamoré para incrementar las reservas de hidrocarburos y reducir la importación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">3</strong> titulares</span>
+<span><strong style="color:var(--c-11)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N005')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/ypfb-alista-perforacion-de-dos-nuevos-pozos-en-surubi-mamore-para-incrementar-reservas" rel="noopener noreferrer" target="_blank">YPFB alista perforación de dos nuevos pozos en Surubí-Mamoré para incrementar reservas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-apuesta-surubi-mamore-aliviar-presion-importaciones_1777910881" rel="noopener noreferrer" target="_blank">YPFB apuesta por Surubí-Mamoré para aliviar presión por importaciones</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/ypfb-anuncia-perforacion-de-nuevos-pozos-en-surubi-mamore/" rel="noopener noreferrer" target="_blank">YPFB anuncia perforación de nuevos pozos en Surubí-Mamoré - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N006">
+<div class="modal-backdrop" onclick="closeModal('modal_N006')"></div>
+<div aria-label="Cárcel para padres que quemaron a hija" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Cárcel para padres que quemaron a hija</div>
+<div class="modal-sum">Una pareja en Oruro es enviada a la cárcel preventivamente tras ser acusada de quemar a su hija de 15 años con alcohol.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">3</strong> titulares</span>
+<span><strong style="color:var(--c-07)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N006')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/padres-rocian-alcohol-prenden-fuego-hija-adolescente_1777898395" rel="noopener noreferrer" target="_blank">Padres rocían alcohol y prenden fuego a su hija adolescente</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/carcel-pareja-acusada-quemar-hija-15-anos_1777940759" rel="noopener noreferrer" target="_blank">Cárcel para pareja acusada de quemar a su hija de 15 años</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/04/detencion-preventiva-para-padres-que-atacaron-a-su-hija-en-oruro/" rel="noopener noreferrer" target="_blank">Detención preventiva para padres que atacaron a su hija en Oruro</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
