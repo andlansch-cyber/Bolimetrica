@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260508</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix móvil: reducir paddings y ancho fijo que desbordan */
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+}
+ 
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-05-08" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-05-08-i9ZMNI.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">236</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">22</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">9</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 08-MAYO-2026</strong><br/>
+        Reporte N° B24-20260508<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_16c" onclick="openModal('modal_16c')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-05)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-05)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="top3-title">Sectores en conflicto por Ley de Tierras</div>
+<div class="top3-body">Sectores productivos, empresarios y opositores como Branko Marinkovic, Luis Fernando Camacho y Samuel Doria Medina rechazan la posible abrogación de la Ley 1720 y advierten medidas de presión por su impacto en la producción; mientras tanto, organizaciones indígenas mantienen vigilias en La Paz exigiendo anular la norma, en medio de tensiones que Rodrigo Paz calificó como actos de violencia y “sicariato”.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">28</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">17</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_16a" onclick="openModal('modal_16a')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-21)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-21)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="top3-title">Postergación de abrogación de Ley de Tierras</div>
+<div class="top3-body">La Cámara de Diputados postergó el tratamiento de la abrogación de la Ley 1720 por falta de consenso y de los dos tercios necesarios, mientras Rodrigo Paz reconoció que la norma careció de socialización y planteó abrir mesas de diálogo para consensuar una nueva ley de tierras con los sectores involucrados.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">28</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_17" onclick="openModal('modal_17')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-02)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-02)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="top3-title">Emisión exitosa de bonos soberanos bolivianos</div>
+<div class="top3-body">Bolivia captó 1.000 millones de dólares en los mercados internacionales mediante la emisión de bonos soberanos. El ministro Espinoza destacó una demanda récord, cinco veces superior a la oferta inicial, lo que permitirá incrementar las reservas internacionales por encima de los 4.700 millones.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-02)">18</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-02)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-05)"></div></div>
+<div class="cat-n">49</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_16c'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">1.</span> Sectores en conflicto por Ley de Tierras</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">5.</span> Encuentro nacional por pacto de gobernabilidad</li><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">18.</span> Reestructuración del gabinete departamental de La Paz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:98%;background:var(--c-08)"></div></div>
+<div class="cat-n">48</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_5a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">4.</span> Bloqueo nacional de caminos de la COB</li><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">8.</span> Liberación de dirigentes y reactivación de protestas</li><li onclick="scrollToCard('card_15a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">13.</span> Exigencia de renuncia del presidente Rodrigo Paz</li><li onclick="scrollToCard('card_22'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">15.</span> Reporte de puntos de bloqueo en carreteras</li><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">19.</span> Paro nacional de maestros urbanos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:78%;background:var(--c-21)"></div></div>
+<div class="cat-n">38</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_16a'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">2.</span> Postergación de abrogación de Ley de Tierras</li><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">9.</span> Proyecto de Ley de Energías Renovables</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:65%;background:var(--c-10)"></div></div>
+<div class="cat-n">32</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">6.</span> Aprehensión de sospechosos por asesinato de magistrado</li><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">11.</span> Investigación por daños financieros en BoA</li><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">12.</span> Denuncia penal contra dirigente Mario Argollo</li><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">21.</span> Investigación penal contra Evo Morales en Argentina</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:39%;background:var(--c-18)"></div></div>
+<div class="cat-n">19</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_18'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">14.</span> Alerta de viaje de Estados Unidos para Bolivia</li><li onclick="scrollToCard('card_20'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">17.</span> Alianza Bolivia y Brasil contra el narcotráfico</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">20.</span> Visita oficial de reina Letizia a Bolivia</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:37%;background:var(--c-02)"></div></div>
+<div class="cat-n">18</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">3.</span> Emisión exitosa de bonos soberanos bolivianos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:35%;background:var(--c-07)"></div></div>
+<div class="cat-n">17</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_19'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">10.</span> Hallazgo de joven secuestrado en el Trópico</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">16.</span> Feminicidio de cantante en La Angostura</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:24%;background:var(--c-11)"></div></div>
+<div class="cat-n">12</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">7.</span> Fiscalización de calidad de gasolina por UMSA</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_SOCIEDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-25)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:6%;background:var(--c-25)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_SOCIEDAD"><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">22.</span> Nacimiento de bebé en canoa en Beni</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">35</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:92%"></div>
+</div>
+</td>
+<td class="freq-count">31</td>
+</tr>
+<tr>
+<td class="freq-word">diputado</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:77%"></div>
+</div>
+</td>
+<td class="freq-count">24</td>
+</tr>
+<tr>
+<td class="freq-word">nacional</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:72%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">abrogación de ley</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:68%"></div>
+</div>
+</td>
+<td class="freq-count">20</td>
+</tr>
+<tr>
+<td class="freq-word">millones</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:63%"></div>
+</div>
+</td>
+<td class="freq-count">18</td>
+</tr>
+<tr>
+<td class="freq-word">diputados</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:58%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">ministerio de trabajo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">toma del ministerio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:42%"></div>
+</div>
+</td>
+<td class="freq-count">10</td>
+</tr>
+<tr>
+<td class="freq-word">ley de electricidad</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:39%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_16c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Sectores en conflicto por Ley de Tierras
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">28</div>
+</div>
+<div class="chart-medios">17 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Postergación de abrogación de Ley de Tierras
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">28</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Emisión exitosa de bonos soberanos bolivianos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:64.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">18</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Bloqueo nacional de caminos de la COB
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:57.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">16</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Encuentro nacional por pacto de gobernabilidad
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:53.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">15</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Aprehensión de sospechosos por asesinato de magistrado
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:46.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">13</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Fiscalización de calidad de gasolina por UMSA
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:42.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">12</div>
+</div>
+<div class="chart-medios">11 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Liberación de dirigentes y reactivación de protestas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:39.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">11</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Proyecto de Ley de Energías Renovables
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">10</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_19')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Hallazgo de joven secuestrado en el Trópico
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">10</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Investigación por daños financieros en BoA
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Denuncia penal contra dirigente Mario Argollo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_15a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Exigencia de renuncia del presidente Rodrigo Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:28.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_18')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Alerta de viaje de Estados Unidos para Bolivia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_22')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Reporte de puntos de bloqueo en carreteras
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Feminicidio de cantante en La Angostura
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_20')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Alianza Bolivia y Brasil contra el narcotráfico
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Reestructuración del gabinete departamental de La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Paro nacional de maestros urbanos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Visita oficial de reina Letizia a Bolivia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">21.</span>
+            Investigación penal contra Evo Morales en Argentina
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">22.</span>
+            Nacimiento de bebé en canoa en Beni
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_5a" onclick="openModal('modal_5a')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Bloqueo nacional de caminos de la COB</div>
+<div class="topic-body">La COB convocó a un bloqueo nacional indefinido con respaldo de campesinos y maestros, instalando al menos 18 puntos de bloqueo y cercando La Paz; la medida mantiene suspendidas las salidas en terminales de buses de La Paz y Cochabamba, mientras los choferes suspendieron sus protestas, aunque continúan presionando al Gobierno.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Encuentro nacional por pacto de gobernabilidad</div>
+<div class="topic-body">El presidente Rodrigo Paz convoca a un encuentro nacional para este sábado con el fin de establecer un pacto de gobernabilidad y acuerdos económicos. Líderes políticos como Luis Revilla confirman su asistencia, mientras sectores como Unidad Nacional y el gobernador Leonardo Loza evalúan su participación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>15</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Aprehensión de sospechosos por asesinato de magistrado</div>
+<div class="topic-body">La Fiscalía aprehendió a cuatro sospechosos por el asesinato del magistrado Claure y declaró el caso en reserva judicial. Las autoridades investigan el hecho como un presunto ajuste de cuentas que podría estar vinculado a conflictos por tierras en la región.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>13</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-11)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-11)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-11)">HIDROCARBUROS</div>
+<div class="topic-title">Fiscalización de calidad de gasolina por UMSA</div>
+<div class="topic-body">El Gobierno y YPFB aseguran que el problema de calidad en los combustibles ha sido resuelto, atribuyendo las fallas a un decreto de 2022 y a la gestión anterior. El conflicto se levantó tras acordar con los choferes que la UMSA fiscalizará técnicamente la calidad de la gasolina.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>11</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Liberación de dirigentes y reactivación de protestas</div>
+<div class="topic-body">La Fiscalía y la Policía liberaron a los dirigentes fabriles aprehendidos tras la toma del Ministerio de Trabajo. Tras la liberación de los 13 detenidos, la Central Obrera Boliviana (COB) anticipó que realizará un análisis de la situación y determinó retomar las movilizaciones a nivel nacional.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>11</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_14" onclick="openModal('modal_14')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">LEGISLATIVA</div>
+<div class="topic-title">Proyecto de Ley de Energías Renovables</div>
+<div class="topic-body">El Gobierno presentó un proyecto de Ley de Electricidad y Energías Renovables que busca atraer inversión privada y abrir el mercado energético. La propuesta plantea un nuevo modelo para fomentar energías limpias y modernizar el sector, con el fin de fortalecer a ENDE sin privilegios estatales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_19" onclick="openModal('modal_19')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Hallazgo de joven secuestrado en el Trópico</div>
+<div class="topic-body">La Policía y la Fiscalía de Cochabamba confirmaron el hallazgo del cuerpo sin vida de un joven de 24 años que había sido secuestrado por encapuchados en Entre Ríos. El hecho, que movilizó intensos operativos en el trópico, marca el segundo asesinato registrado en la zona en menos de tres días.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigación por daños financieros en BoA</div>
+<div class="topic-body">La Fiscalía aprehendió a una exdirectora de BoA en el marco del caso 'La ruta de La Habana', sumando dos exautoridades detenidas. Se investigan delitos de conducta antieconómica e incumplimiento de deberes por daños financieros derivados de la falta de rentabilidad de los vuelos a Cuba.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_13" onclick="openModal('modal_13')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Denuncia penal contra dirigente Mario Argollo</div>
+<div class="topic-body">El diputado Manolo Rojas formalizó una denuncia penal contra Mario Argollo, dirigente de la COB, por presunto fraude y cobros irregulares de una pensión de invalidez superior a los Bs 141.000. El legislador cuestionó la veracidad de la discapacidad del dirigente y solicitó su renuncia al cargo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_15a" onclick="openModal('modal_15a')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Exigencia de renuncia del presidente Rodrigo Paz</div>
+<div class="topic-body">La COB y sectores campesinos de La Paz han radicalizado su postura exigiendo la renuncia del presidente Rodrigo Paz. El ministro Lupo calificó el pedido como inaceptable, mientras la dirigencia sindical supedita el diálogo a la salida del mandatario y a la liberación de trabajadores detenidos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_18" onclick="openModal('modal_18')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Alerta de viaje de Estados Unidos para Bolivia</div>
+<div class="topic-body">El Departamento de Estado de Estados Unidos actualizó su alerta de viaje para Bolivia, recomendando a sus ciudadanos extremar precauciones ante disturbios y delincuencia. La advertencia sugiere evitar específicamente la región del Chapare por riesgos asociados al narcotráfico e inseguridad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_22" onclick="openModal('modal_22')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Reporte de puntos de bloqueo en carreteras</div>
+<div class="topic-body">La Administradora Boliviana de Carreteras (ABC) reportó entre 12 y 18 puntos de bloqueo en las rutas nacionales, concentrados principalmente en los departamentos de La Paz y Beni. Mientras los reportes detallan las zonas afectadas, el Gobierno calificó las medidas de baja intensidad.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Feminicidio de cantante en La Angostura</div>
+<div class="topic-body">La mujer hallada decapitada y calcinada en La Angostura, Santa Cruz, fue identificada como una cantante de un grupo musical. La Fiscalía informó que la víctima tenía antecedentes en otros procesos, mientras que allegados señalaron que la mujer se encontraba embarazada al momento del crimen.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_20" onclick="openModal('modal_20')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Alianza Bolivia y Brasil contra el narcotráfico</div>
+<div class="topic-body">Bolivia y Brasil formalizaron una alianza estratégica que contempla 31 acciones conjuntas y cinco ejes de trabajo para combatir el narcotráfico, el lavado de activos y el crimen organizado. El acuerdo busca fortalecer el control fronterizo y la cooperación operativa entre ambos países.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Reestructuración del gabinete departamental de La Paz</div>
+<div class="topic-body">El gobernador de La Paz, Revilla, posesionó a su gabinete departamental y redujo el número de secretarías de once a cinco. Según la autoridad, esta reestructuración busca mejorar la eficiencia técnica y administrativa ante el desorden encontrado en la gestión anterior.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_4" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Paro nacional de maestros urbanos</div>
+<div class="topic-body">El magisterio urbano de Bolivia convocó a un paro nacional de 24 horas para el próximo lunes en demanda de atención a sus pedidos sectoriales. La medida de presión ratificada por las federaciones de maestros exige respuestas concretas del Ministerio de Educación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Visita oficial de reina Letizia a Bolivia</div>
+<div class="topic-body">La reina Letizia de España visitará Bolivia en junio para fortalecer los lazos bilaterales y celebrar los 40 años de cooperación española en el país. Su equipo de avanzada ya se encuentra en territorio nacional coordinando la agenda oficial que incluirá la ciudad de La Paz y otras regiones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_12" onclick="openModal('modal_12')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">21</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigación penal contra Evo Morales en Argentina</div>
+<div class="topic-body">En Argentina avanza la investigación penal contra Evo Morales por presunta trata de personas y estupro. Informes y testimonios policiales señalan la presencia de una menor de edad en la residencia oficial ocupada por el exmandatario durante su permanencia en el país vecino.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-25)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-25)">22</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-25)">SOCIEDAD</div>
+<div class="topic-title">Nacimiento de bebé en canoa en Beni</div>
+<div class="topic-body">Una mujer dio a luz a un bebé a bordo de una canoa en el río Mamoré, Beni, recibiendo asistencia de emergencia durante la travesía fluvial.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://lapatria.bo/enfoque-nacional/revelan-bunker-secreto-de-lujo-de-evo-morales/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Revelan búnker secreto de lujo de Evo Morales - La Patria 3.0 | Periódico digital de Bolivia</a></div>
+<div class="emergente-sum">La revelación de un supuesto búnker de lujo vinculado al exmandatario Evo Morales tiene una alta relevancia política y mediática.</div>
+<div class="emergente-source">Fuente: La Patria (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/cae-narcoavioneta-argentina-vinculada-pepa-marset-hay-dos-bolivianos-aprehendidos_1778187454" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Cae narcoavioneta en Argentina vinculada a 'Pepa' y 'Marset'; hay dos bolivianos entre los aprehendidos</a></div>
+<div class="emergente-sum">La caída de una narcoavioneta boliviana en Argentina vinculada a Marset evidencia la expansión de redes criminales transnacionales.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpais.bo/nacional/20260507_denuncian-avance-de-la-mineria-ilegal-con-maquinaria-pesada-en-el-parque-madidi.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Denuncian avance de la minería ilegal con maquinaria pesada en el Parque Madidi</a></div>
+<div class="emergente-sum">La denuncia sobre minería ilegal con maquinaria pesada en el Parque Madidi alerta sobre una amenaza crítica a una de las reservas naturales más importantes.</div>
+<div class="emergente-source">Fuente: El País (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpais.bo/nacional/20260507_espinoza-espera-entre-2-600-y-3-000-millones-de-dolares-del-fmi-en-tres-anos.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Espinoza espera entre "2.600 y 3.000 millones de dólares" del FMI en tres años</a></div>
+<div class="emergente-sum">La proyección de ingresos por créditos del FMI es fundamental para el análisis de la liquidez de divisas y estabilidad económica del país.</div>
+<div class="emergente-source">Fuente: El País (Bolivia)</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260508 · 2026-05-08</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 236 titulares · 22 temas · 9 categorías · 19 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_16c">
+<div class="modal-backdrop" onclick="closeModal('modal_16c')"></div>
+<div aria-label="Sectores en conflicto por Ley de Tierras" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Sectores en conflicto por Ley de Tierras</div>
+<div class="modal-sum">Sectores productivos, empresarios y opositores como Branko Marinkovic, Luis Fernando Camacho y Samuel Doria Medina rechazan la posible abrogación de la Ley 1720 y advierten medidas de presión por su impacto en la producción; mientras tanto, organizaciones indígenas mantienen vigilias en La Paz exigiendo anular la norma, en medio de tensiones que Rodrigo Paz calificó como actos de violencia y “sicariato”.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">28</strong> titulares</span>
+<span><strong style="color:var(--c-05)">17</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/cao-rechaza-apoyo-del-gobierno-a-la-abrogacion-de-ley-1720-y-advierte-con-medidas-de-presion-60346" rel="noopener noreferrer" target="_blank">CAO rechaza apoyo del gobierno a la abrogación de ley 1720 y advierte con medidas de presión</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/marinkovic-defiende-la-ley-1720-y-denuncia-desinformacion-en-torno-a-la-reconversion-de-tierras-60358" rel="noopener noreferrer" target="_blank">Marinkovic defiende la Ley 1720 y denuncia “desinformación” en torno a la reconversión de tierras</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/la-ley-ni-me-va-ni-me-viene-marinkovic-defiende-la-ley-1720-y-acusa-desinformacion-de-ong/" rel="noopener noreferrer" target="_blank">“La ley ni me va ni me viene”: Marinkovic defiende la Ley 1720 y acusa desinformación de ONG</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ley-que-promueve-empresariado-pequeno-esa-gente-que-necesita-trabajar-crecer-progresar-empresarios-defienden-ley-1720/" rel="noopener noreferrer" target="_blank">“Ley que promueve empresariado pequeño, esa gente que necesita trabajar, crecer, progresar”: empresarios defienden Ley 1720</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/senador-marinkovic-sugiere-cada-departamento-decida-si-aplica-no-ley-1720_1778204727" rel="noopener noreferrer" target="_blank">El senador Marinkovic sugiere que cada departamento decida si aplica o no la Ley 1720</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/economia/sectores-productivos-cierran-filas-en-apoyo-a-la-ley-1720-el-conflicto-marca-el-primer-quiebre-con-rodrigo-paz.html" rel="noopener noreferrer" target="_blank">Sectores productivos cierran filas en apoyo a la ley 1720; el conflicto marca el primer quiebre con Rodrigo Paz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_acuerdo-por-la-ley-1720-desata-enojo-de-la-cao.html" rel="noopener noreferrer" target="_blank">Acuerdo por la Ley 1720 desata enojo de la CAO</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/07/rechazan-el-acuerdo-que-busca-abrogar-la-ley-1720/" rel="noopener noreferrer" target="_blank">Rechazan el acuerdo que busca abrogar la Ley 1720</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/camacho-rechaza-abrogacion-de-ley-1720-descalifica-marcha-campesina-de-tierras-bajas/" rel="noopener noreferrer" target="_blank">Camacho rechaza abrogación de Ley 1720; descalifica marcha campesina de tierras bajas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/es-riesgoso-no-se-puede-ceder-chantajes-samuel-camacho-rechazan-abrogacion" rel="noopener noreferrer" target="_blank">"Es riesgoso" y "no se puede ceder a chantajes": Samuel y Camacho rechazan la abrogación de la Ley 1720</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/es-riesgoso-y-no-se-puede-ceder-a-chantajes-samuel-y-camacho-rechazan-la-abrogacion-de-la-ley-1720/" rel="noopener noreferrer" target="_blank">“Es riesgoso” y “no se puede ceder a chantajes”: Samuel y Camacho rechazan la abrogación de la Ley 1720</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/marinkovic-rechaza-abrogar-la-ley-1720-y-paz-admite-que-falto-socializarla/" rel="noopener noreferrer" target="_blank">Marinkovic rechaza abrogar la Ley 1720 y Paz admite que faltó socializarla</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/civicos-crucenos-rechazan-intencion-de-abrogar-la-ley-1720" rel="noopener noreferrer" target="_blank">Cívicos cruceños rechazan intención de abrogar la ley 1720</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/marinkovic-se-abre-a-modificar-la-ley-1720-pero-rechaza-su-abrogacion-202657123529" rel="noopener noreferrer" target="_blank">El senador Branko Marinkovic abre posibilidad de modificar la Ley 1720, pero rechaza su eliminación</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cao-advierte-con-movilizaciones-si-se-abroga-la-ley-1720-202657135233" rel="noopener noreferrer" target="_blank">CAO advierte con movilizaciones si se abroga la Ley 1720</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/multisectores-se-suman-en-rechazo-a-la-posible-abrogacion-de-la-ley-1720-202657163824" rel="noopener noreferrer" target="_blank">Multisectores se suman en rechazo a la posible abrogación de la Ley 1720</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/sector-exportador-respalda-al-agro-y-advierte-riesgos-si-se-elimina-la-ley-de-converison-de-tierras-BD20540221" rel="noopener noreferrer" target="_blank">Sector exportador respalda al agro y advierte riesgos si se elimina la Ley de converisòn de tierras</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/abrogacion-de-ley-1720-afectara-a-pequenos-productores-y-campesinos-dice-federacion-de-empresarios-crucenos-KE20532495" rel="noopener noreferrer" target="_blank">Abrogación de Ley 1720 afectará a pequeños productores y campesinos, dice Federación de Empresarios cruceños</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/empresarios-y-autoridades-crucenas-rechazan-la-abrogacion-de-la-ley-1720" rel="noopener noreferrer" target="_blank">Empresarios y autoridades cruceñas rechazan la abrogación de la ley 1720</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_ley-1720-marchistas-insisten-con-abrogacion.html" rel="noopener noreferrer" target="_blank">Ley 1720: Marchistas insisten con abrogación</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/gobierno-dialoga-con-todos-los-sectores-no-entiendo-la-violencia-es-una-suerte-de-s1c4r14t0/" rel="noopener noreferrer" target="_blank">“Gobierno dialoga con todos los sectores. No entiendo la violencia; es una suerte de s1c4r14t0”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/marcha-indigena-mantiene-vigilia-diputados-trataran-posible-abrogacion-ley-1720_1778164753" rel="noopener noreferrer" target="_blank">Marcha indígena mantiene su vigilia y diputados tratarán la posible abrogación de la Ley 1720</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/%E2%80%9Cla-violencia-no-se-acepta%E2%80%9D-paz-critica-la-toma-del-ministerio-de-trabajo-y-pide-cambiar-la" rel="noopener noreferrer" target="_blank">“La violencia no se acepta”: Paz critica la toma del Ministerio de Trabajo y pide cambiar la actitud</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/ley-1720-marchistas-insisten-con-abrogaci%C3%B3n-el-agro-defiende-la-norma-y-anuncia-medidas-de" rel="noopener noreferrer" target="_blank">Ley 1720: Marchistas insisten con abrogación; el agro defiende la norma y anuncia medidas de presión</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ley-1720-marchistas-piden-abrogacion-agro-defiende-norma-anunciando-medidas-presion/20260507122744991130.html" rel="noopener noreferrer" target="_blank">Ley 1720: Marchistas piden abrogación y el agro defiende la norma anunciando medidas de presión</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-condena-la-toma-del-ministerio-de-trabajo-y-advierte-que-la-violencia-es-una-suerte-de-sicariato/" rel="noopener noreferrer" target="_blank">Paz condena la toma del Ministerio de Trabajo y advierte que “la violencia es una suerte de sicariato”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/marcha-indigena-mantiene-vigilia-en-la-paz-mientras-diputados-definen-el-futuro-de-la-ley-1720" rel="noopener noreferrer" target="_blank">Marcha indígena mantiene vigilia en La Paz mientras Diputados definen el futuro de la Ley 1720</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46893-paz-ve-una-suerte-de-sicariato-en-la-toma-del-ministerio-de-trabajo-eso-no-se-puede-aceptar" rel="noopener noreferrer" target="_blank">Paz ve una “suerte de sicariato” en la toma del Ministerio de Trabajo: “Eso no se puede aceptar”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_16a">
+<div class="modal-backdrop" onclick="closeModal('modal_16a')"></div>
+<div aria-label="Postergación de abrogación de Ley de Tierras" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Postergación de abrogación de Ley de Tierras</div>
+<div class="modal-sum">La Cámara de Diputados postergó el tratamiento de la abrogación de la Ley 1720 por falta de consenso y de los dos tercios necesarios, mientras Rodrigo Paz reconoció que la norma careció de socialización y planteó abrir mesas de diálogo para consensuar una nueva ley de tierras con los sectores involucrados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">28</strong> titulares</span>
+<span><strong style="color:var(--c-21)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/diputada-oficialista-califica-de-torpeza-que-paz-acuerde-abrogar-la-ley-1720-con-dirigentes-que-no-marcharon" rel="noopener noreferrer" target="_blank">Diputada oficialista califica de torpeza que Paz acuerde abrogar la Ley 1720 con dirigentes que no marcharon</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/diputados-frena-debate-para-abrogar-la-ley-1720-y-posterga-su-tratamiento-para-este-viernes-60380" rel="noopener noreferrer" target="_blank">Diputados frena debate para abrogar la Ley 1720 y posterga su tratamiento para este viernes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/07/legisladores-cuestionan-al-gobierno-por-la-crisis-y-el-retroceso-en-torno-a-la-ley-1720-60377" rel="noopener noreferrer" target="_blank">Legisladores cuestionan al gobierno por la crisis y el retroceso en torno a la Ley 1720</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/sin-los-dos-tercios-diputados-aplaza-debate-de-abrogacion-de-la-ley-1720-para-este-viernes/" rel="noopener noreferrer" target="_blank">Sin los dos tercios, Diputados aplaza debate de abrogación de la Ley 1720 para este viernes</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/proyecto-abrogacion-ley-1720-ingreso-camara-diputados-26-abril_1778211154" rel="noopener noreferrer" target="_blank">Proyecto de abrogación de la Ley 1720 ingresó a la Cámara de Diputados el 26 de abril</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/camara-diputados-pone-agenda-abrogacion-ley-1720-este-viernes_1778200882" rel="noopener noreferrer" target="_blank">Cámara de Diputados pone en agenda abrogación de la Ley 1720 para este viernes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/economia/proyecto-para-abrogar-la-ley-1720-pasa-al-pleno-de-diputados-tras-aprobacion-en-comision.html" rel="noopener noreferrer" target="_blank">Proyecto para abrogar la Ley 1720 pasa al pleno de Diputados tras aprobación en comisión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/07/diputados-rechazan-debate-de-proyecto-para-abrogar-ley-1720/" rel="noopener noreferrer" target="_blank">Diputados rechazan debate de proyecto para abrogar Ley 1720</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diputados-rechazaron-alterar-el-orden-del-dia-y-no-trataron-la-abrogacion-de-la-ley-1720/" rel="noopener noreferrer" target="_blank">Diputados rechazó tratar la abrogación de la Ley 1720 esta jornada, pero la agenda para el viernes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bancada-de-diputados-de-libre-rechaza-la-abrogacion-de-la-ley-1720-202657164516" rel="noopener noreferrer" target="_blank">Bancada de diputados de LIBRE rechaza la abrogación de la Ley 1720</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ley-1720-diputados-convocan-a-jefes-de-bancada-para-analizar-proyecto-de-abrogacion-202657192412" rel="noopener noreferrer" target="_blank">Diputados aplazan para este viernes tratamiento del PL de abrogación de Ley 1720</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputados-rechazan-tratar-en-la-sesion-de-este-jueves-un-proyecto-de-abrogacion-de-la-ley-1720-de-conversion-de-tierras-GD20546000" rel="noopener noreferrer" target="_blank">Diputados rechazan tratar en la sesión de este jueves un proyecto de abrogación de la Ley 1720 de conversión de tierras</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/comision-de-diputados-aprueba-proyecto-de-abrogacion-de-la-ley-1720-de-conversion-de-tierras-dice-legisladora-del-pdc-AD20545764" rel="noopener noreferrer" target="_blank">Comisión de Diputados aprueba proyecto de abrogación de la Ley 1720 de conversión de tierras, dice legisladora del PDC</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputados-convocan-a-jefes-de-bancada-para-analizar-proyecto-de-abrogacion-de-la-ley-1720-de-conversion-de-tierras-LE20539525" rel="noopener noreferrer" target="_blank">Diputados: Convocan a jefes de bancada para analizar proyecto de abrogación de la Ley 1720 de conversión de tierras</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/indigenas-que-buscan-anular-la-ley-de-conversion-de-tierras-llegaron-a-la-alp-para-participar-de-sesion-de-diputados-JE20538364" rel="noopener noreferrer" target="_blank">Indígenas que buscan anular la ley de conversión de tierras llegaron a la ALP para participar de sesión de Diputados</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/47016-diputados-rechazan-tratamiento-del-proyecto-de-abrogacion-de-la-ley-1720-por-falta-de-dos-tercios" rel="noopener noreferrer" target="_blank">Diputados rechazan tratamiento del proyecto de abrogación de la Ley 1720 por falta de dos tercios</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_paz-admite-que-falto-socializar-la-ley-1720-de-conversion-de-tierras.html" rel="noopener noreferrer" target="_blank">Paz admite que faltó socializar la Ley 1720 de conversión de tierras</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_ley-1720-gobierno-alcanza-acuerdos-con-la-csutcb.html" rel="noopener noreferrer" target="_blank">Ley 1720: Gobierno alcanza acuerdos con la CSUTCB</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ley-1720-puede-ser-mejorable-esa-es-una-atribucion-del-parlamento/" rel="noopener noreferrer" target="_blank">“Ley 1720 puede ser mejorable, esa es una atribución del Parlamento”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-retrocede-ley-1720-admite-falto-socializacion_1778168934" rel="noopener noreferrer" target="_blank">Gobierno retrocede con la Ley 1720 y admite que faltó socialización</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/economia/paz-dice-que-la-ley-1720-tiene-una-buena-base-pero-falto-socializarla.html" rel="noopener noreferrer" target="_blank">Paz dice que la ley 1720 tiene una buena base pero faltó socializarla</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/gobierno-dispuesto-consensuar-nueva-ley-de-conversi%C3%B3n-de-tierras" rel="noopener noreferrer" target="_blank">Gobierno dispuesto a consensuar nueva ley de conversión de tierras</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/gobierno-abre-posibilidad-abrogar-ley-1720-deja-manos-asamblea" rel="noopener noreferrer" target="_blank">Gobierno abre posibilidad de abrogar ley 1720 y deja en manos de la Asamblea</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/gobierno-apunta-consensuar-nueva-ley-que-sustituya-1720" rel="noopener noreferrer" target="_blank">Gobierno apunta a consensuar nueva ley que sustituya a la 1720</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-afirma-que-la-ley-1720-puede-ser-mejorada-con-consenso-202657135956" rel="noopener noreferrer" target="_blank">Presidente afirma que la Ley 1720 “puede ser mejorada” con consenso</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ley-1720-gobierno-esta-abierto-a-mesas-de-dialogo-para-ver-alcances-y-beneficios-20265717264" rel="noopener noreferrer" target="_blank">Ley 1720: Gobierno está abierto a mesas de diálogo para ver alcances y beneficios</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-plantea-derogar-la-ley-1720-para-consensuar-una-nueva-norma" rel="noopener noreferrer" target="_blank">Gobierno plantea derogar la Ley 1720 para consensuar una nueva norma</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46935-paz-afirma-que-la-ley-1720-puede-ser-mejorada-y-que-el-gobierno-esta-para-concertar-entre-sectores-enfrentados" rel="noopener noreferrer" target="_blank">Paz afirma que la Ley 1720 puede ser mejorada y que el Gobierno está para concertar entre sectores enfrentados</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Emisión exitosa de bonos soberanos bolivianos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Emisión exitosa de bonos soberanos bolivianos</div>
+<div class="modal-sum">Bolivia captó 1.000 millones de dólares en los mercados internacionales mediante la emisión de bonos soberanos. El ministro Espinoza destacó una demanda récord, cinco veces superior a la oferta inicial, lo que permitirá incrementar las reservas internacionales por encima de los 4.700 millones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">18</strong> titulares</span>
+<span><strong style="color:var(--c-02)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_gobierno-contrata-deuda-en-bonos-por-otros-mil-millones-de-dolares.html" rel="noopener noreferrer" target="_blank">Gobierno contrata deuda en bonos por otros mil millones de dólares</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/bolivia-capta-1-000-millones-en-mercados-internacionales-con-bonos-soberanos" rel="noopener noreferrer" target="_blank">Bolivia capta $1.000 millones en mercados internacionales con bonos soberanos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/bolivia-vuelve-al-mercado-internacional-con-emision-de-bonos-por-us-1000-millones-segun-bloomberg-60367" rel="noopener noreferrer" target="_blank">Bolivia vuelve al mercado internacional con emisión de bonos por $us 1.000 millones, según Bloomberg</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/grupo-santander-lidero-emision-de-bonos-bolivianos-por-us-1000-millones-en-mercados-internacionales-60373" rel="noopener noreferrer" target="_blank">Grupo Santander lideró emisión de bonos bolivianos por $us 1.000 millones en mercados internacionales</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/bolivia-capta-us-1000-millones-en-bonos-soberanos-y-las-reservas-subiran-por-encima-de-us-4700-millones-60368" rel="noopener noreferrer" target="_blank">Bolivia capta $us 1.000 millones en bonos soberanos y las reservas subirán por encima de $us 4.700 millones</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/bolivia-ha-podido-recaudar-1-000-millones-de-dolares-min-espinoza-destaca-demanda-de-cinco-veces-mas-por-bonos-soberanos/" rel="noopener noreferrer" target="_blank">“Bolivia ha podido recaudar 1.000 millones de dólares”; Min Espinoza destaca demanda “de cinco veces más” por bonos soberanos</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/estamos-por-arriba-de-los-3-600-millones-de-dolares-en-reservas-min-espinoza-anuncia-fortalecimiento-de-reservas/" rel="noopener noreferrer" target="_blank">“Estamos por arriba de los 3.600 millones de dólares en reservas”; Min Espinoza anuncia fortalecimiento de reservas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bolivia-vuelve-mercados-logra-us-1-000-millones-bonos-demanda-record_1778187795" rel="noopener noreferrer" target="_blank">Bolivia vuelve a los mercados y logra $us 1.000 millones en bonos con demanda récord</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/economia/el-gobierno-coloco-bonos-por-$us-1000-millones-y-destaca-la-gran-demanda.html" rel="noopener noreferrer" target="_blank">El gobierno colocó bonos por $us 1.000 millones y destaca la gran demanda</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_gobierno-dice-que-recaudo-1-000-millones-de-dolares-en-bonos-del-mercado-de-capitales.html" rel="noopener noreferrer" target="_blank">Gobierno dice que recaudó 1.000 millones de dólares en bonos del mercado de capitales</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/bolivia-recauda-1000-millones-de-d%C3%B3lares-frescos-con-emisi%C3%B3n-de-bonos-en-el-mercado-de" rel="noopener noreferrer" target="_blank">Bolivia recauda 1.000 millones de dólares frescos con emisión de bonos en el mercado de capitales</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/seg%C3%BAn-bloomberg-bolivia-volver%C3%ADa-al-mercado-de-capitales-con-oferta-de-bonos-por-1000" rel="noopener noreferrer" target="_blank">Según Bloomberg, Bolivia volvería al mercado de capitales con oferta de bonos por 1.000 millones de dólares</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/dinero-negocios/bolivia-recauda-us-1-000-millones-en-bonos-soberanos/" rel="noopener noreferrer" target="_blank">Bolivia recauda $us 1.000 millones en bonos soberanos - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260507/bolivia-emite-nuevos-bonos-soberanos-recauda-us-1000-millones" rel="noopener noreferrer" target="_blank">Bolivia emite nuevos bonos soberanos y recauda $us 1.000 millones</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/bolivia-capto-mil-millones-de-dolares-a-traves-de-bonos-soberanos-asegura-el-ministro-espinoza/" rel="noopener noreferrer" target="_blank">Bolivia captó mil millones de dólares a través de bonos soberanos, asegura el ministro Espinoza</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-anuncia-captacion-de-us-1000-millones-tras-colocacion-de-bonos-soberanos-en-el-exterior-ID20541977" rel="noopener noreferrer" target="_blank">Gobierno anuncia captación de $us 1.000 millones tras colocación de bonos soberanos en el exterior</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/bolivia-logra-1-000-millones-en-mercados-internacionales-con-una-demanda-5-veces-mayor" rel="noopener noreferrer" target="_blank">Bolivia logra $1.000 millones en mercados internacionales, con una demanda 5 veces mayor</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46974-espinoza-informo-que-bolivia-logro-cerrar-una-operacion-de-financiamiento-mediante-bonos-soberanos-por-us-1000-millones" rel="noopener noreferrer" target="_blank">Espinoza informó que Bolivia logró cerrar una operación de financiamiento mediante bonos soberanos por $us 1.000 millones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="Bloqueo nacional de caminos de la COB" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Bloqueo nacional de caminos de la COB</div>
+<div class="modal-sum">La COB convocó a un bloqueo nacional indefinido con respaldo de campesinos y maestros, instalando al menos 18 puntos de bloqueo y cercando La Paz; la medida mantiene suspendidas las salidas en terminales de buses de La Paz y Cochabamba, mientras los choferes suspendieron sus protestas, aunque continúan presionando al Gobierno.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">16</strong> titulares</span>
+<span><strong style="color:var(--c-08)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cob-anuncia-bloqueos-partir-cero-horas-este-viernes_1778198924" rel="noopener noreferrer" target="_blank">COB anuncia bloqueos a partir de las cero horas de este viernes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/politica/cob-convoca-a-bloqueo-nacional-de-caminos-desde-las-cero-hora-de-este-viernes.html" rel="noopener noreferrer" target="_blank">COB convoca a bloqueo nacional de caminos desde las cero hora de este viernes</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/choferes-suspenden-bloqueo-pero-presionan-campesinos-cob-maestros" rel="noopener noreferrer" target="_blank">Los choferes suspenden bloqueo, pero presionan campesinos, COB y maestros</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/cob-instruye-bloqueo-nacional-caminos-esta-medianoche" rel="noopener noreferrer" target="_blank">COB instruye bloqueo nacional de caminos desde esta medianoche</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_terminal-de-buses-de-la-paz-informa-que-las-salidas-continuan-suspendidas.html" rel="noopener noreferrer" target="_blank">Terminal de Buses de La Paz informa que las salidas continúan suspendidas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/07/terminal-de-buses-de-la-paz-mantiene-suspension-de-salidas-nacionales-e-internacionales/" rel="noopener noreferrer" target="_blank">Terminal de Buses de La Paz mantiene suspensión de salidas nacionales e internacionales</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/bbloqueos-suspenden-salidas-de-buses-en-la-paz-y-cochabamba" rel="noopener noreferrer" target="_blank">Bloqueos suspenden salidas de buses en la paz y cochabamba</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/atencion-viajeros-estos-son-los-puntos-de-bloqueo-y-rutas-restringidas-hoy-20265785043" rel="noopener noreferrer" target="_blank">¡Atención, viajeros!: estos son los puntos de bloqueo y rutas restringidas hoy</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/al-estilo-de-evo-dirigente-de-fejuve-asegura-que-con-5-bloqueos-no-dejaran-entrar-ni-salir-nada-a-la-paz" rel="noopener noreferrer" target="_blank">Al estilo de Evo, dirigente de Fejuve asegura que con 5 bloqueos no dejarán entrar ni salir nada a La Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/ypfb-advierte-que-los-bloqueos-provocan-retrasos-en-el-abastecimiento-de-combustibles-en-la-paz-y-el-alto-60378" rel="noopener noreferrer" target="_blank">YPFB advierte que los bloqueos provocan retrasos en el abastecimiento de combustibles en La Paz y El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/05/07/cob-ratifica-paro-indefinido-e-instruye-nuevas-movilizaciones-para-este-jueves/" rel="noopener noreferrer" target="_blank">COB ratifica paro indefinido e instruye nuevas movilizaciones para este jueves</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/18-bloqueos-se-mantienen-este-jueves-en-territorio-nacional-OE20539250" rel="noopener noreferrer" target="_blank">18 bloqueos se mantienen este jueves en territorio nacional</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/la-paz-cercada-por-los-bloqueos-de-sectores-campesinos-que-respaldan-a-la-cob-BE20533345" rel="noopener noreferrer" target="_blank">La Paz, cercada por los bloqueos de sectores campesinos que respaldan a la COB</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tres-sectores-protagonizan-protestas-con-pedidos-al-gobierno-hay-18-puntos-de-bloqueo-en-el" rel="noopener noreferrer" target="_blank">Tres sectores protagonizan protestas con pedidos al Gobierno; hay 18 puntos de bloqueo en el país</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/al-menos-420-turistas-estan-varados-debido-los-bloqueos-de-campesinos-en-la-paz" rel="noopener noreferrer" target="_blank">Al menos 420 turistas están varados debido a los bloqueos de campesinos en La Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/campesinos-endurecen-protestas-bloquean-tres-rutas-la-paz-en-apoyo-la-cob" rel="noopener noreferrer" target="_blank">Campesinos endurecen protestas: Bloquean tres rutas a La Paz en apoyo a la COB</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Encuentro nacional por pacto de gobernabilidad" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Encuentro nacional por pacto de gobernabilidad</div>
+<div class="modal-sum">El presidente Rodrigo Paz convoca a un encuentro nacional para este sábado con el fin de establecer un pacto de gobernabilidad y acuerdos económicos. Líderes políticos como Luis Revilla confirman su asistencia, mientras sectores como Unidad Nacional y el gobernador Leonardo Loza evalúan su participación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">15</strong> titulares</span>
+<span><strong style="color:var(--c-05)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/07/la-agenda-del-encuentro-del-sabado-esta-absolutamente-abierta-al-debate-dice-paz-60355" rel="noopener noreferrer" target="_blank">La agenda del encuentro del sábado está "absolutamente abierta al debate", dice Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/07/agenda-del-encuentro-nacional-tiene-cuatro-puntos-centrales-60357" rel="noopener noreferrer" target="_blank">Agenda del encuentro nacional tiene cuatro puntos centrales</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ojala-se-pueda-formalizar-un-gran-acuerdo-nacional-revilla-confirma-asistencia-a-encuentro-convocado-por-gobierno/" rel="noopener noreferrer" target="_blank">“Ojalá se pueda formalizar un gran acuerdo nacional”: Revilla confirma asistencia a encuentro convocado por Gobierno</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/samuel-aun-no-nos-ha-comunicado-nada-unidad-aun-no-define-su-asistencia-al-encuentro-nacional/" rel="noopener noreferrer" target="_blank">“Samuel aún no nos ha comunicado nada”: Unidad aún no define su asistencia al encuentro nacional</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/mamen-confirma-su-asistencia-al-dialogo-nacional-convocado-por-gobierno-es-importante-que-podamos-dialogar-con-todos-los-alcaldes/" rel="noopener noreferrer" target="_blank">Mamén confirma su asistencia al diálogo nacional convocado por Gobierno, “es importante que podamos dialogar con todos los alcaldes”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-paz-busca-pacto-gobernabilidad-alista-cumbres-sectoriales_1778150995" rel="noopener noreferrer" target="_blank">Presidente Paz busca un ‘pacto de gobernabilidad’ y alista ‘cumbres’ sectoriales</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/politica/doria-medina-y-gobernadora-de-tarija-descartan-asistir-al-encuentro-convocado-por-paz.html" rel="noopener noreferrer" target="_blank">Doria Medina y gobernadora de Tarija descartan asistir al encuentro convocado por Paz</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gran-encuentro-nacional-en-cochabamba-reunira-a-lideres-del-pais/" rel="noopener noreferrer" target="_blank">Gran encuentro nacional en Cochabamba reunirá a líderes del país - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/encuentro-nacional-del-sabado-buscara-acuerdos-de-gobernabilidad-y-economia/" rel="noopener noreferrer" target="_blank">Encuentro nacional del sábado buscará acuerdos de gobernabilidad y economía</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/libre-anticipa-fracaso-del-encuentro-rodrigo-paz-pero-tuto-quiroga-ira" rel="noopener noreferrer" target="_blank">Libre anticipa fracaso del encuentro de Rodrigo Paz, pero Tuto Quiroga irá con propuestas de reforma</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/revilla-se-ofrece-para-mediar-y-viabilizar-el-dialogo-entre-sectores-movilizados-y-el-gobierno/" rel="noopener noreferrer" target="_blank">Revilla se ofrece para mediar y viabilizar el diálogo entre sectores movilizados y el Gobierno</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/gobernadora-de-tarija-no-asistira-el-sabado-a-encuentro-nacional-convocado-por-paz-CE20534789" rel="noopener noreferrer" target="_blank">Gobernadora de Tarija no asistirá el sábado a encuentro nacional convocado por Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/revilla-y-jp-plantean-acuerdo-nacional-en-encuentro-del-sabado-loza-analiza-su-participacion" rel="noopener noreferrer" target="_blank">Revilla y JP plantean acuerdo nacional en encuentro del sábado; Loza analiza su participación</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-inicia-el-proceso-para-la-concertacion-con-el-encuentro-nacional-asegura-vocero" rel="noopener noreferrer" target="_blank">Paz inicia el proceso para la concertación con el encuentro nacional, asegura vocero</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46953-analista-politico-recomienda-al-gobierno-postergar-el-dialogo-nacional-para-resolver-primero-los-conflictos-sociales" rel="noopener noreferrer" target="_blank">Analista político recomienda al Gobierno postergar el diálogo nacional para resolver primero los conflictos sociales</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Aprehensión de sospechosos por asesinato de magistrado" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Aprehensión de sospechosos por asesinato de magistrado</div>
+<div class="modal-sum">La Fiscalía aprehendió a cuatro sospechosos por el asesinato del magistrado Claure y declaró el caso en reserva judicial. Las autoridades investigan el hecho como un presunto ajuste de cuentas que podría estar vinculado a conflictos por tierras en la región.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">13</strong> titulares</span>
+<span><strong style="color:var(--c-10)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/fiscalia-aprehende-a-cuatro-personas-en-investigacion-por-el-asesinato-del-magistrado-claure" rel="noopener noreferrer" target="_blank">Fiscalía aprehende a cuatro personas en investigación por el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/07/policia-sospecha-que-asesinato-de-decano-del-tribunal-agroambiental-no-se-relaciona-con-el-crimen-organizado-60343" rel="noopener noreferrer" target="_blank">Policía sospecha que asesinato de decano del Tribunal Agroambiental no se relaciona con el crimen organizado</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/07/cuatro-aprehendidos-por-el-asesinato-del-magistrado-claure-fiscalia-declara-el-caso-en-reserva-60376" rel="noopener noreferrer" target="_blank">Cuatro aprehendidos por el asesinato del magistrado Claure; fiscalía declara el caso en reserva</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cuatro-aprehendidos-por-el-as3sin4to-del-magistrado-claure-caso-es-declarado-en-reserva/" rel="noopener noreferrer" target="_blank">Cuatro aprehendidos por el as3sin4to del magistrado Claure; caso es declarado en reserva</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/pais/hay-cuatro-aprehendidos-y-declaran-en-reserva-investigacion-del-asesinato-de-magistrado-claure.html" rel="noopener noreferrer" target="_blank">Hay cuatro aprehendidos y declaran en reserva investigación del asesinato de magistrado Claure</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/07/investigan-como-ajuste-de-cuentas-un-asesinato/" rel="noopener noreferrer" target="_blank">Investigan como ajuste de cuentas un asesinato</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/caen-cuatro-sospechosos-por-el-asesinato-del-magistrado-claure/" rel="noopener noreferrer" target="_blank">Caen cuatro sospechosos por el asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/saucedo-pide-al-menos-un-policia-para-cada-magistrado-tras-asesinato-de-claure/" rel="noopener noreferrer" target="_blank">Saucedo pide al menos un policía para cada magistrado tras asesinato de Claure</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260507/aprehenden-4-implicados-asesinato-del-magistrado-claure" rel="noopener noreferrer" target="_blank">Aprehenden a 4 implicados en asesinato del magistrado Claure</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/asesinato-de-magistrado-cuatro-personas-fueron-arrestadas-y-una-esta-involucrada-dice-fiscal-aguilera-DD20540542" rel="noopener noreferrer" target="_blank">Asesinato de magistrado: Cuatro personas fueron arrestadas y una está involucrada, dice fiscal Aguilera</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/aprehenden-cuatro-personas-por-el-asesinato-de-un-magistrado" rel="noopener noreferrer" target="_blank">Aprehenden a cuatro personas por el asesinato de un magistrado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46866-el-tema-del-magistrado-mas-parece-ser-por-una-resolucion-que-haya-emitido-con-el-tema-de-tierras-afirma-el-jefe-policial-cruceno" rel="noopener noreferrer" target="_blank">“El tema del magistrado más parece ser por una resolución que haya emitido con el tema de tierras”, afirma el jefe policial cruceño</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46968-cuatro-aprehendidos-y-proceso-en-reserva-por-el-asesinato-del-magistrado-claure-investigan-posible-vinculo-con-conflictos-de-tierras" rel="noopener noreferrer" target="_blank">Cuatro aprehendidos y proceso en reserva por el asesinato del magistrado Claure; investigan posible vínculo con conflictos de tierras</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Fiscalización de calidad de gasolina por UMSA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Fiscalización de calidad de gasolina por UMSA</div>
+<div class="modal-sum">El Gobierno y YPFB aseguran que el problema de calidad en los combustibles ha sido resuelto, atribuyendo las fallas a un decreto de 2022 y a la gestión anterior. El conflicto se levantó tras acordar con los choferes que la UMSA fiscalizará técnicamente la calidad de la gasolina.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">12</strong> titulares</span>
+<span><strong style="color:var(--c-11)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_alarcon-denuncia-estafa-en-gestion-de-carburantes.html" rel="noopener noreferrer" target="_blank">Alarcón denuncia “estafa” en gestión de carburantes</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/ministro-lupo-no-tiene-claro-el-porque-en-3-meses-no-se-reparo-la-gasolina-de-mala-calidad" rel="noopener noreferrer" target="_blank">Ministro Lupo no tiene claro el porqué en 3 meses no se reparó la gasolina de mala calidad</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/pdte-de-ypfb-asegura-ante-comision-legislativa-que-se-resolvio-problema-en-la-gasolina-hemos-identificado-el-problema-original/" rel="noopener noreferrer" target="_blank">Pdte. de YPFB asegura ante comisión legislativa que se resolvió problema en la gasolina; “Hemos identificado el problema original”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/acuerdo-choferes-umsa-verificara-calidad-gasolina_1778150602" rel="noopener noreferrer" target="_blank">Acuerdo con choferes: UMSA verificará la calidad de la gasolina</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_gobierno-apunta-que-fallas-del-combustible-se-arrastran-desde-el-2022.html" rel="noopener noreferrer" target="_blank">Gobierno apunta que fallas del combustible se arrastran desde el 2022</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_ypfb-afirma-que-ya-no-existe-problema-de-calidad-encombustible.html" rel="noopener noreferrer" target="_blank">YPFB afirma que ya no existe problema de calidad encombustible</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/apuntan-al-decreto-4718-de-2022-como-origen-del-problema-en-la-calidad-de-combustibles" rel="noopener noreferrer" target="_blank">Apuntan al Decreto 4718 de 2022 como origen del problema en la calidad de combustibles</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260507/ministro-hidrocarburos-pide-disculpas-choferes-barbaridad-gasolina" rel="noopener noreferrer" target="_blank">Ministro de Hidrocarburos pide disculpas a los choferes por la “barbaridad” de la gasolina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ypfb-afirma-que-ya-no-existe-problema-de-calidad-y-garantiza-combustible-sin-riesgo-para-motores/" rel="noopener noreferrer" target="_blank">YPFB afirma que ya no existe problema de calidad de la gasolina y que ya no dañará los motores</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/acuerdo-con-choferes-la-umsa-verificara-la-calidad-de-la-gasolina-y-se-levanta-el-conflicto" rel="noopener noreferrer" target="_blank">Acuerdo con choferes: la umsa verificará la calidad de la gasolina y se levanta el conflicto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/el-compromiso-es-que-ya-no-haya-mayores-conflictos-viceministro-confirma-desbloqueo-de-rutas-20265775445" rel="noopener noreferrer" target="_blank">“El compromiso es que ya no haya mayores conflictos”: viceministro confirma desbloqueo de rutas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/47007-comision-investigadora-atribuye-gasolina-de-mala-calidad-a-un-decreto-promulgado-por-arce-y-a-la-negligencia-del-expresidente-de-ypfb-yussef-akly" rel="noopener noreferrer" target="_blank">Comisión investigadora atribuye gasolina de mala calidad a un decreto promulgado por Arce y a la negligencia del expresidente de YPFB, Yussef Akly</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Liberación de dirigentes y reactivación de protestas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Liberación de dirigentes y reactivación de protestas</div>
+<div class="modal-sum">La Fiscalía y la Policía liberaron a los dirigentes fabriles aprehendidos tras la toma del Ministerio de Trabajo. Tras la liberación de los 13 detenidos, la Central Obrera Boliviana (COB) anticipó que realizará un análisis de la situación y determinó retomar las movilizaciones a nivel nacional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">11</strong> titulares</span>
+<span><strong style="color:var(--c-08)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/07/liberan-a-13-dirigentes-detenidos-por-la-toma-del-ministerio-de-trabajo-la-cob-retoma-movilizaciones-60371" rel="noopener noreferrer" target="_blank">Liberan a 13 dirigentes detenidos por la toma del Ministerio de Trabajo; la COB retoma movilizaciones</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/detenidos-toma-ministerio-trabajo-liberados-salen-felcc_1778192999" rel="noopener noreferrer" target="_blank">Detenidos por toma del Ministerio de Trabajo son liberados y salen de la Felcc</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cob-protesta-felcc-demanda-liberacion-detenidos_1778175830" rel="noopener noreferrer" target="_blank">COB protesta en la Felcc en demanda de la liberación de sus detenidos</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/liberan-los-fabriles-que-fueron-aprehendidos-en-la-toma-del-ministerio-de-trabajo" rel="noopener noreferrer" target="_blank">Liberan a los fabriles que fueron aprehendidos en la toma del Ministerio de Trabajo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/policia-libera-a-los-13-dirigentes-aprehendidos-por-toma-de-un-ministerio/" rel="noopener noreferrer" target="_blank">Policía libera a los 13 dirigentes aprehendidos por toma de un ministerio</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/07/argollo-sobre-fabriles-detenidos-era-una-toma-pacifica-han-sido-emboscados/" rel="noopener noreferrer" target="_blank">Argollo sobre fabriles detenidos: Era una toma pacífica, han sido emboscados</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/apdh-verifica-situacion-de-13-detenidos-tras-toma-del-ministerio-de-trabajo/" rel="noopener noreferrer" target="_blank">APDH verifica situación de 13 detenidos tras toma del Ministerio de Trabajo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/liberan-a-los-13-fabriles-aprehendidos-por-toma-del-ministerio-de-trabajo-y-la-cob-anticipa-un-amplio-analisis/" rel="noopener noreferrer" target="_blank">Liberan a los 13 fabriles aprehendidos por toma del Ministerio de Trabajo y la COB anticipa un “amplio análisis”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-otorga-libertad-pura-y-simple-a-12-dirigentes-fabriles-tras-toma-del-ministerio-de-trabajo-JD20543028" rel="noopener noreferrer" target="_blank">Fiscalía otorga libertad pura y simple a 12 dirigentes fabriles tras toma del Ministerio de Trabajo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/liberan-fabriles-que-estaban-detenidos-tras-la-toma-del-ministerio-de-trabajo" rel="noopener noreferrer" target="_blank">Liberan a fabriles que estaban detenidos tras la toma del Ministerio de Trabajo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46890-abogado-del-equipo-juridico-de-evo-pueblo-asume-la-defensa-de-fabriles-aprehendidos-y-denuncia-detencion-ilegal" rel="noopener noreferrer" target="_blank">Abogado del equipo jurídico de "Evo Pueblo" asume la defensa de fabriles aprehendidos y denuncia detención ilegal</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Proyecto de Ley de Energías Renovables" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Proyecto de Ley de Energías Renovables</div>
+<div class="modal-sum">El Gobierno presentó un proyecto de Ley de Electricidad y Energías Renovables que busca atraer inversión privada y abrir el mercado energético. La propuesta plantea un nuevo modelo para fomentar energías limpias y modernizar el sector, con el fin de fortalecer a ENDE sin privilegios estatales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">10</strong> titulares</span>
+<span><strong style="color:var(--c-21)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-presenta-proyecto-de-ley-de-electricidad-y-apunta-a-que-privados-ofrezcan-energia" rel="noopener noreferrer" target="_blank">Gobierno presenta proyecto de Ley de Electricidad y apunta a que privados ofrezcan energía</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/07/gobierno-presenta-proyecto-de-ley-de-electricidad-que-incorpora-las-energias-renovables-60362" rel="noopener noreferrer" target="_blank">Gobierno presenta proyecto de ley de Electricidad que incorpora las energías renovables</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobierno-presenta-nueva-ley-electricidad-abrir-mercado-sector-privado-atraer-inversiones_1778171015" rel="noopener noreferrer" target="_blank">Gobierno presenta nueva Ley de Electricidad para abrir el mercado al sector privado y atraer inversiones</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/economia/gobierno-impulsa-ley-de-electricidad-para-fomentar-energias-renovables-y-atraer-inversion-privada.html" rel="noopener noreferrer" target="_blank">Gobierno impulsa Ley de Electricidad para fomentar energías renovables y atraer inversión privada</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/gobierno-presenta-ley-de-electricidad-para-incorporar-energ%C3%ADas-renovables-con-apertura-al" rel="noopener noreferrer" target="_blank">Gobierno presenta Ley de Electricidad para incorporar energías renovables con apertura al sector privado</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gobierno-propone-anteproyecto-de-ley-para-transformar-sector-energetico/" rel="noopener noreferrer" target="_blank">Gobierno propone anteproyecto de ley para transformar sector energético - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-presenta-su-ley-de-electricidad-y-plantea-un-nuevo-modelo-de-mercado-con-mayor-participacion-privada/" rel="noopener noreferrer" target="_blank">El Gobierno presenta su Ley de Electricidad y plantea un nuevo modelo de mercado con mayor participación privada</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-gobierno-presenta-la-nueva-ley-de-electricidad-y-energias-renovables-parte-del-paquete-de-normas-estructurales-CE20531355" rel="noopener noreferrer" target="_blank">El Gobierno presenta la nueva Ley de Electricidad y Energías Renovables, parte del paquete de normas estructurales</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-presenta-nueva-ley-de-electricidad-enfocada-en-inversion-privada-y-energias" rel="noopener noreferrer" target="_blank">Gobierno presenta nueva Ley de Electricidad enfocada en inversión privada y energías renovables</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46908-proyecto-de-ley-de-electricidad-abre-el-mercado-al-sector-privado-y-busca-una-ende-fortalecida-y-sin-privilegios" rel="noopener noreferrer" target="_blank">Proyecto de Ley de Electricidad abre el mercado al sector privado y busca una ENDE fortalecida y sin privilegios</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_19">
+<div class="modal-backdrop" onclick="closeModal('modal_19')"></div>
+<div aria-label="Hallazgo de joven secuestrado en el Trópico" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Hallazgo de joven secuestrado en el Trópico</div>
+<div class="modal-sum">La Policía y la Fiscalía de Cochabamba confirmaron el hallazgo del cuerpo sin vida de un joven de 24 años que había sido secuestrado por encapuchados en Entre Ríos. El hecho, que movilizó intensos operativos en el trópico, marca el segundo asesinato registrado en la zona en menos de tres días.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">10</strong> titulares</span>
+<span><strong style="color:var(--c-07)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_19')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/enmanillado-y-con-un-d1sp4r0-en-la-cabeza-hallan-c4d4v3r-en-entre-rios-y-se-investiga-posible-s3cu3str0/" rel="noopener noreferrer" target="_blank">Enmanillado y con un d1sp4r0 en la cabeza; hallan c4d4v3r en Entre Ríos y se investiga posible s3cu3str0</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dos-asesinatos-tres-dias-rios-joven-fue-hallado-esposado-disparo_1778192711" rel="noopener noreferrer" target="_blank">Dos asesinatos en tres días en Entre Ríos: hallan muerto a joven secuestrado</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_fiscalia-y-policia-buscan-a-joven-de-24-anos-en-entre-rios.html" rel="noopener noreferrer" target="_blank">Fiscalía y Policía buscan a joven de 24 años en Entre Ríos</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/busqueda-intensiva-de-joven-presuntamente-secuestrado-en-cochabamba/" rel="noopener noreferrer" target="_blank">Búsqueda intensiva de joven presuntamente secuestrado en Cochabamba - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260507/fiscalia-policia-intensifican-busqueda-joven-secuestrado-rios" rel="noopener noreferrer" target="_blank">Fiscalía y Policía intensifican la búsqueda de un joven secuestrado en Entre Ríos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/hallan-vida-joven-secuestrado-entre-rios/20260507193830991142.html" rel="noopener noreferrer" target="_blank">Hallan sin vida a joven secuestrado en Entre Ríos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/enpuchados-secuestran-joven-entre-rios-despliegan-operativos-busqueda/20260507121450991127.html" rel="noopener noreferrer" target="_blank">Encapuchados secuestran a joven en Entre Ríos y despliegan operativos de búsqueda</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/joven-de-24-anos-fue-secuestrado-y-dos-dias-despues-fue-hallado-muerto-con-un-disparo-en-la-cabeza-ED20545890" rel="noopener noreferrer" target="_blank">Joven de 24 años fue secuestrado y dos días después fue hallado muerto con un disparo en la cabeza</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/hallan-el-cadaver-de-un-hombre-en-entre-rios-estaba-maniatado-y-tenia-un-disparo-en-la" rel="noopener noreferrer" target="_blank">Hallan el cadáver de un hombre en Entre Ríos; estaba maniatado y tenía un disparo en la cabeza</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/47022-hallan-sin-vida-a-un-joven-secuestrado-en-entre-rios-es-el-segundo-asesinato-en-menos-de-tres-dias" rel="noopener noreferrer" target="_blank">Hallan sin vida a un joven secuestrado en Entre Ríos; es el segundo asesinato en menos de tres días</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Investigación por daños financieros en BoA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigación por daños financieros en BoA</div>
+<div class="modal-sum">La Fiscalía aprehendió a una exdirectora de BoA en el marco del caso 'La ruta de La Habana', sumando dos exautoridades detenidas. Se investigan delitos de conducta antieconómica e incumplimiento de deberes por daños financieros derivados de la falta de rentabilidad de los vuelos a Cuba.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">8</strong> titulares</span>
+<span><strong style="color:var(--c-10)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/abogado-afirma-que-exgerente-de-boa-alerto-en-dos-ocasiones-que-la-ruta-aerea-santa-cruz-la-habana-no-era-rentable" rel="noopener noreferrer" target="_blank">Abogado afirma que exgerente de BoA alertó en dos ocasiones que la ruta aérea Santa Cruz - La Habana no era rentable</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/aprehenden-exdirectora-boa-defensa-considera-injusta-medida_1778202231" rel="noopener noreferrer" target="_blank">Aprehenden a una exdirectora de BoA; su defensa considera injusta la medida</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_aprehenden-a-exgerente-de-boa-por-vuelos-a-cuba.html" rel="noopener noreferrer" target="_blank">Aprehenden a exgerente de BoA por vuelos a Cuba</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/aprehenden-exdirectora-de-boa-por-conducta-antiecon%C3%B3mica-e-incumplimiento-de-deberes" rel="noopener noreferrer" target="_blank">Aprehenden a exdirectora de BoA por conducta antieconómica e incumplimiento de deberes</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/07/aprehendida-exdirectora-de-boa-por-investigacion-sobre-vuelos-a-cuba/" rel="noopener noreferrer" target="_blank">Aprehendida exdirectora de BoA por investigación sobre vuelos a Cuba</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260507/exdirectora-boa-aprehendida-orden-fiscalia" rel="noopener noreferrer" target="_blank">Una exdirectora de BoA, aprehendida por orden de la Fiscalía</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/aprehenden-exdirectora-boa-presunto-dano-economico-vuelos-cuba/20260507215413991143.html" rel="noopener noreferrer" target="_blank">Aprehenden a exdirectora de BoA por presunto daño económico en vuelos a Cuba</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/47034-caso-la-ruta-de-la-habana-aprehenden-a-exdirectora-de-boa-y-ya-suman-dos-exautoridades-detenidas" rel="noopener noreferrer" target="_blank">Caso “La ruta de La Habana”: aprehenden a exdirectora de BoA y ya suman dos exautoridades detenidas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Denuncia penal contra dirigente Mario Argollo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Denuncia penal contra dirigente Mario Argollo</div>
+<div class="modal-sum">El diputado Manolo Rojas formalizó una denuncia penal contra Mario Argollo, dirigente de la COB, por presunto fraude y cobros irregulares de una pensión de invalidez superior a los Bs 141.000. El legislador cuestionó la veracidad de la discapacidad del dirigente y solicitó su renuncia al cargo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">8</strong> titulares</span>
+<span><strong style="color:var(--c-10)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/diputado-formaliza-denuncia-contra-dirigente-de-la-cob-por-supuestas-irregularidades-en-pension-de-invalidez" rel="noopener noreferrer" target="_blank">Diputado formaliza denuncia contra dirigente de la COB por supuestas irregularidades en pensión de invalidez</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/politica/diputado-presenta-denuncia-contra-lider-de-la-cob-por-fraude-en-pension-de-invalidez.html" rel="noopener noreferrer" target="_blank">Diputado presenta denuncia contra líder de la COB por “fraude” en pensión de invalidez</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/diputado-formaliza-denuncia-contra-el-l%C3%ADder-de-la-cob-por-%E2%80%9Cfraude%E2%80%9D-con-pensi%C3%B3n-de" rel="noopener noreferrer" target="_blank">Diputado formaliza denuncia contra el líder de la COB por “fraude” con pensión de invalidez</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/diputado-rojas-denuncia-a-argollo-por-presuntos-delitos-previsionales-y-estafa/" rel="noopener noreferrer" target="_blank">Diputado Rojas denuncia a Argollo por presuntos delitos previsionales y estafa</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diputado-rojas-formaliza-denuncia-contra-argollo-por-presuntos-cobros-irregulares-por-pension-de-invalidez/" rel="noopener noreferrer" target="_blank">Diputado Rojas formaliza denuncia contra Argollo por presuntos cobros irregulares por pensión de invalidez</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/diputado-denuncia-a-dirigente-de-la-cob-por-presuntos-cobros-irregulares-202657133332" rel="noopener noreferrer" target="_blank">Diputado denuncia a dirigente de la COB por presuntos cobros irregulares</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/diputado-manolo-rojas-denuncia-ejecutivo-de-la-cob-por-fraude-y-le-pide-su-renuncia" rel="noopener noreferrer" target="_blank">Diputado Manolo Rojas denuncia ejecutivo de la COB por fraude y le pide su renuncia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46914-diputado-presenta-denuncia-contra-dirigente-de-la-cob-mario-argollo-pone-en-duda-la-discapacidad-por-la-que-cobro-mas-de-bs-141000" rel="noopener noreferrer" target="_blank">Diputado presenta denuncia contra dirigente de la COB, Mario Argollo: pone en duda la discapacidad por la que cobró más de Bs 141.000</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_15a">
+<div class="modal-backdrop" onclick="closeModal('modal_15a')"></div>
+<div aria-label="Exigencia de renuncia del presidente Rodrigo Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Exigencia de renuncia del presidente Rodrigo Paz</div>
+<div class="modal-sum">La COB y sectores campesinos de La Paz han radicalizado su postura exigiendo la renuncia del presidente Rodrigo Paz. El ministro Lupo calificó el pedido como inaceptable, mientras la dirigencia sindical supedita el diálogo a la salida del mandatario y a la liberación de trabajadores detenidos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">8</strong> titulares</span>
+<span><strong style="color:var(--c-08)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_la-cob-habla-de-la-renuncia-del-presidente.html" rel="noopener noreferrer" target="_blank">La COB habla de la renuncia del presidente</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/min-lupo-no-es-aceptable-pedir-la-renuncia-del-presidente-lamentablemente-la-cob-esta-cayendo-en-este-ambito/" rel="noopener noreferrer" target="_blank">Min. Lupo: “No es aceptable pedir la renuncia del presidente. Lamentablemente la COB está cayendo en este ámbito”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/politica/persisten-bloqueos-cob-se-alia-con-campesinos-de-la-paz-y-suman-pedidos-de-renuncia.html" rel="noopener noreferrer" target="_blank">Persisten bloqueos, COB se alía con campesinos de La Paz y suman pedidos de renuncia</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_cob-y-campesinos-exigen-renuncia-de-rodrigo-paz.html" rel="noopener noreferrer" target="_blank">COB y campesinos exigen renuncia de Rodrigo Paz</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/es-inaceptable-el-pedido-de-renuncia-del-presidente-dice-lupo/" rel="noopener noreferrer" target="_blank">Es inaceptable el pedido de renuncia del Presidente, dice Lupo</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/cob-exige-liberacion-17-fabriles-detenidos-avisa-paz-tiene-voluntad-solucionar-tiene-que-irse/20260507102249991123.html" rel="noopener noreferrer" target="_blank">COB exige liberación de los 17 fabriles detenidos y avisa a Paz: “Si no tiene la voluntad de solucionar, tiene que irse”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/argollo-afirma-que-no-es-su-dirigencia-la-que-pide-la-renuncia-de-paz-sino-las-bases-y-el-pueblo/" rel="noopener noreferrer" target="_blank">Argollo afirma que no es su dirigencia la que pide la renuncia de Paz, sino las bases y “el pueblo”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/47031-la-cob-los-campesinos-de-las-20-provincias-de-la-paz-y-la-fejuve-dejan-de-lado-sus-demandas-y-piden-la-renuncia-de-rodrigo-paz" rel="noopener noreferrer" target="_blank">La COB, los campesinos de las 20 provincias de La Paz y la FEJUVE dejan de lado sus demandas y piden la renuncia de Rodrigo Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_18">
+<div class="modal-backdrop" onclick="closeModal('modal_18')"></div>
+<div aria-label="Alerta de viaje de Estados Unidos para Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Alerta de viaje de Estados Unidos para Bolivia</div>
+<div class="modal-sum">El Departamento de Estado de Estados Unidos actualizó su alerta de viaje para Bolivia, recomendando a sus ciudadanos extremar precauciones ante disturbios y delincuencia. La advertencia sugiere evitar específicamente la región del Chapare por riesgos asociados al narcotráfico e inseguridad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">7</strong> titulares</span>
+<span><strong style="color:var(--c-18)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_18')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/07/departamento-de-estado-actualiza-alerta-sobre-bolivia-y-sugiere-no-viajar-al-chapare-por-ninguna-circunstancia-60345" rel="noopener noreferrer" target="_blank">Departamento de Estado actualiza alerta sobre Bolivia y sugiere no viajar al Chapare “por ninguna circunstancia”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/eeuu-mantiene-a-bolivia-en-alerta-de-viaje-y-recomienda-no-visitar-el-chapare-por-riesgos-de-d3lincuenci4/" rel="noopener noreferrer" target="_blank">EEUU mantiene a Bolivia en alerta de viaje y recomienda no visitar el Chapare por riesgos de “d3lincuenci4”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/departamento-eeuu-mantiene-recomendacion-evitar-viajar-chapare-delincuencia_1778169875" rel="noopener noreferrer" target="_blank">Departamento de EEUU mantiene recomendación de evitar viajar al Chapare por “delincuencia"</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/pais/eeuu-mantiene-alerta-de-viaje-para-bolivia-y-advierte-riesgos-en-el-chapare-por-narcotrafico.html" rel="noopener noreferrer" target="_blank">EEUU mantiene alerta de viaje para Bolivia y advierte riesgos en el Chapare por narcotráfico</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/eeuu-emite-alerta-de-viajes-a-bolivia-por-disturbios-y-aumento-de-delitos/" rel="noopener noreferrer" target="_blank">EEUU emite alerta de viajes a Bolivia por disturbios y aumento de delitos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260507/eeuu-recomienda-sus-ciudadanos-evitar-visitar-chapare-aumento-delitos" rel="noopener noreferrer" target="_blank">EEUU recomienda a sus ciudadanos evitar visitar el Chapare por aumento de delitos y narcotráfico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46884-eeuu-recomienda-a-sus-ciudadanos-extremar-precauciones-en-bolivia-por-disturbios-y-delincuencia-sugiere-no-ir-al-chapare" rel="noopener noreferrer" target="_blank">EEUU recomienda a sus ciudadanos extremar precauciones en Bolivia por disturbios y delincuencia, sugiere no ir al Chapare</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_22">
+<div class="modal-backdrop" onclick="closeModal('modal_22')"></div>
+<div aria-label="Reporte de puntos de bloqueo en carreteras" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Reporte de puntos de bloqueo en carreteras</div>
+<div class="modal-sum">La Administradora Boliviana de Carreteras (ABC) reportó entre 12 y 18 puntos de bloqueo en las rutas nacionales, concentrados principalmente en los departamentos de La Paz y Beni. Mientras los reportes detallan las zonas afectadas, el Gobierno calificó las medidas de baja intensidad.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">7</strong> titulares</span>
+<span><strong style="color:var(--c-08)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_22')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260507_abc-reporta-22-puntos-con-restricciones-en-rutas-del-pais.html" rel="noopener noreferrer" target="_blank">ABC reporta 22 puntos con restricciones en rutas del país</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/abc-reporta-18-puntos-de-bloqueo-por-conflictos-sociales-en-el-pais-la-mayoria-en-la-paz" rel="noopener noreferrer" target="_blank">ABC reporta 18 puntos de bloqueo por conflictos sociales en el país, la mayoría en La Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/07/abc-reporta-17-puntos-de-bloqueos-por-conflictos-sociales-en-la-paz-y-beni-60350" rel="noopener noreferrer" target="_blank">ABC reporta 17 puntos de bloqueos por conflictos sociales en La Paz y Beni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bloqueos-reducen-departamentos-paz-beni_1778155340" rel="noopener noreferrer" target="_blank">Los bloqueos se reducen a los departamentos de La Paz y Beni</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/la-abc-reporta-doce-puntos-de-bloqueos-en-la-paz-y-beni/" rel="noopener noreferrer" target="_blank">La ABC reporta doce puntos de Bloqueos en La Paz y Beni - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/abc-reporta-16-puntos-bloqueo-concentrados-paz-beni-jueves/20260507095134991120.html" rel="noopener noreferrer" target="_blank">ABC reporta 16 puntos de bloqueo concentrados en La Paz y Beni este jueves</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-abc-reporta-18-puntos-de-bloqueo-por-conflictos-sociales-y-el-gobierno-dice-son-menores-en-su-intensidad/" rel="noopener noreferrer" target="_blank">La ABC reporta 18 puntos de bloqueo por conflictos sociales y el Gobierno dice son “menores en su intensidad”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Feminicidio de cantante en La Angostura" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Feminicidio de cantante en La Angostura</div>
+<div class="modal-sum">La mujer hallada decapitada y calcinada en La Angostura, Santa Cruz, fue identificada como una cantante de un grupo musical. La Fiscalía informó que la víctima tenía antecedentes en otros procesos, mientras que allegados señalaron que la mujer se encontraba embarazada al momento del crimen.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">7</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/07/identifican-a-mujer-hallada-decapitada-y-calcinada-en-la-angostura-60365" rel="noopener noreferrer" target="_blank">Identifican a mujer hallada decapitada y calcinada en La Angostura</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/identifican-a-mujer-hallada-c4rb0n1z4d4-en-la-angostura-era-cantante-de-un-grupo-musical/" rel="noopener noreferrer" target="_blank">Identifican a mujer hallada c4rb0n1z4d4 en la Angostura era cantante de un grupo musical</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/07/felcc-confirma-que-la-mujer-quemada-tenia-20-punaladas/" rel="noopener noreferrer" target="_blank">FELCC confirma que la mujer quemada tenía 20 puñaladas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/07/mujer-decapitada-era-cantante-de-un-grupo-de-musical/" rel="noopener noreferrer" target="_blank">Mujer decapitada era cantante de un grupo de musical</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-reporta-que-mujer-decapitada-figuraba-como-victima-en-procesos-anteriores-GD20545461" rel="noopener noreferrer" target="_blank">Fiscalía reporta que mujer decapitada figuraba como víctima en procesos anteriores</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/mujer-decapitada-me-conto-que-estaba-embarazada-senala-allegada-ED20545331" rel="noopener noreferrer" target="_blank">Mujer decapitada: “Me contó que estaba embarazada”, señala allegada</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/era-cantante-identifican-la-mujer-que-fue-decapitada-y-carbonizada-en-santa-cruz" rel="noopener noreferrer" target="_blank">Era cantante; identifican a la mujer que fue decapitada y carbonizada en Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_20">
+<div class="modal-backdrop" onclick="closeModal('modal_20')"></div>
+<div aria-label="Alianza Bolivia y Brasil contra el narcotráfico" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Alianza Bolivia y Brasil contra el narcotráfico</div>
+<div class="modal-sum">Bolivia y Brasil formalizaron una alianza estratégica que contempla 31 acciones conjuntas y cinco ejes de trabajo para combatir el narcotráfico, el lavado de activos y el crimen organizado. El acuerdo busca fortalecer el control fronterizo y la cooperación operativa entre ambos países.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">7</strong> titulares</span>
+<span><strong style="color:var(--c-18)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/bolivia-pide-a-brasil-reforzar-la-lucha-contra-la-produccion-ilegal-de-hojas-de-coca" rel="noopener noreferrer" target="_blank">Bolivia pide a Brasil reforzar la lucha contra la producción ilegal de hojas de coca</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/bolivia-y-brasil-acuerdan-31-acciones-conjuntas-contra-el-n4rc0tr4fico-y-el-lavado-de-activos/" rel="noopener noreferrer" target="_blank">Bolivia y Brasil acuerdan 31 acciones conjuntas contra el n4rc0tr4fico y el lavado de activos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-brasil-sellan-alianza-antidroga-apuntan-combatir-crimen-organizado_1778208605" rel="noopener noreferrer" target="_blank">Bolivia y Brasil sellan alianza antidroga y apuntan combatir el crimen organizado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bolivia-brasil-trazan-cinco-ejes-crimen-narcotrafico_1778151330" rel="noopener noreferrer" target="_blank">Bolivia y Brasil trazan cinco ejes contra el crimen y el narcotráfico</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/bolivia-y-brasil-pactan-31-acciones-contra-el-narcotrafico/" rel="noopener noreferrer" target="_blank">Bolivia y Brasil pactan 31 acciones contra el narcotráfico</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/justiniano-insta-a-brasil-a-ser-parte-de-la-erradicacion-de-coca/" rel="noopener noreferrer" target="_blank">Justiniano insta a Brasil a ser parte de la erradicación de coca</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/justiniano-propone-que-brasil-sea-participe-de-la-erradicacion-de-coca-en-bolivia" rel="noopener noreferrer" target="_blank">Justiniano propone que Brasil sea partícipe de la erradicación de coca en Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Reestructuración del gabinete departamental de La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Reestructuración del gabinete departamental de La Paz</div>
+<div class="modal-sum">El gobernador de La Paz, Revilla, posesionó a su gabinete departamental y redujo el número de secretarías de once a cinco. Según la autoridad, esta reestructuración busca mejorar la eficiencia técnica y administrativa ante el desorden encontrado en la gestión anterior.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">6</strong> titulares</span>
+<span><strong style="color:var(--c-05)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/07/revilla-reduce-de-11-a-cinco-las-secretarias-de-la-gobernacion-y-prioriza-perfiles-tecnicos-60356" rel="noopener noreferrer" target="_blank">Revilla reduce de 11 a cinco las secretarías de la gobernación y prioriza perfiles técnicos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/politica/revilla-reduce-de-11-a-5-las-secretarias-de-la-gobernacion-de-la-paz.html" rel="noopener noreferrer" target="_blank">Revilla reduce de 11 a 5 las secretarías de la Gobernación de La Paz</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobernacion-de-la-paz-pasa-de-11-a-5-secretarias-para-mejorar-la-eficiencia-202657165633" rel="noopener noreferrer" target="_blank">Gobernación de La Paz pasa de 11 a 5 secretarías para mejorar la eficiencia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/el-gobernador-revilla-posesiona-a-su-gabinete-y-reduce-secretarias-de-once-a-cinco-EE20531207" rel="noopener noreferrer" target="_blank">El gobernador Revilla posesiona a su gabinete y reduce secretarías de once a cinco</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/revilla-posesiona-su-gabinete-y-reduce-de-11-5-las-secretarias-de-la-gobernacion" rel="noopener noreferrer" target="_blank">Revilla posesiona a su gabinete y reduce de 11 a 5 las secretarías de la Gobernación</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46899-revilla-reduce-de-once-a-cinco-las-secretarias-departamentales-y-afirma-que-encontro-una-gobernacion-desordenada" rel="noopener noreferrer" target="_blank">Revilla reduce de once a cinco las secretarías departamentales y afirma que encontró una "gobernación desordenada"</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Paro nacional de maestros urbanos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Paro nacional de maestros urbanos</div>
+<div class="modal-sum">El magisterio urbano de Bolivia convocó a un paro nacional de 24 horas para el próximo lunes en demanda de atención a sus pedidos sectoriales. La medida de presión ratificada por las federaciones de maestros exige respuestas concretas del Ministerio de Educación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">6</strong> titulares</span>
+<span><strong style="color:var(--c-08)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/magisterio-urbano-determina-paro-de-24-horas-el-proximo-lunes-11-de-mayo/" rel="noopener noreferrer" target="_blank">Magisterio urbano determina paro de 24 horas para el próximo lunes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/07/el-magisterio-urbano-declara-paro-nacional-de-24-horas-para-el-proximo-lunes-60372" rel="noopener noreferrer" target="_blank">El magisterio urbano declara paro nacional de 24 horas para el próximo lunes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/pais/maestros-urbanos-anuncian-paro-nacional-de-24-horas-para-el-lunes.html" rel="noopener noreferrer" target="_blank">Maestros urbanos anuncian paro nacional de 24 horas para el lunes</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/magisterio-urbano-de-bolivia-anuncia-paro-nacional-el-11-de-mayo/" rel="noopener noreferrer" target="_blank">Magisterio urbano de Bolivia anuncia paro nacional el 11 de mayo - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/magisterio-urbano-paralizara-actividades-el-lunes/" rel="noopener noreferrer" target="_blank">Magisterio urbano paralizará actividades el lunes - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260507/maestros-urbanos-anuncian-paro-nacional-lunes" rel="noopener noreferrer" target="_blank">Maestros urbanos anuncian paro nacional el lunes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Visita oficial de reina Letizia a Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Visita oficial de reina Letizia a Bolivia</div>
+<div class="modal-sum">La reina Letizia de España visitará Bolivia en junio para fortalecer los lazos bilaterales y celebrar los 40 años de cooperación española en el país. Su equipo de avanzada ya se encuentra en territorio nacional coordinando la agenda oficial que incluirá la ciudad de La Paz y otras regiones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">5</strong> titulares</span>
+<span><strong style="color:var(--c-18)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/07/reina-letizia-preve-visitar-bolivia-en-junio-por-los-40-anos-de-cooperacion-espanola-60352" rel="noopener noreferrer" target="_blank">Reina Letizia prevé visitar Bolivia en junio por los 40 años de cooperación española</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_la-reina-letizia-de-espana-visitara-bolivia-en-junio-para-fortalecer-vinculos-bilaterales.html" rel="noopener noreferrer" target="_blank">La reina Letizia de España visitará Bolivia en junio para fortalecer vínculos bilaterales</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_la-reina-letizia-visitara-bolivia-en-junio-proximo.html" rel="noopener noreferrer" target="_blank">La reina Letizia visitará Bolivia en junio próximo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/07/la-reina-letizia-visitara-bolivia-en-junio-por-40-anos-de-cooperacion-espanola/" rel="noopener noreferrer" target="_blank">La reina Letizia visitará Bolivia en junio por 40 años de cooperación española</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/la-reina-letizia-visitara-la-paz-y-otras-regiones-su-equipo-de-avanzada-ya-llego-a-bolivia-AE20532516" rel="noopener noreferrer" target="_blank">La reina Letizia visitará La Paz y otras regiones; su equipo de avanzada ya llegó a Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Investigación penal contra Evo Morales en Argentina" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigación penal contra Evo Morales en Argentina</div>
+<div class="modal-sum">En Argentina avanza la investigación penal contra Evo Morales por presunta trata de personas y estupro. Informes y testimonios policiales señalan la presencia de una menor de edad en la residencia oficial ocupada por el exmandatario durante su permanencia en el país vecino.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">3</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/investigaci%C3%B3n-contra-evo-contin%C3%BAa-en-argentina-y-testimonio-policial-menciona-una-menor" rel="noopener noreferrer" target="_blank">Investigación contra Evo continúa en Argentina y testimonio policial menciona a una menor</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/investigacion-evo-argentina-testimonio-policial-menciona-menor-residencia/20260507092108991119.html" rel="noopener noreferrer" target="_blank">Investigación contra Evo en Argentina: testimonio policial menciona a una menor en la residencia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/07/46881-en-argentina-continua-la-investigacion-contra-evo-morales-por-trata-de-menores" rel="noopener noreferrer" target="_blank">En Argentina continúa la investigación contra Evo Morales por trata de menores</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Nacimiento de bebé en canoa en Beni" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Nacimiento de bebé en canoa en Beni</div>
+<div class="modal-sum">Una mujer dio a luz a un bebé a bordo de una canoa en el río Mamoré, Beni, recibiendo asistencia de emergencia durante la travesía fluvial.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">3</strong> titulares</span>
+<span><strong style="color:var(--c-25)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/mujer-da-luz-canoa-pleno-rio-mamore_1778183750" rel="noopener noreferrer" target="_blank">Una mujer da a luz en una canoa, en pleno río Mamoré</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-07/pais/bebe-nace-a-bordo-de-una-canoa-en-el-rio-mamore-del-beni.html" rel="noopener noreferrer" target="_blank">Bebé nace a bordo de una canoa en el río Mamoré del Beni</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260507_beni-mujer-da-a-luz-en-una-canoa-a-orillas-del-rio-mamore.html" rel="noopener noreferrer" target="_blank">Beni: Mujer da a luz en una canoa a orillas del río Mamoré</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
