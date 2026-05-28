@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260528</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix móvil: reducir paddings y ancho fijo que desbordan */
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+}
+ 
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-05-28" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-05-28-nL2nqG.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">217</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">9</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">18</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 28-MAYO-2026</strong><br/>
+        Reporte N° B24-20260528<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_13" onclick="openModal('modal_13')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-05)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-05)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="top3-title">Instalación de Comisión de Diálogo Nacional</div>
+<div class="top3-body">Con mediación de la Iglesia Católica y la Defensoría del Pueblo, se instaló en la Vicepresidencia una mesa de diálogo para buscar soluciones a la crisis y pacificar el país. La comisión fue convocada por el vicepresidente Edmand Lara y la Asamblea Legislativa, mientras el ministro Lupo representó al Gobierno ante la ausencia del presidente Rodrigo Paz.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">30</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">14</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_17" onclick="openModal('modal_17')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-21)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-21)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="top3-title">Abrogación de ley sobre estados de excepción</div>
+<div class="top3-body">El presidente Rodrigo Paz promulgó la Ley 1732 que abroga la norma 1341 sobre Estados de Excepción, en medio de un clima de conflictos sociales y bloqueos. La medida deja sin efecto la normativa previa y ha generado diversos análisis técnicos sobre el alcance de la nueva disposición legal.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">29</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-21)">15</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_12" onclick="openModal('modal_12')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-03)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-03)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="top3-title">Convocatoria a diálogo con sectores sociales</div>
+<div class="top3-body">El presidente Rodrigo Paz convocó al diálogo a Mario Argollo y Vicente Salazar para frenar la conflictividad social. Desde el Consejo Económico y Social, el mandatario lanzó un ultimátum a la Central Obrera Boliviana y sectores campesinos, advirtiendo que aplicará mecanismos constitucionales ante intentos de desestabilización si no se accede al diálogo.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-03)">25</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-03)">13</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-05)"></div></div>
+<div class="cat-n">37</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">1.</span> Instalación de Comisión de Diálogo Nacional</li><li onclick="scrollToCard('card_16c'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">13.</span> Reunión con comités cívicos por crisis</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:95%;background:var(--c-21)"></div></div>
+<div class="cat-n">35</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">2.</span> Abrogación de ley sobre estados de excepción</li><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">15.</span> Huelga de hambre de legisladores del PDC</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:86%;background:var(--c-02)"></div></div>
+<div class="cat-n">32</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_16a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">5.</span> Instalación del Consejo Económico y Social</li><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">8.</span> Promulgación de Ley de Alivio Tributario</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">16.</span> Gestiones de crédito millonario ante el FMI</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:81%;background:var(--c-18)"></div></div>
+<div class="cat-n">30</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_15'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">4.</span> Denuncia por intromisión de diputada argentina</li><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">12.</span> Suspensión de servicios consulares de Estados Unidos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:76%;background:var(--c-08)"></div></div>
+<div class="cat-n">28</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_20c'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">6.</span> Crisis humanitaria y desabastecimiento por bloqueos</li><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">10.</span> Cocaleros en alerta por apagón en Chapare</li><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">11.</span> Paro indefinido de choferes en La Paz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:68%;background:var(--c-03)"></div></div>
+<div class="cat-n">25</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">3.</span> Convocatoria a diálogo con sectores sociales</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:49%;background:var(--c-07)"></div></div>
+<div class="cat-n">18</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_21'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">7.</span> Expulsión de líder del PCC a Brasil</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">9.</span> Incautación millonaria y armas en el Beni</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ACCIDENTES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-28)"></div>
+<div class="cat-name">ACCIDENTES</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-28)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ACCIDENTES"><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-28); font-weight:700;">17.</span> Aterrizaje de emergencia de avión de BoA</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-10)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">14.</span> Detención preventiva para exdirector de la ABC</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">diálogo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">49</td>
+</tr>
+<tr>
+<td class="freq-word">social</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:74%"></div>
+</div>
+</td>
+<td class="freq-count">32</td>
+</tr>
+<tr>
+<td class="freq-word">bolivia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:73%"></div>
+</div>
+</td>
+<td class="freq-count">31</td>
+</tr>
+<tr>
+<td class="freq-word">estado de excepción</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:64%"></div>
+</div>
+</td>
+<td class="freq-count">26</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:62%"></div>
+</div>
+</td>
+<td class="freq-count">25</td>
+</tr>
+<tr>
+<td class="freq-word">bloqueos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:59%"></div>
+</div>
+</td>
+<td class="freq-count">23</td>
+</tr>
+<tr>
+<td class="freq-word">consejo económico</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:55%"></div>
+</div>
+</td>
+<td class="freq-count">21</td>
+</tr>
+<tr>
+<td class="freq-word">diputada argentina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:50%"></div>
+</div>
+</td>
+<td class="freq-count">18</td>
+</tr>
+<tr>
+<td class="freq-word">patria</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">estados de excepción</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:40%"></div>
+</div>
+</td>
+<td class="freq-count">13</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Instalación de Comisión de Diálogo Nacional
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">30</div>
+</div>
+<div class="chart-medios">14 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Abrogación de ley sobre estados de excepción
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:96.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">29</div>
+</div>
+<div class="chart-medios">15 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Convocatoria a diálogo con sectores sociales
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:83.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">25</div>
+</div>
+<div class="chart-medios">13 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_15')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Denuncia por intromisión de diputada argentina
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:76.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">23</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Instalación del Consejo Económico y Social
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:53.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">16</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_20c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Crisis humanitaria y desabastecimiento por bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:43.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">13</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_21')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Expulsión de líder del PCC a Brasil
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">10</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Promulgación de Ley de Alivio Tributario
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">10</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Incautación millonaria y armas en el Beni
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">8</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Cocaleros en alerta por apagón en Chapare
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">8</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Paro indefinido de choferes en La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Suspensión de servicios consulares de Estados Unidos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">7</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_16c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Reunión con comités cívicos por crisis
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:23.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">7</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Detención preventiva para exdirector de la ABC
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Huelga de hambre de legisladores del PDC
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Gestiones de crédito millonario ante el FMI
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">6</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-28); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Aterrizaje de emergencia de avión de BoA
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:20.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-28))">6</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_15" onclick="openModal('modal_15')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Denuncia por intromisión de diputada argentina</div>
+<div class="topic-body">La Dirección General de Migración denunció presuntos actos de intromisión de una diputada argentina que participó en movilizaciones en El Alto y Senkata contra el gobierno de Rodrigo Paz tras ingresar al país como turista. La entidad activó acciones ante la Cancillería y no descartó la expulsión de la legisladora por sus declaraciones de apoyo a los bloqueos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>23</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_16a" onclick="openModal('modal_16a')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Instalación del Consejo Económico y Social</div>
+<div class="topic-body">El Gobierno instala el Consejo Económico y Social para enfrentar la crisis y tensión económica. El presidente Rodrigo Paz anunció la creación de consejos departamentales ante la ausencia de sectores movilizados, reconociendo la necesidad de mayor inclusión en la gestión gubernamental.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>16</strong> titulares</div>
+<div class="topic-stat"><strong>10</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_20c" onclick="openModal('modal_20c')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Crisis humanitaria y desabastecimiento por bloqueos</div>
+<div class="topic-body">La persistencia de bloqueos en Bolivia genera una crisis sanitaria y desabastecimiento, con reportes de la Defensoría que confirman 7 fallecidos y cientos de arrestos. Ante las pérdidas millonarias y el riesgo de hambruna, organismos internacionales y sectores civiles exigen la pacificación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>13</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_21" onclick="openModal('modal_21')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Expulsión de líder del PCC a Brasil</div>
+<div class="topic-body">Las autoridades bolivianas expulsaron a Brasil a Gerson Palermo, líder del Primer Comando de la Capital (PCC) capturado en Santa Cruz. El traslado se realizó mediante un fuerte operativo de seguridad desde el aeropuerto de Viru Viru hacia territorio brasileño tras su captura.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_9" onclick="openModal('modal_9')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Promulgación de Ley de Alivio Tributario</div>
+<div class="topic-body">El presidente Rodrigo Paz promulgó la Ley de Alivio Tributario y Regularización de Impuestos, denominada 'perdonazo'. La norma busca la regularización de deudas impositivas y, según el mandatario, el anuncio viene acompañado de la creación de nuevos ítems para los sectores de salud y educación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Incautación millonaria y armas en el Beni</div>
+<div class="topic-body">En el marco de una investigación por encomiendas irregulares en Beni, autoridades incautaron más de 1,1 millones de bolivianos, 121.000 dólares y un arma de fuego. El operativo incluyó el secuestro de un vehículo y la investigación a efectivos policiales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6" onclick="openModal('modal_6')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Cocaleros en alerta por apagón en Chapare</div>
+<div class="topic-body">Sectores cocaleros del Trópico de Cochabamba se declararon en alerta tras un apagón eléctrico en el Chapare. Mientras reportes técnicos atribuyen el corte a una falla en un generador, los pobladores denuncian un posible operativo para capturar a Evo Morales y se movilizaron en zonas como Chimoré.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Paro indefinido de choferes en La Paz</div>
+<div class="topic-body">Choferes de La Paz y El Alto iniciaron un paro indefinido con bloqueos de vías y repliegue de sus vehículos, lo que obligó a la ciudadanía a trasladarse a pie o recurrir masivamente al servicio de teleféricos ante la falta de transporte público.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-18)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-18)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="topic-title">Suspensión de servicios consulares de Estados Unidos</div>
+<div class="topic-body">La Embajada de Estados Unidos en Bolivia suspendió sus servicios consulares en La Paz y emitió una alerta de seguridad para sus ciudadanos. La determinación responde al incremento de la conflictividad social y la persistencia de los bloqueos de caminos, recomendando evitar viajes por el país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_16c" onclick="openModal('modal_16c')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Reunión con comités cívicos por crisis</div>
+<div class="topic-body">El presidente Rodrigo Paz confirma encuentros con los comités cívicos del país para evaluar la crisis de abastecimiento y los conflictos que duran 27 días. Se ratificó una reunión nacional con el movimiento cívico programada en Santa Cruz para este jueves.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_2" onclick="openModal('modal_2')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Detención preventiva para exdirector de la ABC</div>
+<div class="topic-body">La justicia dictó seis meses de detención preventiva para el exdirector de la Administradora Boliviana de Carreteras (ABC), Henry Nina, por presuntas irregularidades vinculadas al caso de la Doble Vía El Sillar.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-21)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-21)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-21)">LEGISLATIVA</div>
+<div class="topic-title">Huelga de hambre de legisladores del PDC</div>
+<div class="topic-body">Legisladores del PDC, encabezados por la senadora Crispin, iniciaron una huelga de hambre en la Asamblea Legislativa exigiendo al gobierno de Rodrigo Paz y Edmand Lara soluciones inmediatas a la crisis económica y el levantamiento de los bloqueos de caminos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8" onclick="openModal('modal_8')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Gestiones de crédito millonario ante el FMI</div>
+<div class="topic-body">El presidente Rodrigo Paz confirmó gestiones avanzadas ante el Fondo Monetario Internacional (FMI) para acceder a un financiamiento de 5.000 millones de dólares. Estos créditos estarían destinados a fortalecer sectores sociales y mitigar los efectos de la crisis económica y las movilizaciones.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-28)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-28)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-28)">ACCIDENTES</div>
+<div class="topic-title">Aterrizaje de emergencia de avión de BoA</div>
+<div class="topic-body">Un avión de Boliviana de Aviación (BoA) que realizaba la ruta Iquique–Santa Cruz aterrizó de emergencia en Cochabamba tras detectarse una falla técnica en el sistema de calefacción de la cabina. La aerolínea aclaró que la medida fue preventiva tras reportes de humo.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>6</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/05/27/sala-constitucional-ordena-levantar-todos-los-bloqueos/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Sala Constitucional ordena levantar todos los bloqueos</a></div>
+<div class="emergente-sum">La Sala Constitucional emite una orden judicial para levantar todos los puntos de bloqueo en el territorio nacional.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/paz-hospitales-72-horas-oxigeno-123-unidades-sangre_1779878420" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">La Paz: Hospitales con 72 horas de oxígeno y 123 unidades de sangre</a></div>
+<div class="emergente-sum">Hospitales de La Paz se declaran en estado crítico con reservas de oxígeno para solo 72 horas por falta de suministros.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpais.bo/nacional/20260527_muere-la-nina-con-sarampion-tras-19-dias-de-estar-internada-en-santa-cruz.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Muere la niña con sarampión tras 19 días de estar internada en Santa Cruz</a></div>
+<div class="emergente-sum">Reportan el fallecimiento de una niña por sarampión en Santa Cruz tras permanecer 19 días internada.</div>
+<div class="emergente-source">Fuente: El País (Bolivia)</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260528 · 2026-05-28</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 217 titulares · 17 temas · 9 categorías · 18 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Instalación de Comisión de Diálogo Nacional" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Instalación de Comisión de Diálogo Nacional</div>
+<div class="modal-sum">Con mediación de la Iglesia Católica y la Defensoría del Pueblo, se instaló en la Vicepresidencia una mesa de diálogo para buscar soluciones a la crisis y pacificar el país. La comisión fue convocada por el vicepresidente Edmand Lara y la Asamblea Legislativa, mientras el ministro Lupo representó al Gobierno ante la ausencia del presidente Rodrigo Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">30</strong> titulares</span>
+<span><strong style="color:var(--c-05)">14</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/representantes-de-diferentes-sectores-y-del-gobierno-asisten-a-la-convocatoria-de-lara-para-la-comision-de-dialogo" rel="noopener noreferrer" target="_blank">Representantes de diferentes sectores y del Gobierno asisten a la convocatoria de Lara para la “Comisión de Diálogo”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/se-inicia-la-comision-de-dialogo-convocada-por-lara-lupo-asiste-con-la-misma-esperanza-y-conviccion-61139" rel="noopener noreferrer" target="_blank">Se inicia la "comisión de diálogo" convocada por Lara; Lupo asiste con la “misma esperanza y convicción”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/lara-y-fuerzas-politicas-de-la-alp-convocan-a-dialogo-2/" rel="noopener noreferrer" target="_blank">Lara y fuerzas políticas de la ALP convocan a diálogo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_gobierno-atiende-convocatoria-de-lara-y-asiste-a-la-comision-de-dialogo.html" rel="noopener noreferrer" target="_blank">Gobierno atiende convocatoria de Lara y asiste a la ‘Comisión de Diálogo’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/lupo-representa-al-gobierno-dialogo-convocado-lara" rel="noopener noreferrer" target="_blank">Lupo representa al Gobierno en el diálogo convocado por Lara</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-no-lupo-si-el-gobierno-asiste-a-la-reunion-convocada-por-lara-y-la-alp-para-buscar-salidas-a-las-crisis/" rel="noopener noreferrer" target="_blank">Paz no, Lupo sí: El Gobierno asiste a la reunión convocada por Lara y la ALP para buscar salidas a las crisis</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/comision-acuerda-garantizar-la-participacion-de-todos-los-dirigentes-en-el-dialogo-para-pacificar-el-pais" rel="noopener noreferrer" target="_blank">Comisión acuerda garantizar la participación de todos los dirigentes en el diálogo para pacificar el país</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/comision-de-dialogo-busca-incorporar-a-todos-los-sectores-movilizados-y-encarga-mediacion-a-la-iglesia-y-la-defensoria-61157" rel="noopener noreferrer" target="_blank">Comisión de diálogo busca incorporar a todos los sectores movilizados y encarga mediación a la Iglesia y la defensoría</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-garantizara-presencia-argollo-mesa-dialogo-mediadores_1779915077" rel="noopener noreferrer" target="_blank">Gobierno garantizará la presencia de Argollo en la mesa de diálogo con mediadores</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/abre-via-pacificacion-gestionan-garantias-dirigentes-participen-dialogo_1779906446" rel="noopener noreferrer" target="_blank">Se abre vía de pacificación: gestionan garantías para que dirigentes participen del diálogo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/buscan-pacificacion-pais-dos-escenarios-dialogo-paz_1779891932" rel="noopener noreferrer" target="_blank">Buscan la pacificación del país en dos escenarios de diálogo en La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/iglesia-toma-posta-reunir-gobierno-sectores-movilizados-mesa-dialogo_1779929179" rel="noopener noreferrer" target="_blank">Iglesia toma la posta para reunir a Gobierno y sectores movilizados en mesa de diálogo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/asoma-el-dialogo-comision-acuerda-garantizar-asistencia-de-dirigentes-y-se-perfila-reunion.html" rel="noopener noreferrer" target="_blank">Asoma el diálogo: comisión acuerda garantizar asistencia de dirigentes y se perfila reunión</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_comision-de-dialogo-acuerda-garantizar-asistencia-de-mario-argollo.html" rel="noopener noreferrer" target="_blank">Comisión de Diálogo acuerda garantizar asistencia de Mario Argollo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/comisi%C3%B3n-de-di%C3%A1logo-acuerda-garantizar-asistencia-de-dirigentes-y-volver-reunirse" rel="noopener noreferrer" target="_blank">Comisión de Diálogo acuerda garantizar asistencia de dirigentes y volver a reunirse</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/lupo-califica-de-positivo-el-dialogo-con-sectores-movilizados/" rel="noopener noreferrer" target="_blank">Lupo califica de positivo el diálogo con sectores movilizados</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/gobierno-y-movilizados-abren-via-de-pacificacion-y-dialogo/" rel="noopener noreferrer" target="_blank">Gobierno y movilizados abren vía de pacificación y diálogo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/gobierno-no-descarta-participacion-de-paz-en-proxima-mesa-de-dialogo/" rel="noopener noreferrer" target="_blank">Gobierno no descarta participación de Paz en próxima mesa de diálogo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/yarhui-pide-garantizar-presencia-de-dirigentes-sociales-en-el-dialogo-de-este-jueves/" rel="noopener noreferrer" target="_blank">Yarhui pide garantizar presencia de dirigentes sociales en el diálogo de este jueves</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/vicepresidencia-comision-de-dialogo-acuerda-ampliar-convocatoria-para-destrabar-la-crisis/" rel="noopener noreferrer" target="_blank">Diálogo en Vicepresidencia: Acuerdan ampliar convocatoria a dirigentes para lograr pacificación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/vicepresidencia-instala-dialogo-lupo-acude-en-representacion-de-paz/" rel="noopener noreferrer" target="_blank">Vicepresidencia instala diálogo por conflictos; Lupo está en representación de Paz</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/suman-sectores-que-piden-dialogo-lara-cita-paz-dirigentes-negociar" rel="noopener noreferrer" target="_blank">Suman sectores que piden diálogo y Lara cita a Paz y dirigentes a negociar</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/arranca-dialogo-vicepresidencia-presencias-dos-ministros-iglesia-defensor" rel="noopener noreferrer" target="_blank">Arranca el diálogo en la Vicepresidencia con presencias de dos ministros, la Iglesia, el Defensor y sectores sociales</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/comision-de-dialogo-acuerda-gestionar-la-presencia-de-todos-los-sectores-sociales-y-continuara-este-jueves/" rel="noopener noreferrer" target="_blank">Comisión de Diálogo acuerda gestionar la presencia de todos los sectores sociales y continuará este jueves</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/instalan-comision-de-dialogo-para-buscar-solucion-al-conflicto-y-bloqueos" rel="noopener noreferrer" target="_blank">Instalan comisión de diálogo para buscar solución al conflicto y bloqueos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/en-la-paz-se-instala-mesa-de-dialogo-entre-autoridades-y-dirigentes-de-diferentes-sectores-para-buscar-una-salida-a-los-bloqueos-2026527111116" rel="noopener noreferrer" target="_blank">En La Paz se instala mesa de diálogo entre autoridades y dirigentes de diferentes sectores para buscar una salida a los bloqueos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lupo-califica-de-positivo-el-dialogo-con-sectores-y-no-descarta-que-paz-este-presente-en-una-proxima-reunion-BD20984511" rel="noopener noreferrer" target="_blank">Lupo califica de positivo el diálogo con sectores y no descarta que Paz esté presente en una próxima reunión</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/dialogo-primera-reunion-acordo-gestiones-para-garantizar-presencia-de-todos-los-dirigentes-movilizados-JD20983291" rel="noopener noreferrer" target="_blank">Diálogo: Primera reunión acordó gestiones para garantizar presencia de todos los dirigentes movilizados</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50088-lupo-asiste-al-dialogo-convocado-por-la-vicepresidencia-y-afirma-que-la-concertacion-es-el-camino-para-hallar-soluciones" rel="noopener noreferrer" target="_blank">Lupo asiste al diálogo convocado por la Vicepresidencia y afirma que la concertación es el camino para hallar soluciones</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50139-mesa-de-dialogo-acuerda-realizar-gestiones-para-que-todos-los-dirigentes-del-conflicto-asistan-a-la-concertacion" rel="noopener noreferrer" target="_blank">Mesa de diálogo acuerda realizar gestiones para que “todos” los dirigentes del conflicto asistan a la concertación</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Abrogación de ley sobre estados de excepción" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Abrogación de ley sobre estados de excepción</div>
+<div class="modal-sum">El presidente Rodrigo Paz promulgó la Ley 1732 que abroga la norma 1341 sobre Estados de Excepción, en medio de un clima de conflictos sociales y bloqueos. La medida deja sin efecto la normativa previa y ha generado diversos análisis técnicos sobre el alcance de la nueva disposición legal.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">29</strong> titulares</span>
+<span><strong style="color:var(--c-21)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260527_rodrigo-paz-promulga-la-abrogacion-de-la-ley-de-estados-de-excepcion.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz promulga la abrogación de la Ley de Estados de excepción</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-paz-promulga-ley-de-abrogacion-de-1341-de-estados-de-excepcion-2026527061" rel="noopener noreferrer" target="_blank">Presidente Paz promulga abrogación de Ley 1341 de Estados de Excepción</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-promulga-la-abrogacion-de-la-ley-sobre-estados-de-excepcion/" rel="noopener noreferrer" target="_blank">Paz promulga la abrogación de la Ley de Estados de Excepción</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/presidente-promulga-la-abrogacion-de-la-ley-que-limitaba-la-aplicacion-del-estado-de-sitio" rel="noopener noreferrer" target="_blank">Presidente promulga la abrogación de la ley que limitaba la aplicación del estado de sitio</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/presidente-paz-promulga-la-ley-1732-que-abroga-norma-sobre-estados-de-excepcion-61132" rel="noopener noreferrer" target="_blank">Presidente Paz promulga la Ley 1732 que abroga norma sobre estados de excepción</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/en-medio-de-los-conflictos-paz-oficializa-la-abrogacion-de-la-ley-de-estados-de-excepcion.html" rel="noopener noreferrer" target="_blank">En medio de los conflictos, Paz oficializa la abrogación de la Ley de Estados de Excepción</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-promulga-la-abrogaci%C3%B3n-de-la-ley-sobre-estados-de-excepci%C3%B3n-en-medio-de-los-conflictos" rel="noopener noreferrer" target="_blank">Paz promulga la abrogación de la ley sobre Estados de Excepción en medio de los conflictos</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/27/promulgan-la-abrogacion-de-la-ley-de-estados-de-excepcion/" rel="noopener noreferrer" target="_blank">Promulgan la abrogación de la Ley de Estados de Excepción</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/paz-promulga-ley-que-deja-sin-efecto-la-norma-de-estados-de-excepcion/" rel="noopener noreferrer" target="_blank">Paz promulga ley que deja sin efecto la norma de Estados de Excepción</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/rodrigo-paz-promulga-la-ley-que-abroga-la-norma-sobre-estados-de-excepcion" rel="noopener noreferrer" target="_blank">Rodrigo Paz promulga la ley que abroga la norma sobre estados de excepción</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-implica-la-abrogacion-de-la-ley-1341-esto-explico-carlos-alarcon-202652710150" rel="noopener noreferrer" target="_blank">¿Qué implica la abrogación de la Ley 1341? Esto explicó Carlos Alarcón</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/que-limitaciones-tenia-la-abrogada-ley-1341-de-estados-de-excepcion-2026527103531" rel="noopener noreferrer" target="_blank">¿Qué limitaciones tenía la abrogada Ley 1341 de Estados de Excepción?</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/en-medio-de-bloqueos-un-grupo-de-cocaleros-del-tropico-llega-a-la-paz-e-instala-un-bloqueo-en-rechazo-a-abrogacion-de-ley-CC20990604" rel="noopener noreferrer" target="_blank">En medio de bloqueos, un grupo de cocaleros del trópico llega a La Paz e instala un bloqueo en rechazo a abrogación de ley</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50052-rodrigo-paz-promulga-la-abrogacion-de-la-ley-de-estados-de-excepcion-en-medio-de-la-crisis-por-bloqueos" rel="noopener noreferrer" target="_blank">Rodrigo Paz promulga la abrogación de la Ley de Estados de Excepción en medio de la crisis por bloqueos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50061-los-conflictos-y-bloqueos-llevan-27-dias-paz-enfrenta-un-nuevo-escenario-sin-regulaciones-para-un-estado-de-excepcion" rel="noopener noreferrer" target="_blank">Los conflictos y bloqueos llevan 27 días; Paz enfrenta un nuevo escenario sin regulaciones para un estado de excepción</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/transportistas-tarija-advierten-movilizaciones-si-gobierno-no-decreta-estado-excepcion_1779914127" rel="noopener noreferrer" target="_blank">Transportistas de Tarija advierten con movilizaciones si el gobierno no decreta el Estado de Excepción</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/ministro-lupo-sobre-el-estado-de-excepcion-sera-evaluado-segun-la-oportunidad-y-necesidad.html" rel="noopener noreferrer" target="_blank">Ministro Lupo sobre el estado de excepción: “Será evaluado según la oportunidad y necesidad”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_lupo-afirma-que-el-estado-de-excepcion-sera-evaluado-segun-la-oportunidad-y-necesidad.html" rel="noopener noreferrer" target="_blank">Lupo afirma que el Estado de excepción será evaluado “según la oportunidad y necesidad”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lupo-dice-que-el-estado-de-excepci%C3%B3n-ser%C3%A1-evaluado-seg%C3%BAn-la-oportunidad-y-necesidad" rel="noopener noreferrer" target="_blank">Lupo dice que el estado de excepción será evaluado según la oportunidad y necesidad</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/05/27/dockweiler-pide-evitar-estado-de-excepcion-y-llama-al-reencuentro/" rel="noopener noreferrer" target="_blank">Dockweiler pide evitar estado de excepción y llama al reencuentro</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/lupo-estado-de-excepcion-es-un-instrumento-que-sera-evaluado-segun-la-necesidad/" rel="noopener noreferrer" target="_blank">Lupo: Estado de excepción es un instrumento que será evaluado según la necesidad</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-cob-advierte-que-declarar-estado-de-excepcion-seria-una-catastrofe-y-exige-a-paz-dialogar-en-los-puntos-de-bloqueo/" rel="noopener noreferrer" target="_blank">La COB advierte que declarar Estado de Excepción sería una “catástrofe” y exige a Paz dialogar en los puntos de bloqueo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/senador-condori-dice-que-si-paz-declara-estado-de-excepcion-habra-una-guerra-civil-y-un-revolucion-sangrienta/" rel="noopener noreferrer" target="_blank">Senador Condori dice que si Paz declara Estado de Excepción habrá una “guerra civil” y un “revolución sangrienta”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/santistevan-con-o-sin-ley-el-presidente-puede-dictar-estado-de-excepcion-202652712022" rel="noopener noreferrer" target="_blank">Santistevan: “Con o sin ley, el presidente puede dictar Estado de excepción”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/se-declarara-un-estado-de-excepcion-esto-respondio-el-ministro-lupo-202652712340" rel="noopener noreferrer" target="_blank">¿Se declarará un Estado de excepción? Esto respondió el ministro Lupo</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/camara-de-diputados-aprueba-anulacion-de-la-ley-1341-de-estados-de-excepcion/" rel="noopener noreferrer" target="_blank">Cámara de Diputados aprueba anulación de la Ley 1341 de estados de excepción - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/orden-o-represion-el-debate-sobre-posible-estado-de-excepcion/" rel="noopener noreferrer" target="_blank">Orden o represión: El debate sobre posible estado de excepción - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/paz-promulga-abrogacion-ley-1341-de-estados-de-excepcion/" rel="noopener noreferrer" target="_blank">Paz promulga abrogación "Ley 1341 de Estados de Excepción" - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/camara-de-diputados-anula-limites-al-estado-de-excepcion-en-medio-de-conflictos-en-bolivia-20265276410" rel="noopener noreferrer" target="_blank">Cámara de Diputados anula límites al Estado de excepción en medio de conflictos en Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Convocatoria a diálogo con sectores sociales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Convocatoria a diálogo con sectores sociales</div>
+<div class="modal-sum">El presidente Rodrigo Paz convocó al diálogo a Mario Argollo y Vicente Salazar para frenar la conflictividad social. Desde el Consejo Económico y Social, el mandatario lanzó un ultimátum a la Central Obrera Boliviana y sectores campesinos, advirtiendo que aplicará mecanismos constitucionales ante intentos de desestabilización si no se accede al diálogo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">25</strong> titulares</span>
+<span><strong style="color:var(--c-03)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/en-el-cierre-del-consejo-economico-y-social-paz-invita-a-argollo-a-dialogar-61158" rel="noopener noreferrer" target="_blank">En el cierre del Consejo económico y social, Paz invita a Argollo a dialogar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/yo-tengo-instrumentos-constitucionales-tiempo-acaba-rodrigo-paz-convoca-bloqueadores-dialogar-esta-tarde_1779901631" rel="noopener noreferrer" target="_blank">“Tengo instrumentos constitucionales, el tiempo se acaba”: Rodrigo Paz convoca a bloqueadores a dialogar esta tarde</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-reitera-invitaci%C3%B3n-al-di%C3%A1logo-dirigentes-vicente-salazar-y-mario-argollo" rel="noopener noreferrer" target="_blank">Paz reitera invitación al diálogo a dirigentes Vicente Salazar y Mario Argollo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/sectores-piden-garantias-para-que-mario-argollo-participe-del-dialogo-con-el-gobierno/" rel="noopener noreferrer" target="_blank">Sectores piden garantías para que Mario Argollo participe del diálogo con el Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/paz-desafia-a-argollo-y-le-exige-dialogar-no-puedes-votar-presidentes-porque-se-te-da-la-gana/" rel="noopener noreferrer" target="_blank">Paz desafía a Argollo y le exige dialogar: ‘No puedes botar presidentes porque se te da la gana’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/quiero-que-organizaciones-sociales-sean-parte-del-gobierno-dice-paz-y-llama-a-la-cob-y-la-tupac/" rel="noopener noreferrer" target="_blank">‘Quiero que organizaciones sociales sean parte del Gobierno’, dice Paz y llama a la COB y a la Túpac</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/paz-lanza-ultima-convocatoria-a-vicente-salazar-de-la-tupac-para-instalar-dialogo/" rel="noopener noreferrer" target="_blank">Paz lanza ‘última convocatoria’ a Vicente Salazar, de la Túpac, para instalar diálogo</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/preven-exito-dialogo-movilizados-cob-exige-anular-orden-aprehension-argollo/20260527183104991743.html" rel="noopener noreferrer" target="_blank">Prevén éxito en diálogo con movilizados; COB exige anular orden de aprehensión contra Argollo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-llama-a-la-directiva-y-la-federacion-de-campesinos-tupac-katari-a-dialogar-y-escuchar-la-verdad/" rel="noopener noreferrer" target="_blank">Paz llama a la directiva y la Federación de Campesinos ‘Tupac Katari’ a dialogar y “escuchar la verdad”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-reitera-llamado-al-dialogo-y-enviara-cartitas-a-vicente-choque-de-los-tupac-y-mario-argollo-de-la-cob/" rel="noopener noreferrer" target="_blank">Paz reitera llamado al diálogo y enviará “cartitas” a Vicente Choque de los “Tupac” y Mario Argollo de la COB</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rodrigo-paz-llama-al-dialogo-y-advierte-el-que-quiera-destruir-la-patria-se-la-vera-con-este-presidente-2026527135346" rel="noopener noreferrer" target="_blank">Rodrigo Paz llama al diálogo y advierte: “El que quiera destruir la patria se la verá con este presidente”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/presidente-rodrigo-paz-vuelve-a-convocar-al-dialogo-a-dirigentes-de-la-cob-y-tupac-katari-2026527152923" rel="noopener noreferrer" target="_blank">Presidente Rodrigo Paz vuelve a convocar al diálogo a dirigentes de la COB y Túpac Katari</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/paz-convoca-a-argollo-a-dialogar-no-puedes-botar-a-presidentes-porque-se-te-da-la-gana-HD20985112" rel="noopener noreferrer" target="_blank">Paz convoca a Argollo a dialogar: “No puedes botar a presidentes porque se te da la gana”</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/presidente-inaugura-el-consejo-economico-y-social-invitando-al-dialogo-y-advirtiendo-que-el-tiempo-se-acaba" rel="noopener noreferrer" target="_blank">Presidente inaugura el Consejo Económico y Social invitando al diálogo y advirtiendo que el tiempo se acaba</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/en-el-consejo-economico-y-social-paz-advierte-a-sectores-que-el-tiempo-se-acaba-y-reitera-pedido-de-dialogo-61143" rel="noopener noreferrer" target="_blank">En el Consejo Económico y Social, Paz advierte a sectores que “el tiempo se acaba” y reitera pedido de diálogo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-llama-dialogar-ultima-vez-advierte-aplicar-ley_1779913837" rel="noopener noreferrer" target="_blank">Paz llama a dialogar por última vez y advierte con aplicar la ley</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/desde-el-consejo-economico-y-social-paz-insiste-en-el-dialogo-y-alerta-que-el-tiempo-se-acaba.html" rel="noopener noreferrer" target="_blank">Desde el Consejo Económico y Social, Paz insiste en el diálogo y alerta que “el tiempo se acaba”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-advierte-a-campesinos-y-la-cob-para-que-accedan-al-dialogo-tengo-instrumentos-constitucionales-el-tiempo-se-acaba/" rel="noopener noreferrer" target="_blank">Paz advierte a campesinos y la COB para que accedan al diálogo: “Tengo instrumentos constitucionales, el tiempo se acaba”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50127-paz-advierte-que-el-tiempo-se-acaba-y-llama-a-campesinos-y-a-la-cob-a-dialogar" rel="noopener noreferrer" target="_blank">Paz advierte que “el tiempo se acaba” y llama a campesinos y a la COB a dialogar</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/diputados-bloqueos-pasaron-el-limite-pero-hay-que-dialogar/" rel="noopener noreferrer" target="_blank">Diputados: Bloqueos pasaron el límite, pero hay que dialogar - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/paz-ofrece-dialogo-por-ultima-vez-y-advierte-con-aplicar-la-ley/" rel="noopener noreferrer" target="_blank">Paz ofrece diálogo por última vez y advierte con aplicar la ley - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/la-paz-avanza-dialogo-para-resolver-crisis-social/" rel="noopener noreferrer" target="_blank">La Paz: Avanza diálogo para resolver crisis social - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/lula-insta-al-gobierno-bolivia-movimientos-sociales-que-eviten-violencia" rel="noopener noreferrer" target="_blank">Lula insta al Gobierno de Bolivia y movimientos sociales que eviten la violencia y prioricen el diálogo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/consejo-economico-y-social-paz-llama-al-dialogo-y-anuncia-medidas-para-llevar-a-bolivia-a-un-mejor-futuro-2026527122545" rel="noopener noreferrer" target="_blank">Consejo Económico y Social: Paz llama al diálogo y anuncia medidas para "llevar a Bolivia a un mejor futuro"</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/jose-luis-lupo-asegura-que-el-dialogo-es-la-via-para-pacificar-bolivia-202652723851" rel="noopener noreferrer" target="_blank">José Luis Lupo asegura que el diálogo es la vía para pacificar Bolivia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="Denuncia por intromisión de diputada argentina" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Denuncia por intromisión de diputada argentina</div>
+<div class="modal-sum">La Dirección General de Migración denunció presuntos actos de intromisión de una diputada argentina que participó en movilizaciones en El Alto y Senkata contra el gobierno de Rodrigo Paz tras ingresar al país como turista. La entidad activó acciones ante la Cancillería y no descartó la expulsión de la legisladora por sus declaraciones de apoyo a los bloqueos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">23</strong> titulares</span>
+<span><strong style="color:var(--c-18)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/migracion-acusa-de-intromision-a-diputada-argentina-por-participar-en-movilizaciones-y-no-descarta-su-expulsion" rel="noopener noreferrer" target="_blank">Migración acusa de "intromisión" a diputada argentina por participar en movilizaciones y no descarta su expulsión</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/migracion-no-descarta-expulsar-a-diputada-argentina-61154" rel="noopener noreferrer" target="_blank">Migración no descarta expulsar a diputada argentina</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/anuncian-acciones-cancilleria-intromision-diputada-argentina-asuntos-internos-bolivia_1779913694" rel="noopener noreferrer" target="_blank">Anuncian acciones ante Cancillería por intromisión de diputada argentina en asuntos internos de Bolivia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cancilleria-boliviana-adoptara-medidas-pertinentes-relacion-activista-argentina_1779923082" rel="noopener noreferrer" target="_blank">La Cancillería boliviana adoptará "las medidas pertinentes" en relación a la activista argentina</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/migraci%C3%B3n-anuncia-medidas-ante-%E2%80%9Cintromisi%C3%B3n%E2%80%9D-de-diputada-argentina-que-participa-de" rel="noopener noreferrer" target="_blank">Migración anuncia medidas ante “intromisión” de diputada argentina que participa de manifestaciones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/migracion-anuncia-acciones-por-presunta-intromision-de-diputada-argentina/" rel="noopener noreferrer" target="_blank">Migración anuncia acciones por presunta intromisión de diputada argentina</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/migracion-anuncia-acciones-ante-cancilleria-por-intromision-de-diputada-argentina-en-asuntos-de-bolivia/" rel="noopener noreferrer" target="_blank">Migración anuncia acciones ante Cancillería por intromisión de diputada argentina en asuntos de Bolivia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/cancilleria-rechaza-declaraciones-de-mercedes-trimarchi-afirma-que-no-es-diputada-en-argentina/" rel="noopener noreferrer" target="_blank">Cancillería rechaza declaraciones de Mercedes Trimarchi afirma que no es diputada en Argentina</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/migracion-activa-acciones-ante-cancilleria-por-intromision-de-diputada-argentina-y-no-descarta-su-expulsion-del-pais-2026527155536" rel="noopener noreferrer" target="_blank">Migración activa acciones ante Cancillería por intromisión de diputada argentina y no descarta su expulsión del país</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50121-senador-ormachea-pide-expulsar-a-diputada-agitadora-de-argentina-dice-que-perjudica-al-dialogo" rel="noopener noreferrer" target="_blank">Senador Ormachea pide expulsar a diputada “agitadora” de Argentina, dice que perjudica al diálogo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50133-migracion-activa-acciones-contra-diputada-argentina-por-actos-de-intromision-ingreso-a-bolivia-en-calidad-de-turista" rel="noopener noreferrer" target="_blank">Migración activa acciones contra diputada argentina por actos de “intromisión”; ingresó a Bolivia en calidad de turista</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50175-cancilleria-informa-que-trimarchi-no-ejerce-mandato-legislativo-en-argentina-y-pide-a-migracion-definir-su-estatus-en-el-pais" rel="noopener noreferrer" target="_blank">Cancillería informa que Trimarchi no ejerce mandato legislativo en Argentina y pide a Migración definir su estatus en el país</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/diputada-argentina-de-izquierda-participa-en-las-protestas-contra-paz-y-revela-presencia-socialista-internacional" rel="noopener noreferrer" target="_blank">Diputada argentina de izquierda participa en las protestas contra Paz y revela presencia socialista internacional</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/cancilleria-rechaza-intervencion-de-activista-argentina-en-protestas-y-asegura-que-difunde-falsedades" rel="noopener noreferrer" target="_blank">Cancillería rechaza intervención de activista argentina en protestas y asegura que difunde falsedades</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/diputada-argentina-llega-a-bolivia-y-ensalza-el-conflicto-y-a-los-bloqueadores-61137" rel="noopener noreferrer" target="_blank">Diputada argentina llega a Bolivia y dice que los bloqueadores son "nuestro faro"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/diputada-argentina-llega-alto-destaca-protestas-pusieron-jaque-gobierno_1779899768" rel="noopener noreferrer" target="_blank">Una diputada de izquierda argentina llega hasta El Alto y destaca las protestas que “pusieron en jaque” al Gobierno</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/diputada-argentina-genera-polemica-tras-discurso-contra-el-gobierno-en-senkata.html" rel="noopener noreferrer" target="_blank">Diputada argentina genera polémica tras discurso contra el Gobierno en Senkata</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/activista-argentina-denuncia-%E2%80%9Cacoso-brutal%E2%80%9D-en-redes-tras-sus-declaraciones-en-cabildo-en" rel="noopener noreferrer" target="_blank">Activista argentina denuncia “acoso brutal” en redes tras sus declaraciones en cabildo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/en-senkata-una-diputada-argentina-alienta-manifestantes-con-un-discurso-contra-el-gobierno" rel="noopener noreferrer" target="_blank">En Senkata, una diputada argentina alienta a manifestantes con un discurso contra el Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/una-diputada-argentina-participa-de-movilizaciones-en-el-alto/" rel="noopener noreferrer" target="_blank">Una diputada argentina participa de movilizaciones en El Alto</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/activista-argentina-que-apoya-bloqueos-no-ejerce-mandato-legislativo" rel="noopener noreferrer" target="_blank">Activista argentina que apoya bloqueos no ejerce mandato legislativo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diputada-socialista-de-argentina-participo-en-movilizaciones-en-senkata-y-discursa-contra-el-gobierno-de-paz/" rel="noopener noreferrer" target="_blank">Diputada socialista de Argentina participó en movilizaciones en Senkata y discursa contra el Gobierno de Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50109-diputada-argentina-habla-en-un-punto-de-bloqueo-en-el-alto-han-logrado-poner-en-seis-meses-a-un-gobierno-en-jaque" rel="noopener noreferrer" target="_blank">Diputada argentina habla en un punto de bloqueo en El Alto: “Han logrado poner en seis meses a un gobierno en jaque”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_16a">
+<div class="modal-backdrop" onclick="closeModal('modal_16a')"></div>
+<div aria-label="Instalación del Consejo Económico y Social" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Instalación del Consejo Económico y Social</div>
+<div class="modal-sum">El Gobierno instala el Consejo Económico y Social para enfrentar la crisis y tensión económica. El presidente Rodrigo Paz anunció la creación de consejos departamentales ante la ausencia de sectores movilizados, reconociendo la necesidad de mayor inclusión en la gestión gubernamental.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">16</strong> titulares</span>
+<span><strong style="color:var(--c-02)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260527_inicia-el-consejo-economico-y-social-por-la-patria-en-medio-de-bloqueos-y-tension-economica.html" rel="noopener noreferrer" target="_blank">Inicia el Consejo Económico y Social por la Patria en medio de bloqueos y tensión económica</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260527_paz-instala-consejo-economico-y-social-y-llama-a-sectores-movilizados-a-dialogar.html" rel="noopener noreferrer" target="_blank">Paz instala Consejo Económico y Social y llama a sectores movilizados a dialogar</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/reunion-del-consejo-social-y-economico-se-realizara-en-el-chuquiago-marka-y-no-en-la-casa-grande-del-pueblo-61138" rel="noopener noreferrer" target="_blank">Reunión del Consejo Social y Económico se realizará en el Chuquiago Marka y no en la Casa Grande del Pueblo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/paz-anuncia-la-creacion-de-consejos-economicos-y-sociales-a-nivel-departamental-61166" rel="noopener noreferrer" target="_blank">Paz anuncia la creación de consejos económicos y sociales a nivel departamental</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/instala-consejo-economico-social-liderado-rodrigo-paz_1779898076" rel="noopener noreferrer" target="_blank">Se instala el consejo económico social liderado por Rodrigo Paz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_paz-instala-el-consejo-economico-y-social-sin-los-sectores-movilizados.html" rel="noopener noreferrer" target="_blank">Paz instala el Consejo Económico y Social sin los sectores movilizados</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/27/el-gobierno-instala-hoy-el-consejo-economico-y-social/" rel="noopener noreferrer" target="_blank">El Gobierno instala hoy el Consejo Económico y Social</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/paz-anuncia-consejos-departamentales-en-el-cierre-del-consejo-economico-y-social/" rel="noopener noreferrer" target="_blank">Paz anuncia consejos departamentales en el cierre del Consejo Económico y Social</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/sin-sectores-movilizados-que-exigen-la-renuncia-de-paz-arranca-el-consejo-economico-y-social/" rel="noopener noreferrer" target="_blank">Sin sectores movilizados que exigen su renuncia, Paz da inicio al Consejo Económico y Social</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/arranca-el-consejo-economico-y-social-y-bascope-dice-que-quieren-gobernar-con-el-pueblo/" rel="noopener noreferrer" target="_blank">Arranca el Consejo Económico y Social y Bascopé dice que ‘quieren gobernar con el pueblo’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/apuesta-por-el-dialogo-se-reune-consejo-economico-y-social-y-activan-encuentro-en-vicepresidencia/" rel="noopener noreferrer" target="_blank">Apuesta por el diálogo: Se reúne Consejo Económico y Social y activan encuentro en Vicepresidencia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/campo-ferial-paz-alberga-este-miercoles-primer-consejo-economico-social" rel="noopener noreferrer" target="_blank">Campo Ferial de La Paz alberga este miércoles el Primer Consejo Económico Social por la Patria</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/rodrigo-paz-instala-consejo-economico-y-social-en-medio-de-la-crisis-por-bloqueos" rel="noopener noreferrer" target="_blank">Rodrigo Paz instala consejo económico y social en medio de la crisis por bloqueos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rodrigo-paz-lidera-consejo-economico-y-social-con-autoridades-y-sectores-sociales-2026527114355" rel="noopener noreferrer" target="_blank">Rodrigo Paz lidera Consejo Económico y Social con autoridades y sectores sociales</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/las-10-frases-mas-impactantes-de-rodrigo-paz-en-el-consejo-economico-y-social-2026527135233" rel="noopener noreferrer" target="_blank">Las 10 frases más impactantes de Rodrigo Paz en el Consejo Económico y Social</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50160-consejo-economico-y-social-paz-reconoce-que-al-gobierno-le-falta-inclusion-y-pide-a-colaboradores-bajar-y-trabajar-con-la-poblacion" rel="noopener noreferrer" target="_blank">Consejo Económico y Social: Paz reconoce que al Gobierno le falta inclusión y pide a colaboradores bajar y trabajar con la población</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_20c">
+<div class="modal-backdrop" onclick="closeModal('modal_20c')"></div>
+<div aria-label="Crisis humanitaria y desabastecimiento por bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Crisis humanitaria y desabastecimiento por bloqueos</div>
+<div class="modal-sum">La persistencia de bloqueos en Bolivia genera una crisis sanitaria y desabastecimiento, con reportes de la Defensoría que confirman 7 fallecidos y cientos de arrestos. Ante las pérdidas millonarias y el riesgo de hambruna, organismos internacionales y sectores civiles exigen la pacificación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">13</strong> titulares</span>
+<span><strong style="color:var(--c-08)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_20c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_defensoria-del-pueblo-reporta-321-personas-arrestadas-en-informe-sobre-conflictividad.html" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo reporta 321 personas arrestadas en informe sobre conflictividad</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/defensoria-pueblo-registra-7-fallecidos-23-heridos-321-arrestados-empezaron-conflictos_1779896726" rel="noopener noreferrer" target="_blank">Defensoría del Pueblo registra 7 fallecidos, 23 heridos y 321 arrestados desde que empezaron los conflictos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/beni-asfixia-rutas-cerradas-perdidas-millonarias_1779914608" rel="noopener noreferrer" target="_blank">Beni se asfixia entre rutas cerradas y pérdidas millonarias</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/organismos-internacionales-pronuncian-situacion-bolivia_1779925764" rel="noopener noreferrer" target="_blank">Organismos internacionales se pronuncian sobre la situación de Bolivia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/avicultores-alertan-bloqueos-podrian-reducir-oferta-pollo-siete-semanas_1779899512" rel="noopener noreferrer" target="_blank">Avicultores alertan que bloqueos podrían reducir la oferta de pollo en siete semanas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/empresarios-alertan-hambruna-paz-27-dias-bloqueos-perdidas-llegan-us-390-millones_1779889262" rel="noopener noreferrer" target="_blank">Empresarios alertan “hambruna” en La Paz por 27 días de bloqueos y pérdidas llegan a $us 390 millones</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/madres-piden-pacificacion-en-bolivia/" rel="noopener noreferrer" target="_blank">Madres piden pacificación en Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/alcalde-alerta-escasez-de-productos-por-bloqueos-y-precios-altos/" rel="noopener noreferrer" target="_blank">Alcalde alerta escasez de productos por bloqueos y precios altos - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/crisis-sanitaria-en-la-paz-por-bloqueos-y-desabastecimiento/" rel="noopener noreferrer" target="_blank">Crisis sanitaria en La Paz por bloqueos y desabastecimiento - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/la-paz-empresarios-alertan-hambruna-y-perdidas-millonarias/" rel="noopener noreferrer" target="_blank">La Paz: Empresarios alertan hambruna y pérdidas millonarias - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/crisis-social-321-arrestados-y-7-muertos-segun-defensoria/" rel="noopener noreferrer" target="_blank">Crisis social: 321 arrestados y 7 muertos, según Defensoría - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/conflictos-dejan-321-arrestados-7-fallecidos-y-23-heridos-segun-defensoria-del-pueblo/" rel="noopener noreferrer" target="_blank">Conflictos dejan 321 arrestados, 7 fallecidos y 23 heridos según Defensoría del Pueblo</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/siete-fallecidos-23-heridos-321-arrestados-reporta-defensoria-pueblo/20260527165231991739.html" rel="noopener noreferrer" target="_blank">Siete fallecidos, 23 heridos y 321 arrestados reporta la Defensoría del Pueblo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_21">
+<div class="modal-backdrop" onclick="closeModal('modal_21')"></div>
+<div aria-label="Expulsión de líder del PCC a Brasil" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Expulsión de líder del PCC a Brasil</div>
+<div class="modal-sum">Las autoridades bolivianas expulsaron a Brasil a Gerson Palermo, líder del Primer Comando de la Capital (PCC) capturado en Santa Cruz. El traslado se realizó mediante un fuerte operativo de seguridad desde el aeropuerto de Viru Viru hacia territorio brasileño tras su captura.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">10</strong> titulares</span>
+<span><strong style="color:var(--c-07)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_21')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/policia-entrega-a-agentes-de-brasil-a-supuesto-narcotraficante-vinculado-al-pcc" rel="noopener noreferrer" target="_blank">Policía entrega a agentes de Brasil a supuesto narcotraficante vinculado al PCC</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/27/expulsan-a-brasil-a-capo-del-pcc-capturado-en-santa-cruz-61152" rel="noopener noreferrer" target="_blank">Expulsan a Brasil a capo del PCC capturado en Santa Cruz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gerson-palermo-capo-pcc-capturado-bolivia-esta-brasil_1779921602" rel="noopener noreferrer" target="_blank">Gerson Palermo, capo del PCC capturado en Bolivia, ya está en Brasil</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/capo-pcc-salto-fama-secuestrar-avion-brasil_1779880680" rel="noopener noreferrer" target="_blank">El capo del PCC saltó a la fama por secuestrar un avión en Brasil</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/pais/expulsan-a-brasil-a-gerson-palermo-senalado-como-lider-del-pcc.html" rel="noopener noreferrer" target="_blank">Expulsan a Brasil a Gerson Palermo, señalado como líder del PCC</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/capturan-a-narcotraficante-del-pcc-buscado-en-brasil-2/" rel="noopener noreferrer" target="_blank">Capturan a narcotraficante del PCC buscado en Brasil</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/trasladan-a-lider-del-pcc-a-brasil/" rel="noopener noreferrer" target="_blank">Trasladan a líder del PCC a Brasil - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/expulsan-a-capo-brasileno-vinculado-al-pcc/" rel="noopener noreferrer" target="_blank">Expulsan a capo brasileño vinculado al PCC</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260527/fuerte-operativo-capo-del-pcc-llega-viru-viru-ser-expulsado-brasil" rel="noopener noreferrer" target="_blank">Bajo fuerte operativo, capo del PCC llega a Viru Viru para ser "expulsado" a Brasil</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/bajo-fuerte-operativo-capo-del-pcc-es-expulsado-a-brasil-BD20981660" rel="noopener noreferrer" target="_blank">Bajo fuerte operativo, capo del PCC es “expulsado” a Brasil</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Promulgación de Ley de Alivio Tributario" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Promulgación de Ley de Alivio Tributario</div>
+<div class="modal-sum">El presidente Rodrigo Paz promulgó la Ley de Alivio Tributario y Regularización de Impuestos, denominada 'perdonazo'. La norma busca la regularización de deudas impositivas y, según el mandatario, el anuncio viene acompañado de la creación de nuevos ítems para los sectores de salud y educación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">10</strong> titulares</span>
+<span><strong style="color:var(--c-02)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/presidente-paz-anuncia-promulgacion-ley-del-perdonazo-tributario" rel="noopener noreferrer" target="_blank">Presidente Paz anuncia promulgación de la ley del "perdonazo" tributario</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/05/27/paz-anuncia-promulgacion-de-ley-del-perdonazo-tributario-y-mas-items-para-salud-y-educacion-61144" rel="noopener noreferrer" target="_blank">Paz anuncia promulgación de ley del perdonazo tributario y más ítems para salud y educación</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/perdonazo-tributario-condonara-deudas-hasta-de-bs-10-millones/" rel="noopener noreferrer" target="_blank">“Perdonazo tributario” condonará deudas hasta de Bs 10 millones</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_paz-promulgara-en-horas-el-perdonazo-tributario.html" rel="noopener noreferrer" target="_blank">Paz promulgará en horas el ‘perdonazo’ tributario</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-informa-que-ya-est%C3%A1-promulgada-la-ley-del-%E2%80%9Cperdonazo%E2%80%9D-tributario" rel="noopener noreferrer" target="_blank">Paz informa que ya está promulgada la ley del “perdonazo” tributario</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/27/condonara-deudas-hasta-de-bs-10-mm-generadas-hasta-el-2017-y-durante-el-2020/" rel="noopener noreferrer" target="_blank">Condonará deudas hasta de Bs 10 MM generadas hasta el 2017 y durante el 2020</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260527/condonaran-deudas-bs-10-millones-ley-del-perdonazo-tributario" rel="noopener noreferrer" target="_blank">Condonarán deudas de hasta Bs 10 millones con la ley del “Perdonazo Tributario”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rodrigo-paz-anuncia-5-300-nuevos-items-para-salud-y-educacion-202652714225" rel="noopener noreferrer" target="_blank">Rodrigo Paz anuncia 5.300 nuevos ítems para salud y educación</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/es-oficial-gobierno-promulga-ley-de-alivio-tributario-y-regularizacion-de-impuestos-2026527212657" rel="noopener noreferrer" target="_blank">¡Es oficial! Gobierno promulga Ley de Alivio Tributario y Regularización de Impuestos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-presidente-paz-dice-que-ya-promulgo-la-ley-de-perdonazo-tributario-PD20988610" rel="noopener noreferrer" target="_blank">El presidente Paz dice que ya promulgó la ley de perdonazo tributario</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Incautación millonaria y armas en el Beni" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Incautación millonaria y armas en el Beni</div>
+<div class="modal-sum">En el marco de una investigación por encomiendas irregulares en Beni, autoridades incautaron más de 1,1 millones de bolivianos, 121.000 dólares y un arma de fuego. El operativo incluyó el secuestro de un vehículo y la investigación a efectivos policiales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">8</strong> titulares</span>
+<span><strong style="color:var(--c-07)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/05/27/investigacion-por-encomienda-irregular-permite-confiscar-bs-11-millones-us-121-mil-y-un-arma-61141" rel="noopener noreferrer" target="_blank">Investigación por encomienda irregular permite confiscar Bs 1,1 millones, $us 121 mil y un arma</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/decomiso-encomienda-bs-350-mil-aeropuerto-trinidad-hallan-dinero-arma-fuego_1779890688" rel="noopener noreferrer" target="_blank">Tras decomiso de encomienda de Bs 350 mil en el aeropuerto de Trinidad, hallan más dinero y un arma de fuego</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/pais/caso-encomienda-encuentran-bs-11-millon-e-incautan-un-arma-y-un-motorizado-en-nuevos-operativos.html" rel="noopener noreferrer" target="_blank">Caso encomienda: encuentran Bs 1,1 millón e incautan un arma y un motorizado en nuevos operativos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_beni-hallan-mas-de-bs-1-1-millones-121-000-dolares-y-un-arma-en-una-encomienda.html" rel="noopener noreferrer" target="_blank">Beni: Hallan más de Bs 1,1 millones, 121.000 dólares y un arma en una encomienda</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/05/27/investigan-a-3-policias-y-1-piloto-por-encomienda-con-bs-350-000/" rel="noopener noreferrer" target="_blank">Investigan a 3 policías y 1 piloto por encomienda con Bs 350.000</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/aeropuerto-de-trinidad-hallazgo-de-121-000-dolares-bs-11-millones-y-un-arma/" rel="noopener noreferrer" target="_blank">Aeropuerto de Trinidad: hallazgo de 121.000 dolares, Bs 1,1 millones y un arma - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/hallan-mas-de-bs-1-millon-en-el-vehiculo-de-un-policia/" rel="noopener noreferrer" target="_blank">Hallan más de Bs 1 millón en el vehículo de un Policía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/nuevas-pesquisas-en-el-caso-encomienda-hallan-bs-11-millon-y-secuestran-un-arma-y-un-vehiculo-HM20973602" rel="noopener noreferrer" target="_blank">Nuevas pesquisas en el caso encomienda: Hallan Bs 1,1 millón y secuestran un arma y un vehículo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Cocaleros en alerta por apagón en Chapare" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Cocaleros en alerta por apagón en Chapare</div>
+<div class="modal-sum">Sectores cocaleros del Trópico de Cochabamba se declararon en alerta tras un apagón eléctrico en el Chapare. Mientras reportes técnicos atribuyen el corte a una falla en un generador, los pobladores denuncian un posible operativo para capturar a Evo Morales y se movilizaron en zonas como Chimoré.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">8</strong> titulares</span>
+<span><strong style="color:var(--c-08)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260527_reportan-un-apagon-en-el-tropico-cocaleros-dicen-que-temen-la-captura-de-evo.html" rel="noopener noreferrer" target="_blank">Reportan un “apagón” en el trópico, cocaleros dicen que temen la captura de Evo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/falla-generador-deja-energia-chapare-cocaleros-recrudecen-bloqueos_1779933287" rel="noopener noreferrer" target="_blank">Falla en un generador deja sin energía al Chapare y cocaleros recrudecen los bloqueos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/politica/reportan-un-apagon-en-el-tropico-y-cocaleros-dicen-que-temen-la-captura-de-evo-morales.html" rel="noopener noreferrer" target="_blank">Reportan un “apagón” en el trópico y cocaleros dicen que temen la captura de Evo Morales</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/apagon-parte-del-chapare-pone-alerta-cocaleros" rel="noopener noreferrer" target="_blank">Apagón en parte del Chapare pone en alerta a cocaleros</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/cocaleros-se-aglomeran-ingreso-umopar-chimore" rel="noopener noreferrer" target="_blank">Cocaleros se aglomeran en el ingreso a Umopar en Chimoré</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/emergencia-tropico-cercan-ingreso-umopar-reporte-apagon-tropico/20260527230404991747.html" rel="noopener noreferrer" target="_blank">Emergencia en el Trópico: Cercan ingreso a UMOPAR tras reporte de ‘apagón’ en el Trópico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50193-cocaleros-reportan-corte-de-energia-en-el-tropico-de-cochabamba-y-denuncian-posible-operacion-contra-evo-morales" rel="noopener noreferrer" target="_blank">Cocaleros reportan corte de energía en el trópico de Cochabamba y denuncian posible operación contra Evo Morales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50223-un-apagon-de-luz-de-mas-de-dos-horas-dispara-el-nerviosismo-entre-los-cocaleros-del-chapare" rel="noopener noreferrer" target="_blank">Un apagón de luz de más de dos horas dispara el nerviosismo entre los cocaleros del Chapare</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Paro indefinido de choferes en La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Paro indefinido de choferes en La Paz</div>
+<div class="modal-sum">Choferes de La Paz y El Alto iniciaron un paro indefinido con bloqueos de vías y repliegue de sus vehículos, lo que obligó a la ciudadanía a trasladarse a pie o recurrir masivamente al servicio de teleféricos ante la falta de transporte público.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">7</strong> titulares</span>
+<span><strong style="color:var(--c-08)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260527_la-paz-y-el-alto-amanecen-sin-minibuses-ni-micros-por-paro-indefinido.html" rel="noopener noreferrer" target="_blank">La Paz y El Alto amanecen sin minibuses ni micros por paro indefinido</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/05/27/choferes-de-la-paz-y-el-alto-acatan-paro-y-la-poblacion-camina-y-se-agolpa-en-los-telefericos-61135" rel="noopener noreferrer" target="_blank">Choferes de La Paz y El Alto acatan paro y la población camina y se agolpa en los teleféricos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/medio-cerco-paz-choferes-entran-paro-indefinido-bloqueos-repliegue-vehiculos_1779891226" rel="noopener noreferrer" target="_blank">En medio del cerco a La Paz, choferes entran en paro indefinido con bloqueos y repliegue de sus vehículos</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/choferes-declaran-paro-indefinido-en-la-paz/" rel="noopener noreferrer" target="_blank">Choferes declaran paro indefinido en La Paz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_la-paz-choferes-van-a-un-paro-indefinido.html" rel="noopener noreferrer" target="_blank">La Paz: Choferes van a un paro indefinido</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/la-paz-enfrenta-otra-jornada-de-conflictos-y-crisis-sin-transporte-y-con-movilizaciones/" rel="noopener noreferrer" target="_blank">La Paz enfrenta otra jornada de conflictos y crisis, sin transporte y con movilizaciones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/paro-indefinido-del-transporte-paceno-agrava-situacion-crisis-escasez" rel="noopener noreferrer" target="_blank">Paro indefinido del transporte paceño agrava situación de crisis y escasez</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Suspensión de servicios consulares de Estados Unidos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Suspensión de servicios consulares de Estados Unidos</div>
+<div class="modal-sum">La Embajada de Estados Unidos en Bolivia suspendió sus servicios consulares en La Paz y emitió una alerta de seguridad para sus ciudadanos. La determinación responde al incremento de la conflictividad social y la persistencia de los bloqueos de caminos, recomendando evitar viajes por el país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">7</strong> titulares</span>
+<span><strong style="color:var(--c-18)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/embajada-ee-uu-emite-nueva-alerta-seguridad-bloqueos-bolivia-suspende-servicios-consulares_1779885287" rel="noopener noreferrer" target="_blank">Embajada de EE.UU. emite nueva “alerta de seguridad” por bloqueos en Bolivia y suspende sus servicios consulares</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/pais/por-los-conflictos-la-embajada-de-eeuu-cierra-temporalmente-sus-servicios-consulares-en-la-paz.html" rel="noopener noreferrer" target="_blank">Por los conflictos, la Embajada de EEUU cierra temporalmente sus servicios consulares en La Paz</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_embajada-de-eeuu-en-bolivia-emite-alerta-y-suspende-servicios-consulares-por-conflictos.html" rel="noopener noreferrer" target="_blank">Embajada de EEUU en Bolivia emite alerta y suspende servicios consulares por conflictos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/embajada-de-eeuu-suspende-los-servicios-consulares-en-la-paz/" rel="noopener noreferrer" target="_blank">Embajada de EEUU suspende los servicios consulares en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/embajada-de-eeuu-suspende-servicios-consulares-en-la-paz-y-pide-a-sus-ciudadanos-evitar-viajes-por-bolivia/" rel="noopener noreferrer" target="_blank">Embajada de EEUU suspende servicios consulares en La Paz y pide a sus ciudadanos evitar viajes por Bolivia</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/embajada-de-ee-uu-suspende-servicios-en-la-paz-por-los-bloqueos" rel="noopener noreferrer" target="_blank">Embajada de EE. UU suspende servicios en La Paz por los bloqueos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/embajada-de-eeuu-emite-nueva-alerta-para-bolivia-y-suspende-servicios-consulares-de-rutina-el-27-y-28-de-mayo-KN20968626" rel="noopener noreferrer" target="_blank">Embajada de EEUU emite nueva alerta para Bolivia y suspende servicios consulares de rutina el 27 y 28 de mayo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_16c">
+<div class="modal-backdrop" onclick="closeModal('modal_16c')"></div>
+<div aria-label="Reunión con comités cívicos por crisis" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Reunión con comités cívicos por crisis</div>
+<div class="modal-sum">El presidente Rodrigo Paz confirma encuentros con los comités cívicos del país para evaluar la crisis de abastecimiento y los conflictos que duran 27 días. Se ratificó una reunión nacional con el movimiento cívico programada en Santa Cruz para este jueves.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">7</strong> titulares</span>
+<span><strong style="color:var(--c-05)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_16c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/paz-anuncia-dialogo-con-los-comites-civicos-tras-27-dias-de-bloqueos-y-crisis-de-abastecimiento-61156" rel="noopener noreferrer" target="_blank">Paz anuncia diálogo con los comités cívicos, tras 27 días de bloqueos y crisis de abastecimiento</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-paz-convoca-todos-dialogo-pide-respaldo-gobernar-27-dias-bloqueos_1779900497" rel="noopener noreferrer" target="_blank">El presidente Paz convoca a “todos” al diálogo y pide respaldo para gobernar tras 27 días de bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/civicos-se-reuniran-con-paz-para-evaluar-la-crisis-y-los-bloqueos/" rel="noopener noreferrer" target="_blank">Cívicos se reunirán con Paz para evaluar la crisis y los bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/bolivia-registra-64-puntos-de-bloqueo-en-el-dia-27-del-conflicto-social/" rel="noopener noreferrer" target="_blank">Bolivia registra 64 puntos de bloqueo en el día 27 del conflicto social</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/civicos-piden-al-gobierno-aplicar-medidas-para-levantar-los-bloqueos-del-pais-2026527122527" rel="noopener noreferrer" target="_blank">Cívicos piden al Gobierno aplicar medidas para levantar los bloqueos del país</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-confirma-asistencia-al-encuentro-nacional-de-comites-civicos-2026527125156" rel="noopener noreferrer" target="_blank">Paz confirma asistencia al encuentro nacional de comités cívicos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/paz-confirma-su-presencia-en-reunion-con-civicos-de-todo-el-pais-este-jueves-en-santa-cruz-AD20981643" rel="noopener noreferrer" target="_blank">Paz confirma su presencia en reunión con cívicos de todo el país este jueves en Santa Cruz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Detención preventiva para exdirector de la ABC" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Detención preventiva para exdirector de la ABC</div>
+<div class="modal-sum">La justicia dictó seis meses de detención preventiva para el exdirector de la Administradora Boliviana de Carreteras (ABC), Henry Nina, por presuntas irregularidades vinculadas al caso de la Doble Vía El Sillar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">6</strong> titulares</span>
+<span><strong style="color:var(--c-10)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/justicia-dispone-prision-preventiva-seis-meses-exdirector-abc_1779912832" rel="noopener noreferrer" target="_blank">Justicia dispone prisión preventiva por seis meses para el exdirector de la ABC</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/05/27/aprehenden-a-expresidente-de-la-abc-por-hechos-de-corrupcion/" rel="noopener noreferrer" target="_blank">Aprehenden a expresidente de la ABC por hechos de corrupción</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/env%C3%ADan-la-c%C3%A1rcel-al-expresidente-de-la-abc-henry-nina-por-el-caso-el-sillar-iii" rel="noopener noreferrer" target="_blank">Envían a la cárcel al expresidente de la ABC, Henry Nina, por el caso El Sillar III</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/27/juez-da-detencion-preventiva-a-henry-nina-por-el-caso-el-sillar/" rel="noopener noreferrer" target="_blank">Juez da detención preventiva a Henry Nina por el caso El Sillar</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dictan-detencion-preventiva-para-henry-nina-por-el-caso-el-sillar/" rel="noopener noreferrer" target="_blank">Dictan detención preventiva para Henry Nina por el caso El Sillar</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50157-dictan-seis-meses-de-detencion-preventiva-para-henry-nina-exdirector-de-la-abc-por-caso-doble-via-el-sillar" rel="noopener noreferrer" target="_blank">Dictan seis meses de detención preventiva para Henry Nina, exdirector de la ABC por caso Doble Vía El Sillar</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Huelga de hambre de legisladores del PDC" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Huelga de hambre de legisladores del PDC</div>
+<div class="modal-sum">Legisladores del PDC, encabezados por la senadora Crispin, iniciaron una huelga de hambre en la Asamblea Legislativa exigiendo al gobierno de Rodrigo Paz y Edmand Lara soluciones inmediatas a la crisis económica y el levantamiento de los bloqueos de caminos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">6</strong> titulares</span>
+<span><strong style="color:var(--c-21)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/diputada-del-pdc-se-declara-en-huelga-y-pide-a-paz-y-lara-soluciones-al-conflicto" rel="noopener noreferrer" target="_blank">Diputada del PDC se declara en huelga y pide a Paz y Lara soluciones al conflicto</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/05/27/senadora-oficialista-inicia-huelga-de-hambre-y-exige-al-gobierno-soluciones-inmediatas-a-la-crisis-61164" rel="noopener noreferrer" target="_blank">Senadora oficialista inicia huelga de hambre y exige al gobierno soluciones inmediatas a la crisis</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/senadora-crispin-inicia-huelga-de-hambre-para-exigir-soluciones-al-gobierno" rel="noopener noreferrer" target="_blank">Senadora Crispin inicia huelga de hambre para exigir soluciones al Gobierno</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/05/27/legisladores-del-pdc-instalan-huelga-de-hambre-en-la-alp-por-la-crisis/" rel="noopener noreferrer" target="_blank">Legisladores del PDC instalan huelga de hambre en la ALP por la crisis</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/senadora-del-pdc-instala-huelga-de-hambre-y-exige-una-solucion-a-los-bloqueos-AC20990022" rel="noopener noreferrer" target="_blank">Senadora del PDC instala huelga de hambre y exige una solución a los bloqueos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/05/27/50163-senadora-crispin-inicia-huelga-de-hambre-y-exige-soluciones-al-gobierno" rel="noopener noreferrer" target="_blank">Senadora Crispin inicia huelga de hambre y exige soluciones al Gobierno</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Gestiones de crédito millonario ante el FMI" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Gestiones de crédito millonario ante el FMI</div>
+<div class="modal-sum">El presidente Rodrigo Paz confirmó gestiones avanzadas ante el Fondo Monetario Internacional (FMI) para acceder a un financiamiento de 5.000 millones de dólares. Estos créditos estarían destinados a fortalecer sectores sociales y mitigar los efectos de la crisis económica y las movilizaciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">6</strong> titulares</span>
+<span><strong style="color:var(--c-02)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/paz-revela-negociaciones-con-el-fmi-para-acceder-a-creditos-por-5-000-millones-de-dolares" rel="noopener noreferrer" target="_blank">Paz revela negociaciones con el FMI para acceder a créditos por 5.000 millones de dólares</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/paz-promete-us-5-000-millones-fmi-sectores-sociales-calle-medio-crisis-bloqueos_1779914233" rel="noopener noreferrer" target="_blank">Paz promete $us 5.000 millones del FMI para “sectores sociales en la calle” en medio de la crisis y los bloqueos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-05-27/economia/bolivia-negocia-con-el-fmi-un-credito-de-$us-5000-millones.html" rel="noopener noreferrer" target="_blank">Bolivia negocia con el FMI un crédito de $us 5.000 millones</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260527_el-gobierno-tiene-negociaciones-avanzadas-con-el-fondo-monetario.html" rel="noopener noreferrer" target="_blank">El Gobierno tiene “negociaciones avanzadas” con el Fondo Monetario</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/dinero-negocios/bolivia-busca-financiamiento-de-us-5-000-millones-del-fmi/" rel="noopener noreferrer" target="_blank">Bolivia busca financiamiento de $us 5.000 millones del FMI - La Patria 3.0 | Periódico digital de Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/rodrigo-paz-confirma-gestiones-con-el-fmi-y-anuncia-un-paquete-de-us-5000-millones-FD20982315" rel="noopener noreferrer" target="_blank">Rodrigo Paz confirma gestiones con el FMI y anuncia un paquete de $us 5.000 millones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Aterrizaje de emergencia de avión de BoA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-28)">ACCIDENTES</div>
+<div class="modal-title">Aterrizaje de emergencia de avión de BoA</div>
+<div class="modal-sum">Un avión de Boliviana de Aviación (BoA) que realizaba la ruta Iquique–Santa Cruz aterrizó de emergencia en Cochabamba tras detectarse una falla técnica en el sistema de calefacción de la cabina. La aerolínea aclaró que la medida fue preventiva tras reportes de humo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-28)">6</strong> titulares</span>
+<span><strong style="color:var(--c-28)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/avion-boa-aterriza-emergencia-cochabamba-detectar-humo-cabina_1779929028" rel="noopener noreferrer" target="_blank">Avión de BoA aterriza de emergencia en Cochabamba, tras detectar humo en la cabina</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/boa-desvia-vuelo-iquique-santa-cruz-cochabamba-falla-sistema-calefaccion-cabina_1779929091" rel="noopener noreferrer" target="_blank">BoA desvía vuelo Iquique–Santa Cruz a Cochabamba por falla en sistema de calefacción de cabina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/05/27/boa-desvia-vuelo-de-iquique-a-santa-cruz-por-falla-tecnica-preventiva/" rel="noopener noreferrer" target="_blank">BoA desvía vuelo de Iquique a Santa Cruz por falla técnica preventiva</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260527/avion-boa-aterriza-emergencia-cochabamba" rel="noopener noreferrer" target="_blank">Un avión de BoA aterriza de emergencia en Cochabamba</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/boa-aclara-que-desvio-de-avion-a-cochabamba-se-debio-a-una-falla-en-la-calefaccion-de-las-ventanas-de-la-cabina-2026527201450" rel="noopener noreferrer" target="_blank">BoA aclara que desvío de avión a Cochabamba se debió a una falla en la calefacción de las ventanas de la cabina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/avion-de-boa-aterriza-de-emergencia-en-cochabamba-LC20991974" rel="noopener noreferrer" target="_blank">Avión de BoA aterriza de emergencia en Cochabamba</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
