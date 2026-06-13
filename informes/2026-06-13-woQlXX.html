@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260613</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+
+/* Tarea 2.2: Ancho fluido para monitores modernos */
+.page {
+  max-width: 96% !important; /* Abandona los 1200px fijos y usa casi toda la pantalla */
+  padding: 30px 20px !important;
+}
+
+/* Tarea 2.1: Tipografía agresivamente más grande y legible */
+body { font-size: 15px !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+/* Agrandar los números de la tarjeta de categorías y darles espacio */
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+/* Agrandar el contenido de la tabla de Términos de mayor frecuencia */
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; } /* Le da un poco más de aire a las filas */
+
+
+/* Tarea 2.3: Respiración y márgenes (Padding) para que no se vea apretado */
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+/* Ampliamos el espacio para el texto del índice y agrandamos la letra */
+.chart-label {
+  width: 480px !important; /* Le damos 160px más de espacio horizontal */
+  font-size: 18px !important; /* Letra más grande y legible */
+  line-height: 1.3 !important; /* Mejor interlineado por si el texto cae en dos líneas */
+  padding-right: 15px !important; /* Un poco de aire antes de que empiece la barra */
+}
+/* Aumentar el tamaño de los números en la lista de Temas (índice) */
+.chart-label span { font-size: 18px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+/* 1. Aumentar tamaño de las palabras "titulares" y "medios" */
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+/* 2. Unificar el estilo de la categoría del Top 3 para que sea idéntica a las demás tarjetas, pero más grande */
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* 3. (Opcional) Agrandar también la etiqueta de categoría en las tarjetas normales para que hagan juego perfecto */
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+/* 4. Aumentar el tamaño de los números y el texto "titulares/medios" en las tarjetas normales */
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+/* (Deja el resto de tu CSS de modales intacto hacia abajo...) */
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+/* ───────── Títulos de sección: Top 3 / Todos los temas / Señales emergentes ───────── */
+/* Regla general: solo los section-label (no toca los textos “Hoja 2 / Hoja 3”) */
+.section-label{
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+}
+
+/* (Opcional) refuerzo del título principal de cada bloque, si existiera como heading */
+.top3-title, .topic-title{
+  /* no cambia color, solo presencia */
+}
+/* ───────── Ranking en tarjetas (más fuerte) ───────── */
+.topic-big-n{
+  font-weight: 900 !important;      /* más presencia */
+  font-size: 28px !important;       /* ajusta si lo quieres más grande/pequeño */
+  line-height: 1 !important;
+
+  /* “refuerzo” del color sin cambiar la variable */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.35),   /* realce ligero */
+    0 2px 10px rgba(15,33,55,0.18);   /* profundidad */
+}
+/* Ranking de tarjetas: quitar opacidad del mockup y dar presencia */
+.topic-big-n{
+  opacity: 0.98 !important;     /* <- clave */
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* Top 3: reforzar ranking */
+.top3-rank .rank-num{
+  opacity: 0.98 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important;
+}
+
+/* ── MODALES: lista prolija (desktop + móvil) ── */
+.modal-panel{
+  width: min(980px, calc(100vw - 28px));
+  border-radius: 14px;
+}
+
+.modal-head{
+  padding: 16px 18px;
+}
+
+.modal-title{
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.modal-sum{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.modal-body{
+  padding: 14px 18px;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.modal-list{
+  padding-left: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.modal-list li{
+  display: grid;
+  grid-template-columns: 130px 1fr; /* fuente | titular */
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,.10);
+}
+.modal-list li:last-child{ border-bottom: 0; }
+
+.m-src{
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-sep{ display:none; }
+
+.m-tit a{
+  word-break: break-word;
+  text-decoration: underline;
+}
+
+/* ───────── TAREA 4.2: MICRO-INTERACCIONES (HOVER) ───────── */
+/* 1. Cursor de mano y transición suave para las tarjetas interactivas */
+.top3-card, .topic-card, .emergente-card {
+  cursor: pointer !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* 2. Efecto de elevación y sombra al pasar el mouse */
+.top3-card:hover, .topic-card:hover, .emergente-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important;
+  border-color: var(--border-glow) !important;
+}
+
+/* ───────── RESPONSIVE (MÓVIL) ───────── */
+@media (max-width: 768px){
+
+  /* layout general */
+  .page{ padding: 12px 12px 20px; }
+
+  /* HEADER centrado y ordenado */
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+
+  /* filas / grids -> una columna */
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+
+  /* barras de cobertura: etiqueta no fija - CORREGIDO */
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{
+    width: auto !important;
+    text-align: left;
+    font-size: 15px !important; /* Letra un poco más moderada para no saturar el celular */
+  }
+  .chart-medios{ width: auto; }
+
+  /* tabla frecuencias: scroll horizontal si hace falta */
+  .freq-table{ display:block; overflow-x:auto; }
+
+  /* modales: lista en una columna - CORREGIDO */
+  .modal-panel{
+    width: 92% !important;
+    max-width: 100% !important;
+    border-radius: 12px;
+    box-sizing: border-box !important;
+  }
+  
+  /* Fix móvil: reducir paddings y ancho fijo que desbordan */
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+}
+ 
+
+/* ───────── TAREA 5.1: ÍNDICE INTERACTIVO Y DESTELLO ───────── */
+.index-row {
+  cursor: pointer !important;
+  transition: background 0.2s ease, padding 0.2s ease;
+  border-radius: 6px;
+  padding: 4px;
+  margin: -4px; /* Compensa el padding para no desalinear */
+}
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Animación del destello para la tarjeta destino */
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+/* ───────── TAREA 5.2: CATEGORÍAS DESPLEGABLES (ACORDEÓN) ───────── */
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row {
+  cursor: pointer !important; padding: 4px; margin: -4px;
+  border-radius: 6px; transition: background 0.2s ease;
+}
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+
+/* Sub-lista oculta por defecto */
+.cat-topics-list {
+  display: none;
+  list-style: none;
+  padding: 8px 10px 6px 14px;
+  margin: 6px 0 2px 8px;
+  background: var(--bg-card-2);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  line-height: 1.5; /* Añade esto para que respire mejor al ser más grande */
+  color: var(--text-secondary);
+}
+/* Sub-lista visible con animación */
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+
+/* Ítems internos de la sub-lista cliqueables */
+.cat-topics-list li {
+  padding: 5px 6px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+
+/* Animación de la flechita y la lista */
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ───────── TAREA 6.1: BOTÓN MODO OSCURO (ALINEACIÓN ABSOLUTA EN LA FILA) ───────── */
+.theme-toggle-btn {
+  position: absolute;
+  top: -5px; /* Alineación fina con el texto "Top 3 temas del día" */
+  right: 0;
+  z-index: 10;
+
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--amber);
+  box-shadow: 0 4px 10px rgba(15,33,55,0.1);
+  transform: translateY(-2px);
+}
+/* CORRECCIÓN EXACTA DE ALINEACIÓN SUPERIOR */
+.right-panel > .section-label {
+    margin-bottom: 4px !important;
+}
+
+/* ───────── EFECTO HOVER PARA FILAS CLICABLES (GRÁFICOS) ───────── */
+.cat-row, .index-row {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+/* Desplazamiento elegante a la derecha para ambos modos */
+.cat-row:hover, .index-row:hover {
+  transform: translateX(6px) !important;
+}
+/* Brillo sutil exclusivo para el modo oscuro */
+body.dark-mode .cat-row:hover,
+body.dark-mode .index-row:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+</style>
+<style>
+/* ───────── TAREA 6.2: PALETA MODO OSCURO (CON CONTRASTE) ───────── */
+body.dark-mode {
+  --bg-base:     #060913;  /* Más oscuro y profundo */
+  --bg-card:     #162032;  /* Más claro para que las tarjetas resalten */
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;  /* Borde sutilmente más visible para delimitar la caja */
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+/* Transición suave para que el cambio no sea brusco */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Estilo para tu botón existente (Tarea 6.1) - CORREGIDO */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+/* ───────── CORRECCIÓN DE NÚMEROS OSCUROS EN MODO OSCURO ───────── */
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  /* Esto crea tu "margen delgado blanco" semi-transparente */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  /* Cambiamos la sombra oscura original por un ligero resplandor claro */
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-06-13" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-06-13-woQlXX.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">150</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">20</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">7</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 13-JUNIO-2026</strong><br/>
+        Reporte N° B24-20260613<br/>
+        Cobertura: últimas 24 horas
+      </div></div>
+</header>
+<!-- ════════════ PAGE ════════════ -->
+<div class="page">
+<div class="top-row" style="position: relative;">
+<div>
+<div class="section-label">TOP 3 TEMAS DEL DÍA</div>
+<div class="top3-stack"><div class="top3-card" id="card_12" onclick="openModal('modal_12')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-08)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-08)">1</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="top3-title">Centrales obreras presionan por diálogo con Gobierno</div>
+<div class="top3-body">Diferentes Centrales Obreras Departamentales (COD) presionan al dirigente de la COB, Mario Argollo, para que entable un diálogo con el presidente Rodrigo Paz. Los representantes regionales de Cochabamba, Chuquisaca y el sur rechazan el pedido de renuncia del mandatario por falta de consenso.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">16</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-08)">12</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_9" onclick="openModal('modal_9')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-05)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-05)">2</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="top3-title">Evo Morales ratifica continuidad de los bloqueos</div>
+<div class="top3-body">Evo Morales y sectores afines ratifican la continuidad de los bloqueos tras 42 días de conflicto. Morales instruyó organizar relevos para evitar el agotamiento de las bases y advirtió que la medida podría durar un año o hasta "ganar la batalla", desafiando la gestión de Rodrigo Paz.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">15</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-05)">9</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div>
+<div class="top3-card" id="card_2" onclick="openModal('modal_2')" role="button" tabindex="0">
+<div class="top3-accent" style="background:var(--c-07)"></div>
+<div class="top3-rank"><div class="rank-num" style="color:var(--c-07)">3</div></div>
+<div class="top3-content">
+<div class="top3-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="top3-title">Hallan un millón de bolivianos en ambulancia</div>
+<div class="top3-body">La Policía aprehendió a diez personas tras el hallazgo de un millón de bolivianos ocultos en una ambulancia de Puerto Villarroel que se dirigía al Trópico de Cochabamba. El operativo permitió el secuestro del dinero y el vehículo para investigar el origen de los fondos.</div>
+<div class="top3-stats">
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">13</span><span class="lbl">titulares</span></div>
+<div class="stat-chip"><span class="val" style="color:var(--c-07)">10</span><span class="lbl">medios</span></div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="right-panel">
+<div class="section-label" style="border-left: none; color: transparent; user-select: none;">
+         
+      </div>
+<div class="cat-bar-card">
+<div class="section-label">CATEGORÍAS</div>
+<div class="cat-bars"><div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-08)"></div></div>
+<div class="cat-n">48</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">1.</span> Centrales obreras presionan por diálogo con Gobierno</li><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">10.</span> Cívicos convocan cabildo para exigir desbloqueo</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">11.</span> Caravana humanitaria asiste a transportistas varados</li><li onclick="scrollToCard('card_8b'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">13.</span> Restablecen tránsito en autopista La Paz El Alto</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">14.</span> Transportistas convocan ampliado nacional por bloqueos</li><li onclick="scrollToCard('card_N003'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">16.</span> Amenazan con cortar servicios básicos a La Paz</li><li onclick="scrollToCard('card_N005'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">19.</span> Llega oxígeno medicinal para hospitales de La Paz</li><li onclick="scrollToCard('card_N006'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">20.</span> Reportan noventa puntos de bloqueo en Bolivia</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:62%;background:var(--c-07)"></div></div>
+<div class="cat-n">30</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">3.</span> Hallan un millón de bolivianos en ambulancia</li><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">7.</span> Liberan a militar retenido en San Julián</li><li onclick="scrollToCard('card_8a'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">9.</span> Queman patrulla y agreden policías en El Alto</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:56%;background:var(--c-05)"></div></div>
+<div class="cat-n">27</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">2.</span> Evo Morales ratifica continuidad de los bloqueos</li><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">4.</span> Exhortan al presidente Paz a iniciar diálogo</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTR_FICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:40%;background:var(--c-04)"></div></div>
+<div class="cat-n">19</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTR_FICO"><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">6.</span> Operativos nacionales por caso de narcomadera</li><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">8.</span> Investigan carga de madera con cocaína</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:29%;background:var(--c-02)"></div></div>
+<div class="cat-n">14</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">5.</span> Acuerdo para fondo de garantía al transporte</li><li onclick="scrollToCard('card_N002'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">15.</span> Fancesa paraliza operaciones por millonarias pérdidas</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:17%;background:var(--c-10)"></div></div>
+<div class="cat-n">8</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">12.</span> Ratifican detención preventiva de Luis Arce</li><li onclick="scrollToCard('card_N004'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">18.</span> Investigan a cientos de personas por bloqueos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_SOCIEDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-25)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:8%;background:var(--c-25)"></div></div>
+<div class="cat-n">4</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_SOCIEDAD"><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">17.</span> Estados Unidos golea a Paraguay en Mundial</li></ul>
+</div></div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">bloqueos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">36</td>
+</tr>
+<tr>
+<td class="freq-word">madera en viru</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:38%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">san julián</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:38%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">cod de cochabamba</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">retenido en san</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno créditos</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">militar retenido</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:32%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno acuerdan</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">carga de madera</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">bloqueadores en san</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button>
+</div>
+<!-- ── COVERAGE CHART ── -->
+<div class="coverage-card" data-bm-premium="1">
+<div class="section-label">TEMAS</div>
+<div class="chart-area"><div class="chart-row index-row" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">1.</span>
+            Centrales obreras presionan por diálogo con Gobierno
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">16</div>
+</div>
+<div class="chart-medios">12 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">2.</span>
+            Evo Morales ratifica continuidad de los bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:93.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">15</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">3.</span>
+            Hallan un millón de bolivianos en ambulancia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:81.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">13</div>
+</div>
+<div class="chart-medios">10 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">4.</span>
+            Exhortan al presidente Paz a iniciar diálogo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:75.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">12</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">5.</span>
+            Acuerdo para fondo de garantía al transporte
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:62.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">10</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">6.</span>
+            Operativos nacionales por caso de narcomadera
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:62.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">10</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">7.</span>
+            Liberan a militar retenido en San Julián
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:56.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">9</div>
+</div>
+<div class="chart-medios">9 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">8.</span>
+            Investigan carga de madera con cocaína
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:56.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">9</div>
+</div>
+<div class="chart-medios">8 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">9.</span>
+            Queman patrulla y agreden policías en El Alto
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:50.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">8</div>
+</div>
+<div class="chart-medios">7 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">10.</span>
+            Cívicos convocan cabildo para exigir desbloqueo
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:43.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">7</div>
+</div>
+<div class="chart-medios">6 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">11.</span>
+            Caravana humanitaria asiste a transportistas varados
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:31.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">5</div>
+</div>
+<div class="chart-medios">5 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">12.</span>
+            Ratifican detención preventiva de Luis Arce
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:31.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_8b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">13.</span>
+            Restablecen tránsito en autopista La Paz El Alto
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:31.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">14.</span>
+            Transportistas convocan ampliado nacional por bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:31.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">5</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N002')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">15.</span>
+            Fancesa paraliza operaciones por millonarias pérdidas
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N003')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">16.</span>
+            Amenazan con cortar servicios básicos a La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+<div class="chart-medios">4 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">17.</span>
+            Estados Unidos golea a Paraguay en Mundial
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">4</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N004')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">18.</span>
+            Investigan a cientos de personas por bloqueos
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:18.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N005')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">19.</span>
+            Llega oxígeno medicinal para hospitales de La Paz
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:18.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div>
+<div class="chart-row index-row" onclick="scrollToCard('card_N006')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px;">20.</span>
+            Reportan noventa puntos de bloqueo en Bolivia
+          </div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:18.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+<div class="chart-medios">3 medios</div>
+</div></div>
+</div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 2 · Temas del día</div></div>
+<!-- ── TOPICS GRID ── -->
+<div class="section-label" data-bm-premium="1">Todos los temas</div>
+<div class="topics-grid" data-bm-premium="1"><div class="topic-card" id="card_11" onclick="openModal('modal_11')" role="button" style="border-top:2px solid var(--c-05)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-05)">4</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-05)">POLÍTICA</div>
+<div class="topic-title">Exhortan al presidente Paz a iniciar diálogo</div>
+<div class="topic-body">El vicepresidente Edmand Lara, junto a la COB, la Iglesia y la Defensoría, exhorta al presidente Rodrigo Paz a iniciar un diálogo serio y autocrítico. Destacan la necesidad de habilitar corredores humanitarios para mitigar el desabastecimiento provocado por los conflictos sociales.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>12</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_4" onclick="openModal('modal_4')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">5</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Acuerdo para fondo de garantía al transporte</div>
+<div class="topic-body">El Gobierno y el sector del transporte llegaron a un acuerdo para establecer un fondo de garantía destinado a créditos para choferes con una tasa de interés del 12%. El convenio busca aliviar la situación financiera del sector, aunque quedan pendientes temas de reprogramación de deudas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6b" onclick="openModal('modal_6b')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">6</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="topic-title">Operativos nacionales por caso de narcomadera</div>
+<div class="topic-body">El Ministerio Público coordina operativos en cinco departamentos y conformó comisiones para investigar el caso 'narcomadera' tras una incautación en Chile. La intervención incluye allanamientos en aserraderos de Pando y Beni ante la exigencia de celeridad por parte de exportadores y autoridades.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>10</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_7" onclick="openModal('modal_7')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">7</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Liberan a militar retenido en San Julián</div>
+<div class="topic-body">Un teniente de las Fuerzas Armadas fue liberado tras permanecer retenido durante casi 24 horas por bloqueadores en San Julián. El Ministerio de Defensa confirmó el hecho, señalando que el militar recuperó su libertad luego de las gestiones realizadas ante los sectores movilizados.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>9</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_6a" onclick="openModal('modal_6a')" role="button" style="border-top:2px solid var(--c-04)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-04)">8</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="topic-title">Investigan carga de madera con cocaína</div>
+<div class="topic-body">La Fiscalía y la FELCC investigan una carga de madera en el aeropuerto de Viru Viru tras sospechas de narcotráfico. Pruebas preliminares de campo dieron positivo a cocaína, por lo que se ordenaron análisis periciales complementarios para confirmar la presencia de sustancias controladas.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>9</strong> titulares</div>
+<div class="topic-stat"><strong>8</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8a" onclick="openModal('modal_8a')" role="button" style="border-top:2px solid var(--c-07)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-07)">9</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="topic-title">Queman patrulla y agreden policías en El Alto</div>
+<div class="topic-body">Bloqueadores en El Alto incendiaron una patrulla de la FELCV y agredieron a policías que acudían a un auxilio por violencia de género. El ataque, ocurrido en el sector de Puente Seque, incluyó la retención temporal y maltrato físico a los uniformados antes de su liberación.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>8</strong> titulares</div>
+<div class="topic-stat"><strong>7</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_10" onclick="openModal('modal_10')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">10</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Cívicos convocan cabildo para exigir desbloqueo</div>
+<div class="topic-body">Comcipo y sectores cívicos de La Paz y Potosí se movilizan y convocan a un cabildo para exigir al gobierno de Rodrigo Paz el desbloqueo de carreteras. Los movilizados rechazan las protestas del evismo y solicitan medidas severas, incluyendo la declaratoria de estado de excepción.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>7</strong> titulares</div>
+<div class="topic-stat"><strong>6</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_1" onclick="openModal('modal_1')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">11</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Caravana humanitaria asiste a transportistas varados</div>
+<div class="topic-body">La Defensoría del Pueblo organiza una caravana humanitaria para asistir a cientos de transportistas que se encuentran varados en las rutas de Caracollo y Tambo Quemado debido a los bloqueos de carreteras, con el fin de proveerles alimentos e insumos básicos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>5</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_5" onclick="openModal('modal_5')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">12</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Ratifican detención preventiva de Luis Arce</div>
+<div class="topic-body">Una Sala Penal ratificó la ampliación de la detención preventiva del expresidente Luis Arce por cinco meses adicionales. Durante la audiencia de apelación, el exmandatario cuestionó la resolución judicial y la vigencia de sus derechos, mientras el proceso de investigación sigue su curso.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_8b" onclick="openModal('modal_8b')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">13</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Restablecen tránsito en autopista La Paz El Alto</div>
+<div class="topic-body">Se restablece el flujo vehicular en la autopista La Paz-El Alto y rutas hacia Laja tras la intervención policial en puntos de bloqueo. Las autoridades mantienen resguardo en el peaje y zonas estratégicas para garantizar la normalización del tránsito tras semanas de conflicto.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N001" onclick="openModal('modal_N001')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">14</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Transportistas convocan ampliado nacional por bloqueos</div>
+<div class="topic-body">El sector del transporte nacional convoca a un ampliado nacional para definir medidas ante el impacto de 43 días de bloqueos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>5</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N002" onclick="openModal('modal_N002')" role="button" style="border-top:2px solid var(--c-02)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-02)">15</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-02)">ECONOMÍA</div>
+<div class="topic-title">Fancesa paraliza operaciones por millonarias pérdidas</div>
+<div class="topic-body">Fancesa paraliza operaciones y declara vacación colectiva tras registrar pérdidas de Bs 70 millones por los bloqueos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N003" onclick="openModal('modal_N003')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">16</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Amenazan con cortar servicios básicos a La Paz</div>
+<div class="topic-body">Campesinos de la provincia Los Andes radicalizan bloqueos y amenazan con cortar el suministro de agua y energía eléctrica a La Paz.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>4</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_3" onclick="openModal('modal_3')" role="button" style="border-top:2px solid var(--c-25)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-25)">17</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-25)">SOCIEDAD</div>
+<div class="topic-title">Estados Unidos golea a Paraguay en Mundial</div>
+<div class="topic-body">En el marco del Mundial de fútbol, la selección de Estados Unidos derrotó por goleada a su similar de Paraguay en su partido de debut. El encuentro destacó por el dominio estadounidense frente a una selección paraguaya que tuvo un inicio de torneo accidentado.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>4</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N004" onclick="openModal('modal_N004')" role="button" style="border-top:2px solid var(--c-10)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-10)">18</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-10)">JUSTICIA</div>
+<div class="topic-title">Investigan a cientos de personas por bloqueos</div>
+<div class="topic-body">La Fiscalía de La Paz investiga a 323 personas y reporta 22 detenidos preventivos por los bloqueos de caminos.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N005" onclick="openModal('modal_N005')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">19</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Llega oxígeno medicinal para hospitales de La Paz</div>
+<div class="topic-body">Reportan la llegada de seis toneladas de oxígeno medicinal para abastecer a hospitales de La Paz y El Alto.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div>
+<div class="topic-card" id="card_N006" onclick="openModal('modal_N006')" role="button" style="border-top:2px solid var(--c-08)" tabindex="0">
+<div class="topic-big-n" style="color:var(--c-08)">20</div>
+<div class="topic-cat-badge" style="background:rgba(0,0,0,0.06);color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="topic-title">Reportan noventa puntos de bloqueo en Bolivia</div>
+<div class="topic-body">En el día 43 del conflicto, la ABC y reportes oficiales registran entre 85 y 90 puntos de bloqueo activos en el país.</div>
+<div class="topic-footer">
+<div class="topic-stat"><strong>3</strong> titulares</div>
+<div class="topic-stat"><strong>3</strong> medios</div>
+</div>
+</div></div>
+<div class="page-break" data-bm-premium="1"><div class="page-break-label">Hoja 3 · Señales emergentes</div></div>
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/politica/comision-identifica-a-mas-de-50-responsables-de-la-gasolina-contaminada-y-sugiere-remitir-antecedentes-a-la-fiscalia" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Comisión identifica a más de 50 responsables de la gasolina contaminada y sugiere remitir antecedentes a la fiscalía</a></div>
+<div class="emergente-sum">Comisión legislativa identifica a 50 responsables de la gasolina contaminada y sugiere remitir antecedentes a la Fiscalía.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://brujuladigital.net/seguridad/2026/06/12/secuestran-a-un-dirigente-de-yapacani-la-policia-activa-operativo-de-busqueda-61908" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Secuestran a un dirigente de Yapacaní; la policía activa operativo de búsqueda</a></div>
+<div class="emergente-sum">La Policía activa un operativo de búsqueda en Yapacaní tras el reporte del secuestro de un dirigente local.</div>
+<div class="emergente-source">Fuente: Brujula Digital</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.leo.bo/2026/06/12/emiten-aprehension-y-alerta-migratoria-contra-talamas/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Emiten aprehensión y Alerta Migratoria contra Talamás</a></div>
+<div class="emergente-sum">Emiten orden de aprehensión y alerta migratoria contra Talamás por procesos judiciales en curso.</div>
+<div class="emergente-source">Fuente: LEO (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/reportan-temperatura-baja-este-2026-15-c-jesus-machaca-paz_1781296304" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Reportan la temperatura más baja de este 2026: -15°C en Jesús de Machaca, La Paz</a></div>
+<div class="emergente-sum">Jesús de Machaca registra la temperatura más baja del año en Bolivia con -15°C.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/nacional/2026/06/12/cao-bloqueos-generan-un-impacto-economico-igual-o-peor-que-la-pandemia/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">CAO: Bloqueos generan un impacto económico ‘igual o peor que la pandemia’</a></div>
+<div class="emergente-sum">La CAO advierte que el impacto económico de los bloqueos actuales es igual o peor que el de la pandemia.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div></div>
+</div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260613 · 2026-06-13</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 150 titulares · 20 temas · 7 categorías · 17 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Centrales obreras presionan por diálogo con Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Centrales obreras presionan por diálogo con Gobierno</div>
+<div class="modal-sum">Diferentes Centrales Obreras Departamentales (COD) presionan al dirigente de la COB, Mario Argollo, para que entable un diálogo con el presidente Rodrigo Paz. Los representantes regionales de Cochabamba, Chuquisaca y el sur rechazan el pedido de renuncia del mandatario por falta de consenso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">16</strong> titulares</span>
+<span><strong style="color:var(--c-08)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/dirigentes-sindicales-de-cochabamba-y-chuquisaca-presionan-a-argollo-para-dialogar-con-paz" rel="noopener noreferrer" target="_blank">Dirigentes sindicales de Cochabamba y Chuquisaca presionan a Argollo para dialogar con Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/dirigente-de-la-cod-de-chuquisaca-dice-que-argollo-no-consensuo-antes-de-exigir-la-renuncia-de-paz-a-nombre-de-la-cob-61915" rel="noopener noreferrer" target="_blank">Dirigente de la COD de Chuquisaca dice que Argollo no consensuó antes de exigir la renuncia de Paz a nombre de la COB</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260612/centrales-obreras-departamentales-del-sur-exigen-a-mario-argollo-a-aceptar-el-dialogo.html" rel="noopener noreferrer" target="_blank">Centrales Obreras Departamentales del sur exigen a Mario Argollo a aceptar el diálogo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/cod-chuquisaca-rechaza-pedido-de-renuncia-de-paz-y-exige-a-argollo-acudir-al-dialogo/" rel="noopener noreferrer" target="_blank">COD Chuquisaca rechaza pedido de renuncia de Paz y exige a Argollo acudir al diálogo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/cinco-centrales-obreras-departamentales-buscan-promover-dialogo-para-resolver-los-conflictos-dice-dirigente-DE21347422" rel="noopener noreferrer" target="_blank">Cinco centrales obreras departamentales buscan promover diálogo para resolver los conflictos, dice dirigente</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/central-obrera-de-cochabamba-a-argollo-exhortamos-a-abrirse-al-dialogo-planteado-por-el-presidente-rodrigo-paz-NE21345967" rel="noopener noreferrer" target="_blank">Central Obrera de Cochabamba a Argollo: Exhortamos a abrirse al diálogo planteado por el presidente Rodrigo Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52672-centrales-obreras-afirman-que-la-peticion-de-renuncia-de-paz-fue-decision-de-argollo-y-campesinos-afines-a-morales-insisten-en-esa-exigencia" rel="noopener noreferrer" target="_blank">Centrales obreras afirman que la petición de renuncia de Paz fue decisión de Argollo, y campesinos afines a Morales insisten en esa exigencia</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_cod-de-cochabamba-plantea-a-la-cob-un-cuarto-intermedio-para-ir-a-dialogo.html" rel="noopener noreferrer" target="_blank">COD de Cochabamba plantea a la COB un cuarto intermedio para ir a diálogo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/mas-senales-de-que-la-movilizacion-se-debilita-cod-de-cochabamba-pide-pausa-humanitaria-61909" rel="noopener noreferrer" target="_blank">Más señales de que la movilización se debilita: COD de Cochabamba pide pausa humanitaria</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cod-cochabamba-abre-puerta-dialogo-plantea-pausa-humanitaria-bloqueos_1781294530" rel="noopener noreferrer" target="_blank">La COD de Cochabamba abre la puerta al diálogo y plantea una pausa humanitaria en los bloqueos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_central-obrera-de-cochabamba-plantea-cuarto-intermedio-en-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Central Obrera de Cochabamba plantea cuarto intermedio en los bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/cod-de-cochabamba-propone-a-la-cob-un-cuarto-intermedio/" rel="noopener noreferrer" target="_blank">COD de Cochabamba propone a la COB un cuarto intermedio</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260612/cod-cochabamba-propone-cob-pausa-ir-dialogo" rel="noopener noreferrer" target="_blank">La COD de Cochabamba propone a la COB una pausa para ir a diálogo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/cod-de-cochabamba-propone-a-la-cob-poner-en-pausa-los-bloqueos-para-ir-al-dialogo/" rel="noopener noreferrer" target="_blank">COD de Cochabamba propone a la COB poner en pausa los bloqueos para ir al diálogo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/la-cod-de-cochabamba-le-pide-la-cob-un-cuarto-intermedio-humanitario-y-abrirse-al-dialogo" rel="noopener noreferrer" target="_blank">La COD de Cochabamba le pide a la COB un cuarto intermedio humanitario y abrirse al diálogo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52735-bloqueos-se-levantan-en-cuatro-departamentos-y-la-cod-de-cochabamba-pide-cuarto-intermedio-y-dialogo-con-el-gobierno" rel="noopener noreferrer" target="_blank">Bloqueos se levantan en cuatro departamentos y la COD de Cochabamba pide cuarto intermedio y diálogo con el Gobierno</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Evo Morales ratifica continuidad de los bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Evo Morales ratifica continuidad de los bloqueos</div>
+<div class="modal-sum">Evo Morales y sectores afines ratifican la continuidad de los bloqueos tras 42 días de conflicto. Morales instruyó organizar relevos para evitar el agotamiento de las bases y advirtió que la medida podría durar un año o hasta "ganar la batalla", desafiando la gestión de Rodrigo Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">15</strong> titulares</span>
+<span><strong style="color:var(--c-05)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/06/12/ante-cansancio-de-las-bases-evo-morales-les-pide-que-no-abandonen-los-puntos-de-bloqueo-61912" rel="noopener noreferrer" target="_blank">Ante cansancio de las bases, Evo Morales les pide que no abandonen los puntos de bloqueo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/mientras-cob-y-campesinos-dejan-entrever-dialogo-el-evismo-amenaza-con-mantener-bloqueos-61896" rel="noopener noreferrer" target="_blank">Mientras COB y campesinos dejan entrever diálogo, el evismo amenaza con mantener bloqueos</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260612/bolivia-cumple-43-dias-de-conflicto-con-mas-de-90-puntos-de-bloqueo.html" rel="noopener noreferrer" target="_blank">Bolivia cumple 43 días de conflicto con más de 90 puntos de bloqueo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260612/evismo-insiste-con-mantener-bloqueos-vamos-a-estar-un-ano-si-rodrigo-paz-quiere.html" rel="noopener noreferrer" target="_blank">Evismo insiste con mantener bloqueos: “Vamos a estar un año si Rodrigo Paz quiere”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/politica/evismo-endurece-su-postura-y-asegura-que-mantendra-los-bloqueos-un-ano-si-rodrigo-paz-quiere.html" rel="noopener noreferrer" target="_blank">Evismo endurece su postura y asegura que mantendrá los bloqueos “un año si Rodrigo Paz quiere”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/politica/no-se-van-a-cansar-evo-afirma-que-los-bloqueos-se-fortaleceran-con-relevos-organizados.html" rel="noopener noreferrer" target="_blank">“No se van a cansar”: Evo afirma que los bloqueos se fortalecerán con relevos organizados</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/pais/saqueos-agresiones-y-retenciones-marcan-la-faceta-mas-violenta-de-los-bloqueos-y-movilizaciones-que-superan-los-40-dias.html" rel="noopener noreferrer" target="_blank">Saqueos, agresiones y retenciones marcan la faceta más violenta de los bloqueos y movilizaciones que superan los 40 días</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/evo-pide-mantener-los-bloqueos-y-reforzar-los-relevos-ante-el-desgaste/" rel="noopener noreferrer" target="_blank">Evo pide mantener los bloqueos y reforzar los relevos ante el desgaste</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/morales-dice-que-bloqueadores-se-turnan-y-llama-a-ampliar-las-protestas/" rel="noopener noreferrer" target="_blank">Morales dice que bloqueadores se turnan y llama a ampliar las protestas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/sin-tregua-hay-mas-de-86-rutas-cortadas-en-el-dia-43-de-los-bloqueos/" rel="noopener noreferrer" target="_blank">Sin tregua: Hay más de 86 rutas cortadas en el día 43 de los bloqueos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260612/evo-dice-que-bloqueos-no-se-levantaran-ganar-esta-batalla" rel="noopener noreferrer" target="_blank">Evo dice que los bloqueos no se levantarán hasta "ganar esta batalla"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-revela-que-movilizados-hacen-turnos-para-no-cansarse-y-descarta-que-se-levanten-los-bloqueos/" rel="noopener noreferrer" target="_blank">Evo revela que movilizados “hacen turnos” para no cansarse y descarta que se levanten los bloqueos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/bloqueadores-se-organizan-en-turnos-y-no-se-van-a-cansar-dice-evo-que-apunta-a-masificar-protestas-HD21334762" rel="noopener noreferrer" target="_blank">Bloqueadores se organizan en turnos y “no se van a cansar”, dice Evo, que apunta a masificar protestas</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/evo-dice-que-los-bloqueos-no-se-levantaran-hasta-ganar-esta-batalla" rel="noopener noreferrer" target="_blank">Evo dice que los bloqueos no se levantarán hasta “ganar esta batalla”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52660-a-42-dias-de-bloqueo-evo-morales-exige-mantener-la-medida-de-presion-y-sugiere-relevos-en-los-puntos-de-protesta" rel="noopener noreferrer" target="_blank">A 42 días de bloqueo, Evo Morales exige mantener la medida de presión y sugiere relevos en los puntos de protesta</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Hallan un millón de bolivianos en ambulancia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Hallan un millón de bolivianos en ambulancia</div>
+<div class="modal-sum">La Policía aprehendió a diez personas tras el hallazgo de un millón de bolivianos ocultos en una ambulancia de Puerto Villarroel que se dirigía al Trópico de Cochabamba. El operativo permitió el secuestro del dinero y el vehículo para investigar el origen de los fondos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">13</strong> titulares</span>
+<span><strong style="color:var(--c-07)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/12/policia-aprehende-a-hombre-con-mas-de-bs-1-millon-y-abre-investigacion-sobre-el-destino-del-dinero-61914" rel="noopener noreferrer" target="_blank">Policía aprehende a un hombre con más de Bs 1 millón y abre investigación sobre el destino del dinero</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policia-confirma-hay-nueve-personas-involucradas-caso-bs-1-millon-hallados-ambulancia_1781306873" rel="noopener noreferrer" target="_blank">La Policía confirma que hay nueve personas involucradas en el caso de los Bs 1 millón hallados en una ambulancia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/policia-secuestra-cerca-bs-1-millon-ambulancia-iba-tropico-cochabamba_1781297409" rel="noopener noreferrer" target="_blank">Policía secuestra cerca de Bs 1 millón en ambulancia que iba al Trópico de Cochabamba</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/pais/aprehenden-a-un-hombre-con-mas-de-bs-1-millon-y-sospechan-que-el-dinero-era-para-financiar-bloqueos.html" rel="noopener noreferrer" target="_blank">Aprehenden a un hombre con más de Bs 1 millón y sospechan que el dinero era para financiar bloqueos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/pais/loza-desafia-la-denuncia-por-uso-de-ambulancia-no-tengo-miedo-a-ser-procesado-ni-a-morir.html" rel="noopener noreferrer" target="_blank">Loza desafía la denuncia por uso de ambulancia: “No tengo miedo a ser procesado ni a morir”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_hallan-cerca-de-bs-1-millon-en-una-ambulancia-que-se-dirigia-al-tropico-de-cochabamba.html" rel="noopener noreferrer" target="_blank">Hallan cerca de Bs 1 millón en una ambulancia que se dirigía al Trópico de Cochabamba</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/%E2%80%9Cno-tengo-miedo-ser-procesado-no-tengo-miedo-morir%E2%80%9D-dice-loza-tras-ser-denunciado-por-uso" rel="noopener noreferrer" target="_blank">“No tengo miedo a ser procesado, no tengo miedo a morir”, dice Loza tras ser denunciado por uso indebido de ambulancia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/06/12/un-hombre-llevaba-mas-de-bs-1-millon-al-chapare-en-ambulancia/" rel="noopener noreferrer" target="_blank">Un hombre llevaba más de Bs 1 millón al Chapare en ambulancia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/detienen-persona-bs-1-millon-ambulancia-puerto-villarroel" rel="noopener noreferrer" target="_blank">Detienen a una persona con Bs 1 millón en ambulancia de Puerto Villarroel</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/nueve-arrestados-iban-ambulancia-puerto-villarroel-mas-millon-bolivianos/20260612223516992294.html" rel="noopener noreferrer" target="_blank">Arrestan a 9 personas en una ambulancia de Puerto Villarroel con un millón de bolivianos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/suman-10-aprehendidos-tras-el-hallazgo-de-bs-1-millon-en-una-ambulancia-que-salio-del-tropico-ME21347487" rel="noopener noreferrer" target="_blank">Suman 10 aprehendidos tras el hallazgo de Bs 1 millón en una ambulancia que salió del trópico</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/aprehenden-en-cochabamba-a-un-hombre-con-mas-de-bs-1-millon-en-una-ambulancia-que-salio-del-tropico-ME21341629" rel="noopener noreferrer" target="_blank">Aprehenden en Cochabamba a un hombre con más de Bs 1 millón en una ambulancia que salió del trópico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52738-10-personas-que-se-hallaban-en-una-ambulancia-que-transportaba-bs-1-millon-al-tropico-de-cochabamba-fueron-aprehendidas" rel="noopener noreferrer" target="_blank">10 personas que se hallaban en una ambulancia que transportaba Bs 1 millón al Trópico de Cochabamba fueron aprehendidas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Exhortan al presidente Paz a iniciar diálogo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Exhortan al presidente Paz a iniciar diálogo</div>
+<div class="modal-sum">El vicepresidente Edmand Lara, junto a la COB, la Iglesia y la Defensoría, exhorta al presidente Rodrigo Paz a iniciar un diálogo serio y autocrítico. Destacan la necesidad de habilitar corredores humanitarios para mitigar el desabastecimiento provocado por los conflictos sociales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">12</strong> titulares</span>
+<span><strong style="color:var(--c-05)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_lara-dice-que-paz-debe-iniciar-un-dialogo-y-ser-autocritico.html" rel="noopener noreferrer" target="_blank">Lara dice que Paz debe iniciar un diálogo y ser autocrítico</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_cob-y-campesinos-no-descartan-abrir-un-proceso-de-dialogo.html" rel="noopener noreferrer" target="_blank">COB y campesinos no descartan abrir un proceso de diálogo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/politica/secretario-general-de-la-cob-afirma-que-hasta-en-la-guerra-se-llega-al-dialogo.html" rel="noopener noreferrer" target="_blank">Secretario General de la COB afirma que “hasta en la guerra” se llega al diálogo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_la-iglesia-y-la-defensoria-piden-un-pacto-por-la-paz.html" rel="noopener noreferrer" target="_blank">La Iglesia y la Defensoría piden un “Pacto por la Paz”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_se-abre-la-posibilidad-de-dialogo-con-paz.html" rel="noopener noreferrer" target="_blank">¿Se abre la posibilidad de diálogo con Paz?</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-pide%C2%A0-paz-dar-un-paso-al-frente-abrir-di%C3%A1logo-serio-y-asumir-autocr%C3%ADtica%C2%A0" rel="noopener noreferrer" target="_blank">Lara pide a Paz dar un paso al frente, abrir diálogo serio y asumir autocrítica</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/06/12/choque-hasta-los-paises-en-guerra-han-llegado-al-dialogo/" rel="noopener noreferrer" target="_blank">Choque: “Hasta los países en guerra han llegado al diálogo”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/lara-pide-a-paz-convocar-a-movilizados-hoy-existe-una-oportunidad-de-encaminar-una-salida/" rel="noopener noreferrer" target="_blank">Lara pide a Paz convocar a movilizados: ‘Hoy existe una oportunidad de encaminar una salida’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/tras-un-mes-de-desabastecimiento-lara-destaca-habilitacion-de-corredores-humanitarios/" rel="noopener noreferrer" target="_blank">Tras un mes de desabastecimiento, Lara destaca habilitación de ‘corredores humanitarios’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260612/tupac-katari-cob-piden-agenda-clara-al-gobierno-antes-ir-al-dialogo" rel="noopener noreferrer" target="_blank">La Túpac Katari y la COB piden agenda clara al Gobierno antes de ir al diálogo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-pide-reconocer-que-los-movilizados-abran-corredores-humanitarios-y-que-paz-llame-a-un-proceso-serio-de-dialogo/" rel="noopener noreferrer" target="_blank">Lara pide “reconocer” que los movilizados abran “corredores humanitarios” y que Paz llame a un “proceso serio de diálogo”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lara-acusa-al-ministro-de-gobierno-de-agravar-el-conflicto-y-pide-a-bloqueadores-abrir-corredores-humanitarios-PE21346944" rel="noopener noreferrer" target="_blank">Lara acusa al ministro de Gobierno de agravar el conflicto y pide a bloqueadores abrir corredores humanitarios</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Acuerdo para fondo de garantía al transporte" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Acuerdo para fondo de garantía al transporte</div>
+<div class="modal-sum">El Gobierno y el sector del transporte llegaron a un acuerdo para establecer un fondo de garantía destinado a créditos para choferes con una tasa de interés del 12%. El convenio busca aliviar la situación financiera del sector, aunque quedan pendientes temas de reprogramación de deudas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">10</strong> titulares</span>
+<span><strong style="color:var(--c-02)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/12/choferes-y-gobierno-logran-acuerdo-sobre-fondo-pero-sigue-pendiente-la-reprogramacion-de-creditos-61907" rel="noopener noreferrer" target="_blank">Choferes y gobierno logran acuerdo sobre fondo, pero sigue pendiente la reprogramación de créditos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/12/en-la-reunion-con-el-gobierno-choferes-buscan-reprogramacion-de-al-menos-3-meses-en-creditos-61891" rel="noopener noreferrer" target="_blank">En la reunión con el gobierno, choferes buscan reprogramación de al menos 3 meses en créditos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/12/gobierno-y-choferes-se-reunen-para-analizar-un-fondo-para-el-sector-y-medidas-de-alivio-financiero-y--61883" rel="noopener noreferrer" target="_blank">Gobierno y choferes se reúnen para analizar un fondo para el sector y medidas de alivio financiero</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-transporte-gobierno-acuerdan-fondo-creditos-12-interes_1781298297" rel="noopener noreferrer" target="_blank">La Paz: Transporte y Gobierno acuerdan fondo para créditos al 12% de interés</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/economia/choferes-acuerdan-con-el-gobierno-un-fondo-para-creditos-al-12-de-interes.html" rel="noopener noreferrer" target="_blank">Choferes acuerdan con el Gobierno un fondo para créditos al 12% de interés</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_choferes-aceptan-fondo-del-gobierno-para-creditos-con-12-de-interes.html" rel="noopener noreferrer" target="_blank">Choferes aceptan fondo del Gobierno para créditos con 12% de interés</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260612/choferes-acuerdan-gobierno-creditos-al-12-interes" rel="noopener noreferrer" target="_blank">Choferes acuerdan con Gobierno créditos al 12% de interés</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/gobierno-y-choferes-de-la-paz-acuerdan-crear-un-fondo-de-garantia-para-creditos-con-tasa-de-interes-del-12/" rel="noopener noreferrer" target="_blank">Gobierno y choferes de La Paz acuerdan crear un fondo de garantía para créditos con tasa de interés del 12%</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-y-choferes-de-la-paz-acuerdan-credito-productivo-de-hasta-bs-200000-con-tasa-del-12-segun-dirigente-AE21344026" rel="noopener noreferrer" target="_blank">Gobierno y choferes de La Paz acuerdan “crédito productivo” de hasta Bs 200.000 con tasa del 12%, según dirigente</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/choferes-y-gobierno-acuerdan-un-fondo-para-creditos-de-hasta-bs-200-000-con-bajo-interes" rel="noopener noreferrer" target="_blank">Choferes y Gobierno acuerdan un fondo para créditos de hasta Bs 200.000 con bajo interés</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Operativos nacionales por caso de narcomadera" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Operativos nacionales por caso de narcomadera</div>
+<div class="modal-sum">El Ministerio Público coordina operativos en cinco departamentos y conformó comisiones para investigar el caso 'narcomadera' tras una incautación en Chile. La intervención incluye allanamientos en aserraderos de Pando y Beni ante la exigencia de celeridad por parte de exportadores y autoridades.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">10</strong> titulares</span>
+<span><strong style="color:var(--c-04)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fiscalia-policia-pando-allana-tercer-aserradero-vinculado-caso-narcomadera-incautada-chile_1781284544" rel="noopener noreferrer" target="_blank">Pando: Allanan un tercer aserradero vinculado al caso de la 'narcomadera' incautada en Chile</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministerio-publico-asegura-investiga-caso-narcomaderas-maderas-viru-viru-cinco-departamentos-pais_1781299556" rel="noopener noreferrer" target="_blank">Ministerio Público asegura que investiga el caso "Narcomaderas" y "Maderas en Viru Viru" en cinco departamentos del país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/allanan-aserradero-riberalta-vinculado-caso-narcomadera-incautada-chile_1781281038" rel="noopener noreferrer" target="_blank">Allanan aserradero en Riberalta vinculado al caso 'narcomadera' incautada en Chile</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_caso-maderas-tuto-rechaza-integrar-una-comision-junto-a-evo.html" rel="noopener noreferrer" target="_blank">Caso Maderas: Tuto rechaza integrar una comisión junto a Evo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/exportadores-fepc-forestales-exigen-investigar-caso-narcomadera-chile" rel="noopener noreferrer" target="_blank">Exportadores, FEPC y forestales exigen investigar el caso narcomadera en Chile</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/tuto-lara-rechazan-invitacion-investigar-caso-narcomaderas" rel="noopener noreferrer" target="_blank">Tuto y Lara rechazan invitación para investigar sobre el caso narcomaderas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260612/diputado-chileno-exige-resultados-concretos-incautacion-narcomadera" rel="noopener noreferrer" target="_blank">Diputado chileno exige resultados concretos tras incautación de "narcomadera"</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/fiscalia-investiga-5-departamentos-casos-madera-droga" rel="noopener noreferrer" target="_blank">Fiscalía investiga en 5 departamentos casos de madera con droga</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/pando-es-gente-honesta-gobernadora-pide-sancionar-a-responsables-de-narcomadera-2026612135152" rel="noopener noreferrer" target="_blank">"Pando es gente honesta"’: Gobernadora pide sancionar a responsables de 'narcomadera'</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-conforma-comisiones-para-investigar-la-droga-incautada-en-chile-y-la-carga-de-madera-en-viru-viru-CE21347353" rel="noopener noreferrer" target="_blank">Fiscalía conforma comisiones para investigar la droga incautada en Chile y la carga de madera en Viru Viru</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Liberan a militar retenido en San Julián" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Liberan a militar retenido en San Julián</div>
+<div class="modal-sum">Un teniente de las Fuerzas Armadas fue liberado tras permanecer retenido durante casi 24 horas por bloqueadores en San Julián. El Ministerio de Defensa confirmó el hecho, señalando que el militar recuperó su libertad luego de las gestiones realizadas ante los sectores movilizados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">9</strong> titulares</span>
+<span><strong style="color:var(--c-07)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/liberan-a-militar-retenido-por-bloqueadores-en-san-julian/" rel="noopener noreferrer" target="_blank">Liberan a militar retenido por bloqueadores en San Julián</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/a-casi-una-semana-autoridades-y-activistas-exigen-investigar-hechos-ocurridos-durante-el-desbloqueo-en-san-julian" rel="noopener noreferrer" target="_blank">A casi una semana, autoridades y activistas exigen investigar hechos ocurridos durante el desbloqueo en San Julián</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/12/gobierno-confirma-que-militar-retenido-en-san-julian-ya-fue-liberado-61874" rel="noopener noreferrer" target="_blank">Gobierno confirma que militar retenido en San Julián ya fue liberado</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260612/liberan-a-militar-que-habia-sido-retenido-por-bloqueadores-en-san-julian.html" rel="noopener noreferrer" target="_blank">Liberan a militar que había sido retenido por bloqueadores en San Julián</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/recupera-su-libertad-el-militar-que-estaba-retenido-en-san-juli%C3%A1n" rel="noopener noreferrer" target="_blank">Recupera su libertad el militar que estaba retenido en San Julián</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260612/tramitan-libertad-presunto-militar-retenido-bloqueos-san-julian" rel="noopener noreferrer" target="_blank">Tramitan libertad de presunto militar retenido en los bloqueos de San Julián</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/militar-retenido-por-bloqueadores-en-san-julian-recupera-su-libertad-confirma-el-ministro-de-defensa-202661263553" rel="noopener noreferrer" target="_blank">Militar retenido por bloqueadores en San Julián recupera su libertad, confirma el ministro de Defensa</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/liberan-teniente-de-las-ffaa-tras-ser-retenido-por-bloqueadores-en-san-julian" rel="noopener noreferrer" target="_blank">Liberan a teniente de las FFAA tras ser retenido por bloqueadores en San Julián</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52552-tras-permanecer-por-cerca-de-24-horas-retenido-liberan-al-militar-capturado-por-bloqueadores-en-san-julian" rel="noopener noreferrer" target="_blank">Tras permanecer por cerca de 24 horas retenido, liberan al militar capturado por bloqueadores en San Julián</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Investigan carga de madera con cocaína" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Investigan carga de madera con cocaína</div>
+<div class="modal-sum">La Fiscalía y la FELCC investigan una carga de madera en el aeropuerto de Viru Viru tras sospechas de narcotráfico. Pruebas preliminares de campo dieron positivo a cocaína, por lo que se ordenaron análisis periciales complementarios para confirmar la presencia de sustancias controladas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">9</strong> titulares</span>
+<span><strong style="color:var(--c-04)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_toman-muestras-a-carga-de-madera-en-viru-viru-se-presume-que-contiene-droga.html" rel="noopener noreferrer" target="_blank">Toman muestras a carga de madera en Viru Viru, “se presume” que contiene droga</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/fiscalia-primer-test-detecta-droga-en-madera-secuestrada-en-viru-viru-pero-resultado-aun-debe-verificarse" rel="noopener noreferrer" target="_blank">Fiscalía: primer test detecta droga en madera secuestrada en Viru Viru, pero resultado aún debe verificarse</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/12/madera-hallada-en-viru-viru-da-positivo-a-cocaina-fiscalia-ordena-nuevos-analisis-61906" rel="noopener noreferrer" target="_blank">Madera hallada en Viru Viru da positivo a cocaína; fiscalía de Santa Cruz ordena nuevos análisis</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/senado-investigara-quien-autorizo-cargamentos-madera-contaminados-droga_1781317606" rel="noopener noreferrer" target="_blank">Senado investigará quién autorizó los cargamentos de madera contaminados con droga</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/06/12/toman-muestras-a-carga-de-madera-en-viru-viru/" rel="noopener noreferrer" target="_blank">Toman muestras a carga de madera en Viru Viru</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/narcomadera-fiscalia-aguarda-segundo-analisis-tras-primer-resultado-positivo/" rel="noopener noreferrer" target="_blank">Narcomadera: Fiscalía aguarda segundo análisis tras primer resultado positivo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/toman-muestras-a-madera-en-viru-viru-por-sospecha-de-droga/" rel="noopener noreferrer" target="_blank">Toman muestras a madera en Viru Viru por sospecha de droga</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/felcc-fiscalia-abren-investigacion-madera-viru-viru" rel="noopener noreferrer" target="_blank">Felcc y Fiscalía abren investigación sobre madera en Viru Viru</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/carga-de-madera-en-viru-viru-fiscalia-dice-que-primera-prueba-dio-positivo-y-esperan-segundo-test-FD21337332" rel="noopener noreferrer" target="_blank">Carga de madera en Viru Viru: Fiscalía dice que primera prueba dio positivo y esperan segundo test</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="Queman patrulla y agreden policías en El Alto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Queman patrulla y agreden policías en El Alto</div>
+<div class="modal-sum">Bloqueadores en El Alto incendiaron una patrulla de la FELCV y agredieron a policías que acudían a un auxilio por violencia de género. El ataque, ocurrido en el sector de Puente Seque, incluyó la retención temporal y maltrato físico a los uniformados antes de su liberación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">8</strong> titulares</span>
+<span><strong style="color:var(--c-07)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/bloqueadores-intentan-asesinar-a-policia-y-queman-patrulla-que-iba-en-auxilio-de-una-victima-de-violencia" rel="noopener noreferrer" target="_blank">Bloqueadores intentan asesinar a policía y queman patrulla que iba en auxilio de una víctima de violencia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/12/bloqueadores-queman-una-patrulla-y-agreden-a-dos-policias-en-el-alto-61919" rel="noopener noreferrer" target="_blank">Bloqueadores queman una patrulla y agreden a dos policías en El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/violencia-alto-bloqueadores-queman-camioneta-policia-desnudan-uniformados_1781298739" rel="noopener noreferrer" target="_blank">Violencia en El Alto: bloqueadores queman una camioneta de la Policía y desnudan a uniformados</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_incendian-vehiculo-de-la-felcv-y-agreden-a-dos-policias-en-punto-de-bloqueo-en-el-alto.html" rel="noopener noreferrer" target="_blank">Incendian vehículo de la FELCV y agreden a dos policías en punto de bloqueo en El Alto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/felcv-veh%C3%ADculo-policial-quemado-en-puente-seke-se-dirig%C3%ADa-auxiliar-una-mujer-v%C3%ADctima-de" rel="noopener noreferrer" target="_blank">FELCV: Vehículo policial quemado en Puente Seke se dirigía a auxiliar a una mujer víctima de violencia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/queman-un-veh%C3%ADculo-policial-en-el-camino-laja" rel="noopener noreferrer" target="_blank">Queman un vehículo policial en el camino a Laja</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260612/denuncian-quema-patrulla-policial-felcv-alto-liberan-uniformados" rel="noopener noreferrer" target="_blank">Denuncian quema de patrulla policial de la Felcv en El Alto; liberan a uniformados</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/reportan-liberacion-de-policias-tras-ser-retenidos-en-un-bloqueo-de-el-alto-les-quemaron-la-patrulla-HE21340979" rel="noopener noreferrer" target="_blank">Reportan liberación de policías tras ser retenidos en un bloqueo de El Alto; les quemaron la patrulla</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Cívicos convocan cabildo para exigir desbloqueo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Cívicos convocan cabildo para exigir desbloqueo</div>
+<div class="modal-sum">Comcipo y sectores cívicos de La Paz y Potosí se movilizan y convocan a un cabildo para exigir al gobierno de Rodrigo Paz el desbloqueo de carreteras. Los movilizados rechazan las protestas del evismo y solicitan medidas severas, incluyendo la declaratoria de estado de excepción.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">7</strong> titulares</span>
+<span><strong style="color:var(--c-08)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260612/sube-presion-para-que-paz-dicte-estado-de-excepcion.html" rel="noopener noreferrer" target="_blank">Sube presión para que Paz dicte Estado de excepción</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cabildo-potosi-pide-estado-excepcion-aprehension-evo_1781313528" rel="noopener noreferrer" target="_blank">Cabildo en Potosí pide estado de excepción y aprehensión de Evo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/civicos-potosi-alistan-cabildo-esta-tarde-bloqueos_1781284128" rel="noopener noreferrer" target="_blank">Cívicos de Potosí alistan un cabildo para esta tarde en contra de los bloqueos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/politica/comcipo-convoca-a-cabildo-este-viernes-para-rechazar-los-bloqueos-y-exigir-estado-de-excepcion.html" rel="noopener noreferrer" target="_blank">Comcipo convoca a cabildo este viernes para rechazar los bloqueos y exigir estado de excepción</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/la-paz-y-potosi-se-movilizan-para-exigir-el-fin-de-los-bloqueos/" rel="noopener noreferrer" target="_blank">La Paz y Potosí se movilizan para exigir el fin de los bloqueos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/comcipo-convoca-cabildo-potosi-exigir-fin-bloqueos/20260612114526992273.html" rel="noopener noreferrer" target="_blank">Comcipo convoca a un cabildo en Potosí para exigir el fin de los bloqueos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/comcipo-convoca-a-cabildo-en-potosi-para-exigir-el-desbloqueo-de-carreteras-2026612111959" rel="noopener noreferrer" target="_blank">Comcipo convoca a cabildo en Potosí para exigir el desbloqueo de carreteras</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Caravana humanitaria asiste a transportistas varados" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Caravana humanitaria asiste a transportistas varados</div>
+<div class="modal-sum">La Defensoría del Pueblo organiza una caravana humanitaria para asistir a cientos de transportistas que se encuentran varados en las rutas de Caracollo y Tambo Quemado debido a los bloqueos de carreteras, con el fin de proveerles alimentos e insumos básicos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">5</strong> titulares</span>
+<span><strong style="color:var(--c-08)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_preparan-caravana-humanitaria-para-ayudar-a-mas-de-500-transportistas-varados-en-las-carreteras.html" rel="noopener noreferrer" target="_blank">Preparan caravana humanitaria para ayudar a más de 500 transportistas varados en las carreteras</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/defensoria-organiza-caravana-humanitaria-para-asistir-a-transportistas-varados-en-caracollo-y-tambo-quemado-61929" rel="noopener noreferrer" target="_blank">Defensoría organiza caravana humanitaria para asistir a transportistas varados en Caracollo y Tambo Quemado</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/preparan-caravana-humanitaria-para-transportistas-varados-por-bloqueos" rel="noopener noreferrer" target="_blank">Preparan caravana humanitaria para transportistas varados por bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/06/12/salud-de-transportistas-varados-en-carreteras-se-deteriora/" rel="noopener noreferrer" target="_blank">Salud de transportistas varados en carreteras se deteriora</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/defensoria-alista-caravana-humanitaria-para-500-choferes-varados-en-tambo-quemado-y" rel="noopener noreferrer" target="_blank">Defensoría alista caravana humanitaria para 500 choferes varados en Tambo Quemado y Caracollo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Ratifican detención preventiva de Luis Arce" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Ratifican detención preventiva de Luis Arce</div>
+<div class="modal-sum">Una Sala Penal ratificó la ampliación de la detención preventiva del expresidente Luis Arce por cinco meses adicionales. Durante la audiencia de apelación, el exmandatario cuestionó la resolución judicial y la vigencia de sus derechos, mientras el proceso de investigación sigue su curso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/amplian-cinco-meses-detencion-preventiva-luis-arce-fondo-indigena_1781298524" rel="noopener noreferrer" target="_blank">Sala Penal ratifica ampliación de detención de Luis Arce y deberá permanecer cinco meses más en prisión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/es-ampliada-por-cinco-meses-la-detencion-preventiva-de-luis-arce/" rel="noopener noreferrer" target="_blank">Es ampliada por cinco meses la detención preventiva de Luis Arce</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/luis-arce-cuestiona-prolongacion-de-su-detencion-preventiva/" rel="noopener noreferrer" target="_blank">Luis Arce cuestiona prolongación de su detención preventiva</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/arce-en-audiencia-que-ratifico-la-ampliacion-de-su-detencion-pareceria-que-dar-la-cara-es-un-delito/" rel="noopener noreferrer" target="_blank">Arce en audiencia que ratificó la ampliación de su detención: “Parecería que dar la cara es un delito”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/ratifican-ampliacion-de-la-detencion-preventiva-de-luis-arce-por-cinco-meses-PE21346922" rel="noopener noreferrer" target="_blank">Ratifican ampliación de la detención preventiva de Luis Arce por cinco meses</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8b">
+<div class="modal-backdrop" onclick="closeModal('modal_8b')"></div>
+<div aria-label="Restablecen tránsito en autopista La Paz El Alto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Restablecen tránsito en autopista La Paz El Alto</div>
+<div class="modal-sum">Se restablece el flujo vehicular en la autopista La Paz-El Alto y rutas hacia Laja tras la intervención policial en puntos de bloqueo. Las autoridades mantienen resguardo en el peaje y zonas estratégicas para garantizar la normalización del tránsito tras semanas de conflicto.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">5</strong> titulares</span>
+<span><strong style="color:var(--c-08)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/autopista-la-paz-el-alto-se-encuentra-sin-bloqueos-y-con-resguardo-policial--61887" rel="noopener noreferrer" target="_blank">Autopista La Paz- El Alto se encuentra sin bloqueos y con resguardo policial</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260612/bloqueos-vuelve-el-transito-vehicular-en-distintas-zonas-de-el-alto.html" rel="noopener noreferrer" target="_blank">Bloqueos: Vuelve el tránsito vehicular en distintas zonas de El Alto</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/comunidades-repliegan-bloqueo-rio-seco-43-dias-conflictos_1781300626" rel="noopener noreferrer" target="_blank">Comunidades se repliegan del bloqueo en Río Seco, tras 43 días de conflictos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/policia-despeja-bloqueo-en-puente-seque-y-restablece-el-transito-hacia-laja/" rel="noopener noreferrer" target="_blank">Policía despeja bloqueo en Puente Seque y restablece el tránsito hacia Laja</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/peaje-entre-la-paz-y-el-alto-vuelve-a-operar-con-resguardo-policial-tras-semanas-de-bloqueos/" rel="noopener noreferrer" target="_blank">Peaje entre La Paz y El Alto vuelve a operar con resguardo policial tras semanas de bloqueos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Transportistas convocan ampliado nacional por bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Transportistas convocan ampliado nacional por bloqueos</div>
+<div class="modal-sum">El sector del transporte nacional convoca a un ampliado nacional para definir medidas ante el impacto de 43 días de bloqueos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">5</strong> titulares</span>
+<span><strong style="color:var(--c-08)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/12/choferes-convocan-a-un-ampliado-nacional-y-advierten-decisiones-firmes-tras-mas-de-40-dias-de-bloqueos-61928" rel="noopener noreferrer" target="_blank">Choferes convocan a un ampliado nacional y advierten decisiones firmes tras más de 40 días de bloqueos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/bloqueos-choferes-bolivia-convocan-ampliado-este-lunes_1781303224" rel="noopener noreferrer" target="_blank">Bloqueos: Choferes de Bolivia convocan a un ampliado para este lunes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/economia/transporte-nacional-se-reune-este-lunes-para-analizar-medidas-ante-el-conflicto-vial.html" rel="noopener noreferrer" target="_blank">Transporte nacional se reúne este lunes para analizar medidas ante el conflicto vial</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/06/12/confederacion-nacional-de-choferes-anuncia-ampliado-para-definir-nuevas-medidas/" rel="noopener noreferrer" target="_blank">Confederación nacional de Choferes anuncia ampliado para definir nuevas medidas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/choferes-anuncian-entrega-simbolica-de-una-soga-a-lara/" rel="noopener noreferrer" target="_blank">Choferes anuncian entrega simbólica de una soga a Lara</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="Fancesa paraliza operaciones por millonarias pérdidas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Fancesa paraliza operaciones por millonarias pérdidas</div>
+<div class="modal-sum">Fancesa paraliza operaciones y declara vacación colectiva tras registrar pérdidas de Bs 70 millones por los bloqueos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">4</strong> titulares</span>
+<span><strong style="color:var(--c-02)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260612/fancesa-declara-vacacion-colectiva-ante-perdidas-de-bs-70-millones-por-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Fancesa declara vacación colectiva ante pérdidas de Bs 70 millones por los bloqueos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/43-dias-conflicto-fancesa-dispone-vacaciones-colectivas-procesa-bloqueadores_1781279468" rel="noopener noreferrer" target="_blank">43 días de conflicto: Fancesa dispone vacaciones colectivas y procesa a los bloqueadores</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-12/economia/fancesa-paraliza-operaciones-por-bloqueos-y-denuncia-a-dirigentes-por-perdidas-de-bs-70-millones.html" rel="noopener noreferrer" target="_blank">Fancesa paraliza operaciones por bloqueos y denuncia a dirigentes por pérdidas de Bs 70 millones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/fancesa-apaga-sus-hornos-y-denuncia-dirigentes-por-p%C3%A9rdidas-que-superan-los-bs-70-millones" rel="noopener noreferrer" target="_blank">Fancesa apaga sus hornos y denuncia a dirigentes por pérdidas que superan los Bs 70 millones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N003">
+<div class="modal-backdrop" onclick="closeModal('modal_N003')"></div>
+<div aria-label="Amenazan con cortar servicios básicos a La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Amenazan con cortar servicios básicos a La Paz</div>
+<div class="modal-sum">Campesinos de la provincia Los Andes radicalizan bloqueos y amenazan con cortar el suministro de agua y energía eléctrica a La Paz.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N003')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/campesinos-de-los-andes-amenazan-con-cortes-de-agua-y-energia-para-exigir-la-renuncia-de-paz" rel="noopener noreferrer" target="_blank">Campesinos de Los Andes amenazan con cortes de agua y energía para exigir la renuncia de Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/12/ponchos-huayrurus-amenazan-con-cortar-agua-energia-y-endurecer-el-cerco-a-la-paz-61920" rel="noopener noreferrer" target="_blank">Ponchos Huayrurus amenazan con cortar agua y energía; piden endurecer el cerco a La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/radicalizan-bloqueos-andes-definen-corte-agua-luz-ademas-exigen-alto-sumarse_1781306277" rel="noopener noreferrer" target="_blank">Radicalizarán los bloqueos, en Los Andes definen corte de agua y luz; además exigen a El Alto sumarse</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/campesinos-de-la-provincia-los-andes-mantienen-y-endurecen-bloqueos/" rel="noopener noreferrer" target="_blank">Campesinos de la provincia Los Andes mantienen y endurecen bloqueos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Estados Unidos golea a Paraguay en Mundial" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Estados Unidos golea a Paraguay en Mundial</div>
+<div class="modal-sum">En el marco del Mundial de fútbol, la selección de Estados Unidos derrotó por goleada a su similar de Paraguay en su partido de debut. El encuentro destacó por el dominio estadounidense frente a una selección paraguaya que tuvo un inicio de torneo accidentado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">4</strong> titulares</span>
+<span><strong style="color:var(--c-25)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/12/primer-gol-en-contra-del-mundial-favorece-a-estados-unidos--61930" rel="noopener noreferrer" target="_blank">Primer gol en contra del Mundial favorece a Estados Unidos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/12/ee-uu-muestra-un-gran-rendimiento-y-golea-a-paraguay-61933" rel="noopener noreferrer" target="_blank">EE UU muestra un gran rendimiento y golea a Paraguay</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paraguay-tuvo-un-debut-de-pesadilla-en-el-mundial-fue-goleado-por-estados-unidos/" rel="noopener noreferrer" target="_blank">Paraguay tuvo un debut de pesadilla en el Mundial: Fue goleado por Estados Unidos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/12/52759-estados-unidos-brilla-en-su-debut-mundialista-y-golea-con-autoridad-a-paraguay" rel="noopener noreferrer" target="_blank">Estados Unidos brilla en su debut mundialista y golea con autoridad a Paraguay</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N004">
+<div class="modal-backdrop" onclick="closeModal('modal_N004')"></div>
+<div aria-label="Investigan a cientos de personas por bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Investigan a cientos de personas por bloqueos</div>
+<div class="modal-sum">La Fiscalía de La Paz investiga a 323 personas y reporta 22 detenidos preventivos por los bloqueos de caminos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">3</strong> titulares</span>
+<span><strong style="color:var(--c-10)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N004')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/fiscalia-de-la-paz-investiga-a-323-personas-por-los-bloqueos-y-reporta-22-detenidos-preventivos" rel="noopener noreferrer" target="_blank">Fiscalía de La Paz investiga a 323 personas por los bloqueos y reporta 22 detenidos preventivos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/12/bloqueos-hay-323-investigados-y-22-detenidos-preventivos/" rel="noopener noreferrer" target="_blank">Bloqueos: Hay 323 investigados y 22 detenidos preventivos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-fiscalia-de-la-paz-afirma-que-323-personas-son-investigadas-por-los-bloqueos-22-cumplen-detencion/" rel="noopener noreferrer" target="_blank">La Fiscalía de La Paz afirma que 323 personas son investigadas por los bloqueos, 22 cumplen detención</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N005">
+<div class="modal-backdrop" onclick="closeModal('modal_N005')"></div>
+<div aria-label="Llega oxígeno medicinal para hospitales de La Paz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Llega oxígeno medicinal para hospitales de La Paz</div>
+<div class="modal-sum">Reportan la llegada de seis toneladas de oxígeno medicinal para abastecer a hospitales de La Paz y El Alto.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N005')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260612_reportan-llegada-de-seis-toneladas-de-oxigeno-medicinal-liquido-para-la-paz-y-el-alto.html" rel="noopener noreferrer" target="_blank">Reportan llegada de seis toneladas de oxígeno medicinal líquido para La Paz y El Alto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/06/12/llegan-seis-toneladas-de-oxigeno-para-hospitales-de-la-paz-y-el-alto/" rel="noopener noreferrer" target="_blank">Llegan seis toneladas de oxígeno para hospitales de La Paz y El Alto</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/llegan-6-toneladas-de-oxigeno-medicinal-y-despachan-57-cisternas-de-diesel-para-la-paz/" rel="noopener noreferrer" target="_blank">Llegan 6 toneladas de oxígeno medicinal y despachan 57 cisternas de diésel para La Paz</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N006">
+<div class="modal-backdrop" onclick="closeModal('modal_N006')"></div>
+<div aria-label="Reportan noventa puntos de bloqueo en Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Reportan noventa puntos de bloqueo en Bolivia</div>
+<div class="modal-sum">En el día 43 del conflicto, la ABC y reportes oficiales registran entre 85 y 90 puntos de bloqueo activos en el país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N006')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260612_dia-43-de-bloqueos-86-puntos-de-corte-persisten-en-seis-departamentos.html" rel="noopener noreferrer" target="_blank">Día 43 de bloqueos: 86 puntos de corte persisten en seis departamentos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/dia-43-de-movilizaciones-la-abc-registra-85-bloqueos-y-crece-la-presion-por-una-solucion" rel="noopener noreferrer" target="_blank">Día 43 de movilizaciones: la ABC registra 85 bloqueos y crece la presión por una solución</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/mantienen-90-bloqueos-dia-43-conflicto_1781267680" rel="noopener noreferrer" target="_blank">Se mantienen más de 90 bloqueos en el día 43 del conflicto</a></span></li>
+</ul>
+</div>
+</div>
+</div><script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+// NUEVA FUNCIÓN TAREA 5.1
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    // Desplazamiento suave centrado en la pantalla
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Añadir clase de destello
+    el.classList.add('highlight-card');
+    // Remover clase después de que termine la animación (1.5s)
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+// NUEVA FUNCIÓN TAREA 5.2
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+
+</script>
+<script>
+/* ───────── TAREA 6.3: LÓGICA DEL BOTÓN ───────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  // 1. Revisar si el usuario ya había elegido modo oscuro antes
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  // 2. Acción al hacer clic
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    // Cambiar ícono
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    // Guardar preferencia en el navegador
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
