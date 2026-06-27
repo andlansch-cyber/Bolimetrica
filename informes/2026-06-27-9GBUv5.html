@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260627</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+:root {
+  --dash-box-bg: #FBF6EC;
+  --kpi-chip-bg: rgba(15, 33, 55, 0.06);
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body.dark-mode {
+  --dash-box-bg: rgba(15, 33, 55, 0.5);
+  --kpi-chip-bg: rgba(0, 0, 0, 0.2);
+}
+.page {
+  max-width: 96% !important;
+  padding: 25px 30px !important;
+
+}
+
+.layout-2-cols { 
+  padding: 12px 12px !important; 
+  max-width: 100vw !important; 
+  box-sizing: border-box !important; 
+  width: 100% !important; 
+  overflow: hidden !important; 
+  gap: 16px !important;
+}
+
+body { font-size: 15px !important; background-color: #f4f1ea !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; }
+
+.emergentes-grid { grid-template-columns: 1fr !important; }
+
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  margin-bottom: 6px;
+}
+#themeToggle {
+  position: static !important;
+}
+
+.brief-tactico { background: var(--bg-card) !important; }
+.tarjeta-nivel-a { background: var(--bg-card) !important; }
+
+.chart-row-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+.chart-row-vertical .chart-label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  padding-bottom: 18px !important;
+}
+.chart-row-vertical .chart-bar-wrap {
+  width: 100% !important;
+}
+.chart-row-vertical .chart-medios {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 11px !important;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.donut-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.donut-arc {
+  transition: stroke-width 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+.donut-arc:hover {
+  stroke-width: 20;
+  opacity: 0.85;
+}
+.donut-legend {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.donut-legend-item {
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+.chart-label {
+  width: 480px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  padding-right: 15px !important;
+  text-align: left !important;
+}
+.chart-label span { font-size: 14px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+
+.section-label{ font-size: 13px !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+
+.topic-big-n{ font-weight: 900 !important; font-size: 28px !important; line-height: 1 !important; text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(15,33,55,0.18); }
+.topic-big-n{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+.top3-rank .rank-num{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+
+.modal-panel{ width: min(980px, calc(100vw - 28px)); border-radius: 14px; }
+.modal-head{ padding: 16px 18px; }
+.modal-title{ font-size: 20px; line-height: 1.15; }
+.modal-sum{ font-size: 13px; line-height: 1.45; }
+.modal-body{ padding: 14px 18px; max-height: calc(100vh - 220px); overflow: auto; }
+.modal-list{ padding-left: 0; margin: 0; gap: 10px; }
+.modal-list li{ display: grid; grid-template-columns: 130px 1fr; column-gap: 12px; row-gap: 2px; align-items: start; font-size: 13px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,.10); }
+.modal-list li:last-child{ border-bottom: 0; }
+.m-src{ font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-sep{ display:none; }
+.m-tit a{ word-break: break-word; text-decoration: underline; }
+
+.top3-card, .topic-card, .emergente-card { cursor: pointer !important; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important; }
+.top3-card:hover, .topic-card:hover, .emergente-card:hover { transform: translateY(-3px) !important; box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important; border-color: var(--border-glow) !important; }
+
+@media (max-width: 768px){
+  .page{ padding: 12px 12px 20px; max-width: 100% !important; box-sizing: border-box !important; width: 100% !important; }
+  .layout-2-cols{ 
+    padding: 12px 12px !important; 
+    max-width: 100vw !important; 
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    overflow: hidden !important; 
+  }
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; box-sizing: border-box !important; width: 100% !important; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto !important; text-align: left; font-size: 15px !important; }
+  .a-header { flex-wrap: wrap; }
+  .a-kpis { white-space: normal; }
+  .chart-medios{ width: auto; }
+  .freq-table{ display:block; overflow-x:auto; }
+  .modal-panel{ width: 92% !important; max-width: 100% !important; border-radius: 12px; box-sizing: border-box !important; }
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+  .layout-2-cols { display: grid !important; grid-template-columns: 1fr !important; }
+  .col-main, .col-sidebar { display: contents !important; }
+
+  .col-main > div:nth-child(1) { order: 1; position: relative; } /* Resumen Ejecutivo */
+  .col-sidebar > .cat-bar-card { order: 2; }
+  .col-sidebar > .concentracion-card { order: 3; }
+  .col-main > div:nth-child(2) { order: 4; } /* Jerarquía de temas */
+  .col-sidebar > .coverage-card { order: 5; }
+  .col-sidebar > .emergentes-grid,
+  .col-sidebar > div:has(> .emergentes-grid) { order: 6; }
+  .col-sidebar > .freq-table-card { order: 7; }
+
+  .col-sidebar > .sidebar-toggle-row {
+    position: relative !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-right: 4px !important;
+    order: 0;
+  }
+}
+
+.index-row { cursor: pointer !important; transition: background 0.2s ease, padding 0.2s ease; border-radius: 6px; padding: 4px; margin: -4px; }
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row { cursor: pointer !important; padding: 4px; margin: -4px; border-radius: 6px; transition: background 0.2s ease; }
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+.cat-topics-list { display: none; list-style: none; padding: 8px 10px 6px 14px; margin: 6px 0 2px 8px; background: var(--bg-card-2); border-left: 2px solid var(--border); border-radius: 0 4px 4px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+.cat-topics-list li { padding: 5px 6px; margin-bottom: 2px; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle-btn {
+  position: absolute; top: -5px; right: 0; z-index: 10;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 20px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+.theme-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+
+.right-panel > .section-label { margin-bottom: 4px !important; }
+
+.cat-row, .index-row { transition: background 0.2s ease, transform 0.2s ease !important; }
+.cat-row:hover, .index-row:hover { transform: translateX(6px) !important; }
+body.dark-mode .cat-row:hover, body.dark-mode .index-row:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+.ind-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.ind-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; background: transparent; }
+
+.brief-ejecutivo { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 6px; padding: 22px 28px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,33,55,0.06); }
+.brief-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.brief-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.brief-semaforo { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; padding: 4px 12px; border-radius: 999px; }
+.brief-parrafo { font-size: 14px; line-height: 1.7; color: var(--text-primary); margin-bottom: 14px; }
+.brief-implicaciones { list-style: none; padding: 0; margin: 0 0 12px 0; display: flex; flex-direction: column; gap: 6px; }
+.brief-implicaciones li { font-size: 13px; line-height: 1.55; color: var(--text-secondary); padding-left: 14px; position: relative; }
+.brief-implicaciones li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.brief-narrativa { font-size: 13px; line-height: 1.55; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+.brief-narrativa-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+.emergente-reason { font-size: 13px; font-style: italic; color: var(--amber-d); line-height: 1.55; border-left: 2px solid var(--amber); padding-left: 8px; margin-top: 2px; }
+
+.brief-tactico { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: #162032; border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 26px; }
+.brief-alerta { padding-left: 2px; margin-bottom: 16px; }
+.semaforo-badge { font-family: var(--font-mono); font-weight: 700; color: #ffffff; padding: 3px 9px; border-radius: 4px; font-size: 12px; margin-right: 10px; }
+.alerta-texto { font-weight: 700; color: var(--text-primary); }
+.brief-panorama h4, .brief-tensiones h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: #f0c060; margin-top: 0; margin-bottom: 8px; }
+.brief-panorama p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+.brief-tensiones ul { padding-left: 16px; margin: 0; color: var(--text-secondary); }
+.brief-tensiones li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+
+.categoria-contenedor { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.categoria-titulo { font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.tarjeta-nivel-a { background: #1d2a40; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.tarjeta-nivel-a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-color: var(--border-glow); }
+.a-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+.a-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.a-kpis { display: flex; gap: 8px; white-space: nowrap; }
+.kpi-chip { font-family: var(--font-mono); font-size: 11px; background: var(--kpi-chip-bg); padding: 3px 8px; border-radius: 4px; color: var(--text-muted); }
+.a-sumilla { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+
+.a-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--dash-box-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.dash-box strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: #f0c060; margin-bottom: 6px; }
+.dash-box p { font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+.a-dashboard .dash-box:nth-child(2) { padding-left: 14px; }
+
+.grid-nivel-b { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tarjeta-nivel-b { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+.tarjeta-nivel-b:hover { transform: translateY(-2px); background: rgba(0,0,0,0.04); border-color: var(--border-glow); }
+body.dark-mode .tarjeta-nivel-b:hover { background: #1d2a40; }
+.b-kpis { font-family: var(--font-mono); font-size: 11px; color: #f0c060; margin-bottom: 8px; }
+.b-sumilla { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+
+.lista-nivel-c { background: rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 8px 12px; }
+.lista-nivel-c summary { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); cursor: pointer; }
+.lista-nivel-c summary:hover { color: var(--text-primary); }
+.lista-nivel-c ul { margin: 8px 0 0 0; padding-left: 16px; }
+.lista-nivel-c li { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; cursor: pointer; }
+.lista-nivel-c li:hover { color: #f0c060; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .brief-tactico, .a-dashboard, .grid-nivel-b { grid-template-columns: 1fr !important; }
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-left: 2px solid var(--amber);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+.concentracion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+}
+.concentracion-svg {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  margin-top: 4px;
+}
+.concentracion-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+.concentracion-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.chart-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ───────── MEJORAS PUNTO 4: INTERACTIVIDAD DONA ───────── */
+.donut-legend-item.legend-hoverable { 
+  transition: background 0.2s ease, transform 0.2s ease; 
+  padding: 5px 6px; 
+  margin: -5px -6px 3px -6px; 
+  border-radius: 6px; 
+}
+.donut-legend-item.legend-hoverable:hover { 
+  background: rgba(0,0,0,0.04); 
+  transform: translateX(4px); 
+}
+body.dark-mode .donut-legend-item.legend-hoverable:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+}
+.legend-text { font-size: 12.5px; }
+.legend-text strong { 
+  color: var(--text-primary); 
+  font-size: 13px; 
+  font-weight: 700;
+}
+</style>
+<style>
+body.dark-mode {
+  --bg-base:     #0f2137;
+  --bg-card:     #152b47;
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.layout-2-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .layout-2-cols { grid-template-columns: 1fr; }
+}
+.col-main { display: flex; flex-direction: column; gap: 20px; }
+.col-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+body.dark-mode .theme-toggle-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+body.dark-mode .theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-06-27" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-06-27-9GBUv5.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">191</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">21</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">11</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">19</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 27-JUNIO-2026</strong><br/>
+            Reporte N° B24-20260627<br/>
+            Cobertura: últimas 24 horas
+          </div></div>
+</header><div class="layout-2-cols"><div class="col-main"><div><h3 class="section-label">RESUMEN EJECUTIVO</h3><div class="brief-tactico">
+<div class="brief-col-izq">
+<div class="brief-alerta" style="border-left: 4px solid #ba3030;">
+<span class="semaforo-badge" style="background:#ba3030;">🔴 ROJO</span>
+<span class="alerta-texto">Crisis multifactorial con escasez de combustible, inestabilidad económica, conflictos sociales y divisiones gubernamentales profundizan la alta volatilidad.</span>
+</div>
+<div class="brief-panorama">
+<h4>PANORAMA ESTRATÉGICO</h4>
+<p>La agenda mediática revela un escenario de alta complejidad y tensión creciente, dominado por la severa escasez de combustible que paraliza sectores y genera malestar social, a pesar de los intentos gubernamentales por descartar ajustes de precios y ofrecer paliativos como la tolerancia laboral. Paralelamente, la economía muestra signos de inestabilidad con la implementación de un régimen cambiario flexible y las críticas empresariales y políticas, mientras los bloqueos sociales persisten y escalan, evidenciando la incapacidad de contención. La situación se agrava con las profundas fisuras internas en el gobierno, expuestas por el Vicepresidente, y la persistente sombra de la asonada militar, lo que sugiere una administración bajo presión extrema y con dificultades para articular una respuesta unificada y efectiva ante las múltiples crisis.</p>
+</div>
+</div>
+<div class="brief-col-der">
+<div class="brief-tensiones">
+<h4>MAPA DE TENSIONES</h4>
+<ul><li>Gobierno vs. Crisis de Hidrocarburos: La administración intenta contener la escasez de combustible con medidas paliativas y descartando ajustes, mientras la población sufre largas filas y el impacto económico.</li><li>Gobierno vs. Oposición y Empresarios: El Ejecutivo implementa un régimen cambiario flexible y paga bonos, pero enfrenta críticas por inacción económica y pedidos de diálogo institucional.</li><li>Gobierno vs. Movimientos Sociales: La aprehensión de dirigentes y la tolerancia laboral contrastan con la persistencia de bloqueos cocaleros y advertencias de escalada del conflicto.</li><li>Gobierno (interno) vs. Gobierno (interno): Las tensiones internas se exponen públicamente con el Vicepresidente criticando al Ministro de Economía, revelando fisuras en la cúpula.</li></ul>
+</div>
+</div>
+</div></div><div>
+<div class="top3-stack">
+<div class="categoria-contenedor" style="border-top: 3px solid var(--c-11);">
+<h2 class="categoria-titulo" style="color: var(--c-11);">HIDROCARBUROS</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_5a" onclick="openModal('modal_5a')">
+<div class="a-header">
+<div class="a-title">#1 - Escasez de combustible genera largas filas</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 31 Titulares</span>
+<span class="kpi-chip">🏢 17 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La escasez de combustible, atribuida por YPFB a bloqueos y controles de calidad, genera largas filas en surtidores de La Paz y Santa Cruz. El presidente de YPFB pide paciencia, prometiendo normalizar el abastecimiento en los próximos días, mientras sectores como Anapo, choferes y avícolas reclaman por daño económico.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está dominada por los sectores afectados (transportistas, agricultores, avícolas, mineros) que denuncian una crisis persistente, impactos económicos severos y la ineficacia de las soluciones gubernamentales. YPFB y el Gobierno intentan contrarrestar pidiendo paciencia y prometiendo normalización, atribuyendo los problemas a factores externos, pero sus plazos no cumplidos les restan credibilidad. La ventaja narrativa la tienen los sectores afectados al exponer la realidad del impacto.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El sector agrícola (Anapo) y los transportistas son los principales actores con potencial de escalada. La afectación a la cosecha de invierno por la falta de diésel podría generar una crisis alimentaria y protestas. La frustración de los transportistas por las largas esperas y promesas incumplidas podría derivar en nuevas medidas de presión. La falta de cumplimiento de los plazos de normalización prometidos por YPFB y el Gobierno en los próximos días erosionará aún más la credibilidad y aumentará el descontento social.</p>
+</div>
+</div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b" data-bm-premium="1">
+<div class="tarjeta-nivel-b" id="card_5b" onclick="openModal('modal_5b')">
+<div class="b-title">#10 - Gobierno y YPFB descartan ajuste precio combustibles</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">El Gobierno y YPFB descartan un nuevo ajuste en el precio de los combustibles para la presente gestión, manteniendo la subvención a la gasolina en un promedio de entre Bs 2,04 y Bs 3,04 por litro.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_5c" onclick="openModal('modal_5c')">
+<div class="b-title">#12 - Gobierno da tolerancia laboral por escasez combustible</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">Ante la escasez de combustible, el Ministerio de Trabajo y el Gobierno disponen tolerancia de 30 minutos en el horario de ingreso laboral a partir de este viernes para los trabajadores.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-02);">
+<h2 class="categoria-titulo" style="color: var(--c-02);">ECONOMÍA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_8a" onclick="openModal('modal_8a')">
+<div class="a-header">
+<div class="a-title">#2 - Gobierno implementa régimen cambiario flexible para dólar</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 30 Titulares</span>
+<span class="kpi-chip">🏢 16 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El Gobierno, a través del Banco Central de Bolivia, implementa un régimen cambiario flexible para el dólar, poniendo fin a 15 años de tipo de cambio fijo. La nueva política iniciará el lunes 29 de junio de 2026 con un valor inicial de Bs 9,73 por dólar, y el BCB publicará el tipo de cambio cada día</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa es impulsada principalmente por el Gobierno, que es el actor que establece y dispone el nuevo régimen cambiario, y el Banco Central de Bolivia (BCB), que es el encargado de su implementación y definición diaria del tipo de cambio. Ambos tienen la ventaja al controlar la ejecución y la comunicación oficial de la medida. Voces externas (economistas, políticos) comienzan a reaccionar, tanto con apoyo como con advertencias, pero la agenda operativa está en manos de las entidades estatales.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Los actores con mayor potencial para amplificar o agravar el tema en las próximas 48 horas son los economistas y la oposición política, quienes ya están generando reacciones y advertencias sobre posibles impactos negativos (ej. encarecimiento de importaciones, inflación). El factor clave de escalada sería una volatilidad significativa o un aumento percibido en el tipo de cambio del dólar en los primeros días de implementación, lo que podría generar incertidumbre económica, descontento público y ser capitalizado por narrativas críticas.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_6" onclick="openModal('modal_6')">
+<div class="b-title">#8 - Empresarios piden diálogo institucional al Gobierno</div>
+<div class="b-kpis">8 Tit. | 7 Med.</div>
+<div class="b-sumilla">La Confederación de Empresarios Privados de Bolivia (CEPB) y otros sectores empresariales instan al Gobierno a establecer un diálogo institucional, planificado y ordenado, ante lo que consideran una relación 'desordenada'.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_7a" onclick="openModal('modal_7a')">
+<div class="b-title">#13 - Doria Medina critica inacción económica del Gobierno</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">El político Samuel Doria Medina critica al Gobierno por la falta de medidas concretas para la reactivación económica del país, señalando que sus sugerencias no son tomadas en cuenta y que la economía no se arregla sola.</div>
+</div>
+</div>
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de ECONOMÍA</summary>
+<ul>
+<li id="card_4a" onclick="openModal('modal_4a')">
+<strong>Gobierno paga Bono Gestión de Aula a maestros</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-08);">
+<h2 class="categoria-titulo" style="color: var(--c-08);">MOVIMIENTOS SOCIALES</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_3a" onclick="openModal('modal_3a')">
+<div class="a-header">
+<div class="a-title">#3 - Dirigentes de El Alto aprehendidos por bloqueos</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 9 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Denuncias penales, demandas y aprehensiones de dirigentes de El Alto, incluyendo a Alberto Quelali, Argollo, Salazar y Condori, en relación con los bloqueos que se extendieron por más de 50 días.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está fuertemente impulsada por los sectores afectados por los bloqueos (gremiales, cívicos, familias) y por instituciones que buscan justicia y rendición de cuentas (Asamblea de DDHH, asambleístas departamentales, Senado, Fiscalía). Estos actores tienen la ventaja, con acciones concretas como denuncias, demandas y aprehensiones de dirigentes, lo que sugiere que la agenda de "justicia y no impunidad" es la dominante.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La escalada puede venir de la profundización de los procesos legales, con posibles nuevas aprehensiones o imputaciones formales contra dirigentes (incluyendo figuras de alto perfil como Evo Morales, Argollo, etc.), lo que podría generar una fuerte reacción de los sectores afines a los acusados. La denuncia de la familia por la muerte de una mujer es un factor crítico que puede intensificar la presión social y mediática. Además, la respuesta de los dirigentes y organizaciones implicadas ante las acciones judiciales y las demandas de resarcimiento podría derivar en nuevas movilizaciones o contramovilizaciones.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_11b" onclick="openModal('modal_11b')">
+<div class="b-title">#9 - Cocaleros mantienen bloqueos en Trópico de Cochabamba</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">Pese al Estado de Excepción, cocaleros mantienen bloqueos y vigilias en el Trópico de Cochabamba, con un punto específico reportado. La Fiscalía de Cochabamba aguarda informes policiales para iniciar acciones legales, mientras se registran tramos restringidos para viajeros.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_11a" onclick="openModal('modal_11a')">
+<div class="b-title">#16 - Cocaleros retoman retén de Umopar en Villa Tunari</div>
+<div class="b-kpis">4 Tit. | 4 Med.</div>
+<div class="b-sumilla">Cocaleros retoman y justifican la toma del retén El Castillo de Umopar en Villa Tunari, Trópico de Cochabamba, lo que provoca el repliegue de la fuerza antidrogas y la imposición de condiciones para su trabajo en la zona.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-15);">
+<h2 class="categoria-titulo" style="color: var(--c-15);">MEDIO AMBIENTE</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_15a" onclick="openModal('modal_15a')">
+<div class="a-header">
+<div class="a-title">#4 - Terremoto en Venezuela: 235 muertos y 4.300 heridos</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 7 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Tras los terremotos en Venezuela, el número de muertos continúa en aumento, superando los 900 y llegando hasta 1.000, con la población enfrentando desesperación y saqueos.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está impulsada por los medios de comunicación que reportan el aumento de víctimas. La ventaja la tiene la información sobre la magnitud del desastre.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El aumento continuo de muertos y heridos, junto con la posible falta de recursos para atender a los afectados, puede agravar la crisis humanitaria en las próximas 48 horas.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-05);">
+<h2 class="categoria-titulo" style="color: var(--c-05);">POLÍTICA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_12" onclick="openModal('modal_12')">
+<div class="a-header">
+<div class="a-title">#5 - Zúñiga agradece a soldados por asonada militar</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 11 Titulares</span>
+<span class="kpi-chip">🏢 9 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">A dos años de la asonada militar de 2024, el general Juan José Zúñiga expresa respeto y gratitud a sus soldados, destacando que muchos estuvieron dispuestos a entregar su vida.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Zúñiga impulsa la agenda al emitir un mensaje público, buscando generar simpatía y reafirmar su liderazgo entre los soldados. Él tiene la ventaja en la difusión de su propia narrativa.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Las declaraciones de Zúñiga podrían generar reacciones en el ámbito militar (apoyo o rechazo interno) y político, así como un posible endurecimiento de la postura del gobierno o la justicia. La promesa de futuras revelaciones por parte de Zúñiga o su entorno.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-10);">
+<h2 class="categoria-titulo" style="color: var(--c-10);">JUSTICIA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_13a" onclick="openModal('modal_13a')">
+<div class="a-header">
+<div class="a-title">#6 - Presidente Arce niega vínculos en caso Zapatero</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 11 Titulares</span>
+<span class="kpi-chip">🏢 8 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El presidente Luis Arce niega enfáticamente haber intercedido o tener vínculos con tráfico de influencias en el caso 'Zapatero' y el conflicto Fancesa-Soboce, afirmando que su relación fue institucional y política.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa principal es de negación por parte de Luis Arce, quien rechaza consistentemente los vínculos con el tráfico de influencias y justifica sus reuniones como institucionales y políticas. Sin embargo, la ventaja la tiene la narrativa que expone la evidencia (chats) y la investigación judicial (Magistratura), lo que lo pone a la defensiva y bajo escrutinio.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La Magistratura es el actor clave que puede amplificar el tema en las próximas 48 horas, a través de avances en su investigación o la emisión de nuevas resoluciones. La publicación de más detalles o transcripciones de los 'chats' de Zapatero, o declaraciones de los involucrados, también podría agravar la situación. La Alcaldía de Sucre y la defensa de Fancesa pueden escalar el conflicto a nivel legal.</p>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" id="card_17" onclick="openModal('modal_17')">
+<div class="a-header">
+<div class="a-title">#7 - Zapatero pide excluir informe sobre negocios en Bolivia</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 10 Titulares</span>
+<span class="kpi-chip">🏢 9 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El expresidente español Rodríguez Zapatero solicita a la justicia de España que se excluya de una investigación judicial, como el caso 'Plus Ultra', un informe policial sobre sus presuntos negocios y gestiones en Bolivia.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Zapatero está a la defensiva, buscando excluir el informe. La justicia española y los medios de comunicación tienen la ventaja al mantener el foco en la investigación y la difusión de información.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La decisión del juez en España sobre la exclusión del informe, la posible filtración de detalles del mismo, y la reacción de actores políticos y judiciales en Bolivia, especialmente si se vincula a otros casos o genera más renuncias.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_4c" onclick="openModal('modal_4c')">
+<div class="b-title">#14 - TSJ denuncia colapso tecnológico y pide presupuesto</div>
+<div class="b-kpis">5 Tit. | 4 Med.</div>
+<div class="b-sumilla">El Tribunal Supremo de Justicia (TSJ) denuncia un colapso tecnológico, con sistemas obsoletos y computadoras colgadas, y demanda urgentemente mayor presupuesto para evitar el deterioro del servicio de justicia.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-18);">
+<h2 class="categoria-titulo" style="color: var(--c-18);">RELACIONES INTERNACIONALES</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_10" onclick="openModal('modal_10')">
+<div class="b-title">#11 - Presidente Paz asistirá a cumbre del Mercosur</div>
+<div class="b-kpis">6 Tit. | 5 Med.</div>
+<div class="b-sumilla">Paraguay confirma que el presidente boliviano Rodrigo Paz y otros seis mandatarios asistirán a la próxima cumbre del Mercosur.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-03);">
+<h2 class="categoria-titulo" style="color: var(--c-03);">GOBIERNO</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_9" onclick="openModal('modal_9')">
+<div class="b-title">#15 - Denuncian corrupción y cobro de cargos en Aduana</div>
+<div class="b-kpis">5 Tit. | 3 Med.</div>
+<div class="b-sumilla">Legisladores y políticos denuncian casos de corrupción y designaciones irregulares 'a dedo' o por cobros de cargos en la Aduana Nacional a ocho meses del Gobierno de Rodrigo Paz, exigiendo institucionalización e investigación.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-26);">
+<h2 class="categoria-titulo" style="color: var(--c-26);">DEPORTES</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_14" onclick="openModal('modal_14')">
+<div class="b-title">#17 - Uruguay eliminada del Mundial; Cabo Verde clasifica</div>
+<div class="b-kpis">4 Tit. | 2 Med.</div>
+<div class="b-sumilla">Uruguay fue eliminada en la primera fase del Mundial por segunda vez consecutiva, mientras que Cabo Verde logró una histórica clasificación a los octavos de final. España lideró el Grupo H.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-04);">
+<h2 class="categoria-titulo" style="color: var(--c-04);">NARCOTRÁFICO</h2>
+<div class="categoria-body">
+<details class="lista-nivel-c">
+<summary>Ver 2 temas con baja cobertura de NARCOTRÁFICO</summary>
+<ul>
+<li id="card_1a" onclick="openModal('modal_1a')">
+<strong>Retienen camiones con madera y droga en Yacuiba</strong> (3 titulares)
+                </li>
+<li id="card_2a" onclick="openModal('modal_2a')">
+<strong>Detienen madre e hijo por narcotráfico</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-21);">
+<h2 class="categoria-titulo" style="color: var(--c-21);">LEGISLATIVA</h2>
+<div class="categoria-body">
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de LEGISLATIVA</summary>
+<ul>
+<li id="card_4b" onclick="openModal('modal_4b')">
+<strong>Diputados aprueban créditos millonarios para agricultura</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div></div>
+</div></div><div class="col-sidebar"><div class="sidebar-toggle-row"><button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button></div><div class="concentracion-card">
+<h3 class="sidebar-title">CONCENTRACIÓN DE LA AGENDA</h3>
+<div class="donut-wrap">
+<svg aria-label="Concentración de la agenda: Top 5 temas vs. resto" class="donut-svg" role="img" viewbox="0 0 100 100">
+<circle class="donut-arc" cx="50" cy="50" data-label="Escasez de combustible genera largas filas" data-pct="16.2" data-val="31" fill="transparent" onclick="scrollToCard('card_5a')" r="40" stroke="var(--c-11)" stroke-dasharray="40.791 210.536" stroke-dashoffset="-0.000" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 84.9, 69.5)" x="84.9" y="69.5">
+                16%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Gobierno implementa régimen cambiario flexible para dólar" data-pct="15.7" data-val="30" fill="transparent" onclick="scrollToCard('card_8a')" r="40" stroke="var(--c-02)" stroke-dasharray="39.476 211.852" stroke-dashoffset="-40.791" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 52.3, 89.9)" x="52.3" y="89.9">
+                16%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Dirigentes de El Alto aprehendidos por bloqueos" data-pct="7.9" data-val="15" fill="transparent" onclick="scrollToCard('card_3a')" r="40" stroke="var(--c-08)" stroke-dasharray="19.738 231.590" stroke-dashoffset="-80.267" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 24.8, 81.0)" x="24.8" y="81.0">
+                8%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Terremoto en Venezuela: 235 muertos y 4.300 heridos" data-pct="7.9" data-val="15" fill="transparent" onclick="scrollToCard('card_15a')" r="40" stroke="var(--c-15)" stroke-dasharray="19.738 231.590" stroke-dashoffset="-100.005" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 13.1, 65.4)" x="13.1" y="65.4">
+                8%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Zúñiga agradece a soldados por asonada militar" data-pct="5.8" data-val="11" fill="transparent" onclick="scrollToCard('card_12')" r="40" stroke="var(--c-05)" stroke-dasharray="14.474 236.853" stroke-dashoffset="-119.742" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 10.0, 48.7)" x="10.0" y="48.7">
+                6%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Resto" data-pct="46.6" data-val="89" fill="transparent" r="40" stroke="var(--bg-subtle)" stroke-dasharray="117.111 134.217" stroke-dashoffset="-134.217" stroke-width="16" style="">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 54.3, 10.2)" x="54.3" y="10.2">
+                47%
+              </text>
+</svg>
+</div>
+<ul class="concentracion-legend donut-legend">
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_5a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-11)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Escasez de combustible genera largas filas</strong> (31 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_8a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-02)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Gobierno implementa régimen cambiario flexible para dólar</strong> (30 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_3a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-08)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Dirigentes de El Alto aprehendidos por bloqueos</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_15a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-15)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Terremoto en Venezuela: 235 muertos y 4.300 heridos</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_12')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-05)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Zúñiga agradece a soldados por asonada militar</strong> (11 titulares)</span>
+</li>
+<li class="donut-legend-item" style="">
+<span class="dot" style="background:var(--bg-subtle)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Resto</strong> (89 titulares)</span>
+</li>
+</ul>
+</div><div class="cat-bar-card" data-bm-premium="1">
+<div class="section-label">Cobertura por categoría</div>
+<div class="cat-bars">
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-02)"></div></div>
+<div class="cat-n">46</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_8a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">2.</span> Gobierno implementa régimen cambiario flexible para dólar</li><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">8.</span> Empresarios piden diálogo institucional al Gobierno</li><li onclick="scrollToCard('card_7a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">13.</span> Doria Medina critica inacción económica del Gobierno</li><li onclick="scrollToCard('card_4a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">20.</span> Gobierno paga Bono Gestión de Aula a maestros</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:93%;background:var(--c-11)"></div></div>
+<div class="cat-n">43</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_5a'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">1.</span> Escasez de combustible genera largas filas</li><li onclick="scrollToCard('card_5b'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">10.</span> Gobierno y YPFB descartan ajuste precio combustibles</li><li onclick="scrollToCard('card_5c'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">12.</span> Gobierno da tolerancia laboral por escasez combustible</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:57%;background:var(--c-08)"></div></div>
+<div class="cat-n">26</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_3a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">3.</span> Dirigentes de El Alto aprehendidos por bloqueos</li><li onclick="scrollToCard('card_11b'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">9.</span> Cocaleros mantienen bloqueos en Trópico de Cochabamba</li><li onclick="scrollToCard('card_11a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">16.</span> Cocaleros retoman retén de Umopar en Villa Tunari</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:57%;background:var(--c-10)"></div></div>
+<div class="cat-n">26</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_13a'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">6.</span> Presidente Arce niega vínculos en caso Zapatero</li><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">7.</span> Zapatero pide excluir informe sobre negocios en Bolivia</li><li onclick="scrollToCard('card_4c'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">14.</span> TSJ denuncia colapso tecnológico y pide presupuesto</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MEDIO_AMBIENTE')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">MEDIO AMBIENTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:33%;background:var(--c-15)"></div></div>
+<div class="cat-n">15</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MEDIO_AMBIENTE"><li onclick="scrollToCard('card_15a'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">4.</span> Terremoto en Venezuela: 235 muertos y 4.300 heridos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:24%;background:var(--c-05)"></div></div>
+<div class="cat-n">11</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">5.</span> Zúñiga agradece a soldados por asonada militar</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:13%;background:var(--c-18)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">11.</span> Presidente Paz asistirá a cumbre del Mercosur</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTR_FICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:13%;background:var(--c-04)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTR_FICO"><li onclick="scrollToCard('card_1a'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">18.</span> Retienen camiones con madera y droga en Yacuiba</li><li onclick="scrollToCard('card_2a'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">19.</span> Detienen madre e hijo por narcotráfico</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-03)"></div></div>
+<div class="cat-n">5</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">15.</span> Denuncian corrupción y cobro de cargos en Aduana</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_DEPORTES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-26)"></div>
+<div class="cat-name">DEPORTES</div>
+<div class="cat-track"><div class="cat-fill" style="width:9%;background:var(--c-26)"></div></div>
+<div class="cat-n">4</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_DEPORTES"><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-26); font-weight:700;">17.</span> Uruguay eliminada del Mundial; Cabo Verde clasifica</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:7%;background:var(--c-21)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_4b'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">21.</span> Diputados aprueban créditos millonarios para agricultura</li></ul>
+</div></div><div class="coverage-card" data-bm-premium="1">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area">
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">1.</span>
+            Escasez de combustible genera largas filas
+            <span class="chart-medios">17 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">31</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">2.</span>
+            Gobierno implementa régimen cambiario flexible para dólar
+            <span class="chart-medios">16 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:96.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">30</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_3a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">3.</span>
+            Dirigentes de El Alto aprehendidos por bloqueos
+            <span class="chart-medios">9 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:48.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_15a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">4.</span>
+            Terremoto en Venezuela: 235 muertos y 4.300 heridos
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:48.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">5.</span>
+            Zúñiga agradece a soldados por asonada militar
+            <span class="chart-medios">9 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">11</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_13a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">6.</span>
+            Presidente Arce niega vínculos en caso Zapatero
+            <span class="chart-medios">8 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:35.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">11</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">7.</span>
+            Zapatero pide excluir informe sobre negocios en Bolivia
+            <span class="chart-medios">9 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:32.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">10</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">8.</span>
+            Empresarios piden diálogo institucional al Gobierno
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">8</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">9.</span>
+            Gobierno y YPFB descartan ajuste precio combustibles
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_11b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">10.</span>
+            Cocaleros mantienen bloqueos en Trópico de Cochabamba
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">11.</span>
+            Presidente Paz asistirá a cumbre del Mercosur
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:19.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">12.</span>
+            Gobierno da tolerancia laboral por escasez combustible
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_7a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">13.</span>
+            Doria Medina critica inacción económica del Gobierno
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4c')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">14.</span>
+            TSJ denuncia colapso tecnológico y pide presupuesto
+            <span class="chart-medios">4 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">15.</span>
+            Denuncian corrupción y cobro de cargos en Aduana
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:16.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_11a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">16.</span>
+            Cocaleros retoman retén de Umopar en Villa Tunari
+            <span class="chart-medios">4 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">4</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-26); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">17.</span>
+            Uruguay eliminada del Mundial; Cabo Verde clasifica
+            <span class="chart-medios">2 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:12.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-26))">4</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">18.</span>
+            Gobierno paga Bono Gestión de Aula a maestros
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_1a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">19.</span>
+            Retienen camiones con madera y droga en Yacuiba
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_2a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">20.</span>
+            Detienen madre e hijo por narcotráfico
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">21.</span>
+            Diputados aprueban créditos millonarios para agricultura
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:9.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">3</div>
+</div>
+</div></div><div class="page">
+<!-- ── COVERAGE CHART ── -->
+<!-- ── TOPICS GRID ── -->
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/nacional/senador-visita-el-tr%C3%B3pico-y-ratifica-denuncia-sobre-instalaciones-de-criptominer%C3%ADa" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Senador visita el Trópico y ratifica denuncia sobre instalaciones de criptominería</a></div>
+<div class="emergente-reason">La ratificación de la denuncia sobre instalaciones de criptominería ilegal en el Trópico de Cochabamba revela una nueva modalidad de crimen organizado con implicaciones energéticas y económicas, que podría estar pasando desapercibida.</div>
+<div class="emergente-sum">Senador confirma denuncia de criptominería ilegal en el Trópico de Cochabamba, señalando una nueva amenaza criminal y económica.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/economia/bloqueos-dejan-factura-bs-30-millones-multas-navieras_1782471187" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Bloqueos dejan una factura de Bs 30 millones en multas con las navieras</a></div>
+<div class="emergente-reason">La cuantificación del impacto económico de los bloqueos, estimado en Bs 30 millones en multas para las navieras, subraya la grave repercusión en el comercio exterior y la economía nacional, un dato concreto de gran relevancia.</div>
+<div class="emergente-sum">Los bloqueos recientes generaron multas de Bs 30 millones a navieras, impactando severamente el comercio exterior boliviano.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/politica/no-se-si-reir-por-la-desfachatez-o-llorar-por-bolivia-vicepresidente-se-estrella-contra-el-ministro-de-economia" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">“No sé si reír por la desfachatez o llorar por Bolivia”: Vicepresidente se estrella contra el ministro de Economía</a></div>
+<div class="emergente-reason">La fuerte crítica del Vicepresidente al ministro de Economía expone una fisura significativa y abierta en la cúpula del gobierno, lo que sugiere una inestabilidad política interna relevante.</div>
+<div class="emergente-sum">Vicepresidente cuestiona duramente al ministro de Economía, evidenciando un conflicto interno en el gobierno de alta relevancia política.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.redpat.tv/detalle/evo-morales-advierte-sobre-una-posible-escalada-del-conflicto-y-rechaza-entregarse" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Evo Morales advierte sobre una posible escalada del conflicto y rechaza entregarse</a></div>
+<div class="emergente-reason">La advertencia de Evo Morales de una escalada de conflicto y su rechazo a entregarse, tras confirmarse una investigación de EE.UU. en su contra, representa un giro crítico en la política nacional.</div>
+<div class="emergente-sum">Evo Morales rechaza entregarse y advierte escalada de conflicto tras confirmación de investigación de EE.UU. en su contra.</div>
+<div class="emergente-source">Fuente: PAT</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://elpotosi.net/nacional/20260626_anh-compra-de-gasolina-en-bidones-requerira-registro-obligatorio-en-siscarguio.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">ANH: Compra de gasolina en bidones requerirá registro obligatorio en SIScarguío</a></div>
+<div class="emergente-reason">Esta nueva normativa de la ANH para registrar la compra de gasolina en bidones es una medida gubernamental directa para controlar la escasez de combustible, afectando a numerosos ciudadanos y sectores.</div>
+<div class="emergente-sum">ANH impone registro obligatorio para compra de gasolina en bidones en un intento por regular la distribución de combustible.</div>
+<div class="emergente-source">Fuente: El Potosí</div>
+</div></div>
+</div><div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">29</td>
+</tr>
+<tr>
+<td class="freq-word">combustible</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:93%"></div>
+</div>
+</td>
+<td class="freq-count">26</td>
+</tr>
+<tr>
+<td class="freq-word">flexible</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:82%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">tipo de cambio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:77%"></div>
+</div>
+</td>
+<td class="freq-count">20</td>
+</tr>
+<tr>
+<td class="freq-word">cambio fijo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:41%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">zapatero pide</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:37%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">régimen cambiario</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:33%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">ypfb pide paciencia</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">4</td>
+</tr>
+<tr>
+<td class="freq-word">presidente de ypfb</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:29%"></div>
+</div>
+</td>
+<td class="freq-count">5</td>
+</tr>
+<tr>
+<td class="freq-word">santa cruz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">4</td>
+</tr></tbody>
+</table>
+</div></div></div>
+<!-- ════════════ PAGE ════════════ -->
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260627 · 2026-06-27</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 191 titulares · 21 temas · 11 categorías · 19 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="Escasez de combustible genera largas filas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Escasez de combustible genera largas filas</div>
+<div class="modal-sum">La escasez de combustible, atribuida por YPFB a bloqueos y controles de calidad, genera largas filas en surtidores de La Paz y Santa Cruz. El presidente de YPFB pide paciencia, prometiendo normalizar el abastecimiento en los próximos días, mientras sectores como Anapo, choferes y avícolas reclaman por daño económico.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">31</strong> titulares</span>
+<span><strong style="color:var(--c-11)">17</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_ante-las-largas-filas-por-combustible-ypfb-pide-un-poquito-de-paciencia.html" rel="noopener noreferrer" target="_blank">Ante las largas filas por combustible, YPFB pide “un poquito de paciencia”</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_la-anapo-esta-en-alerta-ante-la-escasez-de-diesel.html" rel="noopener noreferrer" target="_blank">La Anapo está en alerta ante la escasez de diésel</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/ypfb-atribuye-a-controles-de-calidad-el-retraso-en-la-distribucion-de-combustibles-en-la-paz-y-santa-cruz" rel="noopener noreferrer" target="_blank">YPFB atribuye a controles de calidad el retraso en la distribución de combustibles en La Paz y Santa Cruz</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/presidente-de-ypfb-asegura-que-las-filas-por-combustible-en-la-paz-se-reduciran-en-4-o-5-dias" rel="noopener noreferrer" target="_blank">Presidente de YPFB asegura que las filas por combustible en La Paz se reducirán en 4 o 5 días</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/combustibles-gobierno-insiste-en-que-pronto-se-normalizara-flujo-dirigente-de-transporte-dice-que-se-compra-menos-62698" rel="noopener noreferrer" target="_blank">Combustibles: gobierno insiste en que pronto se normalizará flujo; dirigente de transporte dice que se compra menos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/daroca-asegura-que-en-los-proximos-tres-o-cuatro-dias-disminuiran-las-filas-de-vehiculos-en-la-paz-62666" rel="noopener noreferrer" target="_blank">Daroca asegura que en “los próximos tres o cuatro días” disminuirán las filas de vehículos en La Paz</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/anapo-advierte-que-el-gobierno-no-soluciono-la-falta-de-diesel-pone-en-riesgo-inicio-de-cosecha-de-invierno/" rel="noopener noreferrer" target="_blank">Anapo advierte que el Gobierno no solucionó la falta de diésel, pone en riesgo inicio de cosecha de invierno</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/estamos-peor-que-antes-hemos-estado-57-dias-parados-no-hay-bloqueos-pero-no-hay-diesel/" rel="noopener noreferrer" target="_blank">“Estamos peor que antes, hemos estado 57 días parados; no hay bloqueos, pero no hay diésel”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/salimos-de-una-y-entramos-a-otra-con-el-problema-del-combustible-avicolas-alertan-pollo-acumulado-por-falta-de-diesel-y-retrasos-en-despachos/" rel="noopener noreferrer" target="_blank">“Salimos de una y entramos a otra con el problema del combustible”: avícolas alertan pollo acumulado por falta de diésel y retrasos en despachos</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/se-levanto-el-bloqueo-pero-peor-bloqueo-es-esta-cola-por-diesel-choferes-pasan-hasta-dos-noches-esperando-combustible/" rel="noopener noreferrer" target="_blank">“Se levantó el bloqueo, pero peor bloqueo es esta cola por diésel”: choferes pasan hasta dos noches esperando combustible</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/siguen-filas-surtidores-ypfb-preve-tres-cuatro-dias-colas-van-estar-bajas_1782479453" rel="noopener noreferrer" target="_blank">Siguen las filas en surtidores y YPFB prevé que en tres y cuatro días “las colas van a estar más bajas”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-afirma-retraso-despacho-combustible-aplicacion-nuevo-control-calidad_1782503651" rel="noopener noreferrer" target="_blank">YPFB afirma que el retraso en el despacho de combustible es por la aplicación del nuevo control de calidad</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/economia/presidente-de-ypfb-pide-un-poquito-de-paciencia-por-las-filas-para-combustible.html" rel="noopener noreferrer" target="_blank">Presidente de YPFB pide “un poquito de paciencia” por las filas para combustible</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/optimizan-procedimiento-de-control-de-calidad-de-gasolina-2/" rel="noopener noreferrer" target="_blank">Optimizan procedimiento de control de calidad de gasolina</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_ante-las-filas-por-combustibles-presidente-de-ypfb-pide-paciencia-a-la-poblacion.html" rel="noopener noreferrer" target="_blank">Ante las filas por combustibles, presidente de YPFB pide paciencia a la población</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/combustible-confederaci%C3%B3n-de-choferes-espera-se-descongestione-filas-hasta-el-lunes" rel="noopener noreferrer" target="_blank">Combustible: Confederación de Choferes espera se descongestione filas hasta el lunes</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/06/26/ypfb-preve-normalizar-suministro-de-combustibles-la-proxima-semana/" rel="noopener noreferrer" target="_blank">YPFB prevé normalizar suministro de combustibles la próxima semana</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/06/26/diesel-y-puertos-frenan-la-recuperacion-exportadora-pacena/" rel="noopener noreferrer" target="_blank">Diésel y puertos frenan la recuperación exportadora paceña</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260626/daroca-pide-poquito-paciencia-filas-combustible" rel="noopener noreferrer" target="_blank">Daroca pide “un poquito de paciencia” por filas para combustible</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260626/ypfb-proyecta-normalizar-abastecimiento-combustibles-mayores-despachos" rel="noopener noreferrer" target="_blank">YPFB proyecta normalizar el abastecimiento de combustibles con mayores despachos</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ypfb-asegura-que-las-filas-por-combustible-son-consecuencia-de-los-bloqueos-y-no-de-deudas-con-proveedores/" rel="noopener noreferrer" target="_blank">YPFB asegura que las filas por combustible son consecuencia de los bloqueos y no de deudas con proveedores</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/presidente-de-ypfb-pide-calma-a-la-poblacion-y-estima-las-filas-en-surtidores-empiecen-a-reducir-el-fin-de-semana/" rel="noopener noreferrer" target="_blank">Presidente de YPFB pide “calma a la población” y estima las filas en surtidores empiecen a reducir el fin de semana</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/terminal-de-la-paz-reduce-salidas-de-flotas-por-escasez-de-diesel" rel="noopener noreferrer" target="_blank">Terminal de La Paz reduce salidas de flotas por escasez de diésel</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/fedecomin-oruro-advierte-que-escasez-de-diesel-frena-la-reactivacion-minera" rel="noopener noreferrer" target="_blank">Fedecomin Oruro advierte que escasez de diésel frena la reactivación minera</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/ypfb-preve-normalizar-el-abastecimiento-de-diesel-en-los-proximos-dias-202662614255" rel="noopener noreferrer" target="_blank">YPFB prevé normalizar el abastecimiento de diésel en los próximos días</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/filas-por-combustible-dirigente-del-transporte-cuestiona-controles-del-gobierno-y-dice-que-carburantes-llegan-certificados-GF21716099" rel="noopener noreferrer" target="_blank">Filas por combustible: Dirigente del transporte cuestiona controles del Gobierno y dice que carburantes llegan certificados</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/pedimos-a-ypfb-cumplir-con-su-compromisos-dice-dirigente-de-los-choferes-ante-las-filas-por-combustible-CE21709856" rel="noopener noreferrer" target="_blank">“Pedimos a YPFB cumplir con su compromisos”, dice dirigente de los choferes ante las filas por combustible</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ypfb-informa-que-hay-cisternas-de-gasolina-y-diesel-en-puerto-suarez-y-arica-para-la" rel="noopener noreferrer" target="_blank">YPFB informa que hay cisternas de gasolina y diésel en Puerto Suárez y Arica para la distribución</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55111-ypfb-despachara-80-millones-de-litros-de-combustible-para-responder-a-la-alta-demanda-en-la-paz-y-santa-cruz" rel="noopener noreferrer" target="_blank">YPFB despachará 80 millones de litros de combustible para responder a la alta demanda en La Paz y Santa Cruz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55225-desabastecimiento-de-combustible-continua-y-pone-en-duda-los-anuncios-del-gobierno-sobre-la-normalizacion-de-la-distribucion" rel="noopener noreferrer" target="_blank">Desabastecimiento de combustible continúa y pone en duda los anuncios del Gobierno sobre la normalización de la distribución</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55264-presidente-de-ypfb-pide-paciencia-ante-filas-por-combustible-y-asegura-reactivacion-de-la-logistica-tras-bloqueos" rel="noopener noreferrer" target="_blank">Presidente de YPFB pide paciencia ante filas por combustible y asegura reactivación de la logística tras bloqueos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5b">
+<div class="modal-backdrop" onclick="closeModal('modal_5b')"></div>
+<div aria-label="Gobierno y YPFB descartan ajuste precio combustibles" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Gobierno y YPFB descartan ajuste precio combustibles</div>
+<div class="modal-sum">El Gobierno y YPFB descartan un nuevo ajuste en el precio de los combustibles para la presente gestión, manteniendo la subvención a la gasolina en un promedio de entre Bs 2,04 y Bs 3,04 por litro.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">7</strong> titulares</span>
+<span><strong style="color:var(--c-11)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/conozca-la-dura-replica-del-vicepresidente-al-ministro-espinoza-por-la-subvencion-62676" rel="noopener noreferrer" target="_blank">Conozca la dura réplica del vicepresidente al ministro Espinoza por la subvención</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260626/gobierno-descarta-nuevo-ajuste-a-los-combustibles.html" rel="noopener noreferrer" target="_blank">Gobierno descarta nuevo ajuste a los combustibles</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/economia/la-subvencion-a-la-gasolina-esta-en-un-promedio-de-entre-bs-304-y-bs-204-por-litro-ypfb-espera-que-se-acorte-la-brecha.html" rel="noopener noreferrer" target="_blank">La subvención a la gasolina está en un promedio de entre Bs 3,04 y Bs 2,04 por litro; YPFB espera que se acorte la brecha</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/aseguran-que-no-se-incrementara-precio-de-combustibles-en-la-presente-gestion/" rel="noopener noreferrer" target="_blank">Aseguran que no se incrementará precio de combustibles en la presente gestión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/lara-acusa-a-espinoza-de-contradicciones-por-la-subvencion/" rel="noopener noreferrer" target="_blank">Lara acusa a Espinoza de contradicciones por la subvención</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/lara-acusa-al-ministro-espinoza-de-mentir-sobre-la-eliminacion-de-la-subvencion/" rel="noopener noreferrer" target="_blank">Lara acusa al ministro Espinoza de ‘mentir’ sobre la eliminación de la subvención</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ahora-ajustara-precio-combustible-distribucion-regulariza-ypfb/20260626103505992717.html" rel="noopener noreferrer" target="_blank">"Por ahora", no se ajustará el precio del combustible y la distribución se regulariza, según YPFB</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5c">
+<div class="modal-backdrop" onclick="closeModal('modal_5c')"></div>
+<div aria-label="Gobierno da tolerancia laboral por escasez combustible" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Gobierno da tolerancia laboral por escasez combustible</div>
+<div class="modal-sum">Ante la escasez de combustible, el Ministerio de Trabajo y el Gobierno disponen tolerancia de 30 minutos en el horario de ingreso laboral a partir de este viernes para los trabajadores.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">5</strong> titulares</span>
+<span><strong style="color:var(--c-11)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/este-viernes-hay-tolerancia-30-minutos-horario-ingreso-laboral_1782488379" rel="noopener noreferrer" target="_blank">Desde este viernes hay tolerancia de 30 minutos en el horario del ingreso laboral</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_trabajo-dicta-tolerancia-por-falta-de-combustible.html" rel="noopener noreferrer" target="_blank">Trabajo dicta tolerancia por falta de combustible</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260626/cochabamba-solo-recibe-30-del-suministro-combustible-transporte-pesado" rel="noopener noreferrer" target="_blank">Cochabamba solo recibe el 30% del suministro de combustible para el transporte pesado</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/por-la-escasez-de-combustible-el-ministerio-de-trabajo-da-tolerancia-de-30-minutos-para-trabajadores/" rel="noopener noreferrer" target="_blank">Por la escasez de combustible, el Ministerio de Trabajo da tolerancia de 30 minutos para trabajadores</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-dispone-tolerancia-de-30-minutos-en-el-ingreso-laboral-por-la-falta-de-combustible" rel="noopener noreferrer" target="_blank">Gobierno dispone tolerancia de 30 minutos en el ingreso laboral por la falta de combustible</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="Gobierno implementa régimen cambiario flexible para dólar" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Gobierno implementa régimen cambiario flexible para dólar</div>
+<div class="modal-sum">El Gobierno, a través del Banco Central de Bolivia, implementa un régimen cambiario flexible para el dólar, poniendo fin a 15 años de tipo de cambio fijo. La nueva política iniciará el lunes 29 de junio de 2026 con un valor inicial de Bs 9,73 por dólar, y el BCB publicará el tipo de cambio cada día</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">30</strong> titulares</span>
+<span><strong style="color:var(--c-02)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_bs-9-73-por-dolar-bcb-anuncia-el-tipo-de-cambio-flexible-para-el-lunes.html" rel="noopener noreferrer" target="_blank">Bs 9,73 por dólar: BCB anuncia el tipo de cambio flexible para el lunes</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_gobierno-flexibiliza-el-tipo-de-cambio-de-acuerdo-a-la-oferta-y-demanda-de-divisas.html" rel="noopener noreferrer" target="_blank">Gobierno flexibiliza el tipo de cambio de acuerdo a la oferta y demanda de divisas</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-dispone-el-regimen-de-tipo-de-cambio-flexible-respecto-al-dolar-y-encarga-su-aplicacion-al-bcb" rel="noopener noreferrer" target="_blank">Gobierno dispone el régimen de tipo de cambio flexible respecto al dólar y encarga su aplicación al BCB</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/adios-al-dolar-fijo-tipo-de-cambio-flexible-arrancara-el-lunes-en-bs-973--62700" rel="noopener noreferrer" target="_blank">Adiós al dólar fijo: tipo de cambio flexible arrancará el lunes en Bs 9,73</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/ministerio-de-economia-emite-resolucion-ministerial-que-establece-un-tipo-de-cambio-flexible/" rel="noopener noreferrer" target="_blank">Adiós al CAMBIO FIJO DEL DÓLAR: Gobierno establece un régimen de tipo de cambio flexible basado en OFERTA Y DEMANDA de divisas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-dispone-transito-tipo-cambio-flexible-bcb-definira-aplicacion_1782513307" rel="noopener noreferrer" target="_blank">Gobierno dispone el tránsito hacia un tipo de cambio flexible y el BCB definirá su aplicación</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bcb-establece-partir-lunes-29-junio-entra-vigencia-tipo-cambio-flexible_1782520030" rel="noopener noreferrer" target="_blank">El BCB establece que a partir del lunes 29 de junio entra en vigencia el tipo de cambio flexible</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/economia/el-gobierno-pone-fin-al-tipo-de-cambio-fijo-en-bolivia-e-instruye-aplicar-uno-flexible.html" rel="noopener noreferrer" target="_blank">El gobierno pone fin al tipo de cambio fijo en Bolivia e instruye aplicar uno flexible</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/gobierno-elimina-el-tipo-de-cambio-fijo-despues-de-15-anos-y-dispone-un-regimen-flexible-1905/" rel="noopener noreferrer" target="_blank">Gobierno elimina el tipo de cambio fijo después de 15 años y dispone un régimen flexible (19:05)</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_el-banco-central-de-bolivia-establece-el-nuevo-tipo-de-cambio-flexible.html" rel="noopener noreferrer" target="_blank">El Banco Central de Bolivia establece el nuevo tipo de cambio flexible</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/bcb-determinar%C3%A1-el-tipo-de-cambio-cada-d%C3%ADa-h%C3%A1bil-y-lo-publicar%C3%A1-las-2000" rel="noopener noreferrer" target="_blank">BCB determinará el Tipo de Cambio cada día hábil y lo publicará a las 20:00</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/bolivia-entra-al-tipo-de-cambio-flexible-bcb-anuncia-bs973-por-d%C3%B3lar-para-el-lunes" rel="noopener noreferrer" target="_blank">Bolivia entra al tipo de cambio flexible: BCB anuncia Bs9,73 por dólar para el lunes</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/06/26/bcb-fija-el-dolar-flexible-en-bs-973-tras-el-anuncio-del-regimen-cambiario/" rel="noopener noreferrer" target="_blank">BCB establece el dólar en Bs 9,73 con el nuevo esquema cambiario flexible</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/06/26/gobierno-activa-regimen-cambiario-flexible-y-el-bcb-definira-su-aplicacion/" rel="noopener noreferrer" target="_blank">Gobierno establece régimen cambiario flexible y el BCB definirá su ejecución</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260626/moneda-boliviana-tiene-regimen-cambio-flexible" rel="noopener noreferrer" target="_blank">La moneda boliviana tiene régimen de cambio flexible</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260626/tipo-cambio-del-lunes-es-bs-973-dolar" rel="noopener noreferrer" target="_blank">El tipo de cambio del lunes es Bs 9,73 por dólar</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/gobierno-dispone-implementacion-regimen-cambiario-flexible/20260626193135992737.html" rel="noopener noreferrer" target="_blank">Gobierno dispone la implementación de un régimen cambiario flexible</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-gobierno-establece-que-el-tipo-de-cambio-del-dolar-sea-flexible-en-lugar-de-uno-fijo/" rel="noopener noreferrer" target="_blank">El Gobierno establece que el tipo de cambio del dólar sea flexible en lugar de uno fijo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-dolar-pasara-a-valer-bs-973-a-partir-del-lunes-informa-el-banco-central-de-bolivia/" rel="noopener noreferrer" target="_blank">El dólar pasará a valer Bs 9,73 a partir del lunes, informa el Banco Central de Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/bcb-tipo-de-cambio-oficial-del-dolar-se-publicara-cada-dia-a-las-2000-BF21716711" rel="noopener noreferrer" target="_blank">BCB: Tipo de cambio oficial del dólar se publicará cada día a las 20:00</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/gobierno-establece-regimen-cambiario-flexible-y-ordena-ejecutar-la-transicion-al-bcb-NF21715679" rel="noopener noreferrer" target="_blank">Gobierno establece régimen cambiario flexible y ordena ejecutar la transición al BCB</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/muere-el-tipo-de-cambio-fijo-el-dolar-se-regira-por-un-regimen-flexible-diario" rel="noopener noreferrer" target="_blank">Muere el tipo de cambio fijo, el dólar se regirá por un régimen flexible diario</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/hasta-el-lunes-la-unidad-del-dolar-se-cotiza-en-bs-9-73-definio-el-bcb" rel="noopener noreferrer" target="_blank">Hasta el lunes la unidad del dólar se cotiza en Bs 9.73, definió el BCB</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55237-gobierno-implementa-regimen-cambiario-flexible-y-encarga-al-bcb-la-transicion-segun-resolucion" rel="noopener noreferrer" target="_blank">Gobierno implementa régimen cambiario flexible y encarga al BCB la transición, según resolución</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55249-este-lunes-bolivia-iniciara-de-forma-oficial-el-regimen-cambiario-flexible-del-dolar-con-un-tipo-de-cambio-de-bs-9_73" rel="noopener noreferrer" target="_blank">Este lunes, Bolivia iniciará de forma oficial el régimen cambiario flexible del dólar, con un tipo de cambio de Bs 9,73</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/economista-considera-imprescindible-nueva-politica-cambiaria-pero-sugiere-salir-del-esquema-del-tipo-de-cambio-fijo" rel="noopener noreferrer" target="_blank">Economista considera “imprescindible” nueva política cambiaria, pero sugiere salir del "esquema del tipo de cambio fijo"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/tipo-cambio-flexible-genera-reacciones-politicos-analistas_1782517387" rel="noopener noreferrer" target="_blank">Tipo de cambio flexible genera reacciones en políticos y analistas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/economista-advierte-dolar-flexible-encarecera-importaciones_1782528340" rel="noopener noreferrer" target="_blank">Economista advierte que el dólar flexible encarecerá las importaciones</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/branko-dejar-atras-el-tipo-de-cambio-fijo-significa-corregir-una-distorsion-del-modelo-del-mas-HF21716313" rel="noopener noreferrer" target="_blank">Branko: “Dejar atrás el tipo de cambio fijo significa corregir una distorsión del modelo del MAS”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/regimen-cambiario-flexible-no-implicara-inflacion-segun-economista-gonzalo-chavez-DF21716674" rel="noopener noreferrer" target="_blank">Régimen cambiario flexible no implicará inflación, según economista Gonzalo Chávez</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Empresarios piden diálogo institucional al Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Empresarios piden diálogo institucional al Gobierno</div>
+<div class="modal-sum">La Confederación de Empresarios Privados de Bolivia (CEPB) y otros sectores empresariales instan al Gobierno a establecer un diálogo institucional, planificado y ordenado, ante lo que consideran una relación 'desordenada'.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">8</strong> titulares</span>
+<span><strong style="color:var(--c-02)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_la-cepb-pide-pasar-de-reuniones-sectoriales-aisladas-a-un-dialogo-institucional-y-planificado.html" rel="noopener noreferrer" target="_blank">La CEPB pide pasar de reuniones sectoriales aisladas a un diálogo institucional y planificado</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/la-relacion-ha-sido-un-poco-desordenada-presidente-de-la-cepb-cuestiona-la-comunicacion-del-gobierno" rel="noopener noreferrer" target="_blank">“La relación ha sido un poco desordenada”: Presidente de la CEPB cuestiona la comunicación del Gobierno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/empresarios-proponen-plan-de-emergencia-con-tres-pilares-y-piden-reformas-estructurales-62686" rel="noopener noreferrer" target="_blank">Empresarios proponen plan de emergencia con tres pilares y piden reformas estructurales</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260626/empresarios-perciben-una-crisis-profunda-y-piden-abandonar-el-estatismo.html" rel="noopener noreferrer" target="_blank">Empresarios perciben una “crisis profunda” y piden abandonar el estatismo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_empresarios-piden-al-gobierno-un-dialogo-institucional.html" rel="noopener noreferrer" target="_blank">Empresarios piden al Gobierno un diálogo institucional</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_oea-insta-a-preservar-el-orden-institucional.html" rel="noopener noreferrer" target="_blank">OEA insta a preservar el orden institucional</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260626/oea-pide-al-gobierno-sectores-preservar-institucionalidad-dialogo" rel="noopener noreferrer" target="_blank">La OEA pide al Gobierno y sectores preservar institucionalidad y diálogo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/los-empresarios-privados-piden-al-gobierno-un-dialogo-institucional-y-planificado" rel="noopener noreferrer" target="_blank">Los empresarios privados piden al Gobierno un diálogo institucional y planificado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="Doria Medina critica inacción económica del Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Doria Medina critica inacción económica del Gobierno</div>
+<div class="modal-sum">El político Samuel Doria Medina critica al Gobierno por la falta de medidas concretas para la reactivación económica del país, señalando que sus sugerencias no son tomadas en cuenta y que la economía no se arregla sola.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">5</strong> titulares</span>
+<span><strong style="color:var(--c-02)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260626/doria-medina-denuncia-maniobra-de-distraccion.html" rel="noopener noreferrer" target="_blank">Doria Medina denuncia ‘maniobra de distracción’</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/samuel-dice-que-el-gobierno-ni-siquiera-lee-sus-sugerencias-para-mejorar-la-econom%C3%ADa" rel="noopener noreferrer" target="_blank">Samuel dice que el Gobierno ni siquiera lee sus sugerencias para mejorar la economía</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/oficialistas-presionan-ejecutivo-reactivacion-economica-piden-cambiar-mas-ministros/20260626143225992721.html" rel="noopener noreferrer" target="_blank">Oficialistas presionan al Ejecutivo sobre reactivación económica y piden cambiar más ministros</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/samuel-al-gobierno-hasta-ahora-no-se-conoce-medidas-de-reactivacion-no-crea-que-la-economia-se-arregla-sola/" rel="noopener noreferrer" target="_blank">Samuel al Gobierno: “Hasta ahora no se conoce medidas de reactivación, no crea que la economía se arregla sola”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/samuel-critica-al-gobierno-hasta-ahora-no-se-conoce-medidas-de-reactivacion" rel="noopener noreferrer" target="_blank">Samuel critica al Gobierno: “Hasta ahora no se conoce medidas de reactivación”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4a">
+<div class="modal-backdrop" onclick="closeModal('modal_4a')"></div>
+<div aria-label="Gobierno paga Bono Gestión de Aula a maestros" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Gobierno paga Bono Gestión de Aula a maestros</div>
+<div class="modal-sum">El Gobierno destina y desembolsa más de Bs 413 millones para el pago del Bono "Gestión de Aula" al Magisterio Fiscal, confirmando el beneficio para los maestros.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_gobierno-destina-mas-de-bs-413-millones-para-el-bono-a-los-maestros.html" rel="noopener noreferrer" target="_blank">Gobierno destina más de Bs 413 millones para el bono a los maestros</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260626/gobierno-destina-bs-413-3-millones-para-el-pago-del-bono-gestion-de-aula.html" rel="noopener noreferrer" target="_blank">Gobierno destina Bs 413,3 millones para el pago del Bono “Gestión de Aula”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/gobierno-desembolsa-el-bono-de-gestion-de-aula-para-el-magisterio-fiscal" rel="noopener noreferrer" target="_blank">Gobierno desembolsa el Bono de Gestión de Aula para el Magisterio Fiscal</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="Dirigentes de El Alto aprehendidos por bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Dirigentes de El Alto aprehendidos por bloqueos</div>
+<div class="modal-sum">Denuncias penales, demandas y aprehensiones de dirigentes de El Alto, incluyendo a Alberto Quelali, Argollo, Salazar y Condori, en relación con los bloqueos que se extendieron por más de 50 días.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">15</strong> titulares</span>
+<span><strong style="color:var(--c-08)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_gremiales-piden-congelar-cuentas-de-la-cob-para-resarcir-danos-por-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Gremiales piden congelar cuentas de la COB para resarcir daños por los bloqueos</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_civicos-denunciaran-a-los-impulsores-de-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Cívicos denunciarán a los impulsores de los bloqueos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/26/gremiales-de-el-alto-anuncian-denuncia-penal-contra-evo-argollo-y-otros-dirigentes-por-los-bloqueos-62699" rel="noopener noreferrer" target="_blank">Gremiales de El Alto anuncian denuncia penal contra Evo, Argollo y otros dirigentes por los bloqueos</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260626/los-bloqueos-no-pueden-quedar-en-impunidad-afirma-asamblea-de-ddhh-en-chuquisaca.html" rel="noopener noreferrer" target="_blank">“Los bloqueos no pueden quedar en impunidad”, afirma Asamblea de DDHH en Chuquisaca</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260626/buscan-reactivar-el-turismo-con-un-proyecto-de-ley-tras-los-danos-ocasionados-por-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Buscan reactivar el turismo con un proyecto de Ley tras los daños ocasionados por los bloqueos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/aprehenden-dirigente-alto-50-dias-bloqueos_1782515238" rel="noopener noreferrer" target="_blank">Aprehenden a un dirigente de El Alto por los más de 50 días de bloqueos</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/debe-haber-justicia-para-los-afectados-por-bloqueos-2/" rel="noopener noreferrer" target="_blank">Debe haber justicia para los afectados por bloqueos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_aprehenden-al-dirigente-alteno-alberto-quelali-por-bloqueos-de-mas-de-50-dias.html" rel="noopener noreferrer" target="_blank">Aprehenden al dirigente alteño Alberto Quelali por bloqueos de más de 50 días</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_asambleista-departamental-presenta-demanda-contra-argollo-salazar-y-condori-por-los-bloqueos.html" rel="noopener noreferrer" target="_blank">Asambleísta departamental presenta demanda contra Argollo, Salazar y Condori por los bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/230807/" rel="noopener noreferrer" target="_blank">Asambleístas de Tarija presenta denuncia contra Argollo, Condori y Salazar</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/sanchez-pide-reconciliacion-y-rechaza-alardes-en-procesos-por-bloqueos/" rel="noopener noreferrer" target="_blank">Sánchez pide reconciliación y rechaza ‘alardes’ en procesos por bloqueos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/senado-conforma-comision-para-investigar-los-danos-y-las-muertes-ocasionadas-por-los-53-dias-de-bloqueos-EF21710271" rel="noopener noreferrer" target="_blank">Senado conforma Comisión para investigar los daños y las muertes ocasionadas por los 53 días de bloqueos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-senala-que-los-procesos-por-los-bloqueos-estan-en-etapa-preliminar-y-preparatoria-FF21711848" rel="noopener noreferrer" target="_blank">Fiscalía señala que los procesos por los bloqueos están en “etapa preliminar y preparatoria”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/familia-denunciara-a-dirigentes-por-la-muerte-de-una-mujer-en-un-accidente-ocurrido-por-los-bloqueos-anuncia-abogado-IM21692648" rel="noopener noreferrer" target="_blank">Familia denunciará a dirigentes por la muerte de una mujer en un accidente ocurrido por los bloqueos, anuncia abogado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55099-bolivia-encara-el-reto-de-recomponer-economia-y-dialogo-social-tras-50-dias-de-protestas" rel="noopener noreferrer" target="_blank">Bolivia encara el reto de recomponer economía y diálogo social tras 50 días de protestas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11b">
+<div class="modal-backdrop" onclick="closeModal('modal_11b')"></div>
+<div aria-label="Cocaleros mantienen bloqueos en Trópico de Cochabamba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Cocaleros mantienen bloqueos en Trópico de Cochabamba</div>
+<div class="modal-sum">Pese al Estado de Excepción, cocaleros mantienen bloqueos y vigilias en el Trópico de Cochabamba, con un punto específico reportado. La Fiscalía de Cochabamba aguarda informes policiales para iniciar acciones legales, mientras se registran tramos restringidos para viajeros.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">7</strong> titulares</span>
+<span><strong style="color:var(--c-08)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/26/sondeo-mas-del-97-cree-que-el-desacato-en-el-chapare-refleja-ausencia-del-estado-62706" rel="noopener noreferrer" target="_blank">Sondeo: más del 97 % cree que el desacato en el Chapare refleja ausencia del Estado</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/06/26/pese-al-estado-de-excepcion-cocaleros-mantienen-un-bloqueo-en-el-tropico-de-cochabamba-62677" rel="noopener noreferrer" target="_blank">Pese al estado de excepción, cocaleros mantienen un bloqueo en el trópico de Cochabamba</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260626/cocaleros-se-burlan-del-estado-de-excepcion-y-vuelven-a-bloquear-en-cochabamba.html" rel="noopener noreferrer" target="_blank">Cocaleros se burlan del Estado de excepción y vuelven a bloquear en Cochabamba</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/fiscalia-aguardara-informes-policiales-para-actuar-por-vigilia-y-bloqueo-en-el-tropico/" rel="noopener noreferrer" target="_blank">Fiscalía aguardará informes policiales para actuar por vigilia y bloqueo en el Trópico</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/a-pesar-del-estado-de-excepcion-se-registra-un-punto-de-bloqueo-en-el-tropico-de-cochabamba/" rel="noopener noreferrer" target="_blank">A pesar del Estado de Excepción, se registra un punto de bloqueo en el Trópico de Cochabamba</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/piensa-viajar-asi-estan-las-carreteras-este-viernes-26-de-junio-202662681256" rel="noopener noreferrer" target="_blank">¡Atención, viajeros!: reportan bloqueo en Cochabamba y tramos restringidos en cuatro departamentos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-de-cochabamba-espera-informes-de-la-policia-para-iniciar-las-acciones-legales-en-la-vigilia-y-bloqueo-en-el-tropico-FF21711037" rel="noopener noreferrer" target="_blank">Fiscalía de Cochabamba espera informes de la Policía para iniciar las acciones legales en la vigilia y bloqueo en el trópico</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11a">
+<div class="modal-backdrop" onclick="closeModal('modal_11a')"></div>
+<div aria-label="Cocaleros retoman retén de Umopar en Villa Tunari" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Cocaleros retoman retén de Umopar en Villa Tunari</div>
+<div class="modal-sum">Cocaleros retoman y justifican la toma del retén El Castillo de Umopar en Villa Tunari, Trópico de Cochabamba, lo que provoca el repliegue de la fuerza antidrogas y la imposición de condiciones para su trabajo en la zona.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">4</strong> titulares</span>
+<span><strong style="color:var(--c-08)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/cocaleros-retoman-el-reten-de-umopar-en-villa-tunari/" rel="noopener noreferrer" target="_blank">Cocaleros retoman retén de Umopar en Villa Tunari</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_tension-en-villa-tunari-umopar-se-repliega-del-reten-castillo-tras-presion-de-cocaleros.html" rel="noopener noreferrer" target="_blank">Tensión en Villa Tunari: Umopar se repliega del retén Castillo tras presión de cocaleros</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/tras-toma-de-un-reten-por-seguidores-de-evo-legisladores-plantean-toque-de-queda-y-militarizacion-en-el-tropico" rel="noopener noreferrer" target="_blank">Tras toma de un retén por seguidores de Evo, legisladores plantean toque de queda y militarización en el Trópico</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55243-cocaleros-justifican-toma-de-reten-el-castillo-condicionan-trabajo-de-umopar-y-piden-que-autoridades-bajen-a-las-bases-para-realizar-su-trabajo" rel="noopener noreferrer" target="_blank">Cocaleros justifican toma de retén El Castillo, condicionan trabajo de Umopar y piden que autoridades bajen a las bases para realizar su trabajo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_15a">
+<div class="modal-backdrop" onclick="closeModal('modal_15a')"></div>
+<div aria-label="Terremoto en Venezuela: 235 muertos y 4.300 heridos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Terremoto en Venezuela: 235 muertos y 4.300 heridos</div>
+<div class="modal-sum">Tras los terremotos en Venezuela, el número de muertos continúa en aumento, superando los 900 y llegando hasta 1.000, con la población enfrentando desesperación y saqueos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">15</strong> titulares</span>
+<span><strong style="color:var(--c-15)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/aumentan-a-235-los-muertos-y-a-mas-de-4-300-los-heridos-por-el-doble-terremoto-de-venezuela" rel="noopener noreferrer" target="_blank">Aumentan a 235 los muertos y a más de 4.300 los heridos por el doble terremoto de Venezuela</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/mundo/2026/06/26/la-cifra-de-victimas-por-terremotos-en-venezuela-sube-a-235-muertos-y-4300-heridos-62665" rel="noopener noreferrer" target="_blank">La cifra de víctimas por terremotos en Venezuela sube a 235 muertos y 4.300 heridos</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/reportan-235-fallecidos-y-4-300-heridos-en-venezuela/" rel="noopener noreferrer" target="_blank">Reportan 235 fallecidos y 4.300 heridos en Venezuela</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/mundo/aumentan-920-los-muertos-por-los-terremotos-en-venezuela" rel="noopener noreferrer" target="_blank">Aumentan a 589 los muertos por los terremotos en Venezuela</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/mundo/2026/06/26/los-desaparecidos-en-venezuela-podrian-ser-50000-dice-entidad-de-nnuu-62691" rel="noopener noreferrer" target="_blank">Los desaparecidos en Venezuela podrían ser 50.000, dice entidad de NNUU</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/mundo/2026/06/26/la-cifra-de-victimas-por-los-terremotos-sigue-en-aumento-reportan-589-muertos-62671" rel="noopener noreferrer" target="_blank">El número de víctimas por los terremotos sigue en aumento: reportan 589 muertos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/suben-589-los-fallecidos-por-los-sismos-en-venezuela-y-reportan-50-000-desaparecidos" rel="noopener noreferrer" target="_blank">Suben a 589 los fallecidos por los sismos en Venezuela y reportan 50.000 desaparecidos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/luto-y-dolor-aumentan-a-mas-de-900-los-fallecidos-por-los-terremotos-en-venezuela" rel="noopener noreferrer" target="_blank">Luto y dolor: Aumentan a más de 900 los fallecidos por los terremotos en Venezuela</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/mundo/acnur-situa-en-miles-los-venezolanos-en-situacion-de-necesidad-urgente-tras-los-devastadores-terremotos" rel="noopener noreferrer" target="_blank">ACNUR sitúa en miles los venezolanos en situación de "necesidad urgente" tras los devastadores terremotos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/mundo/2026/06/26/venezuela-ya-suman-920-muertos-cunde-la-desesperacion-y-proliferan-los-saqueos-62685" rel="noopener noreferrer" target="_blank">Venezuela: ya suman 920 muertos; cunde la desesperación y proliferan los saqueos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260626/doble-terremoto-venezuela-suma-1000-muertos-urge-ayuda" rel="noopener noreferrer" target="_blank">Doble terremoto en Venezuela suma 1.000 muertos, urge ayuda</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bolivia-habilita-linea-consular-de-emergencia-para-asistir-a-connacionales-en-venezuela-202662671510" rel="noopener noreferrer" target="_blank">Bolivia habilita línea consular de emergencia para asistir a connacionales en Venezuela</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tras-la-tragedia-en-venezuela-advierten-que-bolivia-no-esta-exenta-de-sismos-destructores" rel="noopener noreferrer" target="_blank">Tras la tragedia en Venezuela, advierten que Bolivia no está exenta de sismos destructores</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cifra-de-fallecidos-en-venezuela-se-eleva-920-y-hay-mas-de-3-000-heridos" rel="noopener noreferrer" target="_blank">Cifra de fallecidos en Venezuela se eleva a 920 y hay más de 3.000 heridos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/limbania-la-periodista-boliviana-que-busca-ser-la-voz-de-sus-compatriotas-que-sufren-en" rel="noopener noreferrer" target="_blank">Limbania, la periodista boliviana que busca ser la voz de sus compatriotas que sufren en Venezuela</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Zúñiga agradece a soldados por asonada militar" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Zúñiga agradece a soldados por asonada militar</div>
+<div class="modal-sum">A dos años de la asonada militar de 2024, el general Juan José Zúñiga expresa respeto y gratitud a sus soldados, destacando que muchos estuvieron dispuestos a entregar su vida.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">11</strong> titulares</span>
+<span><strong style="color:var(--c-05)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260626/a-dos-anos-de-la-asonada-militar-zuniga-expresa-respeto-y-gratitud-a-sus-soldados.html" rel="noopener noreferrer" target="_blank">A dos años de la asonada militar, Zúñiga expresa “respeto y gratitud” a sus soldados</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_que-dijo-zuniga-a-dos-anos-de-la-asonada-militar.html" rel="noopener noreferrer" target="_blank">¿Qué dijo Zuñiga a dos años de la asonada militar?</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/z%C3%BA%C3%B1iga-sus-soldados-tras-dos-a%C3%B1os-de-la-asonada-%E2%80%9Cmi-respeto-y-mi-gratitud-cada-uno%E2%80%9D" rel="noopener noreferrer" target="_blank">Zúñiga a sus soldados tras dos años de la asonada: “Mi respeto y mi gratitud a cada uno”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/zuniga-envia-mensaje-a-dos-anos-de-la-asonada-militar-de-2024" rel="noopener noreferrer" target="_blank">Zúñiga envía mensaje a dos años de la asonada militar de 2024</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55207-zuniga-sobre-la-asonada-golpista-aquel-dia-hubo-soldados-que-estuvieron-dispuestos-a-entregar-su-vida" rel="noopener noreferrer" target="_blank">Zúñiga sobre la asonada golpista: “Aquel día hubo soldados que estuvieron dispuestos a entregar su vida”</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_a-dos-anos-de-su-arresto-zuniga-difunde-mensaje-y-asegura-que-la-verdad-saldra-a-la-luz.html" rel="noopener noreferrer" target="_blank">A dos años de su arresto, Zúñiga difunde mensaje y asegura que “la verdad” saldrá a la luz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/dos-anos-autogolpe-zuniga-apunta-arce-gabinete-montaje_1782470617" rel="noopener noreferrer" target="_blank">A dos años del ‘autogolpe’, Zúñiga apunta a Arce y su gabinete por el supuesto montaje</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/no-entrare-detalles-aquel-26j-llegara-dia-bolivia-conozca-verdad-asegura-zuniga-prision_1782492814" rel="noopener noreferrer" target="_blank">“Ya no entraré en detalles sobre aquel 26J, ya llegará el día en que Bolivia conozca la verdad”, asegura Zúñiga desde prisión</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/abogado-pide-retirar-acusaciones-contra-zuniga-y-apunta-a-un-juicio/" rel="noopener noreferrer" target="_blank">Abogado pide retirar acusaciones contra Zúñiga y apunta a un juicio</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/a-dos-anos-de-la-asonada-militar-zuniga-asegura-que-bolivia-conocera-toda-la-verdad/" rel="noopener noreferrer" target="_blank">A dos años de la asonada militar, Zúñiga asegura que ‘Bolivia conocerá toda la verdad’</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/zuniga-desde-prision-llegara-el-dia-en-que-bolivia-conozca-toda-la-verdad" rel="noopener noreferrer" target="_blank">Zúñiga desde prisión: “Llegará el día en que Bolivia conozca toda la verdad”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13a">
+<div class="modal-backdrop" onclick="closeModal('modal_13a')"></div>
+<div aria-label="Presidente Arce niega vínculos en caso Zapatero" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Presidente Arce niega vínculos en caso Zapatero</div>
+<div class="modal-sum">El presidente Luis Arce niega enfáticamente haber intercedido o tener vínculos con tráfico de influencias en el caso 'Zapatero' y el conflicto Fancesa-Soboce, afirmando que su relación fue institucional y política.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">11</strong> titulares</span>
+<span><strong style="color:var(--c-10)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260626_soboce-luis-arce-niega-vinculo-con-trafico-de-influencias.html" rel="noopener noreferrer" target="_blank">Soboce: Luis Arce niega vínculo con tráfico de influencias</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260626/caso-zapatero-luis-arce-niega-trafico-de-influencias.html" rel="noopener noreferrer" target="_blank">Caso “Zapatero”: Luis Arce niega tráfico de influencias</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260626/caso-fancesa-soboce-en-la-mira-dos-vocales.html" rel="noopener noreferrer" target="_blank">Caso Fancesa-Soboce: En la mira dos vocales</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_alcaldia-de-sucre-ordena-activar-defensa-de-fancesa.html" rel="noopener noreferrer" target="_blank">Alcaldía de Sucre ordena activar defensa de Fancesa</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_que-es-el-caso-zapatero-y-por-que-bolivia-aparece-en-la-investigacion.html" rel="noopener noreferrer" target="_blank">¿Qué es el caso Zapatero y por qué Bolivia aparece en la investigación?</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260626/magistratura-revisara-proceso-soboce-arce-niega-acusaciones" rel="noopener noreferrer" target="_blank">Magistratura revisará el proceso de Soboce; Arce niega las acusaciones</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/arce-niega-haber-intercedido-conflicto-fancesa-soboce-relacion-zapatero-fue-institucional-politica/20260626120209992720.html" rel="noopener noreferrer" target="_blank">Arce niega haber intercedido en conflicto Fancesa-Soboce: ´su relación con Zapatero fue institucional y política´</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/magistratura-investigara-el-caso-soboce-y-arce-rechaza-haber-intervenido" rel="noopener noreferrer" target="_blank">Magistratura investigará el caso Soboce y Arce rechaza haber intervenido</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/arce-ha-reunido-zapatero-ver-aspectos-politicos-asegura-abogado_1782497829" rel="noopener noreferrer" target="_blank">“Arce se ha reunido con Zapatero para ver aspectos políticos”, asegura su abogado</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/chats-de-zapatero-revelan-gestiones-con-luis-arce/" rel="noopener noreferrer" target="_blank">Chats de Zapatero revelan gestiones con Luis Arce</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/06/26/chats-de-zapatero-y-su-secretaria-revelan-contacto-con-luis-arce/" rel="noopener noreferrer" target="_blank">Chats de Zapatero y su secretaria revelan contacto con Luis Arce</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Zapatero pide excluir informe sobre negocios en Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Zapatero pide excluir informe sobre negocios en Bolivia</div>
+<div class="modal-sum">El expresidente español Rodríguez Zapatero solicita a la justicia de España que se excluya de una investigación judicial, como el caso 'Plus Ultra', un informe policial sobre sus presuntos negocios y gestiones en Bolivia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">10</strong> titulares</span>
+<span><strong style="color:var(--c-10)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/zapatero-pide-a-juez-que-saque-de-las-investigaciones-el-informe-sobre-sus-negocios-en-bolivia" rel="noopener noreferrer" target="_blank">Zapatero pide a juez que saque de las investigaciones el informe sobre sus negocios en Bolivia</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/06/26/zapatero-busca-excluir-del-caso-plus-ultra-el-informe-policial-sobre-sus-contactos-en-bolivia-62675" rel="noopener noreferrer" target="_blank">Zapatero busca excluir del caso "Plus Ultra" el informe policial sobre sus contactos en Bolivia</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260626/zapatero-pide-a-la-justicia-espanola-excluir-informe-de-presuntos-negocios-irregulares-en-bolivia.html" rel="noopener noreferrer" target="_blank">Zapatero pide a la justicia española excluir informe de presuntos negocios irregulares en Bolivia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/zapatero-pide-excluir-informe-bolivia-proceso-espana_1782485591" rel="noopener noreferrer" target="_blank">Zapatero pide excluir el informe sobre Bolivia de su proceso en España</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/espa%C3%B1a-zapatero-pide-la-justicia-excluir-informe-sobre-sus-negocios-en-bolivia" rel="noopener noreferrer" target="_blank">España: Zapatero pide a la justicia excluir informe sobre sus negocios en Bolivia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/zapatero-pide-excluir-de-investigacion-informe-de-presuntas-gestiones-en-bolivia/" rel="noopener noreferrer" target="_blank">Zapatero pide excluir de investigación informe de presuntas gestiones en Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/mundo/20260626/rodriguez-zapatero-pide-justicia-excluir-informe-sus-negocios-bolivia" rel="noopener noreferrer" target="_blank">Rodríguez Zapatero pide a la justicia excluir informe sobre sus negocios en Bolivia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/en-medio-del-escandalo-del-caso-rodriguez-zapatero-renuncia-carmen-almendras-a-la-alcaldia-de-la-paz-IE21703083" rel="noopener noreferrer" target="_blank">En medio del escándalo del caso Rodríguez Zapatero, renuncia Carmen Almendras a la Alcaldía de La Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55186-zapatero-pide-en-espana-apartar-el-caso-bolivia-del-proceso-en-su-contra-y-restringir-difusion-de-informacion" rel="noopener noreferrer" target="_blank">Zapatero pide en España apartar el caso Bolivia del proceso en su contra y restringir difusión de información</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55189-el-caso-zapatero-derivo-en-bolivia-en-una-carta-desde-la-carcel-pedidos-de-investigacion-y-una-renuncia-en-medio-del-revuelo" rel="noopener noreferrer" target="_blank">El caso Zapatero derivó en Bolivia en una carta desde la cárcel, pedidos de investigación y una renuncia en medio del revuelo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4c">
+<div class="modal-backdrop" onclick="closeModal('modal_4c')"></div>
+<div aria-label="TSJ denuncia colapso tecnológico y pide presupuesto" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">TSJ denuncia colapso tecnológico y pide presupuesto</div>
+<div class="modal-sum">El Tribunal Supremo de Justicia (TSJ) denuncia un colapso tecnológico, con sistemas obsoletos y computadoras colgadas, y demanda urgentemente mayor presupuesto para evitar el deterioro del servicio de justicia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">5</strong> titulares</span>
+<span><strong style="color:var(--c-10)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4c')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/pais/tsj-reclama-presupuesto-nuestros-sistemas-son-obsoletos-las-computadoras-se-cuelgan.html" rel="noopener noreferrer" target="_blank">TSJ reclama presupuesto: “Nuestros sistemas son obsoletos, las computadoras se cuelgan”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/tsj-denuncia-colapso-tecnologico-y-exige-mayor-presupuesto-para-evitar-el-deterioro-de-la-justicia/" rel="noopener noreferrer" target="_blank">TSJ denuncia colapso tecnológico y exige mayor presupuesto para evitar el deterioro de la justicia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tsj-confirma-reunion-nacional-de-emergencia-para-definir-lineas-de-accion-para-la-defensa-de-la-justicia/" rel="noopener noreferrer" target="_blank">El TSJ confirma “reunión nacional de emergencia” para “definir líneas de acción para la defensa de la justicia”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tsj-demanda-mayor-presupuesto-nuestros-sistemas-son-obsoletos-las-computadoras-se-cuelgan/" rel="noopener noreferrer" target="_blank">El TSJ demanda mayor presupuesto: “Nuestros sistemas son obsoletos, las computadoras se cuelgan”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/presupuesto-y-las-acefalias-de-magistrados-entre-los-temas-de-la-reunion-de-emergencia-convocada-por-el-tsj-GF21711214" rel="noopener noreferrer" target="_blank">Presupuesto y las acefalías de magistrados, entre los temas de la reunión de emergencia convocada por el TSJ</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Presidente Paz asistirá a cumbre del Mercosur" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Presidente Paz asistirá a cumbre del Mercosur</div>
+<div class="modal-sum">Paraguay confirma que el presidente boliviano Rodrigo Paz y otros seis mandatarios asistirán a la próxima cumbre del Mercosur.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">6</strong> titulares</span>
+<span><strong style="color:var(--c-18)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/06/26/paraguay-confirma-la-presencia-de-paz-y-de-otros-seis-presidentes-en-la-cumbre-del-mercosur-62678" rel="noopener noreferrer" target="_blank">Paraguay confirma la presencia de Paz y de otros seis presidentes en la cumbre del Mercosur</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/26/paraguay-queda-en-lista-de-espera-pero-con-un-pie-adentro-62664" rel="noopener noreferrer" target="_blank">Paraguay queda en lista de espera, pero con un pie adentro</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/cumbre-del-mercosur-reunira-a-siete-presidentes-entre-ellos-rodrigo-paz/" rel="noopener noreferrer" target="_blank">Cumbre del Mercosur reunirá a siete presidentes, entre ellos Rodrigo Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paraguay-confirma-que-rodrigo-paz-asistira-a-la-cumbre-del-mercosur/" rel="noopener noreferrer" target="_blank">Paraguay confirma que Rodrigo Paz asistirá a la cumbre del Mercosur</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paraguay-confirma-presencia-presidentes-en-la-cumbre-del-mercosur-entre-ellos-rodrigo-paz-202662663251" rel="noopener noreferrer" target="_blank">Paraguay confirma presencia presidentes en la cumbre del Mercosur; entre ellos Rodrigo Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/06/26/55177-paraguay-confirma-la-asistencia-de-paz-a-la-cumbre-del-mercosur" rel="noopener noreferrer" target="_blank">Paraguay confirma la asistencia de Paz a la cumbre del Mercosur</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Denuncian corrupción y cobro de cargos en Aduana" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Denuncian corrupción y cobro de cargos en Aduana</div>
+<div class="modal-sum">Legisladores y políticos denuncian casos de corrupción y designaciones irregulares 'a dedo' o por cobros de cargos en la Aduana Nacional a ocho meses del Gobierno de Rodrigo Paz, exigiendo institucionalización e investigación.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">5</strong> titulares</span>
+<span><strong style="color:var(--c-03)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/denuncian-casos-de-corrupcion-en-las-designaciones-al-interior-de-la-aduana-legisladores-anuncian-interpelacion" rel="noopener noreferrer" target="_blank">Denuncian casos de corrupción en las designaciones al interior de la Aduana; legisladores anuncian interpelación</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/hay-denuncias-de-cobros-por-cargos-en-aduana-es-un-nido-que-debe-cerrarse-de-inmediato-ya-son-ocho-meses-de-gobierno-y-debemos-exigir/" rel="noopener noreferrer" target="_blank">“Hay denuncias de cobros por cargos en Aduana; es un nido que debe cerrarse de inmediato. Ya son ocho meses de Gobierno y debemos exigir”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/pdc-denuncias-de-corrupcion-en-aduana-no-son-novedad-malas-autoridades-tienen-que-ser-investigadas/" rel="noopener noreferrer" target="_blank">PDC: Denuncias de corrupción en Aduana “no son novedad”; “malas autoridades tienen que ser investigadas”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/el-gobierno-duerme-con-el-enemigo-mantiene-masistas-en-la-aduana-no-hay-meritocracia-ni-transparencia/" rel="noopener noreferrer" target="_blank">“El Gobierno duerme con el enemigo, mantiene masistas en la Aduana. No hay meritocracia ni transparencia”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/06/26/cuellar-exige-institucionalizar-la-aduana-y-cuestiona-designaciones-a-dedo/" rel="noopener noreferrer" target="_blank">Cuéllar exige institucionalizar la Aduana y cuestiona designaciones ‘a dedo’</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Uruguay eliminada del Mundial; Cabo Verde clasifica" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-26)">DEPORTES</div>
+<div class="modal-title">Uruguay eliminada del Mundial; Cabo Verde clasifica</div>
+<div class="modal-sum">Uruguay fue eliminada en la primera fase del Mundial por segunda vez consecutiva, mientras que Cabo Verde logró una histórica clasificación a los octavos de final. España lideró el Grupo H.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-26)">4</strong> titulares</span>
+<span><strong style="color:var(--c-26)">2</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/26/uruguay-eliminada-en-primera-fase-por-segundo-mundial-consecutivo-62708" rel="noopener noreferrer" target="_blank">Uruguay, eliminada en primera fase por segundo Mundial consecutivo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/26/cabo-verde-logra-una-historica-clasificacion-uruguay-queda-fuera-62707" rel="noopener noreferrer" target="_blank">Cabo Verde logra una histórica clasificación; Uruguay queda fuera</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/06/26/cabo-verde-hace-historia-y-se-cita-con-messi-62709" rel="noopener noreferrer" target="_blank">Cabo Verde hace historia y se cita con Messi</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/uruguay-quedo-eliminada-del-mundial-y-cabo-verde-pasa-a-16avos-sin-victorias-espana-lidero-el-grupo-h/" rel="noopener noreferrer" target="_blank">¡Uruguay quedó eliminada del Mundial y Cabo Verde pasa a 16avos sin victorias!; España lideró el Grupo H</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="Retienen camiones con madera y droga en Yacuiba" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Retienen camiones con madera y droga en Yacuiba</div>
+<div class="modal-sum">La Fiscalía y autoridades de Yacuiba retienen tres camiones con madera sospechosa de estar impregnada con drogas, con muestras a ser enviadas a la DEA para análisis. Se reportan tres casos abiertos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">3</strong> titulares</span>
+<span><strong style="color:var(--c-04)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/pais/muestras-de-madera-impregnada-con-droga-seran-enviadas-a-la-dea-para-su-analisis.html" rel="noopener noreferrer" target="_blank">Muestras de madera impregnada con droga serán enviadas a la DEA</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/tenemos-tres-casos-abiertos-fiscalia-secuestra-camiones-con-madera-impregnada-con-dr0g-en-yacuiba/" rel="noopener noreferrer" target="_blank">“Tenemos tres casos abiertos”: Fiscalía secuestra camiones con madera impregnada con dr0g@ en Yacuiba</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/retienen-tres-camiones-en-yacuiba-por-sospecha-de-madera-impregnada-con-droga" rel="noopener noreferrer" target="_blank">Retienen tres camiones en Yacuiba por sospecha de madera impregnada con droga</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2a">
+<div class="modal-backdrop" onclick="closeModal('modal_2a')"></div>
+<div aria-label="Detienen madre e hijo por narcotráfico" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Detienen madre e hijo por narcotráfico</div>
+<div class="modal-sum">La FELCN y la Fiscalía de Santa Cruz investigan y detienen a una madre y su hijo en el barrio Los Lotes por presunto tráfico de sustancias controladas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">3</strong> titulares</span>
+<span><strong style="color:var(--c-04)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260626_santa-cruz-felcn-investiga-a-una-madre-y-su-hijo-por-trafico-de-sustancias-controladas.html" rel="noopener noreferrer" target="_blank">Santa Cruz: FELCN Investiga a una madre y su hijo por tráfico de sustancias controladas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/06/26/fiscalia-investiga-a-madre-e-hijo-por-presunto-trafico-de-drogas-en-santa-cruz/" rel="noopener noreferrer" target="_blank">Fiscalía investiga a madre e hijo por presunto tráfico de drogas en Santa Cruz</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/madre-e-hijo-detenidos-en-operativo-antidroga-en-los-lotes" rel="noopener noreferrer" target="_blank">Madre e hijo detenidos en operativo antidroga en Los Lotes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4b">
+<div class="modal-backdrop" onclick="closeModal('modal_4b')"></div>
+<div aria-label="Diputados aprueban créditos millonarios para agricultura" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Diputados aprueban créditos millonarios para agricultura</div>
+<div class="modal-sum">La Comisión de Diputados aprueba tres créditos por más de $us 564 millones (algunas fuentes indican $us 546 millones), destinados al fortalecimiento de la agricultura, la seguridad alimentaria y la protección social.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">3</strong> titulares</span>
+<span><strong style="color:var(--c-21)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/06/26/comision-de-diputados-da-luz-verde-a-creditos-por-mas-de-us-546-millones-para-agro-y-seguridad-alimentaria-62705" rel="noopener noreferrer" target="_blank">Comisión de Diputados da luz verde a créditos por más de $us 546 millones para agro y seguridad alimentaria</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/comision-diputados-aprueba-tres-creditos-564-millones-dolares_1782495562" rel="noopener noreferrer" target="_blank">Una comisión de Diputados aprueba tres créditos por más de 564 millones de dólares</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-06-26/politica/comision-de-diputados-aprueba-tres-creditos-por-mas-de-us-564-millones-para-agricultura-y-proteccion-social.html" rel="noopener noreferrer" target="_blank">Comisión de Diputados aprueba tres créditos por más de $us 564 millones para agricultura y protección social</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    const detailsParent = el.closest('details.lista-nivel-c');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlight-card');
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
