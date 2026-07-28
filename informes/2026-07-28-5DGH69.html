@@ -1,0 +1,2642 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260728</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+:root {
+  --dash-box-bg: #FBF6EC;
+  --kpi-chip-bg: rgba(15, 33, 55, 0.06);
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body.dark-mode {
+  --dash-box-bg: rgba(15, 33, 55, 0.5);
+  --kpi-chip-bg: rgba(0, 0, 0, 0.2);
+}
+.page {
+  max-width: 96% !important;
+  padding: 25px 30px !important;
+
+}
+
+.layout-2-cols { 
+  padding: 12px 12px !important; 
+  max-width: 100vw !important; 
+  box-sizing: border-box !important; 
+  width: 100% !important; 
+  overflow: hidden !important; 
+  gap: 16px !important;
+}
+
+body { font-size: 15px !important; background-color: #f4f1ea !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; }
+
+.emergentes-grid { grid-template-columns: 1fr !important; }
+
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  margin-bottom: 6px;
+}
+#themeToggle {
+  position: static !important;
+}
+
+.brief-tactico { background: var(--bg-card) !important; }
+.tarjeta-nivel-a { background: var(--bg-card) !important; }
+
+.chart-row-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+.chart-row-vertical .chart-label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  padding-bottom: 18px !important;
+}
+.chart-row-vertical .chart-bar-wrap {
+  width: 100% !important;
+}
+.chart-row-vertical .chart-medios {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 11px !important;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.donut-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.donut-arc {
+  transition: stroke-width 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+.donut-arc:hover {
+  stroke-width: 20;
+  opacity: 0.85;
+}
+.donut-legend {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.donut-legend-item {
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+.chart-label {
+  width: 480px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  padding-right: 15px !important;
+  text-align: left !important;
+}
+.chart-label span { font-size: 14px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+
+.section-label{ font-size: 13px !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+
+.topic-big-n{ font-weight: 900 !important; font-size: 28px !important; line-height: 1 !important; text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(15,33,55,0.18); }
+.topic-big-n{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+.top3-rank .rank-num{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+
+.modal-panel{ width: min(980px, calc(100vw - 28px)); border-radius: 14px; }
+.modal-head{ padding: 16px 18px; }
+.modal-title{ font-size: 20px; line-height: 1.15; }
+.modal-sum{ font-size: 13px; line-height: 1.45; }
+.modal-body{ padding: 14px 18px; max-height: calc(100vh - 220px); overflow: auto; }
+.modal-list{ padding-left: 0; margin: 0; gap: 10px; }
+.modal-list li{ display: grid; grid-template-columns: 130px 1fr; column-gap: 12px; row-gap: 2px; align-items: start; font-size: 13px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,.10); }
+.modal-list li:last-child{ border-bottom: 0; }
+.m-src{ font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-sep{ display:none; }
+.m-tit a{ word-break: break-word; text-decoration: underline; }
+
+.top3-card, .topic-card, .emergente-card { cursor: pointer !important; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important; }
+.top3-card:hover, .topic-card:hover, .emergente-card:hover { transform: translateY(-3px) !important; box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important; border-color: var(--border-glow) !important; }
+
+@media (max-width: 768px){
+  .page{ padding: 12px 12px 20px; max-width: 100% !important; box-sizing: border-box !important; width: 100% !important; }
+  .layout-2-cols{ 
+    padding: 12px 12px !important; 
+    max-width: 100vw !important; 
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    overflow: hidden !important; 
+  }
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; box-sizing: border-box !important; width: 100% !important; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto !important; text-align: left; font-size: 15px !important; }
+  .a-header { flex-wrap: wrap; }
+  .a-kpis { white-space: normal; }
+  .chart-medios{ width: auto; }
+  .freq-table{ display:block; overflow-x:auto; }
+  .modal-panel{ width: 92% !important; max-width: 100% !important; border-radius: 12px; box-sizing: border-box !important; }
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+  .layout-2-cols { display: grid !important; grid-template-columns: 1fr !important; }
+  .col-main, .col-sidebar { display: contents !important; }
+
+  .col-main > div:nth-child(1) { order: 1; position: relative; } /* Resumen Ejecutivo */
+  .col-sidebar > .cat-bar-card { order: 2; }
+  .col-sidebar > .concentracion-card { order: 3; }
+  .col-main > div:nth-child(2) { order: 4; } /* Jerarquía de temas */
+  .col-sidebar > .coverage-card { order: 5; }
+  .col-sidebar > .emergentes-grid,
+  .col-sidebar > div:has(> .emergentes-grid) { order: 6; }
+  .col-sidebar > .freq-table-card { order: 7; }
+
+  .col-sidebar > .sidebar-toggle-row {
+    position: relative !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-right: 4px !important;
+    order: 0;
+  }
+}
+
+.index-row { cursor: pointer !important; transition: background 0.2s ease, padding 0.2s ease; border-radius: 6px; padding: 4px; margin: -4px; }
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row { cursor: pointer !important; padding: 4px; margin: -4px; border-radius: 6px; transition: background 0.2s ease; }
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+.cat-topics-list { display: none; list-style: none; padding: 8px 10px 6px 14px; margin: 6px 0 2px 8px; background: var(--bg-card-2); border-left: 2px solid var(--border); border-radius: 0 4px 4px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+.cat-topics-list li { padding: 5px 6px; margin-bottom: 2px; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle-btn {
+  position: absolute; top: -5px; right: 0; z-index: 10;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 20px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+.theme-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+
+.right-panel > .section-label { margin-bottom: 4px !important; }
+
+.cat-row, .index-row { transition: background 0.2s ease, transform 0.2s ease !important; }
+.cat-row:hover, .index-row:hover { transform: translateX(6px) !important; }
+body.dark-mode .cat-row:hover, body.dark-mode .index-row:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+.ind-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.ind-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; background: transparent; }
+
+.brief-ejecutivo { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 6px; padding: 22px 28px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,33,55,0.06); }
+.brief-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.brief-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.brief-semaforo { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; padding: 4px 12px; border-radius: 999px; }
+.brief-parrafo { font-size: 14px; line-height: 1.7; color: var(--text-primary); margin-bottom: 14px; }
+.brief-implicaciones { list-style: none; padding: 0; margin: 0 0 12px 0; display: flex; flex-direction: column; gap: 6px; }
+.brief-implicaciones li { font-size: 13px; line-height: 1.55; color: var(--text-secondary); padding-left: 14px; position: relative; }
+.brief-implicaciones li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.brief-narrativa { font-size: 13px; line-height: 1.55; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+.brief-narrativa-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+.emergente-reason { font-size: 13px; font-style: italic; color: var(--amber-d); line-height: 1.55; border-left: 2px solid var(--amber); padding-left: 8px; margin-top: 2px; }
+
+.brief-tactico { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: #162032; border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 26px; }
+.brief-alerta { padding-left: 2px; margin-bottom: 16px; }
+.semaforo-badge { font-family: var(--font-mono); font-weight: 700; color: #ffffff; padding: 3px 9px; border-radius: 4px; font-size: 12px; margin-right: 10px; }
+.alerta-texto { font-weight: 700; color: var(--text-primary); }
+.brief-panorama h4, .brief-tensiones h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: #f0c060; margin-top: 0; margin-bottom: 8px; }
+.brief-panorama p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+.brief-tensiones ul { padding-left: 16px; margin: 0; color: var(--text-secondary); }
+.brief-tensiones li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+
+.categoria-contenedor { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.categoria-titulo { font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.tarjeta-nivel-a { background: #1d2a40; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.tarjeta-nivel-a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-color: var(--border-glow); }
+.a-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+.a-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.a-kpis { display: flex; gap: 8px; white-space: nowrap; }
+.kpi-chip { font-family: var(--font-mono); font-size: 11px; background: var(--kpi-chip-bg); padding: 3px 8px; border-radius: 4px; color: var(--text-muted); }
+.a-sumilla { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+
+.a-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--dash-box-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.dash-box strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: #f0c060; margin-bottom: 6px; }
+.dash-box p { font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+.a-dashboard .dash-box:nth-child(2) { padding-left: 14px; }
+
+.grid-nivel-b { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tarjeta-nivel-b { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+.tarjeta-nivel-b:hover { transform: translateY(-2px); background: rgba(0,0,0,0.04); border-color: var(--border-glow); }
+body.dark-mode .tarjeta-nivel-b:hover { background: #1d2a40; }
+.b-kpis { font-family: var(--font-mono); font-size: 11px; color: #f0c060; margin-bottom: 8px; }
+.b-sumilla { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+
+.lista-nivel-c { background: rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 8px 12px; }
+.lista-nivel-c summary { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); cursor: pointer; }
+.lista-nivel-c summary:hover { color: var(--text-primary); }
+.lista-nivel-c ul { margin: 8px 0 0 0; padding-left: 16px; }
+.lista-nivel-c li { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; cursor: pointer; }
+.lista-nivel-c li:hover { color: #f0c060; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .brief-tactico, .a-dashboard, .grid-nivel-b { grid-template-columns: 1fr !important; }
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-left: 2px solid var(--amber);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+.concentracion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+}
+.concentracion-svg {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  margin-top: 4px;
+}
+.concentracion-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+.concentracion-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.chart-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ───────── MEJORAS PUNTO 4: INTERACTIVIDAD DONA ───────── */
+.donut-legend-item.legend-hoverable { 
+  transition: background 0.2s ease, transform 0.2s ease; 
+  padding: 5px 6px; 
+  margin: -5px -6px 3px -6px; 
+  border-radius: 6px; 
+}
+.donut-legend-item.legend-hoverable:hover { 
+  background: rgba(0,0,0,0.04); 
+  transform: translateX(4px); 
+}
+body.dark-mode .donut-legend-item.legend-hoverable:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+}
+.legend-text { font-size: 12.5px; }
+.legend-text strong { 
+  color: var(--text-primary); 
+  font-size: 13px; 
+  font-weight: 700;
+}
+</style>
+<style>
+body.dark-mode {
+  --bg-base:     #0f2137;
+  --bg-card:     #152b47;
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.layout-2-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .layout-2-cols { grid-template-columns: 1fr; }
+}
+.col-main { display: flex; flex-direction: column; gap: 20px; }
+.col-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+body.dark-mode .theme-toggle-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+body.dark-mode .theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-07-28" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-07-28-5DGH69.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">215</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">18</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">9</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">20</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 28-JULIO-2026 | 7:00 AM</strong><br/>
+            Reporte N° B24-20260728<br/>
+            Cobertura: últimas 24 horas
+          </div></div>
+</header><div class="layout-2-cols"><div class="col-main"><div><h3 class="section-label">RESUMEN EJECUTIVO</h3><div class="brief-tactico">
+<div class="brief-col-izq">
+<div class="brief-alerta" style="border-left: 4px solid #ba3030;">
+<span class="semaforo-badge" style="background:#ba3030;">🔴 ROJO</span>
+<span class="alerta-texto">La agenda mediática prioriza la reconfiguración política del Gobierno, las investigaciones por los decesos en Huanuni y las demandas de los sectores productivos frente al abastecimiento de hidrocarburos y la fluctuación cambiaria.</span>
+</div>
+<div class="brief-panorama">
+<h4>PANORAMA ESTRATÉGICO</h4>
+<p>La agenda del día destaca una reconfiguración en las alianzas del Gobierno tras el alejamiento de Samuel Doria Medina y la atención sobre las medidas judiciales anunciadas contra Evo Morales. En paralelo, el debate público se centra en la investigación de los incidentes fatales en el centro minero de Huanuni y las solicitudes de transparencia ante presuntas irregularidades en los ascensos policiales. En materia económica, se mantienen los reclamos del sector productivo y de transporte por el suministro de diésel y Av-Gas, así como el seguimiento al alza sostenida del dólar flexible. En este contexto, el Ejecutivo concentra sus esfuerzos en impulsar su agenda económica en la Asamblea Legislativa y reforzar sus relaciones bilaterales con Perú.</p>
+</div>
+</div>
+<div class="brief-col-der">
+<div class="brief-tensiones">
+<h4>MAPA DE TENSIONES</h4>
+<ul><li><strong>Gobierno vs Oposición/Disidencia Política:</strong> La ruptura de Doria Medina y la amenaza de aprehensión contra Evo Morales evidencian una polarización política aguda y una estrategia de confrontación directa.</li><li><strong>Ciudadanía vs Inseguridad y Crisis de Servicios:</strong> Las múltiples muertes en Huanuni y la escasez de diésel y Av-Gas exponen la vulnerabilidad de la población ante la violencia y la ineficiencia en la provisión de recursos esenciales.</li><li><strong>Gobierno vs Corrupción y Transparencia:</strong> Las revelaciones sobre compra de ascensos en la Policía y la defensa de un gerente de BoA ponen en tela de juicio la integridad de las instituciones y la gestión gubernamental.</li><li><strong>Economía Nacional vs Factores Externos e Internos:</strong> El dólar flexible en ascenso y la crisis de hidrocarburos reflejan la presión sobre la estabilidad económica, exacerbada por problemas de suministro y calidad.</li></ul>
+</div>
+</div>
+</div></div><div>
+<div class="top3-stack">
+<div class="categoria-contenedor" style="border-top: 3px solid var(--c-05);">
+<h2 class="categoria-titulo" style="color: var(--c-05);">POLÍTICA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_14" onclick="openModal('modal_14')">
+<div class="a-header">
+<div class="a-title">#1 - Doria Medina rompe con el Gobierno</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 46 Titulares</span>
+<span class="kpi-chip">🏢 15 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Samuel Doria Medina oficializó la ruptura de Unidad Nacional con el gobierno de Rodrigo Paz, alegando diferencias por la falta de acciones frente a la corrupción. Mientras el Ejecutivo restó impacto a la decisión y confió en mantener una relación de oposición constructiva en la Asamblea, desde el Senado exigieron que sustente con pruebas sus denuncias.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Samuel Doria Medina está impulsando la agenda al oficializar la ruptura, enmarcarla en razones éticas y, crucialmente, introducir y escalar las acusaciones de corrupción contra el gobierno y allegados de Paz. Esto coloca al gobierno a la defensiva, aunque intenta minimizar el impacto y mantener una fachada de cooperación. Samuel tiene la ventaja en la definición de los términos de la ruptura y la introducción de un tema sensible como la corrupción.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La principal fuente de escalada es la posible revelación de detalles específicos y pruebas sobre los casos de corrupción por parte de Samuel Doria Medina, especialmente si responde al desafío de la Senadora Yarhui de dar "nombre y apellido" de los involucrados. Las declaraciones incendiarias del Vicepresidente Edman Lara también pueden intensificar la confrontación verbal. La necesidad del gobierno de Paz de asegurar nuevas alianzas en la ALP para mantener la gobernabilidad, en un momento político clave, es otro factor de inestabilidad.</p>
+</div>
+</div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" data-bm-premium="1" id="card_12a" onclick="openModal('modal_12a')">
+<div class="a-header">
+<div class="a-title">#7 - Gobierno dice que ejecutará aprehensión contra Evo</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 9 Titulares</span>
+<span class="kpi-chip">🏢 7 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El Gobierno del presidente Rodrigo Paz reitera su compromiso de ejecutar la orden de aprehensión contra Evo Morales, aunque reconoce que la acción es compleja y podría generar un alto riesgo, llegando incluso a “costar vidas”.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Gobierno intenta impulsar la agenda al reiterar su intención de aprehender a Evo Morales, pero su constante admisión de que esto podría “costar vidas” le resta ventaja, posicionándolo en una narrativa de alto riesgo y posible debilidad. Evo Morales, aunque es el objetivo, gana una ventaja defensiva al ser el centro de una acción que el propio Gobierno teme que genere violencia, lo que implícitamente resalta su poder de convocatoria y la lealtad de sus bases.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La inminente acción de aprehensión contra Evo Morales por parte del Gobierno es el principal factor de escalada. Esto podría provocar una reacción violenta y masiva de sus seguidores, especialmente en sus bastiones de apoyo. La propia admisión del Gobierno sobre el riesgo de “costar vidas” subraya la alta probabilidad de enfrentamientos y desestabilización social en las próximas 48 horas, exacerbada por cualquier movimiento concreto hacia la detención o una declaración de Evo Morales.</p>
+</div>
+</div>
+</div>
+<details class="lista-nivel-c" data-bm-premium="1">
+<summary>Ver 1 temas con baja cobertura de POLÍTICA</summary>
+<ul>
+<li id="card_N001" onclick="openModal('modal_N001')">
+<strong>Ministro Zamora defiende gerente de BoA</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-07);">
+<h2 class="categoria-titulo" style="color: var(--c-07);">VIOLENCIA Y SEGURIDAD</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_13" onclick="openModal('modal_13')">
+<div class="a-header">
+<div class="a-title">#2 - Múltiples muertes en centro minero Huanuni</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 39 Titulares</span>
+<span class="kpi-chip">🏢 16 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Múltiples muertes, incluyendo militares y civiles, en el centro minero de Huanuni. Fiscalía investiga como homicidio con tres hipótesis (enfrentamiento, deslizamiento o caída), mientras el Ejército y Gobierno hablan de accidente por deslizamiento. Hay contradicciones sobre la causa y número de víctimas.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Gobierno y el Ejército están impulsando activamente la narrativa de que las muertes en Huanuni fueron un "accidente" o "deslizamiento", buscando minimizar la percepción de un enfrentamiento violento o emboscada. Sin embargo, la Fiscalía investiga el caso como "homicidio" y maneja múltiples hipótesis (enfrentamiento, deslizamiento o caída), lo que contradice la versión oficial y mantiene abierta la posibilidad de un evento más grave. La narrativa está en disputa, con el Gobierno/Ejército intentando controlar la versión oficial, pero la Fiscalía y otras fuentes desafiando esa versión.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La investigación de la Fiscalía es el factor más crítico; si sus hallazgos confirman la hipótesis de "homicidio" o un "enfrentamiento" directo, desmentiría la versión oficial y generaría una crisis de credibilidad para el Gobierno y el Ejército. La evolución del estado de salud de los militares heridos (en terapia intensiva y estado crítico) es otro punto de escalada, ya que cualquier fallecimiento adicional intensificaría la presión pública. Las denuncias de los familiares de las víctimas y la posible aparición de más pruebas (videos, testimonios) que contradigan la versión oficial también podrían agravar la situación. Finalmente, la persistencia del robo de minerales por parte de los "jukus" en la región de Huanuni y la respuesta de las fuerzas de seguridad podrían desencadenar nuevos incidentes.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_8" onclick="openModal('modal_8')">
+<div class="b-title">#12 - Atraco con balacera deja un fallecido</div>
+<div class="b-kpis">6 Tit. | 6 Med.</div>
+<div class="b-sumilla">Un atraco con balacera registrado frente a la terminal de buses de Cochabamba resultó en un librecambista fallecido y dos personas heridas.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_5b" onclick="openModal('modal_5b')">
+<div class="b-title">#17 - Gobierno lanza plan contra feminicidio y violencia</div>
+<div class="b-kpis">4 Tit. | 3 Med.</div>
+<div class="b-sumilla">El Gobierno despliega una estrategia nacional y anuncia un plan para la atención de víctimas de feminicidio y violencia, aprobando una guía de seguridad social de corto plazo.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-18);">
+<h2 class="categoria-titulo" style="color: var(--c-18);">RELACIONES INTERNACIONALES</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_17a" onclick="openModal('modal_17a')">
+<div class="a-header">
+<div class="a-title">#3 - Paz viaja a Perú por investidura de Fujimori</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 21 Titulares</span>
+<span class="kpi-chip">🏢 11 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El presidente boliviano Rodrigo Paz viajó a Perú para asistir a la investidura de la presidenta Keiko Fujimori. Durante su visita en Lima, Paz busca relanzar las relaciones bilaterales, fortalecer la Comunidad Andina de Naciones y sostener reuniones con autoridades peruanas, de Estados Unidos y Emiratos Arabes.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está impulsada principalmente por el Presidente Paz de Bolivia, quien utiliza la investidura de Fujimori como una plataforma para relanzar relaciones bilaterales, impulsar proyectos económicos (Ilo, Chancay) y reactivar la Comunidad Andina de Naciones, buscando beneficios estratégicos para Bolivia.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El principal potencial de escalada en las próximas 48 horas reside en los resultados de las reuniones bilaterales entre Paz y Fujimori, así como con las autoridades de Estados Unidos. La aceptación o rechazo de las propuestas bolivianas (relanzamiento de la CAN, proyectos Ilo y Chancay) por parte de Perú y otros actores regionales o internacionales podría amplificar o frustrar la agenda de Bolivia. La postura de Keiko Fujimori y la dinámica geopolítica entre EEUU y China (mencionada en un titular) también podrían influir significativamente.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-10);">
+<h2 class="categoria-titulo" style="color: var(--c-10);">JUSTICIA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_11" onclick="openModal('modal_11')">
+<div class="a-header">
+<div class="a-title">#4 - Audio revela compra de ascensos en la Policía</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 11 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Un supuesto audio atribuido al Comandante de la Policía, Mirko Sokol, revela denuncias de presunta compra de ascensos y recaudación de $us 2 millones para influir en su remoción o sucesión. El Vicepresidente Edmand Lara exige una investigación, que el Gobierno ya ha anunciado para esclarecer el caso.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Vicepresidente Edman Lara está impulsando activamente la agenda, exigiendo explicaciones e investigaciones, lo que le otorga una ventaja al posicionar al gobierno como reactivo y comprometido con la transparencia. El Gral. Sokol se encuentra en una clara desventaja, siendo el foco de las acusaciones de corrupción y teniendo que defenderse, incluso con una contradenuncia.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El Vicepresidente Lara tiene el potencial de amplificar el tema al mantener la presión y enmarcar la situación como una 'crisis en la Policía'. El próximo pronunciamiento del Ministro de Gobierno es un factor crítico. La confirmación de la autenticidad del audio y los primeros hallazgos de la investigación anunciada podrían agravar rápidamente la situación, así como cualquier nueva revelación o la profundización de las divisiones internas en la Policía.</p>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" id="card_4" onclick="openModal('modal_4')">
+<div class="a-header">
+<div class="a-title">#5 - Aprehenden a exdiputado Freddy Mamani por bloqueos</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 10 Titulares</span>
+<span class="kpi-chip">🏢 10 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El exdiputado y expresidente de la Cámara de Diputados, Freddy Mamani (identificado como 'evista'), fue aprehendido en el marco de una investigación relacionada con los bloqueos que duraron más de 50 días.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa es impulsada por el Estado (gobierno de Rodrigo Paz), que ha tomado una acción concreta (la aprehensión) contra un actor percibido como responsable de la inestabilidad (los bloqueos). El gobierno tiene la ventaja al mostrarse como garante del orden y la justicia, mientras que la facción 'evista' se encuentra a la defensiva, aunque intenta introducir la narrativa de 'persecución política'.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La facción 'evista' y los seguidores de Freddy Mamani son los actores con mayor potencial de amplificar o agravar la situación en las próximas 48 horas. La denuncia de 'persecución política' puede servir como catalizador para movilizaciones, protestas o incluso nuevos bloqueos en solidaridad con Mamani, especialmente en regiones donde esta facción tiene fuerte apoyo.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-21);">
+<h2 class="categoria-titulo" style="color: var(--c-21);">LEGISLATIVA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_3a" onclick="openModal('modal_3a')">
+<div class="a-header">
+<div class="a-title">#6 - Asamblea prioriza agenda económica</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 10 Titulares</span>
+<span class="kpi-chip">🏢 9 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Asamblea Legislativa prevé tratar esta semana el proyecto del Presupuesto General del Estado (PGE) 2026, mientras coordina con el Ejecutivo la aprobación de leyes consideradas estratégicas para impulsar inversiones y fortalecer los sectores de energía e hidrocarburos.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Ejecutivo impulsa la agenda económica, con la Asamblea (Senado) priorizando leyes estructurales y el Presupuesto General del Estado (PGE) en coordinación con el Gobierno. El Ejecutivo tiene la ventaja al dictar las prioridades legislativas (inversiones, energía, hidrocarburos) y alistar propuestas clave como el 50/50, mientras que el PGE muestra una fuerte dependencia de deuda externa para financiar el presupuesto estatal, relegando otros sectores.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El debate y posible aprobación del PGE 2026 en el Senado esta semana (entre mañana y el jueves) es el factor más inmediato de escalada. La crítica sobre la relegación de sectores como carreteras, salud y agro, y la alta dependencia de deuda externa para financiar el presupuesto estatal, podría generar fuerte oposición política y social durante la discusión legislativa o tras su aprobación. La propuesta del Gobierno sobre el 50/50 con gobernadores, aunque con miras al 2027, podría generar fricción si no satisface las demandas regionales.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_1" onclick="openModal('modal_1')">
+<div class="b-title">#14 - Diputados reciben tablets 5G para trabajo</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">Entel entregó 278 tablets con tecnología 5G a diputados para reforzar y modernizar el trabajo legislativo, según varios titulares.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_5a" onclick="openModal('modal_5a')">
+<div class="b-title">#16 - Gobierno socializa proyecto Ley de Inversiones</div>
+<div class="b-kpis">5 Tit. | 4 Med.</div>
+<div class="b-sumilla">El Gobierno de Rodrigo Paz finaliza la socialización del proyecto de Ley de Inversiones, generándose cuestionamientos desde la oposición sobre las garantías que ofrece a los inversionistas.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-11);">
+<h2 class="categoria-titulo" style="color: var(--c-11);">HIDROCARBUROS</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_6b" onclick="openModal('modal_6b')">
+<div class="b-title">#8 - Escasez de diésel afecta producción y transporte</div>
+<div class="b-kpis">8 Tit. | 7 Med.</div>
+<div class="b-sumilla">La escasez de combustible, especialmente diésel, genera advertencias de cañeros por riesgo en la producción de alimentos y presión del transporte pesado y comités cívicos, afectando cadenas económicas clave. El gobierno lo considera un problema estructural.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_6a" onclick="openModal('modal_6a')">
+<div class="b-title">#11 - Atribuyen responsabilidades por gasolina sin calidad</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">Una comisión especial y legislativa atribuye al exministro Medinaceli, YPFB y ANH responsabilidades por la distribución de gasolina sin control de calidad ("basura" o "desestabilizada"), recomendando ampliar investigaciones.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_10" onclick="openModal('modal_10')">
+<div class="b-title">#15 - Falta Av-Gas paraliza 250 aeronaves</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">La falta de combustible de aviación (Av-Gas) en el departamento del Beni ha provocado la inactividad y paralización de más de 250 aeronaves, generando afectaciones al sector.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-15);">
+<h2 class="categoria-titulo" style="color: var(--c-15);">MEDIO AMBIENTE</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_7" onclick="openModal('modal_7')">
+<div class="b-title">#9 - Bolivia registra 805 focos de calor</div>
+<div class="b-kpis">8 Tit. | 6 Med.</div>
+<div class="b-sumilla">Bolivia registra 805 focos de calor que afectan a ocho departamentos, superando los picos de 2025 y mostrando una tendencia ascendente desde 2023, elevando la alerta por posibles incendios.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-02);">
+<h2 class="categoria-titulo" style="color: var(--c-02);">ECONOMÍA</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_9" onclick="openModal('modal_9')">
+<div class="b-title">#10 - Dólar flexible sube por quinta semana</div>
+<div class="b-kpis">8 Tit. | 5 Med.</div>
+<div class="b-sumilla">El dólar flexible en Bolivia inicia su quinta semana consecutiva al alza, cotizando en Bs 11,37 y acumulando un incremento significativo, con proyecciones de continuar su ascenso.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-03);">
+<h2 class="categoria-titulo" style="color: var(--c-03);">GOBIERNO</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_2" onclick="openModal('modal_2')">
+<div class="b-title">#13 - Willy Pozo nuevo Viceministro de Defensa</div>
+<div class="b-kpis">6 Tit. | 5 Med.</div>
+<div class="b-sumilla">Willy Pozo fue posesionado como nuevo Viceministro de Defensa y Cooperación al Desarrollo Integral por Justiniano, quien le encargó fortalecer las FFAA.</div>
+</div>
+</div>
+</div></div></div>
+</div></div><div class="col-sidebar"><div class="sidebar-toggle-row"><button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button></div><div class="concentracion-card">
+<h3 class="sidebar-title">CONCENTRACIÓN DE LA AGENDA</h3>
+<div class="donut-wrap">
+<svg aria-label="Concentración de la agenda: Top 5 temas vs. resto" class="donut-svg" role="img" viewbox="0 0 100 100">
+<circle class="donut-arc" cx="50" cy="50" data-label="Doria Medina rompe con el Gobierno" data-pct="21.4" data-val="46" fill="transparent" onclick="scrollToCard('card_14')" r="40" stroke="var(--c-05)" stroke-dasharray="53.772 197.555" stroke-dashoffset="-0.000" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 81.3, 74.9)" x="81.3" y="74.9">
+                21%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Múltiples muertes en centro minero Huanuni" data-pct="18.1" data-val="39" fill="transparent" onclick="scrollToCard('card_13')" r="40" stroke="var(--c-07)" stroke-dasharray="45.590 205.738" stroke-dashoffset="-53.772" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 36.5, 87.7)" x="36.5" y="87.7">
+                18%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Paz viaja a Perú por investidura de Fujimori" data-pct="9.8" data-val="21" fill="transparent" onclick="scrollToCard('card_17a')" r="40" stroke="var(--c-18)" stroke-dasharray="24.548 226.779" stroke-dashoffset="-99.362" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 12.4, 63.7)" x="12.4" y="63.7">
+                10%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Audio revela compra de ascensos en la Policía" data-pct="7.0" data-val="15" fill="transparent" onclick="scrollToCard('card_11')" r="40" stroke="var(--c-10)" stroke-dasharray="17.534 233.793" stroke-dashoffset="-123.910" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 10.6, 43.0)" x="10.6" y="43.0">
+                7%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Aprehenden a exdiputado Freddy Mamani por bloqueos" data-pct="4.7" data-val="10" fill="transparent" onclick="scrollToCard('card_4')" r="40" stroke="var(--c-10)" stroke-dasharray="11.690 239.638" stroke-dashoffset="-141.445" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 15.7, 29.4)" x="15.7" y="29.4">
+                5%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Resto" data-pct="39.1" data-val="84" fill="transparent" r="40" stroke="var(--bg-subtle)" stroke-dasharray="98.193 153.134" stroke-dashoffset="-153.134" stroke-width="16" style="">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 63.5, 12.3)" x="63.5" y="12.3">
+                39%
+              </text>
+</svg>
+</div>
+<ul class="concentracion-legend donut-legend">
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_14')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-05)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Doria Medina rompe con el Gobierno</strong> (46 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_13')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-07)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Múltiples muertes en centro minero Huanuni</strong> (39 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_17a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-18)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Paz viaja a Perú por investidura de Fujimori</strong> (21 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_11')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Audio revela compra de ascensos en la Policía</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_4')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Aprehenden a exdiputado Freddy Mamani por bloqueos</strong> (10 titulares)</span>
+</li>
+<li class="donut-legend-item" style="">
+<span class="dot" style="background:var(--bg-subtle)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Resto</strong> (84 titulares)</span>
+</li>
+</ul>
+</div><div class="cat-bar-card" data-bm-premium="1">
+<div class="section-label">Cobertura por categoría</div>
+<div class="cat-bars">
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-05)"></div></div>
+<div class="cat-n">58</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">1.</span> Doria Medina rompe con el Gobierno</li><li onclick="scrollToCard('card_12a'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">7.</span> Gobierno dice que ejecutará aprehensión contra Evo</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">18.</span> Ministro Zamora defiende gerente de BoA</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:84%;background:var(--c-07)"></div></div>
+<div class="cat-n">49</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">2.</span> Múltiples muertes en centro minero Huanuni</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">12.</span> Atraco con balacera deja un fallecido</li><li onclick="scrollToCard('card_5b'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">17.</span> Gobierno lanza plan contra feminicidio y violencia</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:43%;background:var(--c-10)"></div></div>
+<div class="cat-n">25</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_11'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">4.</span> Audio revela compra de ascensos en la Policía</li><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">5.</span> Aprehenden a exdiputado Freddy Mamani por bloqueos</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:36%;background:var(--c-18)"></div></div>
+<div class="cat-n">21</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_17a'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">3.</span> Paz viaja a Perú por investidura de Fujimori</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:34%;background:var(--c-21)"></div></div>
+<div class="cat-n">20</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_3a'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">6.</span> Asamblea prioriza agenda económica</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">14.</span> Diputados reciben tablets 5G para trabajo</li><li onclick="scrollToCard('card_5a'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">16.</span> Gobierno socializa proyecto Ley de Inversiones</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:34%;background:var(--c-11)"></div></div>
+<div class="cat-n">20</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">8.</span> Escasez de diésel afecta producción y transporte</li><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">11.</span> Atribuyen responsabilidades por gasolina sin calidad</li><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">15.</span> Falta Av-Gas paraliza 250 aeronaves</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MEDIO_AMBIENTE')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">MEDIO AMBIENTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:14%;background:var(--c-15)"></div></div>
+<div class="cat-n">8</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MEDIO_AMBIENTE"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">9.</span> Bolivia registra 805 focos de calor</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:14%;background:var(--c-02)"></div></div>
+<div class="cat-n">8</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_9'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">10.</span> Dólar flexible sube por quinta semana</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:10%;background:var(--c-03)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">13.</span> Willy Pozo nuevo Viceministro de Defensa</li></ul>
+</div></div><div class="coverage-card" data-bm-premium="1">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area">
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">1.</span>
+            Doria Medina rompe con el Gobierno
+            <span class="chart-medios">15 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">46</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">2.</span>
+            Múltiples muertes en centro minero Huanuni
+            <span class="chart-medios">16 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:84.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">39</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_17a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">3.</span>
+            Paz viaja a Perú por investidura de Fujimori
+            <span class="chart-medios">11 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:45.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">21</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_11')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">4.</span>
+            Audio revela compra de ascensos en la Policía
+            <span class="chart-medios">11 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:32.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">5.</span>
+            Aprehenden a exdiputado Freddy Mamani por bloqueos
+            <span class="chart-medios">10 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">10</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_3a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">6.</span>
+            Asamblea prioriza agenda económica
+            <span class="chart-medios">9 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">10</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_12a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">7.</span>
+            Gobierno dice que ejecutará aprehensión contra Evo
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:19.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">9</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">8.</span>
+            Escasez de diésel afecta producción y transporte
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">8</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">9.</span>
+            Bolivia registra 805 focos de calor
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">8</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_9')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">10.</span>
+            Dólar flexible sube por quinta semana
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">8</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">11.</span>
+            Atribuyen responsabilidades por gasolina sin calidad
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:15.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">12.</span>
+            Atraco con balacera deja un fallecido
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">13.</span>
+            Willy Pozo nuevo Viceministro de Defensa
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">14.</span>
+            Diputados reciben tablets 5G para trabajo
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">15.</span>
+            Gobierno socializa proyecto Ley de Inversiones
+            <span class="chart-medios">4 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">16.</span>
+            Falta Av-Gas paraliza 250 aeronaves
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.9%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">17.</span>
+            Gobierno lanza plan contra feminicidio y violencia
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">4</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">18.</span>
+            Ministro Zamora defiende gerente de BoA
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.5%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">3</div>
+</div>
+</div></div><div class="page">
+<!-- ── COVERAGE CHART ── -->
+<!-- ── TOPICS GRID ── -->
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://correodelsur.com/seguridad/20260727/potosi-seis-nuevas-muertes-en-minas-elevan-a-92-las-victimas-fatales-en-lo-que-va-de-2026.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Potosí: Seis nuevas muertes en minas elevan a 92 las víctimas fatales en lo que va de 2026</a></div>
+<div class="emergente-reason">Revela una alarmante cifra de muertes de mineros en Potosí, destacando la precariedad laboral.</div>
+<div class="emergente-source">Fuente: Correo del Sur</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/alcalde-tarijeno-advierte-cierre-100-alcaldias-si-no-hay-oxigeno-economico-gobierno_1785179758" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Alcalde tarijeño advierte sobre el cierre de 100 Alcaldías si no hay el "oxígeno" económico del gobierno</a></div>
+<div class="emergente-reason">Alerta sobre una posible crisis financiera municipal generalizada que afectaría a gran parte del país.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/bolivia-busca-apoyo-internacional-golpe-super-nino_1785148736" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Bolivia busca apoyo internacional ante el golpe del ‘Super Niño’</a></div>
+<div class="emergente-reason">Indica una inminente crisis climática y la necesidad de asistencia externa para afrontar sus consecuencias.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/nacional/seguridad/delegacion-de-ee-uu-sella-convenio-de-seguridad-con-bolivia-por-us-20-millones" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Delegación de EE.UU. sella convenio de seguridad con Bolivia por $us 20 millones</a></div>
+<div class="emergente-reason">Representa un importante acuerdo de cooperación en seguridad entre Bolivia y Estados Unidos.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div></div>
+</div><div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">53</td>
+</tr>
+<tr>
+<td class="freq-word">huanuni</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:69%"></div>
+</div>
+</td>
+<td class="freq-count">31</td>
+</tr>
+<tr>
+<td class="freq-word">doria medina</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:51%"></div>
+</div>
+</td>
+<td class="freq-count">20</td>
+</tr>
+<tr>
+<td class="freq-word">rodrigo paz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">12</td>
+</tr>
+<tr>
+<td class="freq-word">freddy mamani</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">keiko fujimori</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">8</td>
+</tr>
+<tr>
+<td class="freq-word">falta de combustible</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:24%"></div>
+</div>
+</td>
+<td class="freq-count">7</td>
+</tr>
+<tr>
+<td class="freq-word">willy pozo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:22%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">focos de calor</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:22%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">audio atribuido</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:22%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr></tbody>
+</table>
+</div></div></div>
+<!-- ════════════ PAGE ════════════ -->
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260728 · 2026-07-28</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 215 titulares · 18 temas · 9 categorías · 20 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Doria Medina rompe con el Gobierno" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Doria Medina rompe con el Gobierno</div>
+<div class="modal-sum">Samuel Doria Medina oficializó la ruptura de Unidad Nacional con el gobierno de Rodrigo Paz, alegando diferencias por la falta de acciones frente a la corrupción. Mientras el Ejecutivo restó impacto a la decisión y confió en mantener una relación de oposición constructiva en la Asamblea, desde el Senado exigieron que sustente con pruebas sus denuncias.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">46</strong> titulares</span>
+<span><strong style="color:var(--c-05)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_tengo-claro-quien-es-y-que-quiere-samuel-responde-a-diputado-de-unidad-que-le-cuestiono-su-alejamiento-del-gobierno.html" rel="noopener noreferrer" target="_blank">“Tengo claro quién es y qué quiere”: Samuel responde a diputado de Unidad que le cuestionó su alejamiento del Gobierno</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/jefe-de-bancada-de-libre-la-angurria-de-samuel-y-la-falta-de-palabra-de-paz-hicieron-que-ese-noviazgo-fracase" rel="noopener noreferrer" target="_blank">Jefe de bancada de Libre: La angurria de Samuel y la falta de palabra de Paz hicieron que ese "noviazgo" fracase</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/samuel-oficializa-la-ruptura-con-paz-desde-hoy-unidad-nacional-y-el-gobierno-seguimos-caminos-separados" rel="noopener noreferrer" target="_blank">Samuel oficializa la ruptura con Paz: “Desde hoy, Unidad Nacional y el Gobierno seguimos caminos separados”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/07/27/que-opinan-los-diputados-sobre-la-ruptura-de-samuel-con-el-gobierno-64218" rel="noopener noreferrer" target="_blank">¿Qué opinan los diputados sobre la ruptura de Samuel con el gobierno?</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/samuel-oficializa-ruptura-gobierno-hoy-seguimos-caminos-separados_1785154656" rel="noopener noreferrer" target="_blank">Samuel oficializa su ruptura con el Gobierno: “Desde hoy seguimos caminos separados”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/politica/samuel-anuncia-que-por-etica-se-separa-del-gobierno-y-declara-a-un-como-oposicion-constructiva.html" rel="noopener noreferrer" target="_blank">Samuel anuncia que por “ética” se separa del Gobierno y declara a UN como “oposición constructiva”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/samuel-anuncia-por-%C3%A9tica-se-separa-del-gobierno-y-declara-un-como-oposici%C3%B3n-constructiva" rel="noopener noreferrer" target="_blank">Samuel anuncia que por "ética" se separa del Gobierno y declara a UN como "oposición constructiva"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/samuel-anuncia-que-legisladores-de-la-alianza-unidad-se-capacitaran-en-fiscalizacion-y-pide-no-compararlo-con-lara/" rel="noopener noreferrer" target="_blank">Samuel anuncia que legisladores de la Alianza Unidad se capacitarán en fiscalización y pide no compararlo con Lara</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tras-separacion-de-paz-samuel-se-reunira-con-su-bancada-de-senadores-para-definir-posturas" rel="noopener noreferrer" target="_blank">Tras separación de Paz, Samuel se reunirá con su bancada de senadores para definir posturas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60070-tras-la-ruptura-analistas-dicen-que-el-gobierno-debe-buscar-nuevas-alianzas-en-la-alp-y-acercarse-a-sectores-sociales" rel="noopener noreferrer" target="_blank">Tras la ruptura, analistas dicen que el Gobierno debe buscar nuevas alianzas en la ALP y acercarse a sectores sociales</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/ministro-zamora-relativiza-ruptura-de-samuel-con-el-gobierno-y-destaca-su-aporte-critico.html" rel="noopener noreferrer" target="_blank">Ministro Zamora relativiza la ruptura de Samuel con el Gobierno y destaca su aporte crítico</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/ministro-zamora-valora-%E2%80%9Ccr%C3%ADtica-constructiva%E2%80%9D-de-samuel-y-no-ve-%E2%80%9Calejamiento%E2%80%9D" rel="noopener noreferrer" target="_blank">Ministro Zamora valora “crítica constructiva” de Samuel y no ve “alejamiento”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/zamora-llama-a-doria-medina-a-aportar-con-criticas-constructivas/" rel="noopener noreferrer" target="_blank">Zamora llama a Doria Medina a aportar con críticas constructivas</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260727/zamora-no-ve-alejamiento-samuel-cree-aportara-criticas-constructivas-vamos" rel="noopener noreferrer" target="_blank">Zamora no ve un alejamiento de Samuel y cree aportará con "críticas constructivas": "Vamos a valorar todo lo que diga"</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/zamora-valora-critica-constructiva-samuel-descarta-alejamiento/20260727171116993937.html" rel="noopener noreferrer" target="_blank">Zamora valora la “crítica constructiva” de Samuel y descarta un "alejamiento"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/zamora-no-ve-un-alejamiento-de-samuel-y-cree-aportara-con-criticas-constructivas-vamos-a-valorar-todo-lo-que-diga/" rel="noopener noreferrer" target="_blank">Zamora no ve un alejamiento de Samuel y cree aportará con “críticas constructivas”: “Vamos a valorar todo lo que diga”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/07/27/gobierno-considera-que-samuel-tiene-vocacion-democratica-y-confia-en-que-apoyara-las-leyes-fundamentales-64211" rel="noopener noreferrer" target="_blank">Gobierno considera que Samuel tiene vocación democrática y confía en que apoyará las leyes fundamentales</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/politica/desde-el-gobierno-restan-impacto-a-la-decision-de-doria-medina-y-le-exigen-honrar-compromiso-de-oposicion-constructiva.html" rel="noopener noreferrer" target="_blank">Desde el Gobierno restan impacto a la decisión de Doria Medina y le exigen honrar compromiso de “oposición constructiva”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/gobierno-dice-que-respeta-la-posicion-de-doria-medina-y-confia-en-que-apoyara-las-leyes/" rel="noopener noreferrer" target="_blank">Gobierno dice que respeta la posición de Doria Medina y confía en que apoyará las leyes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/la-decision-de-samuel-doria-medina-provoca-reacciones-en-el-ambito-politico-2026727131222" rel="noopener noreferrer" target="_blank">La decisión de Samuel Doria Medina provoca reacciones en el ámbito político</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gobierno-respeta-la-salida-de-doria-medina-confia-mantener-acuerdos-en-la-asamblea-202672713206" rel="noopener noreferrer" target="_blank">Gobierno respeta la salida de Doria Medina; confía mantener acuerdos en la Asamblea</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-ministro-lupo-tuvo-una-jornada-laboral-normal-tras-la-decision-de-doria-medina" rel="noopener noreferrer" target="_blank">El ministro Lupo tuvo una jornada laboral normal, tras la decisión de Doria Medina</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60046-desde-el-gobierno-restan-impacto-a-la-decision-de-doria-medina-y-le-exigen-honrar-compromiso-de-oposicion-constructiva" rel="noopener noreferrer" target="_blank">Desde el Gobierno restan impacto a la decisión de Doria Medina y le exigen honrar compromiso de "oposición constructiva"</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_por-razones-eticas-unidad-se-aleja-del-gobierno-de-paz.html" rel="noopener noreferrer" target="_blank">"Por razones éticas" Unidad se aleja del gobierno de Paz</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/samuel-confirma-la-ruptura-con-el-gobierno-a-rodrigo-paz-le-deseo-lo-mejor.html" rel="noopener noreferrer" target="_blank">Samuel confirma la ruptura con el Gobierno: “A Rodrigo Paz le deseo lo mejor”</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/cuando-uno-ama-bolivia-no-se-va-se-queda-para-lucharla-dip-reyes-rechaza-alejamiento-de-samuel-del-gobierno/" rel="noopener noreferrer" target="_blank">“Cuando uno ama Bolivia, no se va; se queda para lucharla”: Dip. Reyes rechaza alejamiento de Samuel del Gobierno</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/vocero-samuel-si-bien-puede-separar-gobierno-no-hay-forma-separarse-bolivia_1785173249" rel="noopener noreferrer" target="_blank">Vocero a Samuel: “Si bien se puede separar del Gobierno, no hay forma de separarse de Bolivia”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/lara-sobre-la-ruptura-de-samuel-y-paz-cuando-el-barco-se-hunde-las-ratas-se-escapan/" rel="noopener noreferrer" target="_blank">Lara sobre la ruptura de Samuel y Paz: ‘Cuando el barco se hunde, las ratas se escapan’</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/senador-unidad-nunca-formalizo-una-alianza-con-el-gobierno-2026727205623" rel="noopener noreferrer" target="_blank">Senador: “Unidad nunca formalizó una alianza con el Gobierno”</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/surgen-fracturas-entre-los-aliados-de-samuel-doria-medina-tras-su-alejamiento-del-gobierno" rel="noopener noreferrer" target="_blank">Surgen fracturas entre los aliados de Samuel Doria Medina tras su alejamiento del Gobierno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/07/27/doria-medina-unidad-nacional-un-y-el-gobierno-de-rodrigo-paz-seguimos-caminos-separados-64193" rel="noopener noreferrer" target="_blank">Doria Medina: “Unidad Nacional (UN) y el gobierno de Rodrigo Paz seguimos caminos separados”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/unidad-nacional-revela-que-decidio-romper-con-el-gobierno-durante-los-53-dias-de-bloqueo.html" rel="noopener noreferrer" target="_blank">Unidad Nacional revela que decidió romper con el Gobierno durante los 53 días de bloqueo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/doria-medina-dice-viernes-hablo-paz-ultimo-intento-salvar-diferencias_1785206927" rel="noopener noreferrer" target="_blank">Doria Medina dice que el viernes habló con Paz como último intento de salvar diferencias</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/doria-medina-paz-necesitaba-mas-a-lupo-que-nosotros-en-el-ministerio-de-la-presidencia/" rel="noopener noreferrer" target="_blank">Doria Medina: ‘Paz necesitaba más a Lupo que nosotros en el Ministerio de la Presidencia’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/doria-medina-oficializa-ruptura-con-el-gobierno-desde-hoy-seguimos-caminos-separados/" rel="noopener noreferrer" target="_blank">Doria Medina oficializa ruptura con el Gobierno: ‘desde hoy seguimos caminos separados’’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260727/doria-medina-oficializa-ruptura-paz-hoy-seguimos-caminos-separados" rel="noopener noreferrer" target="_blank">Doria Medina oficializa la ruptura con Paz: 'Desde hoy seguimos caminos separados'</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/samuel-oficializa-que-un-rompe-su-alianza-con-el-gobierno-y-alega-razones-eticas/" rel="noopener noreferrer" target="_blank">Samuel oficializa que UN rompe su alianza con el Gobierno y alega razones éticas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/seguimos-caminos-separados-doria-medina-anuncia-su-ruptura-con-el-gobierno-de-rodrigo-paz-20267279100" rel="noopener noreferrer" target="_blank">“Seguimos caminos separados”: Doria Medina anuncia su ruptura con el Gobierno de Rodrigo Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/59965-doria-medina-rompe-con-el-gobierno-por-inaccion-contra-la-corrupcion-y-la-gobernabilidad-se-complica" rel="noopener noreferrer" target="_blank">Doria Medina rompe con el Gobierno por inacción contra la corrupción y la gobernabilidad se complica</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60028-rodrigo-paz-pierde-un-aliado-en-un-momento-politico-clave-y-a-52-dias-de-que-venza-el-estado-de-excepcion" rel="noopener noreferrer" target="_blank">Rodrigo Paz pierde un aliado en un momento político clave y a 52 días de que venza el estado de excepción</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60058-creemos-se-distancia-de-unidad-nacional-y-decide-mantener-respaldo-al-gobierno-de-paz" rel="noopener noreferrer" target="_blank">Creemos se distancia de Unidad Nacional y decide mantener respaldo al gobierno de Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60076-doria-medina-cuestiona-al-diputado-reyes-y-dice-que-se-alejo-para-acercarse-a-los-incentivos-del-poder" rel="noopener noreferrer" target="_blank">Doria Medina cuestiona al diputado Reyes y dice que se alejó “para acercarse a los incentivos del poder”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/politica/senadora-yarhui-pide-a-doria-medina-que-de-detalles-de-los-casos-de-corrupcion-con-nombre-y-apellido.html" rel="noopener noreferrer" target="_blank">Senadora Yarhui pide a Doria Medina que dé detalles de los casos de corrupción, “con nombre y apellido”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/samuel-afirma-que-la-corrupcion-alcanza-todo-y-advierte-que-involucra-a-allegados-de-paz/" rel="noopener noreferrer" target="_blank">Samuel afirma que la corrupción alcanza ‘todo’ y advierte que involucra a allegados de Paz</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/senadora-yarhui-pide-doria-medina-que-de-detalles-de-los-casos-de-corrupcion-con-nombre-y" rel="noopener noreferrer" target="_blank">Senadora Yarhui pide a Doria Medina que dé detalles de los casos de corrupción, 'con nombre y apellido'</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60136-doria-medina-revela-que-hizo-conocer-a-paz-casos-de-corrupcion-en-su-gestion-y-dice-que-le-explotaran-porque-es-gente-allegada" rel="noopener noreferrer" target="_blank">Doria Medina revela que hizo conocer a Paz casos de corrupción en su gestión y dice que le explotarán porque es gente allegada</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12a">
+<div class="modal-backdrop" onclick="closeModal('modal_12a')"></div>
+<div aria-label="Gobierno dice que ejecutará aprehensión contra Evo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Gobierno dice que ejecutará aprehensión contra Evo</div>
+<div class="modal-sum">El Gobierno del presidente Rodrigo Paz reitera su compromiso de ejecutar la orden de aprehensión contra Evo Morales, aunque reconoce que la acción es compleja y podría generar un alto riesgo, llegando incluso a “costar vidas”.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">9</strong> titulares</span>
+<span><strong style="color:var(--c-05)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_gobierno-senala-que-aprehender-a-evo-podria-costar-vidas-pero-asegura-que-lo-resolvera.html" rel="noopener noreferrer" target="_blank">Gobierno señala que aprehender a Evo podría “costar vidas”, pero asegura que lo resolverá</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/gobierno-afirma-que-captura-de-evo-morales-implica-un-alto-riesgo-y-puede-costar-vidas" rel="noopener noreferrer" target="_blank">Gobierno afirma que captura de Evo Morales implica un alto riesgo y puede costar vidas</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/manfred-cuestiona-sancion-a-policias-por-saludar-a-evo-y-senala-que-el-gobierno-deberia-tomar-acciones.html" rel="noopener noreferrer" target="_blank">Manfred cuestiona sanción a policías por saludar a Evo y señala que el Gobierno debería “tomar acciones”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/gobierno-dice-que-aprehension-de-evo-podria-costar-vidas-pero-asegura-que-la-cumplira.html" rel="noopener noreferrer" target="_blank">Gobierno dice que aprehensión de Evo podría “costar vidas”, pero asegura que la cumplirá</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/gobierno-capturar-a-evo-podria-costar-vidas-aunque-garantiza-que-el-tema-sera-resuelto.html" rel="noopener noreferrer" target="_blank">Gobierno: capturar a Evo podría “costar vidas”, aunque garantiza que el tema será resuelto</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/gobierno-admite-que-capturar-a-evo-podria-costar-vidas/" rel="noopener noreferrer" target="_blank">Gobierno admite que capturar a Evo podría costar vidas</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/gobierno-asegura-que-ejecutara-orden-aprehension-evo-admite-que-podria-costar-vidas/20260727155548993930.html" rel="noopener noreferrer" target="_blank">Gobierno asegura que ejecutará la orden de aprehensión contra Evo, pero admite que podría "costar vidas"</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/gobierno-reitera-que-evo-sera-aprehendido-pero-dice-que-es-complejo-y-puede-costar-vidas/" rel="noopener noreferrer" target="_blank">Gobierno reitera que Evo será aprehendido, pero dice que es “complejo” y puede costar vidas</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/evo-pueblo-dice-que-video-de-morales-hablando-con-policias-fue-un-descuido-y-niega-desafio-al-gobierno/" rel="noopener noreferrer" target="_blank">‘Evo Pueblo’ dice que video de Morales hablando con policías fue un “descuido” y niega desafío al Gobierno</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Ministro Zamora defiende gerente de BoA" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Ministro Zamora defiende gerente de BoA</div>
+<div class="modal-sum">El ministro Zamora defiende al nuevo gerente de BoA, desmintiendo las denuncias en su contra y pidiendo que lo dejen trabajar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">3</strong> titulares</span>
+<span><strong style="color:var(--c-05)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ministro-zamora-sale-defensa-nuevo-gerente-boa_1785194387" rel="noopener noreferrer" target="_blank">El ministro Zamora sale en defensa del nuevo gerente de BoA</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260727/ministro-zamora-desmiente-denuncias-contra-nuevo-gerente-boa-pide-que-dejen" rel="noopener noreferrer" target="_blank">Ministro Zamora desmiente denuncias contra el nuevo gerente de BoA y pide que lo dejen trabajar</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/no-nos-dejan-trabajar-ministro-zamora-desmiente-denuncias-contra-el-nuevo-gerente-de-boa/" rel="noopener noreferrer" target="_blank">“No nos dejan trabajar”: Ministro Zamora desmiente denuncias contra el nuevo gerente de BoA</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Múltiples muertes en centro minero Huanuni" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Múltiples muertes en centro minero Huanuni</div>
+<div class="modal-sum">Múltiples muertes, incluyendo militares y civiles, en el centro minero de Huanuni. Fiscalía investiga como homicidio con tres hipótesis (enfrentamiento, deslizamiento o caída), mientras el Ejército y Gobierno hablan de accidente por deslizamiento. Hay contradicciones sobre la causa y número de víctimas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">39</strong> titulares</span>
+<span><strong style="color:var(--c-07)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_ejercito-investigara-muerte-de-militares-tras-enfrentamiento-con-jukus.html" rel="noopener noreferrer" target="_blank">Ejército investigará muerte de militares tras enfrentamiento con jukus</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/contradicciones-sobre-muertes-en-huanuni-fiscalia-investiga-presunto-homicidio-y-gobierno-sostiene-que-fue-accidente" rel="noopener noreferrer" target="_blank">Contradicciones sobre muertes en Huanuni: Fiscalía investiga presunto homicidio y Gobierno sostiene que fue accidente</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/victimas-del-cerro-posokoni-murieron-tras-caer-entre-50-y-60-metros-64203" rel="noopener noreferrer" target="_blank">Víctimas del cerro Posokoni murieron tras caer entre 50 y 60 metros</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/reportan-que-en-cerro-posokoni-murieron-tres-y-no-cuatro-personas-64208" rel="noopener noreferrer" target="_blank">Reportan que en cerro Posokoni murieron tres y no cuatro personas</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/jefe-militar-muertes-tras-enfrentamientos-con-jukus-fue-a-raiz-de-un-deslizamiento-64187" rel="noopener noreferrer" target="_blank">Jefe militar: muertes tras enfrentamientos con jukus fue a raíz de un deslizamiento</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/militar-herido-en-cerro-posokoni-se-encuentra-en-terapia-intensiva--64201" rel="noopener noreferrer" target="_blank">Militar herido en cerro Posokoni se encuentra en terapia intensiva</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/defensa-califica-como-lamentable-accidente-muerte-de-tres-personas-en-huanuni-y-abre-investigacion.html" rel="noopener noreferrer" target="_blank">Defensa califica como “lamentable accidente” muerte de tres personas en huanuni y abre investigación</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/ejercito-descarta-emboscada-y-atribuye-muerte-de-dos-militares-a-un-deslizamiento-en-huanuni.html" rel="noopener noreferrer" target="_blank">Ejército descarta emboscada y atribuye muerte de dos militares a un deslizamiento en Huanuni</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/militar-herido-en-huanuni-se-encuentra-en-estado-critico-en-un-hospital-de-oruro.html" rel="noopener noreferrer" target="_blank">Militar herido en Huanuni se encuentra en estado crítico en un hospital de Oruro</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/no-me-dejes-morir-revelan-video-del-rescate-de-victimas-en-mina-de-huanuni.html" rel="noopener noreferrer" target="_blank">“No me dejes morir”: Revelan video del rescate de víctimas en mina de Huanuni</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260727/oruro-mueren-2-militares-y-2-civiles-tras-emboscada.html" rel="noopener noreferrer" target="_blank">Oruro: Mueren 2 militares y 2 civiles tras emboscada</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/jefe-militar-tragedia-huanuni-robo-mineral-han-normalizado-ha-incrementado_1785162142" rel="noopener noreferrer" target="_blank">Jefe militar tras la tragedia en Huanuni: “El robo de mineral lo han normalizado y se ha incrementado”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ejercito-bolivia-dice-muerte-cuatro-personas-mina-fue-accidente_1785178600" rel="noopener noreferrer" target="_blank">Ejército de Bolivia dice que muerte de cuatro personas en una mina fue por "accidente"</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ataque-oruro-robar-minerales-causa-cuatro-muertes-huanuni_1785121495" rel="noopener noreferrer" target="_blank">Ataque en Oruro para robar minerales causa cuatro muertes en Huanuni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/investigan-homicidio-muertes-centro-minero-huanuni-presunta-emboscada_1785171176" rel="noopener noreferrer" target="_blank">Fiscalía asegura que son tres y no cuatro los muertos en un centro minero en Huanuni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ejercito-atribuye-deslizamiento-centro-minero-muerte-huanuni_1785172332" rel="noopener noreferrer" target="_blank">El Ejército atribuye a un deslizamiento en el centro minero la muerte en Huanuni</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/enfrentamiento-deslizamiento-o-caida-las-tres-hipotesis-que-analiza-la-fiscalia-por-el-caso-huanuni.html" rel="noopener noreferrer" target="_blank">Enfrentamiento, deslizamiento o caída: las tres hipótesis que analiza la Fiscalía por el caso Huanuni</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/otro-militar-lucha-por-su-vida-tras-la-tragedia-en-huanuni-continuan-las-pesquisas.html" rel="noopener noreferrer" target="_blank">Otro militar lucha por su vida tras la tragedia en Huanuni; continúan las pesquisas</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_caso-centro-minero-de-huanuni-defensa-califica-como-lamentable-accidente.html" rel="noopener noreferrer" target="_blank">Caso Centro Minero de Huanuni: Defensa califica como “lamentable accidente”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_revelan-video-del-rescate-de-victimas-en-mina-de-huanuni.html" rel="noopener noreferrer" target="_blank">Revelan video del rescate de víctimas en mina de Huanuni</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/ministro-de-defensa-califica-de-%E2%80%9Caccidente%E2%80%9D-el-hecho-que-dej%C3%B3-tres-fallecidos-en-huanuni" rel="noopener noreferrer" target="_blank">Ministro de Defensa califica de “accidente” el hecho que dejó tres fallecidos en Huanuni</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/fiscal%C3%ADa-analiza-tres-hip%C3%B3tesis-sobre-las-muertes-en-huanuni-enfrentamiento-deslizamiento" rel="noopener noreferrer" target="_blank">Fiscalía analiza tres hipótesis sobre las muertes en Huanuni: enfrentamiento, deslizamiento o caída</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/07/27/justiniano-descarta-emboscada-y-atribuye-tragedia-en-huanuni-a-un-deslizamiento/" rel="noopener noreferrer" target="_blank">Justiniano descarta emboscada y atribuye tragedia en Huanuni a un deslizamiento</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260727/mueren-dos-militares-dos-civiles-enfrentar-jucus-mina-huanuni" rel="noopener noreferrer" target="_blank">Mueren dos militares y dos civiles tras enfrentar a “jucus” en mina de Huanuni</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260727/no-me-dejes-morir-dramatico-momento-del-rescate-afectados-tragedia" rel="noopener noreferrer" target="_blank">“No me dejes morir”, el dramático momento del rescate de afectados en la tragedia en Oruro</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260727/ejercito-descarta-emboscada-afirma-que-deslizamiento-causo-muerte-dos" rel="noopener noreferrer" target="_blank">Ejército descarta emboscada y afirma que un deslizamiento causó la muerte de dos militares en Huanuni</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/fiscalia-investiga-como-homicidio-muertes-huanuni-maneja-tres-hipotesis/20260727152515993929.html" rel="noopener noreferrer" target="_blank">Fiscalía investiga como homicidio las muertes en Huanuni y maneja tres hipótesis</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/ejercito-muerte-dos-sargentos-huanuni-fue-accidente-emboscada/20260727122407993925.html" rel="noopener noreferrer" target="_blank">Según el Ejército, muerte de dos sargentos en Huanuni fue por accidente y no por emboscada</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ejercito-descarta-emboscada-y-atribuye-a-un-deslizamiento-la-muerte-de-dos-militares-en-huanuni/" rel="noopener noreferrer" target="_blank">Ejército descarta emboscada y atribuye a un deslizamiento la muerte de dos militares en Huanuni</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/no-habra-impunidad-comibol-promete-todo-el-peso-de-la-ley-tras-la-tragedia-en-huanuni-202672793050" rel="noopener noreferrer" target="_blank">"No habrá impunidad": Comibol promete todo el peso de la ley tras la tragedia en Huanuni</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/defensa-plantea-reforzar-capacidades-y-protocolos-de-las-fuerzas-armadas-202672714645" rel="noopener noreferrer" target="_blank">Tras los hechos en Huanuni, Defensa plantea reforzar capacidades y protocolos de las Fuerzas Armadas</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/empresa-huanuni-y-la-policia-dicen-que-en-la-bocamina-murieron-dos-militares-y-un-funcionario-DA22448830" rel="noopener noreferrer" target="_blank">Empresa Huanuni y la Policía dicen que en la bocamina murieron dos militares y un funcionario</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/huanuni-el-caso-se-investiga-como-homicidio-las-victimas-cayeron-50-metros-KA22446693" rel="noopener noreferrer" target="_blank">Huanuni: El caso se investiga como homicidio, las víctimas cayeron 50 metros</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-robo-de-minerales-en-huanuni-se-normalizo-hay-complicidad-entre-jukus-y-pobladores" rel="noopener noreferrer" target="_blank">El robo de minerales en Huanuni "se normalizó"; hay complicidad entre jukus y pobladores</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/contradiccion-por-muerte-de-militares-en-huanuni-familiares-denuncian-tortura-y-gobierno" rel="noopener noreferrer" target="_blank">Contradicción por muerte de militares en Huanuni: Familiares denuncian tortura y Gobierno habla de accidente</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/59971-un-militar-lucha-por-su-vida-en-terapia-intensiva-tras-lo-ocurrido-en-huanuni" rel="noopener noreferrer" target="_blank">Un militar lucha por su vida en terapia intensiva tras lo ocurrido en Huanuni</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60055-los-decesos-en-huanuni-muestran-que-la-magnitud-de-los-robos-escalo-hasta-requerir-presencia-militar-dice-experto" rel="noopener noreferrer" target="_blank">Los decesos en Huanuni muestran que la magnitud de los robos escaló hasta requerir presencia militar, dice experto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60073-fiscalia-investiga-tres-hipotesis-sobre-la-muerte-de-dos-militares-y-un-trabajador-en-la-mina-huanuni" rel="noopener noreferrer" target="_blank">Fiscalía investiga tres hipótesis sobre la muerte de dos militares y un trabajador en la mina Huanuni</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60109-subgerente-de-la-minera-huanuni-informa-que-un-gran-numero-de-jucus-llego-el-sabado-y-que-los-decesos-se-produjeron-al-intentar-huir-de-ellos" rel="noopener noreferrer" target="_blank">Subgerente de la minera Huanuni informa que un gran número de jucus llegó el sábado y que los decesos se produjeron al intentar huir de ellos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Atraco con balacera deja un fallecido" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Atraco con balacera deja un fallecido</div>
+<div class="modal-sum">Un atraco con balacera registrado frente a la terminal de buses de Cochabamba resultó en un librecambista fallecido y dos personas heridas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">6</strong> titulares</span>
+<span><strong style="color:var(--c-07)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/reportan-un-muerto-y-dos-heridos-en-asalto-a-librecambista-al-frente-de-la-terminal-de-buses-de-cochabamba.html" rel="noopener noreferrer" target="_blank">Reportan un muerto y dos heridos en asalto a librecambista al frente de la terminal de buses de Cochabamba</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_cochabamba-balacera-deja-un-librecambista-fallecido-y-al-menos-dos-heridos.html" rel="noopener noreferrer" target="_blank">Cochabamba: Balacera deja un librecambista fallecido y al menos dos heridos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/07/27/balacera-frente-a-la-terminal-de-cochabamba-deja-un-muerto-y-dos-heridos/" rel="noopener noreferrer" target="_blank">Balacera frente a la terminal de Cochabamba deja un muerto y dos heridos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260727/atracadores-matan-librecambista-hieren-dos-personas-frente-terminal" rel="noopener noreferrer" target="_blank">Atracadores matan a un librecambista y hieren a dos personas frente a la terminal de Cochabamba</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/balacera-registrada-frente-terminal-deja-fallecido-heridos/20260727232151993943.html" rel="noopener noreferrer" target="_blank">Una balacera registrada frente a la terminal deja un fallecido y heridos</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60142-balacera-en-cochabamba-deja-un-librecambista-fallecido-y-dos-heridos-durante-atraco" rel="noopener noreferrer" target="_blank">Balacera en Cochabamba deja un librecambista fallecido y dos heridos durante atraco</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5b">
+<div class="modal-backdrop" onclick="closeModal('modal_5b')"></div>
+<div aria-label="Gobierno lanza plan contra feminicidio y violencia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Gobierno lanza plan contra feminicidio y violencia</div>
+<div class="modal-sum">El Gobierno despliega una estrategia nacional y anuncia un plan para la atención de víctimas de feminicidio y violencia, aprobando una guía de seguridad social de corto plazo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">4</strong> titulares</span>
+<span><strong style="color:var(--c-07)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/feminicidio-sometio-golpes-pareja-dio-fuga-dejarla-vida_1785160716" rel="noopener noreferrer" target="_blank">Feminicidio: un sujeto sometió a golpes a su pareja hasta quitarle la vida</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/07/27/gobierno-despliega-estrategia-nacional-contra-feminicidios/" rel="noopener noreferrer" target="_blank">Gobierno despliega estrategia nacional contra feminicidios</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_anuncian-plan-de-atencion-a-victimas-de-feminicidio.html" rel="noopener noreferrer" target="_blank">Anuncian plan de atención a víctimas de feminicidio</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_aprueban-guia-de-la-seguridad-social-de-corto-plazo-para-la-atencion-a-victimas-de-violencia.html" rel="noopener noreferrer" target="_blank">Aprueban “Guía de la Seguridad Social de Corto Plazo para la Atención a Víctimas de Violencia”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_17a">
+<div class="modal-backdrop" onclick="closeModal('modal_17a')"></div>
+<div aria-label="Paz viaja a Perú por investidura de Fujimori" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Paz viaja a Perú por investidura de Fujimori</div>
+<div class="modal-sum">El presidente boliviano Rodrigo Paz viajó a Perú para asistir a la investidura de la presidenta Keiko Fujimori. Durante su visita en Lima, Paz busca relanzar las relaciones bilaterales, fortalecer la Comunidad Andina de Naciones y sostener reuniones con autoridades peruanas, de Estados Unidos y Emiratos Arabes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">21</strong> titulares</span>
+<span><strong style="color:var(--c-18)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/paz-se-reunira-en-peru-con-fujimori-y-autoridades-de-estados-unidos-y-emiratos-arabes.html" rel="noopener noreferrer" target="_blank">Paz se reunirá en Perú con Fujimori y autoridades de Estados Unidos y Emiratos Árabes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/07/27/paz-viaja-a-peru-para-la-posesion-de-fujimori-y-sostener-reuniones-bilaterales-64199" rel="noopener noreferrer" target="_blank">Paz viaja a Perú para la posesión de Fujimori y sostener reuniones bilaterales</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/07/27/paz-llego-a-lima-este-martes-se-reunira-con-keiko-fujimori-64225" rel="noopener noreferrer" target="_blank">Paz llegó a Lima; este martes se reunirá con Keiko Fujimori</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/mundo/2026/07/27/el-fujimorismo-abre-su-segunda-era-en-peru-con-la-asuncion-presidencial-de-keiko-fujimori-64228" rel="noopener noreferrer" target="_blank">El fujimorismo abre su segunda era en Perú con la asunción presidencial de Keiko Fujimori</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/rodrigo-paz-viaja-a-peru-para-la-investidura-de-fujimori-y-relanzar-relacion-bilateral.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz viaja a Perú para la investidura de Fujimori y “relanzar” relación bilateral</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/rodrigo-paz-llega-a-lima-para-asistir-a-la-investidura-de-keiko-fujimori-en-peru/" rel="noopener noreferrer" target="_blank">Rodrigo Paz llega a Lima para asistir a la investidura de Keiko Fujimori en Perú</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/rodrigo-paz-viaja-peru-confirman-reunion-bilateral-keiko_1785166469" rel="noopener noreferrer" target="_blank">Rodrigo Paz viaja a Perú y confirman reunión bilateral con Keiko</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/presidente-bolivia-esta-peru-fujimori-paz-apellidos-vuelven-reunirse-34-anos-despues_1785195830" rel="noopener noreferrer" target="_blank">Presidente de Bolivia ya está en Perú: Fujimori y Paz, los apellidos que vuelven a reunirse 34 años después</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/politica/paz-perfila-con-fujimori-reactivar-el-proyecto-ilo-un-gabinete-binacional-y-ver-como-bolivia-llegara-al-puerto-de-chancay.html" rel="noopener noreferrer" target="_blank">Paz perfila con Fujimori reactivar el proyecto Ilo, un gabinete binacional y ver cómo Bolivia llegará al puerto de Chancay</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_rodrigo-paz-aterriza-en-peru-para-asistir-a-la-posesion-de-keiko-fujimori.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz aterriza en Perú para asistir a la posesión de Keiko Fujimori</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/posesion-de-fujimori-paz-llega-a-peru-y-busca-beneficios-para-ambos-paises/" rel="noopener noreferrer" target="_blank">Posesión de Fujimori: Paz llega a Perú y busca ‘beneficios’ para ambos países</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/paz-planteara-a-fujimori-relanzar-la-comunidad-andina-de-naciones/" rel="noopener noreferrer" target="_blank">Paz planteará a Fujimori relanzar la Comunidad Andina de Naciones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/en-lima-paz-sostendra-reunion-con-fujimori-y-dialogo-con-subsecretario-de-eeuu/" rel="noopener noreferrer" target="_blank">En Lima, Paz sostendrá reunión con Fujimori y diálogo con subsecretario de EEUU</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nueva-etapa-de-integracion-bolivia-propondra-a-peru-fortalecer-la-comunidad-andina-2026727153051" rel="noopener noreferrer" target="_blank">Bolivia busca relanzar la Comunidad Andina: Rodrigo Paz planteará nuevo impulso al bloque regional</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-arriba-a-peru-y-anuncia-gestiones-para-recuperar-tiempo-perdido-2026727195450" rel="noopener noreferrer" target="_blank">Paz arriba a Perú y anuncia gestiones para “recuperar tiempo perdido”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/presidente-paz-llega-a-peru-para-participar-en-la-investidura-de-keiko-fujimori-MB22458163" rel="noopener noreferrer" target="_blank">Presidente Paz llega a Perú para participar en la investidura de Keiko Fujimori</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/gobierno-senala-que-rodrigo-paz-propondra-a-keiko-fujimori-relanzar-la-comunidad-andina-EB22453043" rel="noopener noreferrer" target="_blank">Gobierno señala que Rodrigo Paz propondrá a Keiko Fujimori relanzar la Comunidad Andina</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/keiko-fujimori-asume-manana-y-peru-se-ubica-ahora-entre-eeuu-y-china" rel="noopener noreferrer" target="_blank">Keiko Fujimori asume mañana y Perú se ubica ahora entre EEUU y China</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/keiko-sera-posesionada-este-martes-paz-asistira-y-sostendra-una-reunion-con-la-mandataria" rel="noopener noreferrer" target="_blank">Keiko será posesionada este martes; Paz asistirá y sostendrá una reunión con la mandataria</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60127-rodrigo-paz-llega-a-peru-para-la-investidura-de-keiko-fujimori-y-anuncia-relanzamiento-de-relaciones-bilaterales" rel="noopener noreferrer" target="_blank">Rodrigo Paz llega a Perú para la investidura de Keiko Fujimori y anuncia relanzamiento de relaciones bilaterales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60139-rodrigo-paz-inicia-su-primera-visita-a-peru-con-una-agenda-centrada-en-la-cooperacion-binacional" rel="noopener noreferrer" target="_blank">Rodrigo Paz inicia su primera visita a Perú con una agenda centrada en la cooperación binacional</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_11">
+<div class="modal-backdrop" onclick="closeModal('modal_11')"></div>
+<div aria-label="Audio revela compra de ascensos en la Policía" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Audio revela compra de ascensos en la Policía</div>
+<div class="modal-sum">Un supuesto audio atribuido al Comandante de la Policía, Mirko Sokol, revela denuncias de presunta compra de ascensos y recaudación de $us 2 millones para influir en su remoción o sucesión. El Vicepresidente Edmand Lara exige una investigación, que el Gobierno ya ha anunciado para esclarecer el caso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">15</strong> titulares</span>
+<span><strong style="color:var(--c-10)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_11')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_sokol-denuncia-recaudacion-de-us-2-mm-para-sacarlo-del-cargo-lara-le-pide-explicacion.html" rel="noopener noreferrer" target="_blank">Sokol denuncia recaudación de $us 2 MM para sacarlo del cargo; Lara le pide explicación</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/vicepresidente-exige-investigar-supuesto-audio-atribuido-a-sokol-sobre-presunta-compra-de-ascensos-en-la-policia" rel="noopener noreferrer" target="_blank">Vicepresidente exige investigar supuesto audio atribuido a Sokol sobre presunta compra de ascensos en la Policía</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/circulan-presuntos-audios-de-sokol-lara-exige-investigacion-y-el-gobierno-adelanta-pronto-pronunciamiento-64223" rel="noopener noreferrer" target="_blank">Circulan presuntos audios de Sokol; Lara exige investigación y el gobierno adelanta pronto pronunciamiento</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260727/audio-atribuido-a-mirko-sokol-desata-denuncia-sobre-presunta-compra-de-ascensos.html" rel="noopener noreferrer" target="_blank">Audio atribuido a Mirko Sokol desata denuncia sobre presunta compra de ascensos</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/gral-sokol-denuncia-recaudacion-de-us-2-millones-para-influir-en-su-sucesion-estan-ofreciendo-al-ministro-de-gobierno/" rel="noopener noreferrer" target="_blank">Gral. Sokol denuncia recaudación de $us 2 millones para influir en su sucesión, están ofreciendo al ministro de Gobierno</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/aqui-no-hay-respeto-a-la-institucion-policia-sino-un-negociado-analista-peralta-alerta-por-audio-de-sokol/" rel="noopener noreferrer" target="_blank">“Aquí no hay respeto a la institución (Policía), sino un NEGOCIADO”: analista Peralta alerta por audio de Sokol</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/estamos-hablando-de-millones-de-dolares-por-ascenso-policia-libre-exige-investigar-audio-de-sokol/" rel="noopener noreferrer" target="_blank">“Estamos hablando de MILLONES de dólares por ascenso (Policía)”: Libre exige investigar audio de Sokol</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-anuncia-investigacion-audio-atribuido-sokol_1785200998" rel="noopener noreferrer" target="_blank">Gobierno anuncia investigación por audio atribuido a Sokol</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/un-audio-sobre-compra-de-ascensos-complica-al-comandante-de-la-policia-gobierno-anuncia-investigacion.html" rel="noopener noreferrer" target="_blank">Un audio sobre compra de ascensos complica al comandante de la Policía, Gobierno anuncia investigación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/lara-afirma-que-el-presunto-audio-de-sokol-evidencia-crisis-en-la-policia/" rel="noopener noreferrer" target="_blank">Lara afirma que el presunto audio de Sokol evidencia crisis en la Policía</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/sokol-denuncia-recaudacion-us-2-millones-sacarlo-cargo-lara-pide-explicacion/20260727172448993939.html" rel="noopener noreferrer" target="_blank">Ante supuesta denuncia de Sokol sobre recaudación de $us 2 millones para sacarlo del cargo, Lara le pide explicación</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/audio-revela-pagos-para-designar-al-nuevo-comandante-de-la-policia-lara-exige-sanciones-y-el-gobierno-anuncia-investigacion/" rel="noopener noreferrer" target="_blank">Audio revela pagos para designar al nuevo Comandante de la Policía; Lara exige sanciones y el Gobierno anuncia investigación</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/vocero-presidencial-senala-que-el-ministro-de-gobierno-hablara-sobre-el-audio-atribuido-al-comandante-de-la-policia-JB22454519" rel="noopener noreferrer" target="_blank">Vocero presidencial señala que el ministro de Gobierno hablará sobre el audio atribuido al comandante de la Policía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/lara-exige-una-investigacion-sobre-un-audio-atribuido-al-comandante-mirko-sokol-CB22452752" rel="noopener noreferrer" target="_blank">Lara exige una investigación sobre un audio atribuido al comandante Mirko Sokol</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/que-dice-el-audio-atribuido-al-comandante-policial-mirko-sokol-MA22447496" rel="noopener noreferrer" target="_blank">¿Qué dice el audio atribuido al comandante policial Mirko Sokol?</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Aprehenden a exdiputado Freddy Mamani por bloqueos" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Aprehenden a exdiputado Freddy Mamani por bloqueos</div>
+<div class="modal-sum">El exdiputado y expresidente de la Cámara de Diputados, Freddy Mamani (identificado como 'evista'), fue aprehendido en el marco de una investigación relacionada con los bloqueos que duraron más de 50 días.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">10</strong> titulares</span>
+<span><strong style="color:var(--c-10)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_aprehenden-al-exdiputado-evista-freddy-mamani-acusado-de-impulsar-los-mas-de-50-dias-de-bloqueos.html" rel="noopener noreferrer" target="_blank">Aprehenden al exdiputado evista Freddy Mamani, acusado de impulsar los más de 50 días de bloqueos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/aprehenden-al-expresidente-de-diputados-freddy-mamani-por-la-crisis-de-los-bloqueos" rel="noopener noreferrer" target="_blank">Aprehenden al expresidente de Diputados Freddy Mamani por la crisis de los bloqueos</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/aprehenden-al-exdiputado-freddy-mamani-por-investigacion-de-los-53-dias-de-bloqueos-denuncia-persecucion-politica-64230" rel="noopener noreferrer" target="_blank">Aprehenden al exdiputado Freddy Mamani por el caso de los bloqueos; denuncia persecución política</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/aprehenden-al-expresidente-de-diputados-freddy-mamani-por-supuestamente-los-bloqueos/" rel="noopener noreferrer" target="_blank">Aprehenden al expresidente de Diputados Freddy Mamani por supuestamente los bloqueos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/expresidente-camara-diputados-aprehendido-bloqueos_1785198885" rel="noopener noreferrer" target="_blank">Ex presidente de la Cámara de Diputados es aprehendido por los bloqueos</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_aprehenden-al-exdiputado-evista-freddy-mamani.html" rel="noopener noreferrer" target="_blank">Aprehenden al exdiputado “evista” Freddy Mamani</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/aprehenden-al-exdiputado-freddy-mamani-por-investigaci%C3%B3n-sobre-los-bloqueos%C2%A0" rel="noopener noreferrer" target="_blank">Aprehenden al exdiputado Freddy Mamani por investigación sobre los bloqueos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/cae-el-exdiputado-evista-mamani-implicado-en-los-53-dias-de-bloqueo/" rel="noopener noreferrer" target="_blank">Cae el exdiputado evista Mamani, implicado en los 53 días de bloqueo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/aprehenden-al-expresidente-de-diputados-freddy-mamani-por-los-mas-de-50-dias-de-bloqueo/" rel="noopener noreferrer" target="_blank">Aprehenden al expresidente de Diputados, Freddy Mamani, por los más de 50 días de bloqueo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60130-freddy-mamani-es-aprehendido-en-la-investigacion-por-los-53-dias-de-bloqueos" rel="noopener noreferrer" target="_blank">Freddy Mamani es aprehendido en la investigación por los 53 días de bloqueos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="Asamblea prioriza agenda económica" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Asamblea prioriza agenda económica</div>
+<div class="modal-sum">La Asamblea Legislativa prevé tratar esta semana el proyecto del Presupuesto General del Estado (PGE) 2026, mientras coordina con el Ejecutivo la aprobación de leyes consideradas estratégicas para impulsar inversiones y fortalecer los sectores de energía e hidrocarburos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">10</strong> titulares</span>
+<span><strong style="color:var(--c-21)">9</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_doria-medina-sugiere-incluir-el-50-50-en-el-pge-reformulado.html" rel="noopener noreferrer" target="_blank">Doria Medina sugiere incluir el 50/50 en el PGE reformulado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/senado-preve-tratar-pge-2026-miercoles-espera-informe-comision_1785194821" rel="noopener noreferrer" target="_blank">Senado prevé tratar PGE 2026 hasta el miércoles; espera informe de la comisión</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/carreteras-salud-agro-quedan-relegados-mientras-90-nueva-deuda-externa-destina-financiar-presupuesto-estatal_1785171261" rel="noopener noreferrer" target="_blank">Carreteras, salud y agro quedan relegados mientras el 90% de la nueva deuda externa se destina a financiar el presupuesto estatal</a></span></li>
+<li><span class="m-src">Último Minuto Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://ultimominuto.com.bo/ultimo-minuto/senado-preve-tratar-el-pge-esta-semana/" rel="noopener noreferrer" target="_blank">Senado prevé tratar el PGE esta semana</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/comision-analiza-tratar-el-pge-reformulado-entre-manana-y-el-miercoles-preve-enviarlo-al" rel="noopener noreferrer" target="_blank">Comisión analiza tratar el PGE reformulado entre mañana y el miércoles; prevé enviarlo al pleno el jueves</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/59983-gobierno-alista-propuesta-para-la-reunion-con-gobernadores-sobre-el-5050-con-la-mirada-en-el-2027" rel="noopener noreferrer" target="_blank">Gobierno alista propuesta para la reunión con gobernadores sobre el 50/50 con la mirada en el 2027</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/07/27/norma-de-hidrocarburos-facilitara-la-exploracion-en-el-norte-paceno/" rel="noopener noreferrer" target="_blank">Norma de hidrocarburos facilitará la exploración en el norte paceño</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/asamblea-dara-prioridad-a-las-leyes-estructurales-tras-coordinacion-con-el-ejecutivo/" rel="noopener noreferrer" target="_blank">Asamblea dará prioridad a las leyes estructurales tras coordinación con el Ejecutivo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/senado-priorizara-leyes-estructurales-y-preve-tratar-el-pge-esta-semana-202672717422" rel="noopener noreferrer" target="_blank">Senado priorizará leyes estructurales y prevé tratar el PGE esta semana</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/presidente-del-senado-las-primeras-leyes-que-llegaran-al-legislativo-seran-de-inversiones-energia-e-hidrocarburos-MB22457586" rel="noopener noreferrer" target="_blank">Presidente del Senado: Las primeras leyes que llegarán al Legislativo serán de inversiones, energía e hidrocarburos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Diputados reciben tablets 5G para trabajo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Diputados reciben tablets 5G para trabajo</div>
+<div class="modal-sum">Entel entregó 278 tablets con tecnología 5G a diputados para reforzar y modernizar el trabajo legislativo, según varios titulares.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">5</strong> titulares</span>
+<span><strong style="color:var(--c-21)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/panorama/2026/07/27/tecnologia-y-conectividad-fortaleceran-el-trabajo-parlamentario-64227" rel="noopener noreferrer" target="_blank">Tecnología y conectividad fortalecerán el trabajo parlamentario</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/entel-entreg%C3%B3-278-tablets-con-tecnolog%C3%ADa-5g-diputados-para-reforzar-el-trabajo-legislativo" rel="noopener noreferrer" target="_blank">Entel entregó 278 tablets con tecnología 5G a diputados para reforzar el trabajo legislativo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/diputados-reciben-tablets-con-tecnologia-5g-para-digitalizar-el-trabajo-legislativo/" rel="noopener noreferrer" target="_blank">Diputados reciben tablets con tecnología 5G para ‘digitalizar’ el trabajo legislativo</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/entel-entrega-tablets-con-conexion-5g-a-legisladores-y-zamora-pide-trabajo-conjunto/" rel="noopener noreferrer" target="_blank">Entel entrega tablets con conexión 5G a legisladores y Zamora pide trabajo conjunto</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60088-diputados-reciben-tablets-con-tecnologia-5g-para-modernizar-el-trabajo-legislativo" rel="noopener noreferrer" target="_blank">Diputados reciben tablets con tecnología 5G para modernizar el trabajo legislativo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5a">
+<div class="modal-backdrop" onclick="closeModal('modal_5a')"></div>
+<div aria-label="Gobierno socializa proyecto Ley de Inversiones" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Gobierno socializa proyecto Ley de Inversiones</div>
+<div class="modal-sum">El Gobierno de Rodrigo Paz finaliza la socialización del proyecto de Ley de Inversiones, generándose cuestionamientos desde la oposición sobre las garantías que ofrece a los inversionistas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">5</strong> titulares</span>
+<span><strong style="color:var(--c-21)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/07/27/proyecto-de-ley-de-inversiones-en-etapa-final-de-socializacion/" rel="noopener noreferrer" target="_blank">Proyecto de ley de inversiones en etapa final de socialización</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/07/27/ministro-revela-que-proyecto-de-ley-de-inversiones-entra-en-etapa-final/" rel="noopener noreferrer" target="_blank">Ministro revela que proyecto de ley de inversiones entra en etapa final</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260727_gobierno-socializa-ante-la-cainco-el-proyecto-de-ley-de-inversiones.html" rel="noopener noreferrer" target="_blank">Gobierno socializa ante la CAINCO el proyecto de Ley de Inversiones</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/alarcon-cuestiona-la-ley-de-inversiones-y-afirma-que-ofrece-garantias-ficticias-a-inversionistas/" rel="noopener noreferrer" target="_blank">Alarcón cuestiona la Ley de Inversiones y afirma que ofrece garantías ‘ficticias’ a inversionistas</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/ley-de-inversiones-anunciada-por-el-gobierno-es-una-venta-de-humo-dice-el-diputado-alarcon-IA22446439" rel="noopener noreferrer" target="_blank">Ley de inversiones anunciada por el Gobierno es una “venta de humo”, dice el diputado Alarcón</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Escasez de diésel afecta producción y transporte" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Escasez de diésel afecta producción y transporte</div>
+<div class="modal-sum">La escasez de combustible, especialmente diésel, genera advertencias de cañeros por riesgo en la producción de alimentos y presión del transporte pesado y comités cívicos, afectando cadenas económicas clave. El gobierno lo considera un problema estructural.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">8</strong> titulares</span>
+<span><strong style="color:var(--c-11)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_transportistas-definiran-medidas-por-falta-de-combustible-en-ampliado-nacional-en-cochabamba.html" rel="noopener noreferrer" target="_blank">Transportistas definirán medidas por falta de combustible en ampliado nacional en Cochabamba</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/07/27/falta-de-combustible-no-es-un-problema-del-gobierno-es-un-problema-estructural-afirma-el-vocero-64212" rel="noopener noreferrer" target="_blank">Falta de combustible “no es un problema del gobierno, es un problema estructural” afirma el vocero</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/caneros-acusan-gobierno-incumplir-acuerdos-advierten-falta-diesel-pone-riesgo-produccion-alimentos_1785169924" rel="noopener noreferrer" target="_blank">Cañeros acusan al Gobierno de incumplir acuerdos y advierten que la falta de diésel pone en riesgo la producción de alimentos</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/transporte-pesado-endurece-presion-falta-diesel_1785187716" rel="noopener noreferrer" target="_blank">Transporte pesado endurece su presión por la falta de diésel</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/07/27/falta-de-combustible-paraliza-cadenas-clave-de-la-economia/" rel="noopener noreferrer" target="_blank">Falta de combustible afecta cadenas clave de la economía</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/emacruz-reporta-el-30-de-su-flota-paralizada-por-falta-de-diesel" rel="noopener noreferrer" target="_blank">Emacruz reporta el 30% de su flota paralizada por falta de diésel</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/comite-civico-cuestiona-a-ypfb-por-la-falta-de-diesel-y-exige-importacion-sin-trabas-2026727213840" rel="noopener noreferrer" target="_blank">Comité Cívico cuestiona a YPFB por la falta de diésel y exige importación sin trabas</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/07/27/60118-caneros-dan-plazo-al-gobierno-hasta-el-31-de-julio-para-garantizar-diesel-y-pagos-del-programa-etanol" rel="noopener noreferrer" target="_blank">Cañeros dan plazo al Gobierno hasta el 31 de julio para garantizar diésel y pagos del programa etanol</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Atribuyen responsabilidades por gasolina sin calidad" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Atribuyen responsabilidades por gasolina sin calidad</div>
+<div class="modal-sum">Una comisión especial y legislativa atribuye al exministro Medinaceli, YPFB y ANH responsabilidades por la distribución de gasolina sin control de calidad ("basura" o "desestabilizada"), recomendando ampliar investigaciones.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">7</strong> titulares</span>
+<span><strong style="color:var(--c-11)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_comision-atribuye-a-medinaceli-la-distribucion-de-gasolina-sin-control-de-calidad-durante-la-actual-gestion-de-gobierno.html" rel="noopener noreferrer" target="_blank">Comisión atribuye a Medinaceli la distribución de gasolina sin control de calidad durante la actual gestión de Gobierno</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/comision-especial-halla-irregularidades-e-identifica-presuntos-responsables-de-la-gasolina-contaminada" rel="noopener noreferrer" target="_blank">Comisión especial halla irregularidades e identifica presuntos responsables de la gasolina contaminada</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/07/27/comision-legislativa-apunta-a-exministro-medinaceli-por-la-distribucion-de-gasolina-basura-sin-control-de-calidad-64216" rel="noopener noreferrer" target="_blank">Comisión legislativa apunta a exministro Medinaceli por la distribución de “gasolina basura” sin control de calidad</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/asi-llego-gasolina-desestabilizada-surtidores-bolivia_1785186147" rel="noopener noreferrer" target="_blank">Así llegó la gasolina desestabilizada hasta los surtidores de Bolivia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/gasolina-desestabilizada-informe-identifica-responsabilidades-en-ypfb-anh-y-exministros-2026727203938" rel="noopener noreferrer" target="_blank">Gasolina desestabilizada: Informe identifica responsabilidades en YPFB, ANH y exministros</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputado-rada-comision-recomienda-ampliar-investigacion-contra-akly-y-medinaceli-por-la-gasolina-basura-KB22459012" rel="noopener noreferrer" target="_blank">Diputado Rada: Comisión recomienda ampliar investigación contra Akly y Medinaceli por la gasolina basura</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/diputado-alarcon-comision-atribuye-a-medinaceli-la-distribucion-de-gasolina-sin-control-de-calidad-durante-la-actual-gestion-de-gobierno-GB22453476" rel="noopener noreferrer" target="_blank">Diputado Alarcón: Comisión atribuye a Medinaceli la distribución de gasolina sin control de calidad durante la actual gestión de Gobierno</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Falta Av-Gas paraliza 250 aeronaves" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Falta Av-Gas paraliza 250 aeronaves</div>
+<div class="modal-sum">La falta de combustible de aviación (Av-Gas) en el departamento del Beni ha provocado la inactividad y paralización de más de 250 aeronaves, generando afectaciones al sector.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">5</strong> titulares</span>
+<span><strong style="color:var(--c-11)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_beni-250-avionetas-quedan-paradas-por-falta-de-combustible-pese-a-que-bolivia-produce-av-gas.html" rel="noopener noreferrer" target="_blank">Beni: 250 avionetas quedan paradas por falta de combustible, pese a que Bolivia produce Av-Gas</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/beni-lleva-cinco-dias-sin-combustible-de-aviacion-mas-de-250-aeronaves-estan-inactivas" rel="noopener noreferrer" target="_blank">Beni lleva cinco días sin combustible de aviación; más de 250 aeronaves están inactivas</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/07/27/mas-de-250-aeronaves-estan-paradas-en-beni-por-falta-de-combustible-64202" rel="noopener noreferrer" target="_blank">Asociación de pilotos de Beni asegura que hay entre 250 y 270 naves paradas por falta de combustible</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260727/falta-de-combustible-de-aviacion-paraliza-hasta-300-aeronaves-en-beni.html" rel="noopener noreferrer" target="_blank">Falta de combustible de aviación paraliza hasta 300 aeronaves en Beni</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/pilotos-denuncian-falta-combustible-aviacion-beni-hay-250-aeronaves-paralizadas_1785165435" rel="noopener noreferrer" target="_blank">Pilotos denuncian falta de combustible de aviación en Beni; hay más de 250 aeronaves paralizadas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="Bolivia registra 805 focos de calor" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Bolivia registra 805 focos de calor</div>
+<div class="modal-sum">Bolivia registra 805 focos de calor que afectan a ocho departamentos, superando los picos de 2025 y mostrando una tendencia ascendente desde 2023, elevando la alerta por posibles incendios.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">8</strong> titulares</span>
+<span><strong style="color:var(--c-15)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/07/27/805-focos-de-calor-afectan-a-ocho-departamentos-tarija-no-registra-actividad-64196" rel="noopener noreferrer" target="_blank">805 focos de calor afectan a ocho departamentos; Tarija no registra ninguno</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/07/27/ante-el-aumento-de-los-incendios-forestales-callisaya-pide-priorizar-la-prevencion-64215" rel="noopener noreferrer" target="_blank">Ante el aumento de los incendios forestales, Callisaya pide priorizar la prevención</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20260727/focos-de-calor-en-2026-ya-superan-el-pico-del-ano-pasado-y-elevan-alerta-por-incendios.html" rel="noopener noreferrer" target="_blank">Focos de calor en 2026 ya superan el pico del año pasado y elevan alerta por incendios</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/senamhi-reporta-805-focos-calor-pais_1785187111" rel="noopener noreferrer" target="_blank">Senamhi reporta 805 focos de calor en el país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/defensor-pueblo-advierte-incendios-forestales-convirtieron-problema-estructural-vulnera-derechos_1785177887" rel="noopener noreferrer" target="_blank">Defensor del Pueblo advierte que los incendios forestales se convirtieron en un problema estructural que vulnera derechos</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-07-27/pais/defensoria-alerta-que-los-focos-de-calor-ya-superan-los-registrados-en-2025.html" rel="noopener noreferrer" target="_blank">Defensoría alerta que los focos de calor ya superan los registrados en 2025</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/07/27/defensor-alerta-una-tendencia-ascendente-de-los-focos-de-calor-desde-2023/" rel="noopener noreferrer" target="_blank">Defensor alerta una tendencia ascendente de los focos de calor desde 2023</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/bolivia-inicia-la-semana-con-805-focos-de-calor-santa-cruz-concentra-la-mayor-preocupacion-202672781625" rel="noopener noreferrer" target="_blank">Bolivia inicia la semana con 805 focos de calor: Santa Cruz concentra la mayor preocupación</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9">
+<div class="modal-backdrop" onclick="closeModal('modal_9')"></div>
+<div aria-label="Dólar flexible sube por quinta semana" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Dólar flexible sube por quinta semana</div>
+<div class="modal-sum">El dólar flexible en Bolivia inicia su quinta semana consecutiva al alza, cotizando en Bs 11,37 y acumulando un incremento significativo, con proyecciones de continuar su ascenso.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">8</strong> titulares</span>
+<span><strong style="color:var(--c-02)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/el-dolar-flexible-inicia-este-lunes-cotizando-bs-11-37-es-la-quinta-semana-consecutiva-al-alza" rel="noopener noreferrer" target="_blank">El dólar flexible inicia este lunes cotizando Bs 11,37; es la quinta semana consecutiva al alza</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/07/27/dolar-flexible-inicia-la-quinta-semana-en-bs-1137-con-un-alza-acumulada-del-1685--64190" rel="noopener noreferrer" target="_blank">Dólar flexible inicia la quinta semana en Bs 11,37 con un alza acumulada del 16,85 %</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20260727/diputado-exige-al-bcb-contener-subida-del-dolar.html" rel="noopener noreferrer" target="_blank">Diputado exige al BCB contener subida del dólar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/dolar-flexible-cumple-casi-mes-cotizacion-oficial-subio-bs-9-73-bs-11-37_1785161822" rel="noopener noreferrer" target="_blank">El dólar flexible cumple casi un mes: la cotización oficial subió de Bs 9,73 a Bs 11,37</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/economista-tipo-cambio-flexible-transparento-crisis-divisas-no-resolvio-problema-fondo_1785167780" rel="noopener noreferrer" target="_blank">Economista: el tipo de cambio flexible transparentó la crisis de divisas, pero no resolvió el problema de fondo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/dolar-esta-menos-50-centavos-cotizarse-bs-12_1785199585" rel="noopener noreferrer" target="_blank">El dólar está a menos de 50 centavos de cotizarse en Bs 12</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/dockweiler-alerta-que-la-subida-del-dolar-pone-en-riesgo-continuidad-de-servicios-municipales/" rel="noopener noreferrer" target="_blank">Dockweiler alerta que la subida del dólar pone en riesgo continuidad de servicios municipales</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-dolar-superara-los-bs-1150-el-martes-y-no-da-senales-de-estabilizacion/" rel="noopener noreferrer" target="_blank">El dólar superará los Bs 11,50 el martes y no da señales de estabilización</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Willy Pozo nuevo Viceministro de Defensa" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Willy Pozo nuevo Viceministro de Defensa</div>
+<div class="modal-sum">Willy Pozo fue posesionado como nuevo Viceministro de Defensa y Cooperación al Desarrollo Integral por Justiniano, quien le encargó fortalecer las FFAA.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">6</strong> titulares</span>
+<span><strong style="color:var(--c-03)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/willy-pozo-es-el-nuevo-viceministro-de-defensa-y-cooperacion-al-desarrollo-integral-2026727135511" rel="noopener noreferrer" target="_blank">Willy Pozo Torrico asume como nuevo viceministro de Defensa y Cooperación al Desarrollo Integral</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260727_willy-pozo-asume-el-viceministerio-de-defensa-y-cooperacion-al-desarrollo-integral.html" rel="noopener noreferrer" target="_blank">Willy Pozo asume el Viceministerio de Defensa y Cooperación al Desarrollo Integral</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/07/27/justiniano-posesiona-a-willy-pozo-como-viceministro-y-le-encarga-un-plan-para-fortalecer-las-ffaa-64219" rel="noopener noreferrer" target="_blank">Justiniano posesiona a Willy Pozo como viceministro y le encarga un plan para fortalecer las FFAA</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/general-willy-pozo-posesionado-nuevo-viceministro-defensa_1785176201" rel="noopener noreferrer" target="_blank">El general Willy Pozo es posesionado como nuevo viceministro de Defensa</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/07/27/justiniano-posesiona-a-willy-pozo-como-viceministro-de-defensa-y-cooperacion-al-desarrollo-integral/" rel="noopener noreferrer" target="_blank">Justiniano posesiona a Willy Pozo como viceministro de Defensa y Cooperación al Desarrollo Integral</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/willy-pozo-conozca-la-trayectoria-del-nuevo-ministro-de-defensa-2026727164620" rel="noopener noreferrer" target="_blank">Willy Pozo, conozca la trayectoria del nuevo viceministro de Defensa</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    const detailsParent = el.closest('details.lista-nivel-c');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlight-card');
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
