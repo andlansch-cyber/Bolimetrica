@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260822</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+:root {
+  --dash-box-bg: #FBF6EC;
+  --kpi-chip-bg: rgba(15, 33, 55, 0.06);
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body.dark-mode {
+  --dash-box-bg: rgba(15, 33, 55, 0.5);
+  --kpi-chip-bg: rgba(0, 0, 0, 0.2);
+}
+.page {
+  max-width: 96% !important;
+  padding: 25px 30px !important;
+
+}
+
+.layout-2-cols { 
+  padding: 12px 12px !important; 
+  max-width: 100vw !important; 
+  box-sizing: border-box !important; 
+  width: 100% !important; 
+  overflow: hidden !important; 
+  gap: 16px !important;
+}
+
+body { font-size: 15px !important; background-color: #f4f1ea !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; }
+
+.emergentes-grid { grid-template-columns: 1fr !important; }
+
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  margin-bottom: 6px;
+}
+#themeToggle {
+  position: static !important;
+}
+
+.brief-tactico { background: var(--bg-card) !important; }
+.tarjeta-nivel-a { background: var(--bg-card) !important; }
+
+.chart-row-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+.chart-row-vertical .chart-label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  padding-bottom: 18px !important;
+}
+.chart-row-vertical .chart-bar-wrap {
+  width: 100% !important;
+}
+.chart-row-vertical .chart-medios {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 11px !important;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.donut-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.donut-arc {
+  transition: stroke-width 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+.donut-arc:hover {
+  stroke-width: 20;
+  opacity: 0.85;
+}
+.donut-legend {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.donut-legend-item {
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+.chart-label {
+  width: 480px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  padding-right: 15px !important;
+  text-align: left !important;
+}
+.chart-label span { font-size: 14px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+
+.section-label{ font-size: 13px !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+
+.topic-big-n{ font-weight: 900 !important; font-size: 28px !important; line-height: 1 !important; text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(15,33,55,0.18); }
+.topic-big-n{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+.top3-rank .rank-num{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+
+.modal-panel{ width: min(980px, calc(100vw - 28px)); border-radius: 14px; }
+.modal-head{ padding: 16px 18px; }
+.modal-title{ font-size: 20px; line-height: 1.15; }
+.modal-sum{ font-size: 13px; line-height: 1.45; }
+.modal-body{ padding: 14px 18px; max-height: calc(100vh - 220px); overflow: auto; }
+.modal-list{ padding-left: 0; margin: 0; gap: 10px; }
+.modal-list li{ display: grid; grid-template-columns: 130px 1fr; column-gap: 12px; row-gap: 2px; align-items: start; font-size: 13px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,.10); }
+.modal-list li:last-child{ border-bottom: 0; }
+.m-src{ font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-sep{ display:none; }
+.m-tit a{ word-break: break-word; text-decoration: underline; }
+
+.top3-card, .topic-card, .emergente-card { cursor: pointer !important; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important; }
+.top3-card:hover, .topic-card:hover, .emergente-card:hover { transform: translateY(-3px) !important; box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important; border-color: var(--border-glow) !important; }
+
+@media (max-width: 768px){
+  .page{ padding: 12px 12px 20px; max-width: 100% !important; box-sizing: border-box !important; width: 100% !important; }
+  .layout-2-cols{ 
+    padding: 12px 12px !important; 
+    max-width: 100vw !important; 
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    overflow: hidden !important; 
+  }
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; box-sizing: border-box !important; width: 100% !important; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto !important; text-align: left; font-size: 15px !important; }
+  .a-header { flex-wrap: wrap; }
+  .a-kpis { white-space: normal; }
+  .chart-medios{ width: auto; }
+  .freq-table{ display:block; overflow-x:auto; }
+  .modal-panel{ width: 92% !important; max-width: 100% !important; border-radius: 12px; box-sizing: border-box !important; }
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+  .layout-2-cols { display: grid !important; grid-template-columns: 1fr !important; }
+  .col-main, .col-sidebar { display: contents !important; }
+
+  .col-main > div:nth-child(1) { order: 1; position: relative; } /* Resumen Ejecutivo */
+  .col-sidebar > .cat-bar-card { order: 2; }
+  .col-sidebar > .concentracion-card { order: 3; }
+  .col-main > div:nth-child(2) { order: 4; } /* Jerarquía de temas */
+  .col-sidebar > .coverage-card { order: 5; }
+  .col-sidebar > .emergentes-grid,
+  .col-sidebar > div:has(> .emergentes-grid) { order: 6; }
+  .col-sidebar > .freq-table-card { order: 7; }
+
+  .col-sidebar > .sidebar-toggle-row {
+    position: relative !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-right: 4px !important;
+    order: 0;
+  }
+}
+
+.index-row { cursor: pointer !important; transition: background 0.2s ease, padding 0.2s ease; border-radius: 6px; padding: 4px; margin: -4px; }
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row { cursor: pointer !important; padding: 4px; margin: -4px; border-radius: 6px; transition: background 0.2s ease; }
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+.cat-topics-list { display: none; list-style: none; padding: 8px 10px 6px 14px; margin: 6px 0 2px 8px; background: var(--bg-card-2); border-left: 2px solid var(--border); border-radius: 0 4px 4px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+.cat-topics-list li { padding: 5px 6px; margin-bottom: 2px; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle-btn {
+  position: absolute; top: -5px; right: 0; z-index: 10;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 20px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+.theme-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+
+.right-panel > .section-label { margin-bottom: 4px !important; }
+
+.cat-row, .index-row { transition: background 0.2s ease, transform 0.2s ease !important; }
+.cat-row:hover, .index-row:hover { transform: translateX(6px) !important; }
+body.dark-mode .cat-row:hover, body.dark-mode .index-row:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+.ind-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.ind-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; background: transparent; }
+
+.brief-ejecutivo { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 6px; padding: 22px 28px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,33,55,0.06); }
+.brief-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.brief-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.brief-semaforo { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; padding: 4px 12px; border-radius: 999px; }
+.brief-parrafo { font-size: 14px; line-height: 1.7; color: var(--text-primary); margin-bottom: 14px; }
+.brief-implicaciones { list-style: none; padding: 0; margin: 0 0 12px 0; display: flex; flex-direction: column; gap: 6px; }
+.brief-implicaciones li { font-size: 13px; line-height: 1.55; color: var(--text-secondary); padding-left: 14px; position: relative; }
+.brief-implicaciones li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.brief-narrativa { font-size: 13px; line-height: 1.55; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+.brief-narrativa-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+.emergente-reason { font-size: 13px; font-style: italic; color: var(--amber-d); line-height: 1.55; border-left: 2px solid var(--amber); padding-left: 8px; margin-top: 2px; }
+
+.brief-tactico { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: #162032; border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 26px; }
+.brief-alerta { padding-left: 2px; margin-bottom: 16px; }
+.semaforo-badge { font-family: var(--font-mono); font-weight: 700; color: #ffffff; padding: 3px 9px; border-radius: 4px; font-size: 12px; margin-right: 10px; }
+.alerta-texto { font-weight: 700; color: var(--text-primary); }
+.brief-panorama h4, .brief-tensiones h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: #f0c060; margin-top: 0; margin-bottom: 8px; }
+.brief-panorama p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+.brief-tensiones ul { padding-left: 16px; margin: 0; color: var(--text-secondary); }
+.brief-tensiones li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+
+.categoria-contenedor { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.categoria-titulo { font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.tarjeta-nivel-a { background: #1d2a40; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.tarjeta-nivel-a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-color: var(--border-glow); }
+.a-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+.a-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.a-kpis { display: flex; gap: 8px; white-space: nowrap; }
+.kpi-chip { font-family: var(--font-mono); font-size: 11px; background: var(--kpi-chip-bg); padding: 3px 8px; border-radius: 4px; color: var(--text-muted); }
+.a-sumilla { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+
+.a-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--dash-box-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.dash-box strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: #f0c060; margin-bottom: 6px; }
+.dash-box p { font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+.a-dashboard .dash-box:nth-child(2) { padding-left: 14px; }
+
+.grid-nivel-b { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tarjeta-nivel-b { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+.tarjeta-nivel-b:hover { transform: translateY(-2px); background: rgba(0,0,0,0.04); border-color: var(--border-glow); }
+body.dark-mode .tarjeta-nivel-b:hover { background: #1d2a40; }
+.b-kpis { font-family: var(--font-mono); font-size: 11px; color: #f0c060; margin-bottom: 8px; }
+.b-sumilla { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+
+.lista-nivel-c { background: rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 8px 12px; }
+.lista-nivel-c summary { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); cursor: pointer; }
+.lista-nivel-c summary:hover { color: var(--text-primary); }
+.lista-nivel-c ul { margin: 8px 0 0 0; padding-left: 16px; }
+.lista-nivel-c li { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; cursor: pointer; }
+.lista-nivel-c li:hover { color: #f0c060; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .brief-tactico, .a-dashboard, .grid-nivel-b { grid-template-columns: 1fr !important; }
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-left: 2px solid var(--amber);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+.concentracion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+}
+.concentracion-svg {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  margin-top: 4px;
+}
+.concentracion-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+.concentracion-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.chart-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ───────── MEJORAS PUNTO 4: INTERACTIVIDAD DONA ───────── */
+.donut-legend-item.legend-hoverable { 
+  transition: background 0.2s ease, transform 0.2s ease; 
+  padding: 5px 6px; 
+  margin: -5px -6px 3px -6px; 
+  border-radius: 6px; 
+}
+.donut-legend-item.legend-hoverable:hover { 
+  background: rgba(0,0,0,0.04); 
+  transform: translateX(4px); 
+}
+body.dark-mode .donut-legend-item.legend-hoverable:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+}
+.legend-text { font-size: 12.5px; }
+.legend-text strong { 
+  color: var(--text-primary); 
+  font-size: 13px; 
+  font-weight: 700;
+}
+</style>
+<style>
+body.dark-mode {
+  --bg-base:     #0f2137;
+  --bg-card:     #152b47;
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.layout-2-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .layout-2-cols { grid-template-columns: 1fr; }
+}
+.col-main { display: flex; flex-direction: column; gap: 20px; }
+.col-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+body.dark-mode .theme-toggle-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+body.dark-mode .theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-08-22" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-08-22-oBPBWj.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">216</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">12</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">21</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 22-AGOSTO-2026 | 7:00 AM</strong><br/>
+            Reporte N° B24-20260822<br/>
+            Cobertura: últimas 24 horas
+          </div></div>
+</header><div class="layout-2-cols"><div class="col-main"><div><h3 class="section-label">RESUMEN EJECUTIVO</h3><div class="brief-tactico">
+<div class="brief-col-izq">
+<div class="brief-alerta" style="border-left: 4px solid #ba3030;">
+<span class="semaforo-badge" style="background:#ba3030;">🔴 ROJO</span>
+<span class="alerta-texto">La agenda mediática está dominada por temas judiciales de alto perfil y acciones gubernamentales significativas, complementadas por preocupaciones económicas y sectoriales que indican un entorno de alta tensión.</span>
+</div>
+<div class="brief-panorama">
+<h4>PANORAMA ESTRATÉGICO</h4>
+<p>La categoría de Justicia acapara la mayor atención mediática, con el envío de Cerimedo a Palmasola y la aprehensión de un exteniente vinculado al caso. Se registra también la anulación del juicio de responsabilidades a Sánchez Berzaín y arrestos relacionados con el ataque a Nadia Beller. En el ámbito gubernamental, la destitución de Espinoza por el Presidente Paz tras una censura legislativa es un evento central. Otros temas relevantes incluyen las demandas de sectores por la abrogación del decreto sobre diésel, la emergencia por la crisis de basura en La Paz, y denuncias de contaminación por mercurio. Económicamente, el dólar se estabiliza, pero proyecciones de caída del PIB y advertencias sobre la importación de gas generan incertidumbre, mientras cisterneros anuncian un paro.</p>
+</div>
+</div>
+<div class="brief-col-der">
+<div class="brief-tensiones">
+<h4>MAPA DE TENSIONES</h4>
+<ul><li><strong>Poder Ejecutivo (Vicepresidente Lara) vs. Implicados en Justicia (Cerimedo/Paz):</strong> El Vicepresidente Lara vincula a Cerimedo con la gobernabilidad del país junto al Presidente Paz, generando una expectativa sobre el proceso judicial y sus implicaciones.</li><li><strong>Poder Ejecutivo (Presidente Paz) vs. Poder Legislativo/Sectores Sociales:</strong> La destitución de un ministro por censura legislativa y las exigencias de abrogación de decretos por sectores sociales evidencian fricciones en la gobernabilidad.</li><li><strong>Sectores Productivos (Cisterneros) vs. Gobierno:</strong> El anuncio de un paro nacional por deudas y las demandas sobre el decreto de diésel reflejan una confrontación por políticas económicas y subsidios.</li><li><strong>Sociedad Civil (CIDOB) vs. Actores Contaminantes/Estado:</strong> La denuncia de contaminación por mercurio en la Amazonía por parte de la CIDOB resalta la tensión entre la protección ambiental y las actividades extractivas o la respuesta estatal.</li></ul>
+</div>
+</div>
+</div></div><div>
+<div class="top3-stack">
+<div class="categoria-contenedor" style="border-top: 3px solid var(--c-10);">
+<h2 class="categoria-titulo" style="color: var(--c-10);">JUSTICIA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_10" onclick="openModal('modal_10')">
+<div class="a-header">
+<div class="a-title">#1 - Cerimedo es enviado a Palmasola</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 69 Titulares</span>
+<span class="kpi-chip">🏢 21 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Fernando Cerimedo fue enviado al penal de Palmasola con detención preventiva por 180 días, acusado de tentativa de feminicidio contra Nadia Beller. Durante la audiencia, un juez rechazó cuatro incidentes de su defensa y autorizó la pericia de su teléfono, mientras la Fiscalía continúa investigándolo por presunto enriquecimiento ilícito.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Datos insuficientes para determinar polaridad.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Sin vectores claros de escalada detectados.</p>
+</div>
+</div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" data-bm-premium="1" id="card_13" onclick="openModal('modal_13')">
+<div class="a-header">
+<div class="a-title">#3 - Aprehenden exteniente vinculado a caso Cerimedo</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 23 Titulares</span>
+<span class="kpi-chip">🏢 15 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Policía aprehendió a Fritz Juniors Gironda Aquize, un exteniente del Ejército vinculado al caso Cerimedo, quien había huido con cerca de $us700 mil durante un allanamiento a una casa de cambio. El Ejército aclaró que Gironda ya no era militar activo. Su abogado negó vínculos con Cerimedo.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La investigación judicial y policial impulsa la agenda al lograr la aprehensión del exmilitar, lo que les otorga la ventaja. El Ejército se encuentra a la defensiva, intentando desvincularse del individuo para proteger su imagen institucional, mientras que la defensa del exmilitar busca minimizar su implicación.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Las declaraciones del exmilitar aprehendido (Fritz Juniors Gironda Aquize) y la profundización de la investigación sobre sus vínculos con Cerimedo, así como el destino del dinero fugado, tienen el mayor potencial de escalada en las próximas 48 horas. La implicación de otros actores, especialmente si son de alto perfil o militares activos, agravaría significativamente el tema para el Ejército.</p>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" data-bm-premium="1" id="card_8" onclick="openModal('modal_8')">
+<div class="a-header">
+<div class="a-title">#6 - Anulan juicio de responsabilidades a Sánchez Berzaín</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 13 Titulares</span>
+<span class="kpi-chip">🏢 11 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Sala Constitucional de Cochabamba concedió una acción de libertad a Carlos Sánchez Berzaín, anulando su juicio de responsabilidades por los hechos de octubre de 2003. Un abogado señaló que el fallo no anula la totalidad del proceso, y la decisión también beneficia a Mirtha Quevedo.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Carlos Sánchez Berzaín y su defensa legal tienen la ventaja y están impulsando la agenda. La mayoría de los titulares confirman una victoria legal significativa para él, con la anulación del juicio de responsabilidades. Las víctimas de 'octubre negro' aparecen en desventaja, expresando desconocimiento sobre la acción legal.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Las víctimas de 'octubre negro' y sus organizaciones afines son el principal actor con potencial de escalada, a través de protestas, movilizaciones o nuevas acciones legales. Partidos de oposición y movimientos sociales también podrían amplificar el tema, criticando la decisión judicial y exigiendo justicia.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b" data-bm-premium="1">
+<div class="tarjeta-nivel-b" id="card_5" onclick="openModal('modal_5')">
+<div class="b-title">#8 - Arrestan sospechosos de ataque a Nadia Beller</div>
+<div class="b-kpis">7 Tit. | 7 Med.</div>
+<div class="b-sumilla">La policía reportó el arresto de dos personas sospechosas de participar en el ataque armado contra la abogada y activista Nadia Beller, quienes tenían en su poder objetos vinculados a los sicarios. Continúan los operativos en busca de los responsables del atentado.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-03);">
+<h2 class="categoria-titulo" style="color: var(--c-03);">GOBIERNO</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_9a" onclick="openModal('modal_9a')">
+<div class="a-header">
+<div class="a-title">#2 - Paz destituye a Espinoza tras censura</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 41 Titulares</span>
+<span class="kpi-chip">🏢 19 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El presidente Rodrigo Paz destituyó al ministro de Economía José Gabriel Espinoza en cumplimiento de la censura legislativa y designó a Óscar Mario Justiniano como interino. Espinoza recurrió al Tribunal Constitucional y a la justicia para intentar suspender la medida, mientras sectores políticos y económicos evalúan su salida y reclaman continuidad en las reformas.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa actual está dominada por la acción de la Asamblea Legislativa Plurinacional (ALP) al lograr la censura y destitución del ministro Espinoza, lo que posiciona a la ALP con una ventaja inmediata. El Presidente Paz, aunque acata la destitución, mantiene una postura de espera ante el recurso judicial de Espinoza, lo que introduce incertidumbre y una agenda futura impulsada por la decisión del Tribunal Constitucional Plurinacional (TCP). La oposición y diversos sectores también están influyendo en la narrativa, exigiendo estabilidad económica y advirtiendo contra una posible restitución.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El factor más crítico para la escalada en las próximas 48 horas es la inminente decisión del Tribunal Constitucional Plurinacional (TCP) sobre el recurso de amparo de Espinoza, programada para el 24 de agosto. Una resolución favorable a Espinoza generaría una crisis institucional y un conflicto directo entre el Ejecutivo y el Legislativo, con la oposición ya anunciando acciones. La incapacidad del gobierno interino para estabilizar la economía (especialmente el dólar) también podría agravar la situación con protestas sectoriales.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-11);">
+<h2 class="categoria-titulo" style="color: var(--c-11);">HIDROCARBUROS</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_6" onclick="openModal('modal_6')">
+<div class="a-header">
+<div class="a-title">#4 - Sectores exigen abrogación decreto sobre diésel</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 17 Titulares</span>
+<span class="kpi-chip">🏢 10 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Diversos sectores, incluyendo choferes, productores arroceros, la CAO y Confeagro, exigen la abrogación del Decreto Supremo 5676 sobre el diésel, advirtiendo con movilizaciones y medidas de presión. El rechazo al decreto ha provocado largas filas en surtidores y preocupaciones sobre su impacto econó</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La oposición, liderada por los sectores de transporte y agropecuario, impulsa la agenda al exigir la abrogación del Decreto 5676 y amenazar con movilizaciones. Estos sectores tienen la ventaja debido a la unidad en el rechazo, el impacto directo en la población (filas en surtidores) y la presión económica que ejercen sobre el gobierno, que se encuentra a la defensiva con la reducción del suministro de diésel y la demora en la publicación de reportes.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Los transportistas y el sector agropecuario (CAO, Confeagro, arroceros) son los actores clave con mayor potencial de escalada, habiendo advertido explícitamente con "movilizaciones" y "medidas de presión". La persistente escasez y la reducción programada de diésel, particularmente en Santa Cruz, junto con el impacto económico generalizado, agravarán la situación. La definición de la postura del Transporte Libre el 12 de septiembre es un punto crítico para una posible intensificación de las protestas.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-15);">
+<h2 class="categoria-titulo" style="color: var(--c-15);">MEDIO AMBIENTE</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_7" onclick="openModal('modal_7')">
+<div class="a-header">
+<div class="a-title">#5 - La Paz en emergencia por crisis de basura</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 8 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Paz enfrenta una persistente crisis por el recojo de basura, con acumulación en las calles y un riesgo ambiental en el relleno sanitario. La Alcaldía ha declarado emergencia sanitaria, lanzado planes de emergencia para contratar personal y alquilar volquetas, e incluso pidió la colaboración ciudadanía.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está dominada por la crisis y la incapacidad de la Alcaldía de La Paz para resolverla. Los trabajadores en conflicto tienen la ventaja al mantener la presión y la interrupción del servicio, forzando a la Alcaldía a medidas desesperadas y reactivas. La oposición y la ciudadanía amplifican la percepción de ineficacia de la gestión edil.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Los trabajadores en conflicto pueden escalar la situación con una huelga de hambre, intensificando la presión sobre la Alcaldía. La continua acumulación de basura agravará la crisis sanitaria y los riesgos ambientales en el relleno sanitario Sak’a Churu II, lo que podría llevar a una mayor movilización ciudadana y acciones legales.</p>
+</div>
+</div>
+</div>
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de MEDIO AMBIENTE</summary>
+<ul>
+<li id="card_3a" onclick="openModal('modal_3a')">
+<strong>CIDOB denuncia contaminación por mercurio en Amazonía</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-07);">
+<h2 class="categoria-titulo" style="color: var(--c-07);">VIOLENCIA Y SEGURIDAD</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_12" onclick="openModal('modal_12')">
+<div class="a-header">
+<div class="a-title">#7 - Fiscal desaparecido hallado con vida en Beni</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 12 Titulares</span>
+<span class="kpi-chip">🏢 11 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El fiscal Juan Benjo Huchani fue hallado con vida en Beni tras permanecer desaparecido durante una semana después de un accidente de avioneta. Huchani, encontrado por un trabajador de hacienda, fue trasladado a Trinidad para recibir atención médica.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Datos insuficientes para determinar polaridad.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Sin vectores claros de escalada detectados.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-21);">
+<h2 class="categoria-titulo" style="color: var(--c-21);">LEGISLATIVA</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_4" onclick="openModal('modal_4')">
+<div class="b-title">#9 - Alianza Libre presenta reforma constitucional</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">La Alianza Libre, con el apoyo de figuras como Tuto Quiroga y Alarcón, ha oficializado y presentado un proyecto de ley para la reforma parcial de la Constitución Política del Estado (CPE), solicitando su pronto tratamiento legislativo.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-02);">
+<h2 class="categoria-titulo" style="color: var(--c-02);">ECONOMÍA</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_1a" onclick="openModal('modal_1a')">
+<div class="b-title">#10 - Dólar se estabiliza en Bs 11,50</div>
+<div class="b-kpis">6 Tit. | 6 Med.</div>
+<div class="b-sumilla">El Banco Central de Bolivia y otros reportes fijan el tipo de cambio del dólar en Bs 11,50, valor que se mantendrá al menos hasta el lunes.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-08);">
+<h2 class="categoria-titulo" style="color: var(--c-08);">MOVIMIENTOS SOCIALES</h2>
+<div class="categoria-body">
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de MOVIMIENTOS SOCIALES</summary>
+<ul>
+<li id="card_2a" onclick="openModal('modal_2a')">
+<strong>Cisterneros anuncian paro nacional por deudas</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div></div>
+</div></div><div class="col-sidebar"><div class="sidebar-toggle-row"><button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button></div><div class="concentracion-card">
+<h3 class="sidebar-title">CONCENTRACIÓN DE LA AGENDA</h3>
+<div class="donut-wrap">
+<svg aria-label="Concentración de la agenda: Top 5 temas vs. resto" class="donut-svg" role="img" viewbox="0 0 100 100">
+<circle class="donut-arc" cx="50" cy="50" data-label="Cerimedo es enviado a Palmasola" data-pct="31.9" data-val="69" fill="transparent" onclick="scrollToCard('card_10')" r="40" stroke="var(--c-10)" stroke-dasharray="80.285 171.042" stroke-dashoffset="-0.000" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 71.5, 83.7)" x="71.5" y="83.7">
+                32%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Paz destituye a Espinoza tras censura" data-pct="19.0" data-val="41" fill="transparent" onclick="scrollToCard('card_9a')" r="40" stroke="var(--c-03)" stroke-dasharray="47.706 203.622" stroke-dashoffset="-80.285" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 15.7, 70.5)" x="15.7" y="70.5">
+                19%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Aprehenden exteniente vinculado a caso Cerimedo" data-pct="10.6" data-val="23" fill="transparent" onclick="scrollToCard('card_13')" r="40" stroke="var(--c-10)" stroke-dasharray="26.762 224.566" stroke-dashoffset="-127.991" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 13.0, 34.7)" x="13.0" y="34.7">
+                11%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Sectores exigen abrogación decreto sobre diésel" data-pct="7.9" data-val="17" fill="transparent" onclick="scrollToCard('card_6')" r="40" stroke="var(--c-11)" stroke-dasharray="19.780 231.547" stroke-dashoffset="-154.753" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 27.5, 16.9)" x="27.5" y="16.9">
+                8%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="La Paz en emergencia por crisis de basura" data-pct="6.9" data-val="15" fill="transparent" onclick="scrollToCard('card_7')" r="40" stroke="var(--c-15)" stroke-dasharray="17.453 233.874" stroke-dashoffset="-174.533" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 44.8, 10.3)" x="44.8" y="10.3">
+                7%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Resto" data-pct="23.6" data-val="51" fill="transparent" r="40" stroke="var(--bg-subtle)" stroke-dasharray="59.341 191.986" stroke-dashoffset="-191.986" stroke-width="16" style="">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 79.5, 23.0)" x="79.5" y="23.0">
+                24%
+              </text>
+</svg>
+</div>
+<ul class="concentracion-legend donut-legend">
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_10')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Cerimedo es enviado a Palmasola</strong> (69 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_9a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-03)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Paz destituye a Espinoza tras censura</strong> (41 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_13')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Aprehenden exteniente vinculado a caso Cerimedo</strong> (23 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_6')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-11)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Sectores exigen abrogación decreto sobre diésel</strong> (17 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_7')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-15)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>La Paz en emergencia por crisis de basura</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item" style="">
+<span class="dot" style="background:var(--bg-subtle)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Resto</strong> (51 titulares)</span>
+</li>
+</ul>
+</div><div class="cat-bar-card" data-bm-premium="1">
+<div class="section-label">Cobertura por categoría</div>
+<div class="cat-bars">
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-10)"></div></div>
+<div class="cat-n">112</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">1.</span> Cerimedo es enviado a Palmasola</li><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">3.</span> Aprehenden exteniente vinculado a caso Cerimedo</li><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">6.</span> Anulan juicio de responsabilidades a Sánchez Berzaín</li><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">8.</span> Arrestan sospechosos de ataque a Nadia Beller</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:37%;background:var(--c-03)"></div></div>
+<div class="cat-n">41</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_9a'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">2.</span> Paz destituye a Espinoza tras censura</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MEDIO_AMBIENTE')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">MEDIO AMBIENTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-15)"></div></div>
+<div class="cat-n">18</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MEDIO_AMBIENTE"><li onclick="scrollToCard('card_7'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">5.</span> La Paz en emergencia por crisis de basura</li><li onclick="scrollToCard('card_3a'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">12.</span> CIDOB denuncia contaminación por mercurio en Amazonía</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:15%;background:var(--c-11)"></div></div>
+<div class="cat-n">17</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_6'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">4.</span> Sectores exigen abrogación decreto sobre diésel</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-07)"></div></div>
+<div class="cat-n">12</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_12'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">7.</span> Fiscal desaparecido hallado con vida en Beni</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:6%;background:var(--c-21)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">9.</span> Alianza Libre presenta reforma constitucional</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:5%;background:var(--c-02)"></div></div>
+<div class="cat-n">6</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_1a'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">10.</span> Dólar se estabiliza en Bs 11,50</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:3%;background:var(--c-08)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_2a'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">11.</span> Cisterneros anuncian paro nacional por deudas</li></ul>
+</div></div><div class="coverage-card" data-bm-premium="1">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area">
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">1.</span>
+            Cerimedo es enviado a Palmasola
+            <span class="chart-medios">21 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">69</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_9a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">2.</span>
+            Paz destituye a Espinoza tras censura
+            <span class="chart-medios">19 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:59.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">41</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">3.</span>
+            Aprehenden exteniente vinculado a caso Cerimedo
+            <span class="chart-medios">15 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">23</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">4.</span>
+            Sectores exigen abrogación decreto sobre diésel
+            <span class="chart-medios">10 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:24.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">17</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_7')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">5.</span>
+            La Paz en emergencia por crisis de basura
+            <span class="chart-medios">8 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:21.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">6.</span>
+            Anulan juicio de responsabilidades a Sánchez Berzaín
+            <span class="chart-medios">11 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:18.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">13</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_12')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">7.</span>
+            Fiscal desaparecido hallado con vida en Beni
+            <span class="chart-medios">11 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:17.4%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">12</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">8.</span>
+            Arrestan sospechosos de ataque a Nadia Beller
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">9.</span>
+            Alianza Libre presenta reforma constitucional
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_1a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">10.</span>
+            Dólar se estabiliza en Bs 11,50
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_3a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">11.</span>
+            CIDOB denuncia contaminación por mercurio en Amazonía
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_2a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">12.</span>
+            Cisterneros anuncian paro nacional por deudas
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:4.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+</div></div><div class="page">
+<!-- ── COVERAGE CHART ── -->
+<!-- ── TOPICS GRID ── -->
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://correodelsur.com/economia/20260821/cbhe-el-pais-se-encuentra-al-borde-de-convertirse-en-importador-de-gas.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">CBHE: “El país se encuentra al borde de convertirse en importador de gas”</a></div>
+<div class="emergente-reason">Revelación crítica de un inminente cambio de estatus de Bolivia de exportador a importador de gas, con profundas implicaciones económicas.</div>
+<div class="emergente-source">Fuente: Correo del Sur</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://correodelsur.com/economia/20260821/bcb-proyecta-una-caida-del-pib-de-3-6-en-2026.html" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">BCB proyecta una caída del PIB de 3,6% en 2026</a></div>
+<div class="emergente-reason">Proyección oficial de una contracción económica significativa que afectará empleo, ingresos y desarrollo a nivel nacional.</div>
+<div class="emergente-source">Fuente: Correo del Sur</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/nevadas-dejan-3-muertos-53-400-familias-afectadas-pais_1787314443" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Nevadas dejan 3 muertos y más de 53.400 familias afectadas en el país</a></div>
+<div class="emergente-reason">Un evento climático extremo con un alto costo humano y un impacto masivo en la población y la agricultura a nivel nacional.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/seguridad/justicia-absuelve-de-culpa-tres-acusados-de-la-asonada-militar-de-2024" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Justicia absuelve a 3 acusados de asonada militar de 2024</a></div>
+<div class="emergente-reason">La absolución de implicados en una asonada militar reciente tiene implicaciones importantes sobre la estabilidad política y la confianza en la justicia.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.lostiempos.com/actualidad/pais/20260821/lara-afirma-que-cerimedo-gobernaba-pais-junto-paz-espera-que-no-sea" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Lara afirma que Cerimedo gobernaba el país junto a Paz y espera que no sea liberado</a></div>
+<div class="emergente-reason">Acusación de co-gobierno irregular y corrupción que amenaza la gobernabilidad y legitimidad del actual mandato.</div>
+<div class="emergente-source">Fuente: Los Tiempos</div>
+</div></div>
+</div><div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">cerimedo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">90</td>
+</tr>
+<tr>
+<td class="freq-word">espinoza</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:46%"></div>
+</div>
+</td>
+<td class="freq-count">30</td>
+</tr>
+<tr>
+<td class="freq-word">beller</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:38%"></div>
+</div>
+</td>
+<td class="freq-count">23</td>
+</tr>
+<tr>
+<td class="freq-word">economía</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:37%"></div>
+</div>
+</td>
+<td class="freq-count">22</td>
+</tr>
+<tr>
+<td class="freq-word">decreto</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:34%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">basura</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">diésel</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">sánchez</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">13</td>
+</tr>
+<tr>
+<td class="freq-word">berzaín</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:23%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr>
+<tr>
+<td class="freq-word">paz destituye</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:20%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr></tbody>
+</table>
+</div></div></div>
+<!-- ════════════ PAGE ════════════ -->
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260822 · 2026-08-22</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 216 titulares · 12 temas · 8 categorías · 21 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Cerimedo es enviado a Palmasola" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Cerimedo es enviado a Palmasola</div>
+<div class="modal-sum">Fernando Cerimedo fue enviado al penal de Palmasola con detención preventiva por 180 días, acusado de tentativa de feminicidio contra Nadia Beller. Durante la audiencia, un juez rechazó cuatro incidentes de su defensa y autorizó la pericia de su teléfono, mientras la Fiscalía continúa investigándolo por presunto enriquecimiento ilícito.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">69</strong> titulares</span>
+<span><strong style="color:var(--c-10)">21</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/aramayo-niega-vinculo-de-cerimedo-con-el-gobierno-y-dice-que-tuvo-una-participacion-muy-marginal-en-la-campana-65312" rel="noopener noreferrer" target="_blank">Aramayo niega vínculo de Cerimedo con el gobierno y dice que tuvo una participación “muy marginal” en la campaña</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_el-gobierno-argentino-se-distancia-de-cerimedo-exasesor-de-milei-detenido-en-bolivia.html" rel="noopener noreferrer" target="_blank">El Gobierno argentino se distancia de Cerimedo, exasesor de Milei detenido en Bolivia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260821/declaraciones-beller-salpican-gobierno-milei-argentina" rel="noopener noreferrer" target="_blank">Declaraciones de Beller salpican a Gobierno de Milei en Argentina</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/quien-es-fernando-cerimedo-asesor-milei-politicos-derecha-acusado-tentativa-feminicidio/20260821155104995067.html" rel="noopener noreferrer" target="_blank">Quién es Fernando Cerimedo, asesor de Milei y políticos de derecha acusado tentativa de feminicidio</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/periodista-argentino-denuncia-que-cerimedo-estafo-familia-tendria-sentencia-delinquia-2012/20260821120516995050.html" rel="noopener noreferrer" target="_blank">Periodista argentino denuncia que Cerimedo estafó a su familia y tendría sentencia: “ya delinquía en 2012”</a></span></li>
+<li><span class="m-src">Último Minuto Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://ultimominuto.com.bo/especiales/fernando-cerimedo-de-profeta-moral-a-potencial-feminicida/" rel="noopener noreferrer" target="_blank">Fernando Cerimedo: de profeta moral a potencial feminicida</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/unidad-exige-esclarecer-hasta-las-ultimas-consecuencias-el-caso-cerimedo-65304" rel="noopener noreferrer" target="_blank">Unidad exige esclarecer “hasta las últimas consecuencias” el caso Cerimedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/chats-de-cerimedo-muestran-que-buscaba-contactar-a-la-secretaria-de-evo-morales-65297" rel="noopener noreferrer" target="_blank">Chats de Cerimedo muestran que buscaba contactar a la secretaria de Evo Morales</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/beller-y-morales-identifican-al-contacto-que-informo-a-cerimedo-sobre-el-ataque-del-lunes-65294" rel="noopener noreferrer" target="_blank">Beller y Morales identifican al contacto que informó a Cerimedo sobre el ataque del lunes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/en-una-carta-cerimedo-niega-sobresueldos-a-legisladores-y-granja-de-bots-65290" rel="noopener noreferrer" target="_blank">En una carta, Cerimedo niega sobresueldos a legisladores y "granja" de bots</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/ferreira-y-richter-ven-crisis-de-credibilidad-en-el-caso-cerimedo/" rel="noopener noreferrer" target="_blank">Ferreira y Richter ven crisis de credibilidad por el caso Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/caso-beller-cerimedo-advierten-agendas-oscuras-que-perforan-al-estado/" rel="noopener noreferrer" target="_blank">Caso Beller-Cerimedo: advierten agendas oscuras que perforan al Estado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/aguirre-compara-caso-cerimedo-beller-con-zapata-y-evo-morales/" rel="noopener noreferrer" target="_blank">Aguirre compara caso Cerimedo-Beller con Zapata y Evo Morales</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63811-la-mencion-a-un-contacto-con-una-allegada-a-evo-morales-abre-otra-interrogante-en-el-caso-cerimedo--beller" rel="noopener noreferrer" target="_blank">La mención a un contacto con una allegada a Evo Morales abre otra interrogante en el caso Cerimedo – Beller</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_quinto-allanamiento-intervienen-otra-casa-de-cambios-en-la-paz-por-el-caso-de-enriquecimiento-ilicito-contra-cerimedo.html" rel="noopener noreferrer" target="_blank">Quinto allanamiento: Intervienen otra casa de cambios en La Paz por el caso de enriquecimiento ilícito contra Cerimedo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/fiscales-allanan-quinto-inmueble-en-la-paz-para-buscar-pruebas-de-supuesto-enriquecimiento-contra-cerimedo" rel="noopener noreferrer" target="_blank">Fiscales allanan quinto inmueble en La Paz para buscar pruebas de supuesto enriquecimiento contra Cerimedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/nuevo-allanamiento-en-torno-a-cerimedo-fiscalia-investiga-movimientos-de-dinero-mediante-casa-de-cambios-65291" rel="noopener noreferrer" target="_blank">Nuevo allanamiento en torno a Cerimedo: fiscalía investiga movimientos de dinero mediante casa de cambios</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/fiscalia-cumple-quinto-allanamiento-en-proceso-por-enriquecimiento-ilicito-contra-cerimedo.html" rel="noopener noreferrer" target="_blank">Fiscalía cumple quinto allanamiento en proceso por enriquecimiento ilícito contra Cerimedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/la-fiscalia-halla-bs-500-mil-y-una-minigranja-de-bots.html" rel="noopener noreferrer" target="_blank">La Fiscalía halla Bs 500 mil y una ‘minigranja’ de bots</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/complice-cerimedo-acogio-silencio-intentaba-montar-oficina-zona-sur-paz_1787355272" rel="noopener noreferrer" target="_blank">Cómplice de Cerimedo se acogió al silencio; intentaba montar una oficina en la zona Sur de La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/quinto-allanamiento-paz-alquilaban-bs-25-000-ambiente-oficina-cerimedo-fiscalia_1787334129" rel="noopener noreferrer" target="_blank">Quinto allanamiento en La Paz: alquilaban por Bs 25.000 un ambiente para la oficina de Cerimedo, según la Fiscalía</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/la-paz-fiscalia-allana-quinto-inmueble-vinculado-a-cerimedo.html" rel="noopener noreferrer" target="_blank">La Paz: Fiscalía allana quinto inmueble vinculado a Cerimedo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/allanan-inmueble-en-calacoto-donde-cerimedo-presuntamente-retiro-400-mil-dolares.html" rel="noopener noreferrer" target="_blank">Allanan inmueble en Calacoto donde Cerimedo presuntamente retiró 400 mil dólares</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/fiscalia-allana-otra-casa-de-cambios-en-la-paz-por-el-caso-cerimedo/" rel="noopener noreferrer" target="_blank">Fiscalía allana otra casa de cambios en La Paz por el caso Cerimedo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260821/fiscalia-allana-quinto-inmueble-vinculado-cerimedo-paz" rel="noopener noreferrer" target="_blank">Fiscalía allana el quinto inmueble vinculado a Cerimedo en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/cerimedo-alquilo-una-oficina-por-bs-25-mil-para-trabajar-como-asesor-del-gobierno-segun-la-fiscalia/" rel="noopener noreferrer" target="_blank">Cerimedo alquiló una oficina por Bs 25 mil para trabajar como “asesor del Gobierno”, según la Fiscalía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-solicito-a-la-uif-un-informe-patrimonial-financiero-en-el-marco-de-la-investigacion-a-cerimedo-NB22983428" rel="noopener noreferrer" target="_blank">Fiscalía solicitó a la UIF un informe patrimonial financiero en el marco de la investigación a Cerimedo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/allanan-oficina-que-era-alquilada-por-bs-25-000-mensuales-para-que-cerimedo-ejerza-como" rel="noopener noreferrer" target="_blank">Allanan oficina que era alquilada por Bs 25.000 mensuales para que Cerimedo ejerza como asesor</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63790-cerimedo-alquilaba-en-la-paz-una-oficina-por-25000-bolivianos-para-su-asesoria-a-paz" rel="noopener noreferrer" target="_blank">Cerimedo alquilaba en La Paz una oficina por 25.000 bolivianos para su asesoría a Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/hermano-en-este-momento-le-dispararon-fiscalia-revela-chats-que-incriminan-a-cerimedo-65277" rel="noopener noreferrer" target="_blank">“Hermano, en este momento le dispararon”: Fiscalía revela chats que incriminan a Cerimedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/conozca-los-chats-que-mas-comprometen-a-cerimedo-sobre-el-caso-beller-65278" rel="noopener noreferrer" target="_blank">Conozca los chats que más comprometen a Cerimedo sobre el caso Beller</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/ataque-a-beller-conozca-el-contenido-de-los-chats-que-involucran-a-cerimedo-65282" rel="noopener noreferrer" target="_blank">Ataque a Beller: conozca el contenido de los chats que involucran a Cerimedo</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/abogada-de-cerimedo-asegura-que-esta-estable-niega-que-mensajes-difundidos-sean-chats-es-un-mensaje-en-una-nota/" rel="noopener noreferrer" target="_blank">Abogada de Cerimedo asegura que está estable, NIEGA que mensajes difundidos sean chats, “es un mensaje en una nota”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/circulan-chats-que-comprometen-a-cerimedo-su-defensa-dice-que-no-son-validos/" rel="noopener noreferrer" target="_blank">Circulan chats que comprometen a Cerimedo; su defensa dice que no son válidos</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/evo-acusa-a-jefe-de-la-felcn-de-informar-a-cerimedo-sobre-atentado-a-beller" rel="noopener noreferrer" target="_blank">Evo acusa a jefe de la Felcn de informar a Cerimedo sobre atentado a Beller</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/evo-dice-que-un-jefe-de-la-felcn-informaba-a-cerimedo-minuto-a-minuto-del-atentado-contra-beller-DO22973624" rel="noopener noreferrer" target="_blank">Evo dice que un jefe de la Felcn informaba a Cerimedo “minuto a minuto” del atentado contra Beller</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/beller-dice-que-el-jefe-de-la-felcn-esta-bajo-el-mando-de-cerimedo-y-lo-identifica-en-chats" rel="noopener noreferrer" target="_blank">Beller dice que el jefe de la FELCN está “bajo el mando de Cerimedo” y lo identifica en chats difundidos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/presuntos-chats-de-cerimedo-lo-implican-directamente-en-el-atentado-contra-beller" rel="noopener noreferrer" target="_blank">Presuntos chats de Cerimedo lo implican directamente en el atentado contra Beller</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63739-hermano-en-este-momento-le-dispararon-hallan-en-el-celular-de-cerimedo-un-chat-clave-sobre-el-atentado-contra-beller" rel="noopener noreferrer" target="_blank">“Hermano, en este momento le dispararon”. Hallan en el celular de Cerimedo un chat clave sobre el atentado contra Beller</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/juez-rechaza-4-incidentes-de-la-defensa-de-cerimedo-en-audiencia-cautelar-sobre-atentado-contra-beller" rel="noopener noreferrer" target="_blank">Juez rechaza 4 incidentes de la defensa de Cerimedo en audiencia cautelar sobre atentado contra Beller</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/juez-rechaza-cuatro-incidentes-presentados-por-la-defensa-de-cerimedo-65309" rel="noopener noreferrer" target="_blank">Juez rechaza cuatro incidentes presentados por la defensa de Cerimedo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/defensa-de-cerimedo-presenta-cuatro-incidentes-y-juez-los-rechaza.html" rel="noopener noreferrer" target="_blank">Defensa de Cerimedo presenta cuatro incidentes y juez los rechaza</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/justicia-rechaza-los-cuatro-incidentes-que-presento-cerimedo-y-avanza-para-definir-la-situacion-juridica-del-acusado-MB22986802" rel="noopener noreferrer" target="_blank">Justicia rechaza los cuatro incidentes que presentó Cerimedo y avanza para definir la situación jurídica del acusado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63823-audiencia-juez-rechaza-los-cuatro-incidentes-presentados-por-cerimedo-y-avanza-la-audiencia-cautelar" rel="noopener noreferrer" target="_blank">Audiencia: Juez rechaza los cuatro incidentes presentados por Cerimedo y avanza la audiencia cautelar</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_juez-rechaza-dos-incidentes-y-valida-pericia-a-celular-de-cerimedo.html" rel="noopener noreferrer" target="_blank">Juez rechaza dos incidentes y valida pericia a celular de Cerimedo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/juez-rechaza-dos-incidentes-de-la-defensa-de-cerimedo-y-valora-pericias-del-celular-202682117570" rel="noopener noreferrer" target="_blank">Juez rechaza cuatro incidentes de la defensa de Cerimedo y valora pericias del celular</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/audiencia-cautelar-juez-aprueba-la-pericia-del-telefono-movil-de-fernando-cerimedo" rel="noopener noreferrer" target="_blank">Audiencia cautelar: Juez aprueba la pericia del teléfono móvil de Fernando Cerimedo</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_cerimedo-ira-180-dias-a-prision-por-el-ataque-a-beller.html" rel="noopener noreferrer" target="_blank">Cerimedo irá 180 días a prisión por el ataque a Beller</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_dan-180-dias-de-detencion-preventiva-a-fernando-cerimedo-por-intento-de-feminicidio.html" rel="noopener noreferrer" target="_blank">Dan 180 días de detención preventiva a Fernando Cerimedo por intento de Feminicidio</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/ordenan-detencion-preventiva-para-fernando-cerimedo-por-180-dias-en-palmasola" rel="noopener noreferrer" target="_blank">Ordenan detención preventiva para Fernando Cerimedo por 180 días en Palmasola</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/cerimedo-ira-a-palmasola-con-seis-meses-de-detencion-preventiva-65316" rel="noopener noreferrer" target="_blank">Cerimedo irá a Palmasola con seis meses de detención preventiva</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_envian-a-la-carcel-de-palmasola-a-fernando-cerimedo-por-180-dias.html" rel="noopener noreferrer" target="_blank">Envían a la cárcel de Palmasola a Fernando Cerimedo por 180 días</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/juez-determina-enviar-palmasola-cerimedo-por-intento-de-feminicidio-beller" rel="noopener noreferrer" target="_blank">Juez determina enviar a Palmasola a Cerimedo por intento de feminicidio a Beller</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/dictan-detencion-preventiva-cerimedo-tentativa/" rel="noopener noreferrer" target="_blank">Dictan detención preventiva a Cerimedo por tentativa de feminicidio</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/juez-dicta-detencion-preventiva-para-cerimedo-en-plamasola-por-180-dias/" rel="noopener noreferrer" target="_blank">Juez dicta detención preventiva para Cerimedo en Palmasola por 180 días</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260821/juez-envia-cerimedo-al-penal-palmasola" rel="noopener noreferrer" target="_blank">Juez envía a Cerimedo al penal de Palmasola</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/fernando-cerimedo-es-enviado-a-palmasola-con-detencion-preventiva-la-justicia-rechazo-sus-cuatro-incidentes/" rel="noopener noreferrer" target="_blank">Fernando Cerimedo es enviado a Palmasola con detención preventiva; la Justicia rechazó sus cuatro incidentes</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63805-justicia-envia-a-fernando-cerimedo-a-la-carcel-de-palmasola-por-el-caso-de-tentativa-de-feminicidio-contra-nadia-beller" rel="noopener noreferrer" target="_blank">Justicia envía a Fernando Cerimedo a la cárcel de Palmasola por el caso de tentativa de feminicidio contra Nadia Beller</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_la-audiencia-de-cerimedo-la-reunion-de-los-ministros.html" rel="noopener noreferrer" target="_blank">La audiencia de Cerimedo, la reunión de los ministros</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/comienza-audiencia-cautelar-de-fernando-cerimedo-para-quien-la-fiscalia-pide-detencion-preventiva-en-chonchocoro" rel="noopener noreferrer" target="_blank">Comienza audiencia cautelar de Fernando Cerimedo, para quien la Fiscalía pide detención preventiva en Chonchocoro</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/se-instala-la-audiencia-de-medidas-cautelares-de-cerimedo-65295" rel="noopener noreferrer" target="_blank">Se instala la audiencia de medidas cautelares de Cerimedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/cerimedo-ya-se-encuentra-en-el-palacio-de-justicia-para-su-audiencia-cautelar.html" rel="noopener noreferrer" target="_blank">Cerimedo ya se encuentra en el Palacio de Justicia para su audiencia cautelar</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/postergan-audiencia-cautelar-de-cerimedo/" rel="noopener noreferrer" target="_blank">Postergan audiencia cautelar de Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/se-instala-la-audiencia-de-cerimedo-imputado-por-dos-delitos/" rel="noopener noreferrer" target="_blank">Se instala la audiencia de Cerimedo, imputado por dos delitos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/cerimedo-llego-a-audiencia-cautelar-bajo-fuerte-resguardo-policial/" rel="noopener noreferrer" target="_blank">Cerimedo llegó a audiencia cautelar bajo fuerte resguardo policial</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260821/cerimedo-llega-su-audiencia-cautelar-fuerte-resguardo-policial" rel="noopener noreferrer" target="_blank">Cerimedo llega a su audiencia cautelar bajo fuerte resguardo policial</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/arranca-la-audiencia-cautelar-de-cerimedo-por-el-caso-de-intento-de-feminicidio-contra-nadia-beller-OB22982738" rel="noopener noreferrer" target="_blank">Arranca la audiencia cautelar de Cerimedo por el caso de intento de feminicidio contra Nadia Beller</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/se-instalo-la-audiencia-de-medidas-cautelares-contra-fernando-cerimedo" rel="noopener noreferrer" target="_blank">Se instaló la audiencia de medidas cautelares contra Fernando Cerimedo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63787-audiencia-cautelar-de-fernando-cerimedo-se-instala-en-santa-cruz-por-caso-de-tentativa-de-feminicidio" rel="noopener noreferrer" target="_blank">Audiencia cautelar de Fernando Cerimedo se instala en Santa Cruz por caso de tentativa de feminicidio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Aprehenden exteniente vinculado a caso Cerimedo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Aprehenden exteniente vinculado a caso Cerimedo</div>
+<div class="modal-sum">La Policía aprehendió a Fritz Juniors Gironda Aquize, un exteniente del Ejército vinculado al caso Cerimedo, quien había huido con cerca de $us700 mil durante un allanamiento a una casa de cambio. El Ejército aclaró que Gironda ya no era militar activo. Su abogado negó vínculos con Cerimedo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">23</strong> titulares</span>
+<span><strong style="color:var(--c-10)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_caso-cerimedo-aprehenden-a-militar-que-huyo-con-dinero-y-hay-dos-personas-bajo-custodia.html" rel="noopener noreferrer" target="_blank">Caso Cerimedo: aprehenden a militar que huyó con dinero y hay dos personas bajo custodia</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_ejercito-aclara-que-profugo-del-caso-cerimedo-ya-no-es-militar-se-retiro-en-mayo.html" rel="noopener noreferrer" target="_blank">Ejército aclara que prófugo del caso Cerimedo ya no es militar: se retiró en mayo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/aprehenden-a-exmilitar-que-escapo-de-un-allanamiento-dentro-del-caso-cerimedo" rel="noopener noreferrer" target="_blank">Aprehenden a exmilitar que escapó de un allanamiento dentro del caso Cerimedo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/ejercito-dice-que-el-militar-que-escapo-en-los-allanamientos-por-el-caso-cerimedo-se-retiro-de-la-institucion-en-mayo" rel="noopener noreferrer" target="_blank">Ejército dice que el militar que escapó en los allanamientos por el caso Cerimedo se retiró de la institución en mayo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/aprehenden-a-exmilitar-que-escapo-del-allanamiento-por-caso-contra-cerimedo-65289" rel="noopener noreferrer" target="_blank">Aprehenden a exmilitar que escapó del allanamiento por caso contra Cerimedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/aprehenden-al-hombre-que-se-dio-a-la-fuga-durante-un-allanamiento-por-el-caso-cerimedo.html" rel="noopener noreferrer" target="_blank">Aprehenden al hombre que se dio a la fuga durante un allanamiento por el caso Cerimedo</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/clave-en-caso-cerimedo-abogado-apunta-a-exmilitar-gironda-experto-en-criptomonedas-afirma-que-cobro-2-anos-sin-trabajar/" rel="noopener noreferrer" target="_blank">“Clave en caso Cerimedo”: abogado apunta a exmilitar Gironda; experto en criptomonedas, afirma que cobró 2 años sin trabajar</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/encuentran-casa-cambio-donde-supuestamente-cerimedo-recibia-transparencias-representante-legal-huye-us700-mil_1787309314" rel="noopener noreferrer" target="_blank">Allanan casa de cambio donde, supuestamente, Cerimedo recibía transferencias y su representante legal huye con $us700 mil</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/capturan-exteniente-ejercito-fugo-allanamiento-caso-cerimedo_1787322675" rel="noopener noreferrer" target="_blank">Capturan al exteniente del Ejército que fugó durante un allanamiento por el caso Cerimedo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/exmilitar-no-tiene-vinculacion-cerimedo-huyo-porque-asusto-abogado_1787331162" rel="noopener noreferrer" target="_blank">Exmilitar “no tiene vinculación” con Cerimedo y huyó porque “se asustó”, según su abogado</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ejercito-confirma-profugo-caso-cerimedo-fue-parte-institucion-luego-retiro_1787315130" rel="noopener noreferrer" target="_blank">Ejército confirma que el prófugo del caso Cerimedo fue parte de su institución y que luego se retiró</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/abogado-de-exmilitar-niega-vinculo-con-cerimedo-y-explica-que-escapo-por-susto-en-allanamiento.html" rel="noopener noreferrer" target="_blank">Abogado de exmilitar niega vínculo con Cerimedo y explica que escapó por susto en allanamiento</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_caso-cerimedo-aprehenden-al-hombre-que-se-dio-a-la-fuga-durante-un-allanamiento.html" rel="noopener noreferrer" target="_blank">Caso Cerimedo: Aprehenden al hombre que se dio a la fuga durante un allanamiento</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/caso-cerimedo-aprehenden-militar-escapo/" rel="noopener noreferrer" target="_blank">Caso Cerimedo: Aprehenden al militar que escapó de un allanamiento</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/policia-aprehende-a-exmilitar-que-huyo-de-casa-de-cambio-vinculada-a-cerimedo/" rel="noopener noreferrer" target="_blank">Policía aprehende a exmilitar que huyó de casa de cambio vinculada a Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/profugo-en-caso-cerimedo-no-es-militar-en-servicio-activo-aclara-el-ejercito/" rel="noopener noreferrer" target="_blank">Prófugo en caso Cerimedo no es militar en servicio activo, aclara el Ejército</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/sujeto-que-huyo-de-casa-de-cambios-vinculada-a-cerimedo-se-llevo-unos-us-700-000/" rel="noopener noreferrer" target="_blank">Sujeto que huyó de casa de cambios vinculada a Cerimedo se llevó unos $us 700.000</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/aprehenden-exteniente-que-huyo-allanamiento-casa-cambio-vinculado-caso-cerimedo/20260821120948995052.html" rel="noopener noreferrer" target="_blank">Aprehenden a exteniente que huyó durante allanamiento a casa de cambio vinculado al caso Cerimedo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/comando-general-de-ejercito-afirma-que-fritz-juniors-gironda-aquize-solicito-su-retiro-voluntario-20268210853" rel="noopener noreferrer" target="_blank">Comando General de Ejército afirma que Fritz Juniors Gironda Aquize solicitó su retiro voluntario</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/no-tiene-nada-que-ver-con-cerimedo-dice-abogado-del-exmilitar-aprehendido-tras-allanamiento-en-casa-de-cambio-EB22987164" rel="noopener noreferrer" target="_blank">“No tiene nada que ver con Cerimedo”, dice abogado del exmilitar aprehendido tras allanamiento en casa de cambio</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/caso-cerimedo-tras-allanamiento-detienen-tres-personas-entre-ellas-un-exteniente" rel="noopener noreferrer" target="_blank">Caso Cerimedo: Tras allanamiento, detienen a tres personas, entre ellas a un exteniente</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63745-fritz-juniors-gironda-aquize-el-exmilitar-vinculado-al-caso-cerimedo-que-huyo-de-una-casa-de-cambios" rel="noopener noreferrer" target="_blank">Fritz Juniors Gironda Aquize, el exmilitar vinculado al caso Cerimedo que huyó de una casa de cambios</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63769-la-policia-aprehende-al-exmilitar-que-huyo-de-un-operativo-en-el-caso-cerimedo" rel="noopener noreferrer" target="_blank">La Policía aprehende al exmilitar que huyó de un operativo en el caso Cerimedo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Anulan juicio de responsabilidades a Sánchez Berzaín" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Anulan juicio de responsabilidades a Sánchez Berzaín</div>
+<div class="modal-sum">La Sala Constitucional de Cochabamba concedió una acción de libertad a Carlos Sánchez Berzaín, anulando su juicio de responsabilidades por los hechos de octubre de 2003. Un abogado señaló que el fallo no anula la totalidad del proceso, y la decisión también beneficia a Mirtha Quevedo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">13</strong> titulares</span>
+<span><strong style="color:var(--c-10)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_justicia-concede-accion-de-libertad-a-carlos-sanchez-berzain.html" rel="noopener noreferrer" target="_blank">Justicia concede acción de libertad a Carlos Sánchez Berzaín</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/sala-constitucional-de-cochabamba-anula-juicio-contra-sanchez-berzain-por-el-octubre-negro-de-2003" rel="noopener noreferrer" target="_blank">Sala Constitucional de Cochabamba anula juicio contra Sánchez Berzaín por el "octubre negro" de 2003</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/justicia-concede-accion-de-libertad-a-carlos-sanchez-berzain-y-anula-juicio-por-octubre-de-2003-65299" rel="noopener noreferrer" target="_blank">Justicia concede acción de libertad a Carlos Sánchez Berzaín y anula juicio por octubre de 2003</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/sala-constitucional-falla-a-favor-de-sanchez-berzain-y-anula-juicio-por-octubre-negro.html" rel="noopener noreferrer" target="_blank">Sala Constitucional falla a favor de Sánchez Berzain y anula juicio por Octubre Negro</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/sanchez-berzain-gana-accion-libertad-anula-proceso-judicial-hechos-2003_1787353928" rel="noopener noreferrer" target="_blank">Sánchez Berzaín gana acción de libertad y anula proceso judicial por los hechos de 2003</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/victimas-octubre-dicen-no-conocen-accion-amparo-presento-sanchez-berzain_1787348560" rel="noopener noreferrer" target="_blank">Víctimas de octubre dicen que no conocen la acción de amparo que presentó Sánchez Berzaín</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/justicia-anula-juicio-de-responsabilidades-contra-exministros-de-sanchez-de-lozada/" rel="noopener noreferrer" target="_blank">Justicia anula juicio de responsabilidades contra exministros de Sánchez de Lozada</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260821/sanchez-berzain-gana-accion-libertad-anula-persecucion-judicial-golpe-2003" rel="noopener noreferrer" target="_blank">Sánchez Berzaín gana acción de libertad y anula persecución judicial por golpe de 2003</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/sanchez-berzain-gana-accion-de-libertad-y-anula-persecucion-judicial-por-golpe-de-2003/" rel="noopener noreferrer" target="_blank">Sánchez Berzaín gana acción de libertad y anula juicio por hechos de octubre de 2003</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/octubre-negro-que-dice-la-resolucion-constitucional-que-concedio-la-accion-de-libertad-a-berzain/" rel="noopener noreferrer" target="_blank">‘Octubre negro’: ¿Qué dice la resolución constitucional que concedió la Acción de Libertad a Sánchez Berzaín?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/fallo-a-favor-de-sanchez-berzain-no-anula-todo-el-juicio-de-responsabilidades-segun-abogado-2026821194620" rel="noopener noreferrer" target="_blank">Fallo a favor de Sánchez Berzaín no anula todo el juicio de responsabilidades, según abogado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/conceden-accion-de-libertad-para-carlos-sanchez-berzain-y-mirtha-quevedo-por-el-caso-de-octubre-de-2003-NB22989774" rel="noopener noreferrer" target="_blank">Conceden acción de libertad para Carlos Sánchez Berzaín y Mirtha Quevedo por el caso de octubre de 2003</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63832-justicia-concede-accion-de-libertad-a-carlos-sanchez-berzain-y-deja-sin-efecto-actuaciones-del-proceso-por-octubre-de-2003" rel="noopener noreferrer" target="_blank">Justicia concede acción de libertad a Carlos Sánchez Berzaín y deja sin efecto actuaciones del proceso por octubre de 2003</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Arrestan sospechosos de ataque a Nadia Beller" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Arrestan sospechosos de ataque a Nadia Beller</div>
+<div class="modal-sum">La policía reportó el arresto de dos personas sospechosas de participar en el ataque armado contra la abogada y activista Nadia Beller, quienes tenían en su poder objetos vinculados a los sicarios. Continúan los operativos en busca de los responsables del atentado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_arrestan-a-dos-personas-por-el-ataque-a-nadia-beller-tenian-en-su-poder-los-cascos-de-los-sicarios.html" rel="noopener noreferrer" target="_blank">Arrestan a dos personas por el ataque a Nadia Beller; tenían en su poder los cascos de los sicarios</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/reportan-el-arresto-de-dos-personas-sospechosas-de-participar-en-el-ataque-contra-beller-65283" rel="noopener noreferrer" target="_blank">Reportan el arresto de dos personas sospechosas de participar en el ataque contra Beller</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260821/arrestan-a-dos-sospechosos-del-ataque-a-nadia-beller.html" rel="noopener noreferrer" target="_blank">Arrestan a dos sospechosos del ataque a Nadia Beller</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_cierro-los-ojos-y-vienen-imagenes-de-los-sicarios.html" rel="noopener noreferrer" target="_blank">“Cierro los ojos y vienen imágenes de los sicarios”</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/detienen-dos-sospechosos-atentado-nadia-beller/" rel="noopener noreferrer" target="_blank">Detienen a dos sospechosos por el atentado contra Nadia Beller</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/reportan-el-arresto-de-dos-personas-por-el-ataque-a-nadia-beller/" rel="noopener noreferrer" target="_blank">Reportan el arresto de dos personas por el ataque a Nadia Beller</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/realizan-operativos-en-busca-de-los-sicarios-que-dispararon-a-la-abogada-y-activista-nadia-beller-OB22988767" rel="noopener noreferrer" target="_blank">Realizan operativos en busca de los sicarios que dispararon a la abogada y activista Nadia Beller</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9a">
+<div class="modal-backdrop" onclick="closeModal('modal_9a')"></div>
+<div aria-label="Paz destituye a Espinoza tras censura" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Paz destituye a Espinoza tras censura</div>
+<div class="modal-sum">El presidente Rodrigo Paz destituyó al ministro de Economía José Gabriel Espinoza en cumplimiento de la censura legislativa y designó a Óscar Mario Justiniano como interino. Espinoza recurrió al Tribunal Constitucional y a la justicia para intentar suspender la medida, mientras sectores políticos y económicos evalúan su salida y reclaman continuidad en las reformas.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">41</strong> titulares</span>
+<span><strong style="color:var(--c-03)">19</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_paz-acata-la-censura-de-la-alp-y-deja-a-justiniano-al-frente-de-economia.html" rel="noopener noreferrer" target="_blank">Paz acata la censura de la ALP y deja a Justiniano al frente de Economía</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_oficial-paz-destituye-a-espinoza-y-deja-interino-a-justiniano.html" rel="noopener noreferrer" target="_blank">Oficial: Paz destituye a Espinoza y deja interino a Justiniano</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/gobierno-destaca-que-la-destitucion-del-ministro-de-economia-responde-al-respeto-a-la-asamblea-legislativa" rel="noopener noreferrer" target="_blank">Gobierno destaca que la destitución del ministro de Economía responde al respeto a la Asamblea Legislativa</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/gobierno-emite-decreto-de-destitucion-del-ministro-de-economia-tras-su-censura-en-la-asamblea-legislativa" rel="noopener noreferrer" target="_blank">Gobierno emite decreto de destitución del ministro de Economía tras su censura en la Asamblea Legislativa</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/decreto-que-destituye-a-espinoza-indica-que-aun-esta-pendiente-la-decision-judicial-sobre-un-recurso-en-contra-de-la-censura-65288" rel="noopener noreferrer" target="_blank">Decreto que destituye a Espinoza indica que está pendiente la decisión judicial sobre un recurso en contra de la censura</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/paz-destituye-a-espinoza--65284" rel="noopener noreferrer" target="_blank">Paz destituye a Espinoza; Oscar Mario Justiniano es ministro interino de Economía</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/08/21/choferes-piden-que-el-proximo-ministro-de-economia-frene-el-alza-del-dolar-65303" rel="noopener noreferrer" target="_blank">Choferes piden que el próximo ministro de Economía frene el alza del dólar</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260821/este-es-el-decreto-presidencial-que-deja-a-espinoza-fuera-del-gobierno-de-paz.html" rel="noopener noreferrer" target="_blank">Este es el Decreto Presidencial que deja a Espinoza fuera del gobierno de Paz</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260821/jose-gabriel-espinoza-es-destituido-del-ministerio-de-economia.html" rel="noopener noreferrer" target="_blank">José Gabriel Espinoza es destituido del Ministerio de Economía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260821/oscar-mario-justiniano-asume-como-ministro-interino-de-economia.html" rel="noopener noreferrer" target="_blank">Oscar Mario Justiniano asume como ministro interino de Economía</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/via-decreto-paz-destituye-a-espinoza-tras-censura-designa-a-oscar-justiniano-como-ministro-interino-de-economia/" rel="noopener noreferrer" target="_blank">Vía Decreto, Paz DESTITUYE a Espinoza tras censura; designa a Oscar Justiniano como ministro interino de Economía</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/rodrigo-paz-cambia-espinoza-mientras-espera-decision-constitucional_1787320630" rel="noopener noreferrer" target="_blank">Rodrigo Paz cambia a Espinoza mientras espera una decisión constitucional</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/paz-designa-oscar-mario-justiniano-ministro-interino-economia_1787318922" rel="noopener noreferrer" target="_blank">Paz designa a Óscar Mario Justiniano como ministro interino de Economía</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/politica/rodrigo-paz-destituye-a-jose-gabriel-espinoza-del-ministerio-de-economia-mediante-decreto.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz destituye a José Gabriel Espinoza del Ministerio de Economía mediante decreto</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/decreto-presidencial-cumple-la-censura-de-la-asamblea-para-destituir-espinoza-y-poner" rel="noopener noreferrer" target="_blank">Decreto presidencial cumple la censura de la Asamblea para destituir a Espinoza y poner ministro de Economía interino</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/politica/destituyen-jose-gabriel-espinoza-como-ministro-economia/" rel="noopener noreferrer" target="_blank">Destituyen a José Gabriel Espinoza como ministro de Economía</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/08/21/paz-dice-que-reivindica-independencia-de-poderes-con-remocion-de-espinoza/" rel="noopener noreferrer" target="_blank">Paz dice que reivindica independencia de poderes con remoción de Espinoza</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260821/oscar-mario-justiniano-es-nuevo-ministro-interino-economia-destitucion" rel="noopener noreferrer" target="_blank">Óscar Mario Justiniano es el nuevo ministro interino de Economía tras la destitución de Gabriel Espinoza</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/rodrigo-paz-destituye-jose-gabriel-espinoza-cargo-ministro-economia/20260821095940995043.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz destituye a José Gabriel Espinoza del cargo de Ministro de Economía</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/por-decreto-paz-destituye-a-gabriel-espinoza-y-designa-a-mario-justiniano-como-ministro-de-economia-interino/" rel="noopener noreferrer" target="_blank">Por Decreto, Paz destituye a Gabriel Espinoza y designa a Mario Justiniano como Ministro de Economía interino</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/destituyen-a-gabriel-espinoza-y-designan-a-oscar-mario-justiniano-como-ministro-interino-de-economia-202682192419" rel="noopener noreferrer" target="_blank">Destituyen a Gabriel Espinoza y designan a Óscar Mario Justiniano como ministro interino de Economía</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/por-que-destituyeron-al-ministro-de-economia-esto-dice-el-decreto-202682193733" rel="noopener noreferrer" target="_blank">¿Por qué destituyeron al ministro de Economía? Esto dice el decreto</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/oficial-jose-gabriel-espinoza-deja-el-ministerio-de-economia-2026821165555" rel="noopener noreferrer" target="_blank">Oficial: José Gabriel Espinoza deja el Ministerio de Economía</a></span></li>
+<li><span class="m-src">Último Minuto Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://ultimominuto.com.bo/ultimo-minuto/paz-pereira-destituye-a-espinoza-y-designa-a-oscar-mario-justiniano-como-interino/" rel="noopener noreferrer" target="_blank">Paz Pereira destituye a Espinoza y designa a Oscar Mario Justiniano como interino</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/tras-censura-paz-destituye-a-espinoza-y-nombra-a-justiniano-como-ministro-de-economia-interino-AO22976237" rel="noopener noreferrer" target="_blank">Tras censura, Paz destituye a Espinoza y nombra a Justiniano como ministro de Economía interino</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63751-paz-destituye-por-decreto-al-ministro-de-economia-jose-gabriel-espinoza" rel="noopener noreferrer" target="_blank">Paz destituye por decreto al ministro de Economía, José Gabriel Espinoza</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/espinoza-pide-tcp-suspenda-censura-libre-anuncia-proceso-si-juez-falla-favor_1787355267" rel="noopener noreferrer" target="_blank">Espinoza pide al TCP que suspenda la censura en su contra; Libre anuncia proceso si juez falla a favor</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/tcp-tendra-la-ultima-palabra-respecto-a-destitucion-de-espinoza/" rel="noopener noreferrer" target="_blank">TCP tendrá la última palabra respecto a destitución de Espinoza</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260821/24-agosto-tcp-definira-resolucion-que-puede-permitir-retorno-espinoza" rel="noopener noreferrer" target="_blank">El 24 de agosto, el TCP definirá la resolución que puede permitir el retorno de Espinoza</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/paz-destituyo-a-espinoza-hasta-que-una-sala-de-el-alto-se-pronuncie-sobre-el-amparo-contra-la-censura-del-legislativo-OO22978262" rel="noopener noreferrer" target="_blank">Paz destituyó a Espinoza hasta que una sala de El Alto se pronuncie sobre el amparo contra la censura del Legislativo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/ante-amparo-oposicion-pide-paz-no-restituir-espinoza-y-no-caer-en-practicas-del-mas" rel="noopener noreferrer" target="_blank">Ante amparo, oposición pide a Paz no restituir a Espinoza y no caer en “prácticas del MAS”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/cerimedo-y-el-silencio-del-presidente-analistas-ven-un-callejon-sin-salida-y-una-situacion-turbulenta-65319" rel="noopener noreferrer" target="_blank">Cerimedo y el silencio del presidente; analistas ven un “callejón sin salida” y una “situación turbulenta”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/21/analisislos-autogoles-del-gobierno-y-el-retorno-del-populismowalter-guevara-65275" rel="noopener noreferrer" target="_blank">|ANÁLISIS|Los autogoles del gobierno y el retorno del populismo|Walter Guevara|</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/destitucion-espinoza-deja-gobierno-reto-sostener-reformas-creditos_1787328468" rel="noopener noreferrer" target="_blank">Destitución de Espinoza deja al Gobierno ante el reto de sostener reformas y créditos</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/politica/destacan-destitucion-espinoza-piden-no-ratificarlo/" rel="noopener noreferrer" target="_blank">Destacan destitución de Espinoza y piden no ratificarlo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tras-la-salida-de-espinoza-sectores-exigen-que-no-se-frenen-proyectos-economicos-202682113619" rel="noopener noreferrer" target="_blank">Tras la salida de Espinoza, sectores exigen que no se frenen proyectos económicos</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/parlamentarios-reaccionan-a-la-salida-del-ministro-de-economia-202682114021" rel="noopener noreferrer" target="_blank">Parlamentarios reaccionan a la salida del ministro de Economía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/destitucion-de-espinoza-senadora-de-libre-califica-como-una-senal-positiva-y-diputado-del-pdc-dice-que-debio-continuar-BB22983174" rel="noopener noreferrer" target="_blank">Destitución de Espinoza: Senadora de Libre califica como una señal positiva y diputado del PDC dice que debió continuar</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/cochamanidis-tras-destitucion-de-espinoza-si-el-presidente-usa-la-sensatez-no-deberia-ocurrir-lo-que-hizo-arce-con-del-castillo-FB22982755" rel="noopener noreferrer" target="_blank">Cochamanidis tras destitución de Espinoza: “Si el presidente usa la sensatez, no debería ocurrir lo que hizo Arce con Del Castillo”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/a-espinoza-hay-que-juzgarlo-por-sus-resultados-dice-analista-rios-que-observa-el-alza-de-la-cotizacion-de-las-usdt-NO22977468" rel="noopener noreferrer" target="_blank">A Espinoza hay que juzgarlo “por sus resultados”, dice analista Ríos, que observa el alza de la cotización de las USDT</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-se-queda-sin-cerebros-economicos-en-su-gabinete-y-enfrenta-un-momento-complejo" rel="noopener noreferrer" target="_blank">Paz se queda sin "cerebros económicos" en su gabinete y enfrenta un momento complejo</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6">
+<div class="modal-backdrop" onclick="closeModal('modal_6')"></div>
+<div aria-label="Sectores exigen abrogación decreto sobre diésel" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Sectores exigen abrogación decreto sobre diésel</div>
+<div class="modal-sum">Diversos sectores, incluyendo choferes, productores arroceros, la CAO y Confeagro, exigen la abrogación del Decreto Supremo 5676 sobre el diésel, advirtiendo con movilizaciones y medidas de presión. El rechazo al decreto ha provocado largas filas en surtidores y preocupaciones sobre su impacto econó</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">17</strong> titulares</span>
+<span><strong style="color:var(--c-11)">10</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_diesel-abre-dos-frentes-con-transportistas-y-con-el-agro.html" rel="noopener noreferrer" target="_blank">Diésel abre dos frentes: con transportistas y con el agro</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/08/21/ypfb-programa-21-menos-diesel-para-santa-cruz-65292" rel="noopener noreferrer" target="_blank">YPFB programa 21% menos diésel para Santa Cruz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/protestas-desafian-estado-excepcion-crece-presion-precio-diesel_1787313276" rel="noopener noreferrer" target="_blank">Protestas desafían estado de excepción y crece presión por el precio del diésel</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/choferes-suman-pedido-abrogacion-decreto-5676-advierten-movilizaciones_1787334566" rel="noopener noreferrer" target="_blank">Choferes se suman al pedido de abrogación del Decreto 5676 y advierten con movilizaciones</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-publica-demora-reporte-programa-21-menos-diesel-santa-cruz_1787325208" rel="noopener noreferrer" target="_blank">YPFB publica con demora su reporte y programa 21% menos diésel para Santa Cruz</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/cao-exige-abrogar-el-decreto-supremo-5676/" rel="noopener noreferrer" target="_blank">CAO exige abrogar el Decreto Supremo 5676</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/incremento-del-precio-de-diesel-pone-a-prueba-economia-de-gracos/" rel="noopener noreferrer" target="_blank">Incremento del precio de diésel pone a prueba economía de Gracos</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/cooperativas-mineras-potosinas-rechazan-alza-diesel/" rel="noopener noreferrer" target="_blank">Decreto 5676: Cooperativas de Potosí rechazan alza del diésel</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/productores-arroceros-piden-abrogacion-decreto-diesel/" rel="noopener noreferrer" target="_blank">Productores arroceros piden la abrogación del decreto del diésel</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/rechazo-decreto-provoca-largas-filas-surtidores/" rel="noopener noreferrer" target="_blank">Rechazo a decreto 5676 provoca largas filas en surtidores</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/08/21/transporte-libre-definira-el-12-de-septiembre-su-posicion-sobre-diesel-dolares-y-carreteras/" rel="noopener noreferrer" target="_blank">Transporte Libre definirá el 12 de septiembre su posición sobre diésel, dólares y carreteras</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/choferes-exigen-abrogar-el-decreto-sobre-el-diesel-y-advierten-que-las-medidas-de-presion-ya-vienen/" rel="noopener noreferrer" target="_blank">Choferes exigen abrogar el Decreto sobre el diésel y advierten que “las medidas de presión ya vienen”</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/confeagro-exige-abrogar-decreto-del-diesel-y-liberar-carburantes" rel="noopener noreferrer" target="_blank">Confeagro exige abrogar decreto del diésel y liberar carburantes</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/arroceros-se-suman-al-pedido-de-abrogacion-del-decreto-del-diesel-y-anuncian-medidas-de-presion-LO22975817" rel="noopener noreferrer" target="_blank">Arroceros se suman al pedido de abrogación del decreto del diésel y anuncian medidas de presión</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/confeagro-urge-abrogar-el-decreto-del-diesel-y-pide-liberar-la-importacion-y-comercializacion-de-carburantes-GO22974255" rel="noopener noreferrer" target="_blank">Confeagro urge abrogar el decreto del diésel y pide “liberar” la importación y comercialización de carburantes</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/persisten-las-filas-por-diesel-y-el-agro-se-une-al-rechazo-del-decreto-que-dicta-un-precio-referencial-FO22974076" rel="noopener noreferrer" target="_blank">Persisten las filas por diésel y el agro se une al rechazo del decreto que dicta un precio referencial</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63763-ypfb-reporta-programacion-de-diesel-inferior-a-la-demanda-para-santa-cruz-el-jueves-programo-mas-de-medio-millon-de-litros-menos" rel="noopener noreferrer" target="_blank">YPFB reporta programación de diésel inferior a la demanda para Santa Cruz: el jueves programó más de medio millón de litros menos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7">
+<div class="modal-backdrop" onclick="closeModal('modal_7')"></div>
+<div aria-label="La Paz en emergencia por crisis de basura" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">La Paz en emergencia por crisis de basura</div>
+<div class="modal-sum">La Paz enfrenta una persistente crisis por el recojo de basura, con acumulación en las calles y un riesgo ambiental en el relleno sanitario. La Alcaldía ha declarado emergencia sanitaria, lanzado planes de emergencia para contratar personal y alquilar volquetas, e incluso pidió la colaboración ciudadanía.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">15</strong> titulares</span>
+<span><strong style="color:var(--c-15)">8</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/denuncian-que-se-obliga-a-funcionarios-ediles-a-recoger-basura-la-alcaldia-dice-que-alquila-volquetas-y-contrata-personal-65293" rel="noopener noreferrer" target="_blank">Denuncian que se obliga a funcionarios ediles a recoger basura; la alcaldía dice que alquila volquetas y contrata personal</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/concejala-lema-denuncia-que-se-usa-parqueo-edil-para-acumular-basura-65313" rel="noopener noreferrer" target="_blank">Concejala Lema denuncia que se usa parqueo edil para acumular basura</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/epidemiologo-advierte-riesgos-por-acumulacion-de-basura-y-pide-evitar-zonas-afectadas-65305" rel="noopener noreferrer" target="_blank">Epidemiólogo advierte riesgos por acumulación de basura y pide evitar zonas afectadas</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/sondeo-la-mayoria-rechaza-que-funcionarios-ediles-apoyen-en-el-recojo-de-basura-65321" rel="noopener noreferrer" target="_blank">Sondeo: la mayoría rechaza que funcionarios ediles apoyen en el recojo de basura</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/plan-de-emergencia-de-la-alcaldia-no-logra-frenar-acumulacion-de-basura-en-la-paz-65285" rel="noopener noreferrer" target="_blank">Plan de emergencia de la alcaldía no logra frenar acumulación de basura en La Paz</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/declaran-emergencia-sanitaria-presentan-accion-popular-conflicto-basura-paz_1787325898" rel="noopener noreferrer" target="_blank">Declaran emergencia sanitaria y presentan una acción popular por el conflicto de la basura en La Paz</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/trabajadores-operan-al-20-y-advierten-huelga-de-hambre-ante-11-dias-de-acumulacion-de-basura.html" rel="noopener noreferrer" target="_blank">Trabajadores operan al 20% y advierten huelga de hambre ante 11 días de acumulación de basura</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/persiste-conflicto-por-recojo-de-basura-en-la-urbe-pacena/" rel="noopener noreferrer" target="_blank">Persiste conflicto por recojo de basura en la urbe paceña</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/alcald%C3%ADa-lanza-plan-pega-en-busca-de-trabajadores-para-el-recojo-de-basura" rel="noopener noreferrer" target="_blank">Alcaldía lanza Plan "Pega" en busca de trabajadores para el recojo de basura</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/paz-cumple-dias-montanas-basura/" rel="noopener noreferrer" target="_blank">La Paz cumple 11 días entre “montañas de basura”</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/riesgo-ambiental-relleno-sanitario-saka-churu-ii/" rel="noopener noreferrer" target="_blank">Riesgo ambiental en el relleno sanitario Sak’a Churu II en La Paz</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-paz-alcaldia-alquila-volquetas-y-contrata-personal-eventual-para-reforzar-el-recojo-de-basura/" rel="noopener noreferrer" target="_blank">La Paz: Alcaldía alquila volquetas y contrata personal eventual para reforzar el recojo de basura</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ante-la-crisis-sanitaria-la-alcaldia-llama-a-la-ciudadania-a-recoger-la-basura-y-usar-sus-autos-para-su-transporte/" rel="noopener noreferrer" target="_blank">Ante la crisis sanitaria, la Alcaldía llama a la ciudadanía a recoger la basura y usar sus autos para su transporte</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/dockweiler-anuncia-pago-de-bs-1-100-para-quienes-ayuden-recoger-y-trasladar-la-basura" rel="noopener noreferrer" target="_blank">Dockweiler anuncia pago de Bs 1.100 para quienes ayuden a recoger y trasladar la basura</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/basura-se-acumula-por-11-dias-trabajadores-operan-al-20-y-advierten-con-huelga-de-hambre" rel="noopener noreferrer" target="_blank">Basura se acumula por 11 días, trabajadores operan al 20% y advierten con huelga de hambre</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="CIDOB denuncia contaminación por mercurio en Amazonía" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">CIDOB denuncia contaminación por mercurio en Amazonía</div>
+<div class="modal-sum">La CIDOB alerta y denuncia la grave contaminación por mercurio en los ríos Beni y Madre de Dios en la Amazonía boliviana, exigiendo el cumplimiento de resoluciones contra la minería ilegal.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">3</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260821_cidob-alerta-por-mercurio-en-rios-beni-y-madre-de-dios.html" rel="noopener noreferrer" target="_blank">CIDOB alerta por mercurio en ríos Beni y Madre de Dios</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/08/21/cidob-denuncia-grave-contaminacion-por-mercurio-en-la-amazonia-y-exige-que-se-cumpla-fallo-contra-mineria-ilegal-65314" rel="noopener noreferrer" target="_blank">CIDOB denuncia grave contaminación por mercurio en la Amazonia y exige que se cumpla fallo contra minería ilegal</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/incumplen-resolucion-contra-contaminacion-por-mercurio/" rel="noopener noreferrer" target="_blank">Incumplen resolución contra contaminación por mercurio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_12">
+<div class="modal-backdrop" onclick="closeModal('modal_12')"></div>
+<div aria-label="Fiscal desaparecido hallado con vida en Beni" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Fiscal desaparecido hallado con vida en Beni</div>
+<div class="modal-sum">El fiscal Juan Benjo Huchani fue hallado con vida en Beni tras permanecer desaparecido durante una semana después de un accidente de avioneta. Huchani, encontrado por un trabajador de hacienda, fue trasladado a Trinidad para recibir atención médica.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">12</strong> titulares</span>
+<span><strong style="color:var(--c-07)">11</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_12')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/sociedad/hallan-con-vida-al-fiscal-desaparecido-desde-hace-una-semana-tras-un-accidente-de-avioneta-en-beni" rel="noopener noreferrer" target="_blank">Hallan con vida al fiscal desaparecido desde hace una semana tras un accidente de avioneta en Beni</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/21/hallan-con-vida-al-fiscal-juan-huchani-tras-ocho-dias-desaparecido-en-la-selva-65301" rel="noopener noreferrer" target="_blank">Hallan con vida al fiscal Juan Huchani tras ocho días desaparecido en la selva</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/pais/hallan-con-vida-al-fiscal-juan-benjo-huchani-tras-ocho-dias-de-busqueda-en-beni.html" rel="noopener noreferrer" target="_blank">Hallan con vida al fiscal Juan Benjo Huchani, tras ocho días de búsqueda en Beni</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_encuentran-con-vida-al-fiscal-huchani-tras-siete-dias-de-busqueda-en-beni.html" rel="noopener noreferrer" target="_blank">Encuentran con vida al fiscal Huchani tras siete días de búsqueda en Beni</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/encuentran-con-vida-al-fiscal-que-estaba-desaparecido-una-semana-tras-siniestro-a%C3%A9reo" rel="noopener noreferrer" target="_blank">Encuentran con vida al fiscal que estaba desaparecido una semana tras siniestro aéreo</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/localizan-vida-fiscal-juan-huchani-accidente-aereo/" rel="noopener noreferrer" target="_blank">Localizan con vida al fiscal Juan Huchani tras accidente aéreo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260821/hallan-vivo-sobreviviente-perdido-siniestro-aereo-beni" rel="noopener noreferrer" target="_blank">Hallan vivo a sobreviviente perdido de siniestro aéreo en Beni</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/encuentran-vida-fiscal-juan-benjo-huchani-siete-dias-busqueda-beni/20260821164117995075.html" rel="noopener noreferrer" target="_blank">Encuentran con vida al fiscal Juan Benjo Huchani tras siete días de búsqueda en Beni</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/trabajador-de-una-hacienda-fue-quien-localizo-con-vida-al-fiscal-juan-huchani-HB22986537" rel="noopener noreferrer" target="_blank">Trabajador de una hacienda fue quien localizó con vida al fiscal Juan Huchani</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/hallan-con-vida-al-fiscal-juan-huchani-una-semana-despues-de-la-caida-de-una-avioneta-en-beni-NB22984900" rel="noopener noreferrer" target="_blank">Hallan con vida al fiscal Juan Huchani una semana después de la caída de una avioneta en Beni</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/hallan-con-vida-al-fiscal-huchani-tras-ocho-dias-desaparecido-por-un-accidente-aereo" rel="noopener noreferrer" target="_blank">Hallan con vida al fiscal Huchani tras ocho días desaparecido por un accidente aéreo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63814-fiscal-huchani-fue-hallado-con-vida-y-ya-se-encuentra-en-trinidad-para-recibir-atencion-medica" rel="noopener noreferrer" target="_blank">Fiscal Huchani fue hallado con vida y ya se encuentra en Trinidad para recibir atención médica</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Alianza Libre presenta reforma constitucional" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Alianza Libre presenta reforma constitucional</div>
+<div class="modal-sum">La Alianza Libre, con el apoyo de figuras como Tuto Quiroga y Alarcón, ha oficializado y presentado un proyecto de ley para la reforma parcial de la Constitución Política del Estado (CPE), solicitando su pronto tratamiento legislativo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">7</strong> titulares</span>
+<span><strong style="color:var(--c-21)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/21/libre-oficializa-propuesta-para-modificacion-parcial-de-la-cpe/" rel="noopener noreferrer" target="_blank">Libre oficializa propuesta para modificación parcial de la CPE</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_libre-presenta-proyecto-de-ley-para-reforma-parcial-de-la-constitucion.html" rel="noopener noreferrer" target="_blank">Libre presenta proyecto de ley para reforma parcial de la Constitución</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/libre-presenta-reforma-cpe-suman-dos-proyectos-legislativo/" rel="noopener noreferrer" target="_blank">Libre presenta reforma a la CPE; suman dos proyectos legislativos</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/alarcon-es-el-mejor-momento-para-reformar-la-constitucion/" rel="noopener noreferrer" target="_blank">Alarcón: ‘Es el mejor momento para reformar la Constitución’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/21/libre-presenta-proyecto-para-reformar-parcialmente-la-constitucion/" rel="noopener noreferrer" target="_blank">Libre presenta proyecto para reformar parcialmente la Constitución</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260821/libre-formaliza-entrega-su-proyecto-reforma-parcial-constitucion-pide-su" rel="noopener noreferrer" target="_blank">Libre formaliza entrega de su proyecto para la reforma parcial de la Constitución y pide su pronto tratamiento</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/alianza-libre-formaliza-el-proyecto-de-reforma-constitucional-impulsado-por-tuto-quiroga-CO22979487" rel="noopener noreferrer" target="_blank">Alianza Libre formaliza el proyecto de reforma constitucional impulsado por ‘Tuto’ Quiroga</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1a">
+<div class="modal-backdrop" onclick="closeModal('modal_1a')"></div>
+<div aria-label="Dólar se estabiliza en Bs 11,50" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Dólar se estabiliza en Bs 11,50</div>
+<div class="modal-sum">El Banco Central de Bolivia y otros reportes fijan el tipo de cambio del dólar en Bs 11,50, valor que se mantendrá al menos hasta el lunes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">6</strong> titulares</span>
+<span><strong style="color:var(--c-02)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/dolar-baja-bs-11-50-mantendra-ese-valor-lunes_1787360459" rel="noopener noreferrer" target="_blank">Dólar baja a Bs 11,50 y se mantendrá en ese valor hasta el lunes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-dolar-tiene-un-nuevo-descenso-y-valdra-bs-1150-hasta-el-lunes/" rel="noopener noreferrer" target="_blank">El dólar tiene un nuevo descenso y valdrá Bs 11,50 hasta el lunes</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/21/63841-bcb-fija-el-dolar-en-bs-11_50-para-este-fin-de-semana-y-el-lunes" rel="noopener noreferrer" target="_blank">BCB fija el dólar en Bs 11,50 para este fin de semana y el lunes</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-21/economia/por-tercer-dia-consecutivo-el-dolar-se-mantiene-en-bs-1152.html" rel="noopener noreferrer" target="_blank">Por tercer día consecutivo, el dólar se mantiene en Bs 11,52</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_el-dolar-se-estabiliza-en-bs-11-52-por-tercer-dia.html" rel="noopener noreferrer" target="_blank">El dólar se estabiliza en Bs 11,52 por tercer día</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/por-tercera-jornada-consecutiva-la-cotizacion-oficial-del-dolar-se-mantiene-en-la-misma-cifra-JP22968346" rel="noopener noreferrer" target="_blank">Por tercera jornada consecutiva, la cotización oficial del dólar se mantiene en la misma cifra</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2a">
+<div class="modal-backdrop" onclick="closeModal('modal_2a')"></div>
+<div aria-label="Cisterneros anuncian paro nacional por deudas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Cisterneros anuncian paro nacional por deudas</div>
+<div class="modal-sum">Cisterneros de todo el país anuncian un paro nacional indefinido a partir del lunes debido a deudas pendientes por servicios prestados, algunas de hasta 5 meses.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260821_cisterneros-anuncian-paro-nacional-desde-el-lunes.html" rel="noopener noreferrer" target="_blank">Cisterneros anuncian paro nacional desde el lunes</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260821/cisterneros-anuncian-paro-nacional-lunes-deuda-5-meses" rel="noopener noreferrer" target="_blank">Cisterneros anuncian paro nacional desde el lunes por deuda de 5 meses</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cisterneros-anuncian-paro-nacional-desde-el-lunes-por-deudas-pendientes-20268219424" rel="noopener noreferrer" target="_blank">Cisterneros anuncian paro nacional desde el lunes por deudas pendientes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    const detailsParent = el.closest('details.lista-nivel-c');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlight-card');
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
