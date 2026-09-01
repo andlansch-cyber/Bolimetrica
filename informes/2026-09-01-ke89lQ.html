@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20260901</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+:root {
+  --dash-box-bg: #FBF6EC;
+  --kpi-chip-bg: rgba(15, 33, 55, 0.06);
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body.dark-mode {
+  --dash-box-bg: rgba(15, 33, 55, 0.5);
+  --kpi-chip-bg: rgba(0, 0, 0, 0.2);
+}
+.page {
+  max-width: 96% !important;
+  padding: 25px 30px !important;
+
+}
+
+.layout-2-cols { 
+  padding: 12px 12px !important; 
+  max-width: 100vw !important; 
+  box-sizing: border-box !important; 
+  width: 100% !important; 
+  overflow: hidden !important; 
+  gap: 16px !important;
+}
+
+body { font-size: 15px !important; background-color: #f4f1ea !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; }
+
+.emergentes-grid { grid-template-columns: 1fr !important; }
+
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  margin-bottom: 6px;
+}
+#themeToggle {
+  position: static !important;
+}
+
+.brief-tactico { background: var(--bg-card) !important; }
+.tarjeta-nivel-a { background: var(--bg-card) !important; }
+
+.chart-row-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+.chart-row-vertical .chart-label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  padding-bottom: 18px !important;
+}
+.chart-row-vertical .chart-bar-wrap {
+  width: 100% !important;
+}
+.chart-row-vertical .chart-medios {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 11px !important;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.donut-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.donut-arc {
+  transition: stroke-width 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+.donut-arc:hover {
+  stroke-width: 20;
+  opacity: 0.85;
+}
+.donut-legend {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.donut-legend-item {
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+.chart-label {
+  width: 480px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  padding-right: 15px !important;
+  text-align: left !important;
+}
+.chart-label span { font-size: 14px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+
+.section-label{ font-size: 13px !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+
+.topic-big-n{ font-weight: 900 !important; font-size: 28px !important; line-height: 1 !important; text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(15,33,55,0.18); }
+.topic-big-n{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+.top3-rank .rank-num{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+
+.modal-panel{ width: min(980px, calc(100vw - 28px)); border-radius: 14px; }
+.modal-head{ padding: 16px 18px; }
+.modal-title{ font-size: 20px; line-height: 1.15; }
+.modal-sum{ font-size: 13px; line-height: 1.45; }
+.modal-body{ padding: 14px 18px; max-height: calc(100vh - 220px); overflow: auto; }
+.modal-list{ padding-left: 0; margin: 0; gap: 10px; }
+.modal-list li{ display: grid; grid-template-columns: 130px 1fr; column-gap: 12px; row-gap: 2px; align-items: start; font-size: 13px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,.10); }
+.modal-list li:last-child{ border-bottom: 0; }
+.m-src{ font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-sep{ display:none; }
+.m-tit a{ word-break: break-word; text-decoration: underline; }
+
+.top3-card, .topic-card, .emergente-card { cursor: pointer !important; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important; }
+.top3-card:hover, .topic-card:hover, .emergente-card:hover { transform: translateY(-3px) !important; box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important; border-color: var(--border-glow) !important; }
+
+@media (max-width: 768px){
+  .page{ padding: 12px 12px 20px; max-width: 100% !important; box-sizing: border-box !important; width: 100% !important; }
+  .layout-2-cols{ 
+    padding: 12px 12px !important; 
+    max-width: 100vw !important; 
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    overflow: hidden !important; 
+  }
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; box-sizing: border-box !important; width: 100% !important; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto !important; text-align: left; font-size: 15px !important; }
+  .a-header { flex-wrap: wrap; }
+  .a-kpis { white-space: normal; }
+  .chart-medios{ width: auto; }
+  .freq-table{ display:block; overflow-x:auto; }
+  .modal-panel{ width: 92% !important; max-width: 100% !important; border-radius: 12px; box-sizing: border-box !important; }
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+  .layout-2-cols { display: grid !important; grid-template-columns: 1fr !important; }
+  .col-main, .col-sidebar { display: contents !important; }
+
+  .col-main > div:nth-child(1) { order: 1; position: relative; } /* Resumen Ejecutivo */
+  .col-sidebar > .cat-bar-card { order: 2; }
+  .col-sidebar > .concentracion-card { order: 3; }
+  .col-main > div:nth-child(2) { order: 4; } /* Jerarquía de temas */
+  .col-sidebar > .coverage-card { order: 5; }
+  .col-sidebar > .emergentes-grid,
+  .col-sidebar > div:has(> .emergentes-grid) { order: 6; }
+  .col-sidebar > .freq-table-card { order: 7; }
+
+  .col-sidebar > .sidebar-toggle-row {
+    position: relative !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-right: 4px !important;
+    order: 0;
+  }
+}
+
+.index-row { cursor: pointer !important; transition: background 0.2s ease, padding 0.2s ease; border-radius: 6px; padding: 4px; margin: -4px; }
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row { cursor: pointer !important; padding: 4px; margin: -4px; border-radius: 6px; transition: background 0.2s ease; }
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+.cat-topics-list { display: none; list-style: none; padding: 8px 10px 6px 14px; margin: 6px 0 2px 8px; background: var(--bg-card-2); border-left: 2px solid var(--border); border-radius: 0 4px 4px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+.cat-topics-list li { padding: 5px 6px; margin-bottom: 2px; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle-btn {
+  position: absolute; top: -5px; right: 0; z-index: 10;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 20px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+.theme-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+
+.right-panel > .section-label { margin-bottom: 4px !important; }
+
+.cat-row, .index-row { transition: background 0.2s ease, transform 0.2s ease !important; }
+.cat-row:hover, .index-row:hover { transform: translateX(6px) !important; }
+body.dark-mode .cat-row:hover, body.dark-mode .index-row:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+.ind-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.ind-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; background: transparent; }
+
+.brief-ejecutivo { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 6px; padding: 22px 28px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,33,55,0.06); }
+.brief-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.brief-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.brief-semaforo { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; padding: 4px 12px; border-radius: 999px; }
+.brief-parrafo { font-size: 14px; line-height: 1.7; color: var(--text-primary); margin-bottom: 14px; }
+.brief-implicaciones { list-style: none; padding: 0; margin: 0 0 12px 0; display: flex; flex-direction: column; gap: 6px; }
+.brief-implicaciones li { font-size: 13px; line-height: 1.55; color: var(--text-secondary); padding-left: 14px; position: relative; }
+.brief-implicaciones li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.brief-narrativa { font-size: 13px; line-height: 1.55; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+.brief-narrativa-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+.emergente-reason { font-size: 13px; font-style: italic; color: var(--amber-d); line-height: 1.55; border-left: 2px solid var(--amber); padding-left: 8px; margin-top: 2px; }
+
+.brief-tactico { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: #162032; border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 26px; }
+.brief-alerta { padding-left: 2px; margin-bottom: 16px; }
+.semaforo-badge { font-family: var(--font-mono); font-weight: 700; color: #ffffff; padding: 3px 9px; border-radius: 4px; font-size: 12px; margin-right: 10px; }
+.alerta-texto { font-weight: 700; color: var(--text-primary); }
+.brief-panorama h4, .brief-tensiones h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: #f0c060; margin-top: 0; margin-bottom: 8px; }
+.brief-panorama p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+.brief-tensiones ul { padding-left: 16px; margin: 0; color: var(--text-secondary); }
+.brief-tensiones li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+
+.categoria-contenedor { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.categoria-titulo { font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.tarjeta-nivel-a { background: #1d2a40; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.tarjeta-nivel-a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-color: var(--border-glow); }
+.a-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+.a-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.a-kpis { display: flex; gap: 8px; white-space: nowrap; }
+.kpi-chip { font-family: var(--font-mono); font-size: 11px; background: var(--kpi-chip-bg); padding: 3px 8px; border-radius: 4px; color: var(--text-muted); }
+.a-sumilla { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+
+.a-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--dash-box-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.dash-box strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: #f0c060; margin-bottom: 6px; }
+.dash-box p { font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+.a-dashboard .dash-box:nth-child(2) { padding-left: 14px; }
+
+.grid-nivel-b { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tarjeta-nivel-b { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+.tarjeta-nivel-b:hover { transform: translateY(-2px); background: rgba(0,0,0,0.04); border-color: var(--border-glow); }
+body.dark-mode .tarjeta-nivel-b:hover { background: #1d2a40; }
+.b-kpis { font-family: var(--font-mono); font-size: 11px; color: #f0c060; margin-bottom: 8px; }
+.b-sumilla { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+
+.lista-nivel-c { background: rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 8px 12px; }
+.lista-nivel-c summary { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); cursor: pointer; }
+.lista-nivel-c summary:hover { color: var(--text-primary); }
+.lista-nivel-c ul { margin: 8px 0 0 0; padding-left: 16px; }
+.lista-nivel-c li { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; cursor: pointer; }
+.lista-nivel-c li:hover { color: #f0c060; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .brief-tactico, .a-dashboard, .grid-nivel-b { grid-template-columns: 1fr !important; }
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-left: 2px solid var(--amber);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+.concentracion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+}
+.concentracion-svg {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  margin-top: 4px;
+}
+.concentracion-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+.concentracion-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.chart-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ───────── MEJORAS PUNTO 4: INTERACTIVIDAD DONA ───────── */
+.donut-legend-item.legend-hoverable { 
+  transition: background 0.2s ease, transform 0.2s ease; 
+  padding: 5px 6px; 
+  margin: -5px -6px 3px -6px; 
+  border-radius: 6px; 
+}
+.donut-legend-item.legend-hoverable:hover { 
+  background: rgba(0,0,0,0.04); 
+  transform: translateX(4px); 
+}
+body.dark-mode .donut-legend-item.legend-hoverable:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+}
+.legend-text { font-size: 12.5px; }
+.legend-text strong { 
+  color: var(--text-primary); 
+  font-size: 13px; 
+  font-weight: 700;
+}
+</style>
+<style>
+body.dark-mode {
+  --bg-base:     #0f2137;
+  --bg-card:     #152b47;
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.layout-2-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .layout-2-cols { grid-template-columns: 1fr; }
+}
+.col-main { display: flex; flex-direction: column; gap: 20px; }
+.col-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+body.dark-mode .theme-toggle-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+body.dark-mode .theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-09-01" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-09-01-ke89lQ.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">222</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">14</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">10</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">21</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 01-SEPTIEMBRE-2026 | 7:00 AM</strong><br/>
+            Reporte N° B24-20260901<br/>
+            Cobertura: últimas 24 horas
+          </div></div>
+</header><div class="layout-2-cols"><div class="col-main"><div><h3 class="section-label">RESUMEN EJECUTIVO</h3><div class="brief-tactico">
+<div class="brief-col-izq">
+<div class="brief-alerta" style="border-left: 4px solid #ba3030;">
+<span class="semaforo-badge" style="background:#ba3030;">🔴 ROJO</span>
+<span class="alerta-texto">La agenda mediática se caracteriza por una alta concentración en cambios gubernamentales, un escándalo político de alto perfil y la creciente oposición social a medidas económicas clave.</span>
+</div>
+<div class="brief-panorama">
+<h4>PANORAMA ESTRATÉGICO</h4>
+<p>La agenda mediática del día se centra en una serie de movimientos dentro del aparato estatal, destacando la renuncia del Comandante Sokol y la designación de su reemplazo, junto con otros nombramientos en la DGAC y el Viceministerio de Telecomunicaciones. Paralelamente, se observa una intensificación de la controversia política, con la difusión de un audio que vincula a la Primera Dama con la destitución de Sokol, generando un foco de atención sobre la influencia en decisiones gubernamentales. En el ámbito económico-social, diversos sectores están articulando acciones de protesta contra el decreto del diésel, lo que sugiere un incremento de la tensión social. La esfera judicial continúa activa con avances en el caso Cerimedo, mientras que el TSE inicia su agenda para la reforma electoral. Estos elementos configuran un escenario de alta dinámica en la gestión pública y la interacción política.</p>
+</div>
+</div>
+<div class="brief-col-der">
+<div class="brief-tensiones">
+<h4>MAPA DE TENSIONES</h4>
+<ul><li><strong>Sectores Sociales y Políticos vs Gobierno (Presidente Paz):</strong> La agenda mediática destaca la creciente movilización y preparación de medidas de presión contra el decreto del diésel, desafiando la política económica gubernamental.</li><li><strong>Medios de Comunicación y Oposición vs Primera Dama/Gobierno:</strong> La difusión de un audio que implica a la Primera Dama en la destitución del Comandante Sokol genera un escrutinio sobre la influencia en decisiones gubernamentales.</li><li><strong>Sistema Judicial vs Implicados (Caso Cerimedo):</strong> El avance en el caso Cerimedo, con nuevas aprehensiones y traslados, mantiene el foco en la continuidad de procesos judiciales de alto perfil.</li></ul>
+</div>
+</div>
+</div></div><div>
+<div class="top3-stack">
+<div class="categoria-contenedor" style="border-top: 3px solid var(--c-03);">
+<h2 class="categoria-titulo" style="color: var(--c-03);">GOBIERNO</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_15" onclick="openModal('modal_15')">
+<div class="a-header">
+<div class="a-title">#1 - Sokol renuncia y Paz designa nuevo comandante</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 60 Titulares</span>
+<span class="kpi-chip">🏢 18 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Mirko Sokol renunció al cargo de comandante general de la Policía, dimisión aceptada por el presidente Rodrigo Paz tras nueve meses de gestión y en medio de cuestionamientos y pedidos de investigación. Su defensa atribuyó la salida a “ataques certeros” por su lucha contra la corrupción. Paz posesionó al coronel Adrián Javier Álvarez Arismendi como nuevo comandante y le instruyó hacer cumplir la ley con firmeza.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Presidente Rodrigo Paz y su gobierno controlan la narrativa y la agenda. Han ejecutado un cambio en el alto mando policial, reemplazando a Mirko Sokol por Adrián Álvarez, y el nuevo comandante ha alineado sus declaraciones con las directrices presidenciales, como la lucha contra el crimen organizado y la aplicación del estado de excepción. La oposición y algunos legisladores han cuestionado la salida de Sokol, pero no han logrado desviar el enfoque principal de la acción presidencial.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El factor más significativo para una escalada es la posible aplicación del "Estado de excepción" y las directrices del Presidente Paz al nuevo Alto Mando Policial de ser un "gobierno antibloqueos" y de "recuperar territorios donde la ley retroceda frente al delito". Esto, sumado a las menciones explícitas sobre la "aprehensión de Evo" y la lucha contra el crimen organizado, podría generar confrontaciones directas con grupos de oposición o movimientos sociales, así como posibles violaciones de derechos si las acciones policiales son percibidas como excesivas. Las acusaciones de corrupción en torno a la salida de Sokol y las demandas de investigación por parte de legisladores también podrían agravar la situación política interna.</p>
+</div>
+</div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b" data-bm-premium="1">
+<div class="tarjeta-nivel-b" id="card_13" onclick="openModal('modal_13')">
+<div class="b-title">#8 - Erick Vargas nuevo director de la DGAC</div>
+<div class="b-kpis">6 Tit. | 6 Med.</div>
+<div class="b-sumilla">Erick Vargas, excapitán de Lloyd y BoA, ha sido posesionado y asume el cargo de nuevo director ejecutivo de la Dirección General de Aeronáutica Civil (DGAC).</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_3" onclick="openModal('modal_3')">
+<div class="b-title">#10 - Cynthia Aramayo nueva Viceministra de Telecomunicaciones</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">Cynthia Aramayo es posesionada como la nueva Viceministra de Telecomunicaciones por el Ministro Zamora, asumiendo el cargo y destacando la priorización de la transparencia en su gestión.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-11);">
+<h2 class="categoria-titulo" style="color: var(--c-11);">HIDROCARBUROS</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_6b" onclick="openModal('modal_6b')">
+<div class="a-header">
+<div class="a-title">#2 - Sectores preparan medidas contra decreto del diésel</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 46 Titulares</span>
+<span class="kpi-chip">🏢 16 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El Gobierno y YPFB ratifican que el Decreto Supremo 5676 no será abrogado, aunque admiten posibles ajustes, mientras la CAO, productores y cívicos cruceños convocan a una Asamblea de la Cruceñidad para definir medidas. El presidente Rodrigo Paz defiende el retiro de subvenciones y advierte que la abrogación del decreto agravaría la escasez de diésel, en medio de amenazas de movilización.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La oposición, liderada por los cívicos de Santa Cruz y los sectores afectados (transporte, agropecuarios), está impulsando la agenda y tiene la ventaja narrativa al exponer la crisis del diésel y movilizar a la población. El Gobierno, aunque firme en no abrogar el decreto, está a la defensiva, reconociendo fallas en la distribución y proponiendo ajustes a largo plazo, lo que indica que está reaccionando a la presión social y sectorial.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La convocatoria y las decisiones de la Asamblea de la Cruceñidad, junto con las anunciadas movilizaciones del sector transporte (choferes), tienen el mayor potencial de amplificar el conflicto en las próximas 48 horas. La persistente escasez de diésel y sus impactos económicos (aumento de pasajes, reducción de producción agropecuaria) también agravarán la situación, especialmente si las medidas gubernamentales no son percibidas como soluciones inmediatas y efectivas. La región de Santa Cruz es el epicentro de esta escalada.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-05);">
+<h2 class="categoria-titulo" style="color: var(--c-05);">POLÍTICA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_4" onclick="openModal('modal_4')">
+<div class="a-header">
+<div class="a-title">#3 - Audio implica a Primera Dama en destitución Sokol</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 32 Titulares</span>
+<span class="kpi-chip">🏢 15 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El vicepresidente Edmand Lara presentó un supuesto audio que involucra a la Primera Dama (Urquidi) y Fernando Cerimedo en una presunta coordinación para la destitución de Sokol. El presidente Rodrigo Paz declaró no hacer caso a los audios y los remitió a la justicia.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Vicepresidente Edman Lara está impulsando la agenda al ser el principal actor que difunde y presenta los audios que implican a la Primera Dama y a Cerimedo en la destitución de Sokol. El Presidente Rodrigo Paz y Beller intentan desacreditar la veracidad de los audios o desviar la atención hacia la justicia, lo que coloca a la Presidencia a la defensiva. Lara tiene la ventaja al ser el generador constante de la noticia y las acusaciones.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La Fiscalía y los resultados del peritaje del audio son el factor más crítico que puede amplificar el tema. Si el peritaje confirma la autenticidad del audio, la situación escalará drásticamente para la Primera Dama y el Gobierno de Paz. La oposición política, liderada por la expresidenta Áñez y partidos como Súmate y Libre, también puede amplificar el tema exigiendo explicaciones y transparencia. Las declaraciones de Cerimedo desde la cárcel y la declaración de Sokol también podrían generar nuevas revelaciones.</p>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" id="card_14a" onclick="openModal('modal_14a')">
+<div class="a-header">
+<div class="a-title">#5 - Paz busca consensos para reformas estructurales</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 13 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El presidente Rodrigo Paz propone impulsar reformas parciales a la Constitución con respaldo de dos tercios en la Asamblea Legislativa y plantea abrir un debate sobre los cambios. Paralelamente, busca acercamientos con líderes opositores como Tuto Quiroga y Samuel Doria Medina para construir acuerdos e impulsar reformas y nuevas leyes.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Presidente Rodrigo Paz es el principal impulsor de la agenda, buscando activamente reformas constitucionales y nuevas leyes. Tiene la ventaja al dictar los términos del debate y la búsqueda de consensos, incluso con la oposición.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La Asamblea Legislativa Plurinacional (ALP) y su postura frente a las reformas constitucionales (especialmente el requisito de dos tercios) y la aprobación de leyes. La reacción de la oposición (Tuto Quiroga, Samuel Doria Medina) a las propuestas de diálogo. El debate sobre la subvención de carburantes es un factor de alto riesgo que podría generar descontento social y protestas.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-10);">
+<h2 class="categoria-titulo" style="color: var(--c-10);">JUSTICIA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_5" onclick="openModal('modal_5')">
+<div class="a-header">
+<div class="a-title">#4 - Caso Cerimedo suma aprehensiones y traslado a Chonchocoro</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 23 Titulares</span>
+<span class="kpi-chip">🏢 12 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Policía prepara el traslado de Fernando Cerimedo de Palmasola a Chonchocoro, mientras su defensa advierte riesgos por su estado de salud y el abogado de Nadia Beller exige cumplir la orden. Paralelamente, se ordenaron nuevas aprehensiones de exfuncionarios y presuntos sicarios, mientras videos y declaraciones aportan detalles sobre el atentado contra Beller.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Nadia Beller, respaldada por la Policía y el sistema judicial, impulsa la agenda y tiene la ventaja. Están logrando el traslado de Cerimedo a Chonchocoro y expandiendo la investigación sobre el ataque en su contra, con nuevas aprehensiones y confesiones. La defensa de Cerimedo está a la defensiva, intentando evitar el traslado por motivos de salud. La solicitud del oficialismo de investigar a Beller introduce una contramarrativa, pero no altera el impulso principal del caso.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El factor más inmediato y significativo para la escalada en las próximas 48 horas es el inminente traslado de Fernando Cerimedo a la cárcel de Chonchocoro. Cualquier incidente durante el traslado, un deterioro de su salud, o nuevas revelaciones de los presuntos implicados en el ataque a Beller podrían amplificar la situación. La dimensión política introducida por el 'oficialismo' al pedir la investigación de Beller también podría escalar el caso más allá de lo criminal, generando confrontación política.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-07);">
+<h2 class="categoria-titulo" style="color: var(--c-07);">VIOLENCIA Y SEGURIDAD</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_8b" onclick="openModal('modal_8b')">
+<div class="b-title">#6 - Policía investiga múltiples acribillamientos en Santa Cruz</div>
+<div class="b-kpis">8 Tit. | 7 Med.</div>
+<div class="b-sumilla">La Policía investiga múltiples acribillamientos y asesinatos a tiros de hombres en San Ignacio de Velasco.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-01);">
+<h2 class="categoria-titulo" style="color: var(--c-01);">ELECCIONES</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_2" onclick="openModal('modal_2')">
+<div class="b-title">#7 - TSE inicia agenda para reforma electoral</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">El Tribunal Supremo Electoral (TSE) y los Tribunales Departamentales Electorales (TDE) inician la agenda nacional para la reforma electoral en Cochabamba el 2 de septiembre. Adicionalmente estiman un gasto de Bs 200 millones para un posible referéndum de reforma parcial de la Constitución Política del Estado.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-15);">
+<h2 class="categoria-titulo" style="color: var(--c-15);">MEDIO AMBIENTE</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_6a" onclick="openModal('modal_6a')">
+<div class="b-title">#9 - Múltiples incendios forestales azotan el país</div>
+<div class="b-kpis">6 Tit. | 4 Med.</div>
+<div class="b-sumilla">Se reportan y combaten múltiples incendios forestales en distintas regiones del país, incluyendo el Parque Tunari en Cochabamba, donde un incendio lleva 12 horas activo, y en San Rafael y San Ignacio de Velasco, Santa Cruz, donde los focos fueron controlados.</div>
+</div>
+<div class="tarjeta-nivel-b" id="card_1" onclick="openModal('modal_1')">
+<div class="b-title">#12 - Denuncian minería ilegal y avasallamiento de tierras</div>
+<div class="b-kpis">4 Tit. | 3 Med.</div>
+<div class="b-sumilla">Comunidades y organizaciones denuncian la minería ilegal y proyectos mineros por avasallamiento e incumplimiento de consulta previa, mientras que un informe de la Fundación Solón revela más de 12.500 trámites mineros sin autorización de explotación en el país.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-04);">
+<h2 class="categoria-titulo" style="color: var(--c-04);">NARCOTRÁFICO</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_8a" onclick="openModal('modal_8a')">
+<div class="b-title">#11 - Acribillan a hombre con antecedentes narcotráfico</div>
+<div class="b-kpis">4 Tit. | 4 Med.</div>
+<div class="b-sumilla">Un hombre con antecedentes por narcotráfico fue acribillado en Entre Ríos, Cochabamba. Los sicarios sustrajeron las grabaciones de las cámaras de seguridad del negocio.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-25);">
+<h2 class="categoria-titulo" style="color: var(--c-25);">SOCIEDAD</h2>
+<div class="categoria-body">
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de SOCIEDAD</summary>
+<ul>
+<li id="card_9a" onclick="openModal('modal_9a')">
+<strong>Lionel Messi anuncia retiro de selección argentina</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-02);">
+<h2 class="categoria-titulo" style="color: var(--c-02);">ECONOMÍA</h2>
+<div class="categoria-body">
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de ECONOMÍA</summary>
+<ul>
+<li id="card_9b" onclick="openModal('modal_9b')">
+<strong>Exportaciones de galletas bolivianas superan 2.3 millones</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div></div>
+</div></div><div class="col-sidebar"><div class="sidebar-toggle-row"><button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button></div><div class="concentracion-card">
+<h3 class="sidebar-title">CONCENTRACIÓN DE LA AGENDA</h3>
+<div class="donut-wrap">
+<svg aria-label="Concentración de la agenda: Top 5 temas vs. resto" class="donut-svg" role="img" viewbox="0 0 100 100">
+<circle class="donut-arc" cx="50" cy="50" data-label="Sokol renuncia y Paz designa nuevo comandante" data-pct="27.0" data-val="60" fill="transparent" onclick="scrollToCard('card_15')" r="40" stroke="var(--c-03)" stroke-dasharray="67.926 183.401" stroke-dashoffset="-0.000" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 76.4, 80.0)" x="76.4" y="80.0">
+                27%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Sectores preparan medidas contra decreto del diésel" data-pct="20.7" data-val="46" fill="transparent" onclick="scrollToCard('card_6b')" r="40" stroke="var(--c-11)" stroke-dasharray="52.077 199.251" stroke-dashoffset="-67.926" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 21.9, 78.5)" x="21.9" y="78.5">
+                21%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Audio implica a Primera Dama en destitución Sokol" data-pct="14.4" data-val="32" fill="transparent" onclick="scrollToCard('card_4')" r="40" stroke="var(--c-05)" stroke-dasharray="36.227 215.100" stroke-dashoffset="-120.003" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 11.9, 37.7)" x="11.9" y="37.7">
+                14%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Caso Cerimedo suma aprehensiones y traslado a Chonchocoro" data-pct="10.4" data-val="23" fill="transparent" onclick="scrollToCard('card_5')" r="40" stroke="var(--c-10)" stroke-dasharray="26.038 225.289" stroke-dashoffset="-156.231" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 31.5, 14.5)" x="31.5" y="14.5">
+                10%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Paz busca consensos para reformas estructurales" data-pct="6.8" data-val="15" fill="transparent" onclick="scrollToCard('card_14a')" r="40" stroke="var(--c-05)" stroke-dasharray="16.982 234.346" stroke-dashoffset="-182.269" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 52.3, 10.1)" x="52.3" y="10.1">
+                7%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Resto" data-pct="20.7" data-val="46" fill="transparent" r="40" stroke="var(--bg-subtle)" stroke-dasharray="52.077 199.251" stroke-dashoffset="-199.251" stroke-width="16" style="">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 81.8, 25.8)" x="81.8" y="25.8">
+                21%
+              </text>
+</svg>
+</div>
+<ul class="concentracion-legend donut-legend">
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_15')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-03)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Sokol renuncia y Paz designa nuevo comandante</strong> (60 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_6b')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-11)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Sectores preparan medidas contra decreto del diésel</strong> (46 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_4')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-05)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Audio implica a Primera Dama en destitución Sokol</strong> (32 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_5')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Caso Cerimedo suma aprehensiones y traslado a Chonchocoro</strong> (23 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_14a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-05)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Paz busca consensos para reformas estructurales</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item" style="">
+<span class="dot" style="background:var(--bg-subtle)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Resto</strong> (46 titulares)</span>
+</li>
+</ul>
+</div><div class="cat-bar-card" data-bm-premium="1">
+<div class="section-label">Cobertura por categoría</div>
+<div class="cat-bars">
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-03)"></div></div>
+<div class="cat-n">71</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_15'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">1.</span> Sokol renuncia y Paz designa nuevo comandante</li><li onclick="scrollToCard('card_13'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">8.</span> Erick Vargas nuevo director de la DGAC</li><li onclick="scrollToCard('card_3'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">10.</span> Cynthia Aramayo nueva Viceministra de Telecomunicaciones</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:66%;background:var(--c-05)"></div></div>
+<div class="cat-n">47</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">3.</span> Audio implica a Primera Dama en destitución Sokol</li><li onclick="scrollToCard('card_14a'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">5.</span> Paz busca consensos para reformas estructurales</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_HIDROCARBUROS')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-11)"></div>
+<div class="cat-name">HIDROCARBUROS</div>
+<div class="cat-track"><div class="cat-fill" style="width:65%;background:var(--c-11)"></div></div>
+<div class="cat-n">46</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_HIDROCARBUROS"><li onclick="scrollToCard('card_6b'); event.stopPropagation();"><span style="color:var(--c-11); font-weight:700;">2.</span> Sectores preparan medidas contra decreto del diésel</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:32%;background:var(--c-10)"></div></div>
+<div class="cat-n">23</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">4.</span> Caso Cerimedo suma aprehensiones y traslado a Chonchocoro</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MEDIO_AMBIENTE')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-15)"></div>
+<div class="cat-name">MEDIO AMBIENTE</div>
+<div class="cat-track"><div class="cat-fill" style="width:14%;background:var(--c-15)"></div></div>
+<div class="cat-n">10</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MEDIO_AMBIENTE"><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">9.</span> Múltiples incendios forestales azotan el país</li><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-15); font-weight:700;">12.</span> Denuncian minería ilegal y avasallamiento de tierras</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-07)"></div></div>
+<div class="cat-n">8</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_8b'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">6.</span> Policía investiga múltiples acribillamientos en Santa Cruz</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ELECCIONES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-01)"></div>
+<div class="cat-name">ELECCIONES</div>
+<div class="cat-track"><div class="cat-fill" style="width:10%;background:var(--c-01)"></div></div>
+<div class="cat-n">7</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ELECCIONES"><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-01); font-weight:700;">7.</span> TSE inicia agenda para reforma electoral</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTR_FICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:6%;background:var(--c-04)"></div></div>
+<div class="cat-n">4</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTR_FICO"><li onclick="scrollToCard('card_8a'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">11.</span> Acribillan a hombre con antecedentes narcotráfico</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_SOCIEDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-25)"></div>
+<div class="cat-name">SOCIEDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-25)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_SOCIEDAD"><li onclick="scrollToCard('card_9a'); event.stopPropagation();"><span style="color:var(--c-25); font-weight:700;">13.</span> Lionel Messi anuncia retiro de selección argentina</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_ECONOM_A')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-02)"></div>
+<div class="cat-name">ECONOMÍA</div>
+<div class="cat-track"><div class="cat-fill" style="width:4%;background:var(--c-02)"></div></div>
+<div class="cat-n">3</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_ECONOM_A"><li onclick="scrollToCard('card_9b'); event.stopPropagation();"><span style="color:var(--c-02); font-weight:700;">14.</span> Exportaciones de galletas bolivianas superan 2.3 millones</li></ul>
+</div></div><div class="coverage-card" data-bm-premium="1">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area">
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_15')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">1.</span>
+            Sokol renuncia y Paz designa nuevo comandante
+            <span class="chart-medios">18 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">60</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-11); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">2.</span>
+            Sectores preparan medidas contra decreto del diésel
+            <span class="chart-medios">16 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:76.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-11))">46</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">3.</span>
+            Audio implica a Primera Dama en destitución Sokol
+            <span class="chart-medios">15 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:53.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">32</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">4.</span>
+            Caso Cerimedo suma aprehensiones y traslado a Chonchocoro
+            <span class="chart-medios">12 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:38.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">23</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_14a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">5.</span>
+            Paz busca consensos para reformas estructurales
+            <span class="chart-medios">13 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:25.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">6.</span>
+            Policía investiga múltiples acribillamientos en Santa Cruz
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:13.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">8</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-01); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">7.</span>
+            TSE inicia agenda para reforma electoral
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-01))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_13')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">8.</span>
+            Erick Vargas nuevo director de la DGAC
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">9.</span>
+            Múltiples incendios forestales azotan el país
+            <span class="chart-medios">4 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:10.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">6</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_3')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">10.</span>
+            Cynthia Aramayo nueva Viceministra de Telecomunicaciones
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:8.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-15); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">11.</span>
+            Denuncian minería ilegal y avasallamiento de tierras
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-15))">4</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">12.</span>
+            Acribillan a hombre con antecedentes narcotráfico
+            <span class="chart-medios">4 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">4</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_9a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-25); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">13.</span>
+            Lionel Messi anuncia retiro de selección argentina
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-25))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_9b')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-02); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">14.</span>
+            Exportaciones de galletas bolivianas superan 2.3 millones
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:5.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-02))">3</div>
+</div>
+</div></div><div class="page">
+<!-- ── COVERAGE CHART ── -->
+<!-- ── TOPICS GRID ── -->
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/economia/dolar-roza-pico-maximo-alcanzado-julio-pasado_1788224598" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">El dólar roza el pico máximo alcanzado en julio pasado</a></div>
+<div class="emergente-reason">La cotización del dólar rozando un nuevo pico es un indicador clave de la inestabilidad económica nacional y afecta directamente el poder adquisitivo.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.leo.bo/2026/08/31/el-evismo-convoca-a-marcha-en-cochabamba-contra-el-dieselazo/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">El evismo convoca a marcha en Cochabamba contra el “dieselazo”</a></div>
+<div class="emergente-reason">La convocatoria a una marcha por el 'dieselazo' representa una escalada en la conflictividad social sobre un tema económico vital, con potencial de mayores protestas.</div>
+<div class="emergente-source">Fuente: LEO (Bolivia)</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/econom%C3%ADa/las-21-plantas-productivas-de-chuquisaca-siguen-paralizadas-pese-una-inversi%C3%B3n-de-bs-820" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Las 21 plantas productivas de Chuquisaca siguen paralizadas pese a una inversión de Bs 820 millones</a></div>
+<div class="emergente-reason">La persistente inoperatividad de 21 plantas productivas en Chuquisaca, pese a una inversión millonaria, es un escándalo de mala gestión y despilfarro de fondos públicos que pasa desapercibido.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://larazon.bo/economia-y-empresa/2026/08/31/japon-y-bolivia-amplian-perspectivas-de-cooperacion-en-litio-y-tierras-raras/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Japón y Bolivia amplían perspectivas de cooperación en litio y tierras raras</a></div>
+<div class="emergente-reason">La cooperación con Japón en litio y tierras raras es un movimiento estratégico crucial para el desarrollo futuro de Bolivia, con implicaciones a largo plazo para la economía nacional.</div>
+<div class="emergente-source">Fuente: La Razón</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://erbol.com.bo/gente/unitas-y-cedib-alertan-que-el-ds-5673-profundiza-el-control-estatal-sobre-las-ong" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">UNITAS y CEDIB alertan que el DS 5673 profundiza el control estatal sobre las ONG</a></div>
+<div class="emergente-reason">La alerta sobre el control estatal a las ONG a través de un nuevo decreto es una grave preocupación para la libertad de asociación, la democracia y los derechos humanos en el país.</div>
+<div class="emergente-source">Fuente: erbol</div>
+</div></div>
+</div><div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">policía</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">41</td>
+</tr>
+<tr>
+<td class="freq-word">cerimedo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:93%"></div>
+</div>
+</td>
+<td class="freq-count">37</td>
+</tr>
+<tr>
+<td class="freq-word">beller</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:67%"></div>
+</div>
+</td>
+<td class="freq-count">23</td>
+</tr>
+<tr>
+<td class="freq-word">comandante general</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:49%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">mirko sokol</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:40%"></div>
+</div>
+</td>
+<td class="freq-count">11</td>
+</tr>
+<tr>
+<td class="freq-word">san ignacio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">alto mando policial</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:35%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">lara presenta audio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">santa cruz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr>
+<tr>
+<td class="freq-word">supuesto audio</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">6</td>
+</tr></tbody>
+</table>
+</div></div></div>
+<!-- ════════════ PAGE ════════════ -->
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20260901 · 2026-09-01</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 222 titulares · 14 temas · 10 categorías · 21 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_15">
+<div class="modal-backdrop" onclick="closeModal('modal_15')"></div>
+<div aria-label="Sokol renuncia y Paz designa nuevo comandante" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Sokol renuncia y Paz designa nuevo comandante</div>
+<div class="modal-sum">Mirko Sokol renunció al cargo de comandante general de la Policía, dimisión aceptada por el presidente Rodrigo Paz tras nueve meses de gestión y en medio de cuestionamientos y pedidos de investigación. Su defensa atribuyó la salida a “ataques certeros” por su lucha contra la corrupción. Paz posesionó al coronel Adrián Javier Álvarez Arismendi como nuevo comandante y le instruyó hacer cumplir la ley con firmeza.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">60</strong> titulares</span>
+<span><strong style="color:var(--c-03)">18</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_15')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/paz-cambia-el-alto-mando-policial-y-ordena-recuperar-territorios-donde-la-ley-retroceda-frente-al-delito-65753" rel="noopener noreferrer" target="_blank">Paz cambia el alto mando policial y ordena recuperar territorios donde “la ley retroceda frente al delito”</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260831_rodrigo-paz-posesiona-al-nuevo-alto-mando-interino-de-la-policia-boliviana.html" rel="noopener noreferrer" target="_blank">Rodrigo Paz posesiona al nuevo Alto Mando interino de la Policía Boliviana</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/paz-al-nuevo-alto-mando-policial-somos-un-gobierno-antibloqueos/" rel="noopener noreferrer" target="_blank">Paz al nuevo Alto Mando Policial: ‘Somos un gobierno antibloqueos’</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/presidente-posesiona-al-nuevo-alto-mando-policial" rel="noopener noreferrer" target="_blank">El presidente posesiona al nuevo Alto Mando policial</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/posesionan-a-nuevas-autoridades-del-alto-mando-policial-2026831174120" rel="noopener noreferrer" target="_blank">Posesionan a nuevas autoridades del Alto Mando Policial</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/este-es-el-nuevo-alto-mando-policial-posesionado-por-paz-tras-la-salida-de-sokol-FI23181015" rel="noopener noreferrer" target="_blank">Este es el nuevo Alto Mando Policial posesionado por Paz tras la salida de Sokol</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65420-paz-posesiona-al-alto-mando-policial-y-exige-frenar-territorios-donde-la-ley-retroceda-ante-el-delito" rel="noopener noreferrer" target="_blank">Paz posesiona al Alto Mando Policial y exige frenar territorios donde la ley retroceda ante el delito</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-gobierno-confirma-renuncia-comandante-general-policia_1788185075" rel="noopener noreferrer" target="_blank">Ministro de Gobierno confirma la renuncia del comandante general de la Policía Mirko Sokol</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_cambiaran-a-mirko-sokol-comandante-general-de-la-policia.html" rel="noopener noreferrer" target="_blank">¿Cambiarán a Mirko Sokol, comandante General de la Policía?</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/oviedo-confirma-renuncia-de-sokol-como-comandante-general-de-la-policia-65730" rel="noopener noreferrer" target="_blank">Oviedo confirma renuncia de Sokol como comandante general de la Policía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/alto-mando-policial-se-reune-sin-la-presencia-de-mirko-sokol.html" rel="noopener noreferrer" target="_blank">Alto Mando Policial se reúne sin la presencia de Mirko Sokol</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/mirko-sokol-renuncio-al-cargo-de-comandante-general-de-la-policia.html" rel="noopener noreferrer" target="_blank">Mirko Sokol renunció al cargo de Comandante General de la Policía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/reportan-la-salida-de-mirko-sokol-del-comando-general-de-la-policia.html" rel="noopener noreferrer" target="_blank">Reportan la salida de Mirko Sokol del Comando General de la Policía</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/mirko-sokol-deja-cargo-comandante-general-policia_1788180460" rel="noopener noreferrer" target="_blank">Mirko Sokol deja el cargo de comandante general de la Policía</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/pais/mirko-sokol-renuncia-a-la-comandancia-general-de-la-policia.html" rel="noopener noreferrer" target="_blank">Mirko Sokol renuncia a la Comandancia General de la Policía</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/sokol-deja-el-cargo-de-comandante-de-la-polic%C3%ADa-gobierno-confirma-que-present%C3%B3-renuncia" rel="noopener noreferrer" target="_blank">Sokol deja el cargo de Comandante de la Policía; Gobierno confirma que presentó renuncia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/velasco-cuestiona-salida-de-sokol-y-reclama-independencia-institucional/" rel="noopener noreferrer" target="_blank">Velasco cuestiona salida de Sokol y reclama independencia institucional</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/mirko-sokol-ha-dejado-el-cargo-confirma-el-ministro-de-gobierno/" rel="noopener noreferrer" target="_blank">Ministro Oviedo confirma renuncia de Sokol: ya no es comandante de la Policía</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/cambios-en-el-alto-mando-policial-surgen-versiones-de-la-renuncia-de-sokol/" rel="noopener noreferrer" target="_blank">¿Cambios en el Alto Mando Policial? Surgen versiones de la renuncia de Sokol</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/ministro-oviedo-confirma-renuncia-sokol-anuncia-posesion-nuevo-comandante" rel="noopener noreferrer" target="_blank">Ministro Oviedo confirma la renuncia de Sokol y anuncia posesión de nuevo comandante de la Policía para el mediodía</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/sokol-habria-renunciado-al-cargo-de-comandante-de-la-policia-no-participo-de-acto-oficial-este-lunes/" rel="noopener noreferrer" target="_blank">Sokol habría renunciado al cargo de Comandante de la Policía; no participó de acto oficial este lunes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ministro-de-gobierno-confirma-la-renuncia-de-sokol-y-dice-que-fue-aceptada-por-el-presidente/" rel="noopener noreferrer" target="_blank">Ministro de Gobierno confirma la renuncia de Sokol y dice que fue aceptada por el Presidente</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/altos-mandos-policiales-se-reunen-con-una-delegacion-chilena-sin-la-presencia-de-sokol" rel="noopener noreferrer" target="_blank">Altos Mandos Policiales se reúnen con una delegación chilena sin la presencia de Sokol</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-confirma-renuncia-de-sokol-dijo-que-cumplio-un-ciclo-respetamos-la-decision" rel="noopener noreferrer" target="_blank">Gobierno confirma renuncia de Sokol: “Dijo que cumplió un ciclo, respetamos la decisión”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65312-mirko-sokol-renuncia-al-mando-de-la-policia-a-9-meses-de-haber-asumido-el-cargo-y-en-medio-de-un-proceso" rel="noopener noreferrer" target="_blank">Mirko Sokol renuncia al mando de la Policía a 9 meses de haber asumido el cargo y en medio de un proceso</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65333-ministro-oviedo-confirma-la-renuncia-de-sokol-y-anuncia-que-paz-designara-al-nuevo-comandante-de-la-policia" rel="noopener noreferrer" target="_blank">Ministro Oviedo confirma la renuncia de Sokol y anuncia que Paz designará al nuevo comandante de la Policía</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/legisladores-especulan-las-verdaderas-razones-de-la-renuncia-de-sokol-como-comandante-de-la-policia" rel="noopener noreferrer" target="_blank">Legisladores especulan las verdaderas razones de la renuncia de Sokol como comandante de la Policía</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/pudo-mas-la-corrupcion-gobernador-de-chuquisaca-lamenta-renuncia-de-sokol.html" rel="noopener noreferrer" target="_blank">“Pudo más la corrupción”: Gobernador de Chuquisaca lamenta renuncia de Sokol</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/abogado-afirma-sokol-era-piedra-zapato/" rel="noopener noreferrer" target="_blank">Abogado afirma que Sokol era una “piedra en el zapato” para corruptos</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/legisladores-piden-sokol-sea-investigado-renuncia/" rel="noopener noreferrer" target="_blank">Legisladores piden que Sokol sea investigado tras su renuncia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/diputados-ven-pesima-gestion-de-sokol-y-piden-reestructurar-la-policia/" rel="noopener noreferrer" target="_blank">Diputados ven ‘pésima’ gestión de Sokol y piden reestructurar la Policía</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/su-renuncia-dara-pie-a-la-investigacion-dimision-de-sokol-genera-cuestionamientos-en-el-legislativo-LH23176739" rel="noopener noreferrer" target="_blank">“Su renuncia dará pie a la investigación”: Dimisión de Sokol genera cuestionamientos en el Legislativo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/abogado-mirko-sokol-renuncio-por-ataques-debido-a-su-lucha-contra-la-corrupcion-en-la-policia-GH23175740" rel="noopener noreferrer" target="_blank">Abogado: Mirko Sokol renunció por “ataques” debido a su “lucha contra la corrupción” en la Policía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/sokol-renuncio-tras-ataques-certeros-por-su-lucha-contra-la-corrupcion-dice-su-defensa" rel="noopener noreferrer" target="_blank">Sokol renunció tras “ataques certeros” por su lucha contra la corrupción, dice su defensa</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_nuevo-comandante-anuncia-lucha-frontal-al-crimen-organizado.html" rel="noopener noreferrer" target="_blank">Nuevo comandante anuncia lucha frontal al crimen organizado</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/coronel-adrian-alvarez-jura-como-nuevo-comandante-de-la-policia" rel="noopener noreferrer" target="_blank">Coronel Adrián Álvarez jura como nuevo comandante de la Policía</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/adrian-alvarez-asume-la-conduccion-de-la-policia-tras-la-renuncia-de-mirko-sokol-65752" rel="noopener noreferrer" target="_blank">Adrián Álvarez asume como comandante de la Policía tras la renuncia de Mirko Sokol</a></span></li>
+<li><span class="m-src">DTV</span><span class="m-sep">·</span><span class="m-tit"><a href="https://dtv.bo/libre-pide-al-nuevo-comandante-policial-hacer-cumplir-la-ley-y-ejecutar-aprehension-de-evo/" rel="noopener noreferrer" target="_blank">Libre pide al nuevo comandante policial: “hacer cumplir la ley” y ejecutar “APREHENSIÓN de Evo”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/designan-coronel-adrian-javier-alvarez-arismendi-nuevo-comandante-general-policia-boliviana_1788194294" rel="noopener noreferrer" target="_blank">Designan al coronel Adrián Javier Álvarez Arismendi como nuevo comandante general de la Policía Boliviana</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/pais/paz-posesiona-a-adrian-javier-alvarez-como-nuevo-comandante-de-la-policia-en-lugar-de-mirko-sokol.html" rel="noopener noreferrer" target="_blank">Paz posesiona a Adrián Javier Álvarez como nuevo comandante de la Policía en lugar de Mirko Sokol</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260831_que-dijo-el-nuevo-comandante-general-tras-su-posesion.html" rel="noopener noreferrer" target="_blank">¿Qué dijo el nuevo Comandante General tras su posesión?</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/bilbao-califica-de-error-la-postura-de-sokol-sobre-evo-y-espera-que-nuevo-comandante" rel="noopener noreferrer" target="_blank">Bilbao califica de error la postura de Sokol sobre Evo y espera que nuevo comandante ejecute aprehensiones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/nuevo-comandante-asegura-que-har%C3%A1-cumplir-el-estado-de-excepci%C3%B3n-y-pide-informe-sobre-caso" rel="noopener noreferrer" target="_blank">Nuevo comandante asegura que hará cumplir el estado de excepción y pide informe sobre caso Evo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/adri%C3%A1n-%C3%A1lvarez-reemplaza-sokol-y-asume-como-comandante-de-la-polic%C3%ADa" rel="noopener noreferrer" target="_blank">Adrián Álvarez reemplaza a Sokol y asume como comandante de la Policía</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/adrian-alvarez-jura-como-nuevo-comandante-general-policia/" rel="noopener noreferrer" target="_blank">Posesionan al coronel Adrián Álvarez como nuevo Comandante General de la Policía</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/alvarez-anuncia-que-la-policia-hara-cumplir-el-estado-de-excepcion/" rel="noopener noreferrer" target="_blank">Álvarez anuncia que la Policía hará cumplir el Estado de excepción</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/paz-posesiona-a-alejandro-basto-como-nuevo-comandante-general-de-la-policia/" rel="noopener noreferrer" target="_blank">Paz posesiona a Javier Álvarez como nuevo comandante general de la Policía</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/policia-boliviana-tendra-nuevo-comandante-general-proximas-horas" rel="noopener noreferrer" target="_blank">La Policía Boliviana tendrá nuevo Comandante General en las próximas horas</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/alvarez-asume-mando-policia-paz-pide-hacer-cumplir-ley-firmeza/20260831180854995515.html" rel="noopener noreferrer" target="_blank">Álvarez asume el mando de la Policía y Paz pide hacer cumplir la ley con firmeza</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-designa-al-coronel-adrian-alvarez-arismendi-como-el-nuevo-comandante-general-de-la-policia/" rel="noopener noreferrer" target="_blank">Paz designa al coronel Adrián Álvarez Arismendi como el nuevo Comandante General de la Policía</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/nuevo-comandante-de-la-policia-afirma-hara-cumplir-el-estado-de-excepcion-y-promete-lucha-contra-el-crimen-organizado/" rel="noopener noreferrer" target="_blank">Nuevo Comandante de la Policía afirma hará cumplir el Estado de Excepción y promete lucha contra el crimen organizado</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/posesionan-a-adrian-alvarez-como-nuevo-comandante-de-la-policia-2026831111035" rel="noopener noreferrer" target="_blank">Posesionan a Adrián Álvarez como nuevo comandante de la Policía</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/quien-es-adrian-javier-alvarez-arismendi-nuevo-comandante-de-la-policia-boliviana-202683117460" rel="noopener noreferrer" target="_blank">¿Quién es Adrián Javier Álvarez Arismendi, nuevo comandante de la Policía Boliviana?</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/nuevo-comandante-de-la-policia-anuncia-el-fin-del-modelo-de-policia-comunitario-202683117541" rel="noopener noreferrer" target="_blank">Nuevo comandante de la Policía anuncia el fin del modelo de policía comunitario</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/vamos-a-enfocar-nuestros-esfuerzos-en-la-lucha-contra-el-crimen-organizado-dice-alvarez-tras-ser-posesionado-DI23180663" rel="noopener noreferrer" target="_blank">“Vamos a enfocar nuestros esfuerzos en la lucha contra el crimen organizado”, dice Álvarez tras ser posesionado</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/quien-es-adrian-javier-alvarez-arismendi-el-nuevo-comandante-general-de-la-policia-OH23179698" rel="noopener noreferrer" target="_blank">¿Quién es Adrián Javier Álvarez Arismendi, el nuevo comandante general de la Policía?</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/adrian-javier-alvarez-es-posesionado-como-nuevo-comandante-general-de-la-policia-boliviana-HH23177761" rel="noopener noreferrer" target="_blank">Adrián Javier Álvarez es posesionado como nuevo comandante general de la Policía Boliviana</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/javier-alvarez-es-posesionado-como-comandante-general-de-la-policia" rel="noopener noreferrer" target="_blank">Javier Álvarez es posesionado como comandante General de la Policía</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-nuevo-comandante-policial-promete-lucha-frontal-contra-cuatro-males" rel="noopener noreferrer" target="_blank">El nuevo comandante policial promete lucha frontal contra cuatro males</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65402-adrian-javier-lvarez-asume-como-comandante-general-interino-de-la-policia-boliviana" rel="noopener noreferrer" target="_blank">Adrián Javier Álvarez asume como comandante general interino de la Policía Boliviana</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_13">
+<div class="modal-backdrop" onclick="closeModal('modal_13')"></div>
+<div aria-label="Erick Vargas nuevo director de la DGAC" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Erick Vargas nuevo director de la DGAC</div>
+<div class="modal-sum">Erick Vargas, excapitán de Lloyd y BoA, ha sido posesionado y asume el cargo de nuevo director ejecutivo de la Dirección General de Aeronáutica Civil (DGAC).</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">6</strong> titulares</span>
+<span><strong style="color:var(--c-03)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_13')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_erick-vargas-excapitan-de-lloyd-y-boa-asume-la-direccion-de-la-dgac.html" rel="noopener noreferrer" target="_blank">Erick Vargas, excapitán de Lloyd y BoA, asume la dirección de la DGAC</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/erick-vargas-campero-asume-nuevo-director-ejecutivo-dgac-cual-trayectoria_1788200850" rel="noopener noreferrer" target="_blank">Erick Vargas Campero asume como nuevo director ejecutivo de la DGAC: ¿Cuál es su trayectoria?</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/economia/posesionan-a-eduardo-vargas-como-nuevo-director-de-la-dgac.html" rel="noopener noreferrer" target="_blank">Posesionan a Eduardo Vargas como nuevo director de la DGAC</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/posesionan-erick-vargas-como-nuevo-director-dgac/" rel="noopener noreferrer" target="_blank">Posesionan a Erick Vargas como nuevo director de la DGAC</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/erick-vargas-asume-como-nuevo-director-ejecutivo-de-la-dgac" rel="noopener noreferrer" target="_blank">Erick Vargas asume como nuevo director ejecutivo de la DGAC</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-excapitan-de-lloyd-y-boa-erick-vargas-jura-como-nuevo-director-de-la-dgac-GH23171722" rel="noopener noreferrer" target="_blank">El excapitán de Lloyd y BoA, Erick Vargas, jura como nuevo director de la DGAC</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3">
+<div class="modal-backdrop" onclick="closeModal('modal_3')"></div>
+<div aria-label="Cynthia Aramayo nueva Viceministra de Telecomunicaciones" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Cynthia Aramayo nueva Viceministra de Telecomunicaciones</div>
+<div class="modal-sum">Cynthia Aramayo es posesionada como la nueva Viceministra de Telecomunicaciones por el Ministro Zamora, asumiendo el cargo y destacando la priorización de la transparencia en su gestión.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">5</strong> titulares</span>
+<span><strong style="color:var(--c-03)">5</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/cynthia-aramayo-nueva-viceministra-telecomunicaciones-reto-impresionante_1788201454" rel="noopener noreferrer" target="_blank">Cynthia Aramayo, nueva viceministra de Telecomunicaciones: "Es un reto impresionante"</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/econom%C3%ADa/zamora-posesiona-nueva-viceministra-de-telecomunicaciones-y-director-de-la-dgac" rel="noopener noreferrer" target="_blank">Zamora posesiona a nueva viceministra de Telecomunicaciones y director de la DGAC</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/cynthia-aramayo-asume-viceministerio-telecomunicaciones/" rel="noopener noreferrer" target="_blank">Cynthia Aramayo asume el Viceministerio de Telecomunicaciones</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20260831/nueva-viceministra-telecomunicaciones-priorizara-transparencia" rel="noopener noreferrer" target="_blank">Nueva viceministra de Telecomunicaciones priorizará transparencia</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/cynthia-aramayo-es-la-nueva-viceministra-de-telecomunicaciones-CH23172617" rel="noopener noreferrer" target="_blank">Cynthia Aramayo es la nueva viceministra de Telecomunicaciones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6b">
+<div class="modal-backdrop" onclick="closeModal('modal_6b')"></div>
+<div aria-label="Sectores preparan medidas contra decreto del diésel" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-11)">HIDROCARBUROS</div>
+<div class="modal-title">Sectores preparan medidas contra decreto del diésel</div>
+<div class="modal-sum">El Gobierno y YPFB ratifican que el Decreto Supremo 5676 no será abrogado, aunque admiten posibles ajustes, mientras la CAO, productores y cívicos cruceños convocan a una Asamblea de la Cruceñidad para definir medidas. El presidente Rodrigo Paz defiende el retiro de subvenciones y advierte que la abrogación del decreto agravaría la escasez de diésel, en medio de amenazas de movilización.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-11)">46</strong> titulares</span>
+<span><strong style="color:var(--c-11)">16</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/paz-reitera-defensa-de-ds-sobre-diesel-y-pide-a-santa-cruz-pensar-en-el-pais-65738" rel="noopener noreferrer" target="_blank">Paz reitera defensa de DS sobre diésel y pide a Santa Cruz pensar en el país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-asegura-hay-17-millones-litros-diesel-santa-cruz-reconoce-fallas-distribucion_1788196574" rel="noopener noreferrer" target="_blank">YPFB asegura que hay 17 millones de litros de diésel en Santa Cruz, pero reconoce fallas en distribución</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/comite-pro-santa-cruz-evaluara-convocar-a-asamblea-de-la-crucenidad-por-crisis-del-diesel-202683181712" rel="noopener noreferrer" target="_blank">Comité Pro Santa Cruz evaluará convocar a Asamblea de la Cruceñidad por crisis del diésel</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65372-el-conflicto-por-el-diesel-escala-a-nivel-regional-en-santa-cruz-y-convocan-a-la-asamblea-de-la-crucenidad" rel="noopener noreferrer" target="_blank">El conflicto por el diésel escala a nivel regional en Santa Cruz y convocan a la Asamblea de la Cruceñidad</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/08/31/aramayo-descarta-abrogar-el-ds-5676-y-plantea-abrir-la-importacion-de-combustibles-para-frenar-contrabando-65756" rel="noopener noreferrer" target="_blank">Aramayo descarta abrogar el DS 5676 y plantea abrir la importación de combustibles para frenar contrabando</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-defensa-productores-si-abroga-ds-5676-van-quedar-diesel-porque-no-habra-dinero-suficiente-comprar_1788179705" rel="noopener noreferrer" target="_blank">Ministro de Defensa a productores: “Si se abroga el DS 5676, se van a quedar sin diésel porque no habrá dinero suficiente para comprar”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/ypfb-descarta-abrogar-decreto-diesel-cao-exige-cambios-frenar-desabastecimiento_1788191985" rel="noopener noreferrer" target="_blank">YPFB descarta abrogar el decreto del diésel y la CAO exige cambios para frenar el desabastecimiento</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/politica/via-santa-cruz---beni-queda-expedita-gobierno-descarta-abrogar-el-decreto-pero-abre-espacio-para-mejorarlo.html" rel="noopener noreferrer" target="_blank">Vía Santa Cruz - Beni queda expedita: Gobierno descarta abrogar el decreto, pero abre espacio para mejorarlo</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/08/31/la-cao-activa-el-pedido-de-asamblea-de-la-crucenidad/" rel="noopener noreferrer" target="_blank">La CAO activa el pedido de Asamblea de la Cruceñidad</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/ypfb-reitera-que-el-decreto-5676-sobre-el-diesel-no-se-abrogara-pero-puede-modificarse/" rel="noopener noreferrer" target="_blank">YPFB reitera que el Decreto 5676 sobre el diésel no se abrogará, pero puede modificarse</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/diesel-ypfb-ratifica-que-el-decreto-5676-no-sera-abrogado-y-civicos-convocaran-a-una-asamblea-de-la-crucenidad/" rel="noopener noreferrer" target="_blank">Diésel: YPFB ratifica que el Decreto 5676 no será abrogado y cívicos convocarán a una Asamblea de la Cruceñidad</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/aramayo-sobre-decreto-del-diesel-yo-no-plantee-que-era-una-condicion-del-fmi-levantar-la-subvencion-AI23182031" rel="noopener noreferrer" target="_blank">Aramayo sobre decreto del diésel: “Yo no planteé que era una condición (del FMI) levantar la subvención”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/velasco-cuestiona-precio-diferenciado-del-diesel-y-plantea-menor-dependencia-de-ypfb-EH23179728" rel="noopener noreferrer" target="_blank">Velasco cuestiona precio diferenciado del diésel y plantea menor dependencia de YPFB</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/paz-reconoce-que-ypfb-no-logro-el-objetivo-de-abastecimiento-y-llama-a-analizar-futuro-de-la-subvencion-AI23181230" rel="noopener noreferrer" target="_blank">Paz reconoce que YPFB no logró el objetivo de abastecimiento y llama a analizar futuro de la subvención</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/reunion-con-civicos-ypfb-dice-que-no-se-abrogara-decreto-del-diesel-y-productores-piden-asamblea-de-la-crucenidad-HH23172454" rel="noopener noreferrer" target="_blank">Reunión con cívicos: YPFB dice que no se abrogará decreto del diésel y productores piden asamblea de la cruceñidad</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/el-problema-es-tener-dos-precios-distintos-de-diesel-senala-el-ministro-justiniano-quien-sugiere-dialogo-de-cara-al-pueblo-FG23169581" rel="noopener noreferrer" target="_blank">El problema es tener dos precios distintos de diésel, señala el ministro Justiniano, quien sugiere diálogo “de cara al pueblo”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/economia/presidente-de-ypfb-la-posicion-del-gobierno-es-no-abrogar-el-decreto-del-diesel-pero-si-pueden-darse-ajustes-NG23168621" rel="noopener noreferrer" target="_blank">Presidente de YPFB: La posición del Gobierno “es no abrogar el decreto del diésel, pero sí pueden darse ajustes”</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_diesel-escaso-y-caro-desata-amenaza-de-movilizaciones.html" rel="noopener noreferrer" target="_blank">Diésel escaso y caro desata amenaza de movilizaciones</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/08/31/civicos-anuncian-asamblea-de-la-crucenidad-para-decidir-acciones-por-la-crisis-del-diesel-65744" rel="noopener noreferrer" target="_blank">Cívicos anuncian Asamblea de la Cruceñidad para decidir acciones por la crisis del diésel</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/08/31/choferes-anuncian-movilizaciones-si-el-gobierno-no-soluciona-la-escasez-de-diesel-65759" rel="noopener noreferrer" target="_blank">Choferes anuncian movilizaciones si el gobierno no soluciona la escasez de diésel</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/transporte-cuestiona-gobierno-falta-diesel-si-todo-esta-bien-hacemos-cola_1788192845" rel="noopener noreferrer" target="_blank">Transporte cuestiona al Gobierno por la falta de diésel: “Si todo está bien, ¿por qué hacemos cola?”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/municipios-advierten-agota-paciencia-falta-combustibles_1788188186" rel="noopener noreferrer" target="_blank">Municipios advierten que “se agota la paciencia” por la falta de combustibles</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/31/agosto-concluye-con-filas-por-diesel/" rel="noopener noreferrer" target="_blank">Agosto concluye con filas por diésel</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/civicos-crucenos-definiran-medidas-crisis-diesel-cao-pide-anular-decreto" rel="noopener noreferrer" target="_blank">Cívicos cruceños definirán medidas por la crisis por diésel y CAO pide anular decreto</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/pasajes-interdepartamentales-suben-en-10-por-la-falta-de-diesel-y-el-dolar" rel="noopener noreferrer" target="_blank">Pasajes interdepartamentales suben en 10% por la falta de diésel y el dólar</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/agropecuarios-preven-reduccion-del-25-en-la-produccion-este-ano-por-falta-de-diesel" rel="noopener noreferrer" target="_blank">Agropecuarios prevén reducción del 25% en la producción este año por falta de diésel</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65336-civicos-crucenos-entran-en-conflicto-por-el-diesel-y-el-gobierno-ratifica-que-no-bajara-el-precio-de-bs-18" rel="noopener noreferrer" target="_blank">Cívicos cruceños entran en conflicto por el diésel y el Gobierno ratifica que no bajará el precio de Bs 18</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-afirma-que-el-combustible-es-el-cancer-que-frena-la-recuperacion-de-la-economia/" rel="noopener noreferrer" target="_blank">Paz afirma que el combustible es el “cáncer” que frena la recuperación de la economía</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-admite-que-ypfb-no-logra-garantizar-de-combustible-24-7-y-anuncia-apertura-del-mercado/" rel="noopener noreferrer" target="_blank">Paz admite que YPFB no logra garantizar de combustible 24/7 y anuncia apertura del mercado</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-reporta-cerca-de-70-solicitudes-para-importar-combustible-2026831201942" rel="noopener noreferrer" target="_blank">Paz reporta cerca de 70 solicitudes para importar combustible</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/gobierno-advierte-que-una-abrogacion-del-decreto-5676-va-a-agudizar-la-falta-de-diesel-e-insta-al-dialogo-EH23176705" rel="noopener noreferrer" target="_blank">Gobierno advierte que una abrogación del decreto 5676 “va a agudizar la falta de diésel” e insta al diálogo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/gobierno-sugiere-dialogo-para-que-solo-haya-un-precio-del-combustible" rel="noopener noreferrer" target="_blank">Gobierno sugiere diálogo para que solo haya un precio del combustible</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-pide-gobernadores-asumir-la-decision-de-jp-sobre-importar-combustible-por-privados" rel="noopener noreferrer" target="_blank">Paz pide a gobernadores asumir la decisión de JP sobre importar combustible por privados</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cavero-ve-contradiccion-en-decretos-sobre-el-combustible-y-pide-paz-definir-su-politica" rel="noopener noreferrer" target="_blank">Cavero ve contradicción en decretos sobre el combustible y pide a Paz “definir su política”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gastamos-plata-subvencion-obras-paz-anuncia-tomara-nuevas-decisiones-ano-terminara-soluciones_1788196428" rel="noopener noreferrer" target="_blank">“¿Gastamos plata en subvención o en obras?”: Paz anuncia que tomará nuevas decisiones y que el año terminará con soluciones</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-dice-recursos-externos-bolivia-no-emplearan-subsidio-combustibles_1788229861" rel="noopener noreferrer" target="_blank">Paz dice que recursos externos para Bolivia no se emplearán en subsidio a los combustibles</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/paz-economia-esta-recuperando-paros-lastre-pais_1788211703" rel="noopener noreferrer" target="_blank">Paz: “La economía se está recuperando”, pero los paros son un “lastre” para el país</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/gobernador-velasco-plantea-profundizar-retiro-subsidio-combustible-pase-manos-privadas_1788189077" rel="noopener noreferrer" target="_blank">Gobernador Velasco plantea profundizar el retiro del subsidio y que el combustible pase a manos privadas</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/aramayo-niega-que-el-fmi-haya-condicionado-el-retiro-de-la-subvenci%C3%B3n-al-di%C3%A9sel" rel="noopener noreferrer" target="_blank">Aramayo niega que el FMI haya condicionado el retiro de la subvención al diésel</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/politica/paz-admite-fallas-ypfb-plantea-eliminar-subvencion/" rel="noopener noreferrer" target="_blank">Paz admite fallas de YPFB y plantea eliminar la subvención</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/paz-economia-mejora-paros-lastre/" rel="noopener noreferrer" target="_blank">Paz: La economía mejora, pero los paros son un “lastre”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/unidad-pide-a-paz-acelerar-medidas-ante-la-crisis-economica-e-institucional/" rel="noopener noreferrer" target="_blank">Unidad pide a Paz acelerar medidas ante la crisis económica e institucional</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/paz-anuncia-reunion-gabinete-abordar-crisis-combustible-nuevas-reformas/20260831191121995529.html" rel="noopener noreferrer" target="_blank">Paz anuncia reunión de gabinete para abordar la crisis del combustible y nuevas reformas</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/unidad-exige-al-gobierno-tomar-decisiones-concretas-y-dar-respuestas-sobre-la-crisis" rel="noopener noreferrer" target="_blank">Unidad exige al Gobierno tomar decisiones concretas y dar respuestas sobre la crisis</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-la-economia-se-esta-recuperando-pero-hay-un-cancer-que-nos-frena" rel="noopener noreferrer" target="_blank">Paz: La economía se está recuperando, pero hay un cáncer que nos frena</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65357-paz-defiende-retiro-de-la-subvencion-el-padre-o-la-madre-tiene-que-tomar-decisiones-complejas-para-tener-un-mejor-futuro" rel="noopener noreferrer" target="_blank">Paz defiende retiro de la subvención: “El padre o la madre tiene que tomar decisiones complejas para tener un mejor futuro”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Audio implica a Primera Dama en destitución Sokol" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Audio implica a Primera Dama en destitución Sokol</div>
+<div class="modal-sum">El vicepresidente Edmand Lara presentó un supuesto audio que involucra a la Primera Dama (Urquidi) y Fernando Cerimedo en una presunta coordinación para la destitución de Sokol. El presidente Rodrigo Paz declaró no hacer caso a los audios y los remitió a la justicia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">32</strong> titulares</span>
+<span><strong style="color:var(--c-05)">15</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/sokol-pide-reprogramar-su-declaracion-por-el-caso-audios.html" rel="noopener noreferrer" target="_blank">Sokol pide reprogramar su declaración por el caso ‘Audios’</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_lara-distribuye-supuesto-audio-entre-cerimedo-y-bibi-beller-duda-de-su-veracidad-audio.html" rel="noopener noreferrer" target="_blank">Lara distribuye supuesto audio entre Cerimedo y Bibi; Beller duda de su veracidad (Audio)</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_transcripcion-completa-del-supuesto-audio-entre-bibi-y-cerimedo-y-audio.html" rel="noopener noreferrer" target="_blank">Transcripción completa del supuesto audio entre Bibi y Cerimedo (y audio)</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/rodrigo-paz-dice-que-no-hace-caso-a-los-audios-ante-denuncia-del-vicepresidente-sobre-la-primera-dama-y-cerimedo" rel="noopener noreferrer" target="_blank">Rodrigo Paz dice que no hace "caso a los audios" ante denuncia del vicepresidente sobre la primera dama y Cerimedo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/vicepresidente-presenta-un-audio-donde-aparentemente-la-primera-dama-y-cerimedo-hablan-de-sacar-a-sokol" rel="noopener noreferrer" target="_blank">Vicepresidente presenta un audio donde aparentemente la primera dama y Cerimedo hablan de sacar a Sokol</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/beller-pone-en-duda-el-audio-difundido-por-lara-y-afirma-esa-no-es-la-voz-de-fernando-cerimedo-65751" rel="noopener noreferrer" target="_blank">Beller pone en duda el audio difundido por Lara y afirma: “Esa no es la voz de Fernando Cerimedo”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/paz-dice-que-no-hace-caso-a-los-audios-porque-son-una-suerte-de-desprestigio-65758" rel="noopener noreferrer" target="_blank">Paz dice que no hace caso a los audios porque son “una suerte de desprestigio”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/lea-la-transcripcion-de-la-supuesta-conversacion-entre-cerimedo-y-la-primera-dama--65746" rel="noopener noreferrer" target="_blank">Lea la transcripción de la supuesta conversación entre Cerimedo y la primera dama</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/estas-son-las-frases-mas-impactantes-del-supuesto-audio-entre-la-primera-dama-y-cerimedo--65747" rel="noopener noreferrer" target="_blank">Estas son las frases más impactantes del supuesto audio entre la primera dama y Cerimedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/lara-difunde-grabacion-en-la-que-se-oiria-a-la-primera-dama-hablar-con-cerimedo-para-cambiar-a-sokol-y-a-otras-autoridades--65743" rel="noopener noreferrer" target="_blank">Lara difunde grabación en la que se oiría a la primera dama hablar con Cerimedo para cambiar a Sokol y a otras autoridades</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/lara-exhibe-audio-en-el-que-se-pide-destituir-a-sokol-por-una-investigacion-y-apunta-a-cerimedo.html" rel="noopener noreferrer" target="_blank">Lara exhibe audio en el que se pide destituir a Sokol por una investigación y apunta a Cerimedo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/expresidenta-anez-pide-paz-sincerarse-cerimedo_1788212612" rel="noopener noreferrer" target="_blank">Expresidenta Áñez pide a Paz sincerarse sobre Cerimedo</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/31/piden-ampliar-investigacion-a-beller-por-caso-cerimedo/" rel="noopener noreferrer" target="_blank">Piden ampliar investigación a Béller por caso Cerimedo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/el-rastro-de-una-billetera-fr%C3%ADa-vinculada-cerimedo-llev%C3%B3-identificar-10-cuentas-de" rel="noopener noreferrer" target="_blank">El rastro de una billetera fría vinculada a Cerimedo llevó a identificar 10 cuentas de transferencias de capital</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-presenta-supuesto-audio-beller-pone-en-duda-su-veracidad" rel="noopener noreferrer" target="_blank">Lara presenta supuesto audio; Beller pone en duda su veracidad</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/lara-revela-supuesto-audio-implica-urquidi-cerimedo/" rel="noopener noreferrer" target="_blank">Lara devela supuesto audio que implica a Urquidi con Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/paz-esperara-peritaje-del-audio-de-lara-sobre-su-esposa-y-cerimedo/" rel="noopener noreferrer" target="_blank">Paz esperará peritaje del audio de Lara sobre su esposa y Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/beller-duda-del-audio-de-lara-sobre-urquidi-y-cerimedo/" rel="noopener noreferrer" target="_blank">Beller duda del audio de Lara sobre Urquidi y Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/cerimedo-niega-desde-la-carcel-haber-trabajado-con-kast-y-cuestiona-las-acusaciones-de-beller/" rel="noopener noreferrer" target="_blank">Cerimedo niega desde la cárcel haber trabajado con Kast y cuestiona las acusaciones de Beller</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/anez-exige-al-gobierno-transparentar-el-papel-de-cerimedo/" rel="noopener noreferrer" target="_blank">Áñez exige al Gobierno transparentar el papel de Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/lara-anuncia-que-presentara-ante-la-fiscalia-un-audio-sobre-cerimedo-y-la-primera-dama/" rel="noopener noreferrer" target="_blank">Lara anuncia que presentará ante la Fiscalía un audio sobre Cerimedo y la primera dama</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/kast-admite-que-conoce-a-cerimedo-y-dice-que-se-cruzo-con-el-en-encuentros-politicos/" rel="noopener noreferrer" target="_blank">Kast admite que conoce a Cerimedo y dice que se cruzó con él en encuentros políticos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/hago-caso-audios-paz-deja-manos-justicia-grabacion-presentada-lara/20260831191431995530.html" rel="noopener noreferrer" target="_blank">“Yo no hago caso a los audios”: Paz deja en manos de la justicia grabación presentada por Lara</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/anez-exige-a-paz-esclarecer-la-relacion-de-cerimedo-con-el-gobierno-y-critica-negociaciones-individuales-con-parlamentarios/" rel="noopener noreferrer" target="_blank">Áñez exige a Paz esclarecer la relación de Cerimedo con el Gobierno y critica negociaciones individuales con parlamentarios</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-entrega-a-la-fiscalia-audio-que-revela-presuntas-charlas-de-la-primera-dama-y-cerimedo-sobre-sacar-a-sokol/" rel="noopener noreferrer" target="_blank">Lara entrega a la Fiscalía audio que revela presunta charla de la Primera Dama y Cerimedo sobre sacar a Sokol</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/vicepresidente-lara-presenta-un-audio-en-el-que-se-pide-la-destitucion-de-sokol-202683118320" rel="noopener noreferrer" target="_blank">Vicepresidente Lara presenta un audio en el que se pide la destitución de Sokol</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/dejemos-a-la-justicia-que-actue-dice-paz-sobre-los-audios-difundidos-por-lara-FI23182465" rel="noopener noreferrer" target="_blank">“Dejemos a la Justicia que actúe”, dice Paz sobre los audios difundidos por Lara</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/mientras-mas-habla-cerimedo-mas-hunde-al-gobierno-dice-diputado-de-sumate-libre-exige-explicaciones-CH23178468" rel="noopener noreferrer" target="_blank">“Mientras más habla Cerimedo, más hunde al Gobierno”, dice diputado de Súmate; Libre exige explicaciones</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/lara-revela-supuesto-audio-entre-cerimedo-y-urquidi-en-el-que-hablan-de-la-salida-de-sokol" rel="noopener noreferrer" target="_blank">Lara revela supuesto audio entre Cerimedo y Urquidi en el que hablan de la salida de Sokol</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/cerimedo-niega-haber-trabajado-con-el-presidente-kast-y-acusa-beller-de-arruinarle-la-vida" rel="noopener noreferrer" target="_blank">Cerimedo niega haber trabajado con el presidente Kast y acusa a Beller de “arruinarle la vida”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65387-lara-presenta-audio-de-presunta-charla-entre-cerimedo-y-la-primera-dama-beller-dice-que-no-es-la-voz-de-su-expareja" rel="noopener noreferrer" target="_blank">Lara presenta audio de presunta charla entre Cerimedo y la primera dama, Beller dice que no es la voz de su expareja</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65423-presidente-paz-habla-del-audio-presentado-por-lara-y-deja-su-verificacion-en-manos-de-la-justicia" rel="noopener noreferrer" target="_blank">Presidente Paz habla del audio presentado por Lara y deja su verificación en manos de la Justicia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14a">
+<div class="modal-backdrop" onclick="closeModal('modal_14a')"></div>
+<div aria-label="Paz busca consensos para reformas estructurales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Paz busca consensos para reformas estructurales</div>
+<div class="modal-sum">El presidente Rodrigo Paz propone impulsar reformas parciales a la Constitución con respaldo de dos tercios en la Asamblea Legislativa y plantea abrir un debate sobre los cambios. Paralelamente, busca acercamientos con líderes opositores como Tuto Quiroga y Samuel Doria Medina para construir acuerdos e impulsar reformas y nuevas leyes.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">15</strong> titulares</span>
+<span><strong style="color:var(--c-05)">13</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_paz-plantea-cambios-clave-a-la-constitucion-con-dos-tercios-de-la-asamblea.html" rel="noopener noreferrer" target="_blank">Paz plantea “cambios clave” a la Constitución con dos tercios de la Asamblea</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20260831/paz-plantea-ajustes-a-la-constitucion-y-pide-viabilizar-leyes-en-la-alp.html" rel="noopener noreferrer" target="_blank">Paz plantea ajustes a la Constitución y pide viabilizar leyes en la ALP</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/politica/paz-propone-una-reforma-constitucional-rapidito-con-dos-tercios-en-la-asamblea.html" rel="noopener noreferrer" target="_blank">Paz propone una reforma constitucional “rapidito” con dos tercios en la Asamblea</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-plantea-hacer-reformas-la-constituci%C3%B3n-%E2%80%9Crapidito%E2%80%9D-con-dos-tercios-de-la-asamblea" rel="noopener noreferrer" target="_blank">Paz plantea hacer reformas a la Constitución “rapidito” con dos tercios de la Asamblea</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/paz-propone-realizar-reformas-parciales-constitucion" rel="noopener noreferrer" target="_blank">Paz propone realizar reformas parciales a la Constitución</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-a-la-alp-estan-bien-censuren-a-los-ministros-pero-tambien-echen-un-una-aprobadita-a-las-leyes/" rel="noopener noreferrer" target="_blank">Paz a la ALP: “Están bien, censuren (a los ministros), pero también echen una aprobadita a las leyes”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-anuncia-envio-de-paquete-de-leyes-y-decretos-a-la-alp-2026831181555" rel="noopener noreferrer" target="_blank">Paz anuncia envío de paquete de leyes y decretos a la ALP</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/paz-pide-apertura-para-debatir-reformas-constitucionales-y-nuevas-leyes-JI23181769" rel="noopener noreferrer" target="_blank">Paz pide apertura para debatir reformas constitucionales y nuevas leyes</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/08/31/paz-busca-acercamiento-con-tuto-y-samuel-para-impulsar-reformas-y-nuevas-leyes-65761" rel="noopener noreferrer" target="_blank">Paz busca acercamiento con Tuto y Samuel para impulsar reformas y nuevas leyes</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-abre-dialogo-tuto-doria-medina-encarar-reformas-estructurales_1788218455" rel="noopener noreferrer" target="_blank">Paz se abre al diálogo con Tuto y Doria Medina para encarar reformas estructurales</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-buscar%C3%A1-sumar-esfuerzos-con-tuto-y-samuel-para-aprobar-leyes-y-reformas-la-constituci%C3%B3n" rel="noopener noreferrer" target="_blank">Paz buscará sumar esfuerzos con Tuto y Samuel para aprobar leyes y reformas a la Constitución</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/paquete-leyes-rodrigo-paz-busca-mejorar-infraestructura/" rel="noopener noreferrer" target="_blank">Paquete de leyes de Rodrigo Paz busca mejorar infraestructura</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/paz-busca-acuerdos-con-tuto-y-samuel-para-impulsar-reformas-y-leyes/" rel="noopener noreferrer" target="_blank">Paz busca acuerdos con Tuto y Samuel para impulsar reformas y leyes</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-buscara-sumar-esfuerzos-con-quiroga-y-doria-medina-para-aprobar-leyes-y-reformas-a-la-constitucion/" rel="noopener noreferrer" target="_blank">Paz buscará sumar esfuerzos con Quiroga y Doria Medina para aprobar leyes y reformas a la Constitución</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65426-paz-pide-debatir-la-subvencion-de-carburantes-destaca-respaldo-del-fmi-a-las-rin-y-anuncia-contactos-con-quiroga-y-doria-medina" rel="noopener noreferrer" target="_blank">Paz pide debatir la subvención de carburantes, destaca respaldo del FMI a las RIN y anuncia contactos con Quiroga y Doria Medina</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Caso Cerimedo suma aprehensiones y traslado a Chonchocoro" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Caso Cerimedo suma aprehensiones y traslado a Chonchocoro</div>
+<div class="modal-sum">La Policía prepara el traslado de Fernando Cerimedo de Palmasola a Chonchocoro, mientras su defensa advierte riesgos por su estado de salud y el abogado de Nadia Beller exige cumplir la orden. Paralelamente, se ordenaron nuevas aprehensiones de exfuncionarios y presuntos sicarios, mientras videos y declaraciones aportan detalles sobre el atentado contra Beller.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">23</strong> titulares</span>
+<span><strong style="color:var(--c-10)">12</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_la-policia-alista-operativo-para-llevar-a-cerimedo-a-la-paz.html" rel="noopener noreferrer" target="_blank">La Policía alista operativo para llevar a Cerimedo a La Paz</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/beller-refuta-a-defensa-de-cerimedo-dice-que-el-goza-de-buena-salud-y-puede-ser-traido-a-chonchocoro-65736" rel="noopener noreferrer" target="_blank">Beller refuta a defensa de Cerimedo, dice que él goza de buena salud y puede ser traído a Chonchocoro</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/llevandolo-chonchocoro-vida-puede-estar-peligro-defensa-cerimedo-busca-evitar-traslado_1788187808" rel="noopener noreferrer" target="_blank">"Su vida puede estar en peligro": Defensa de Cerimedo intenta evitar que su defendido sea llevado a Chonchocoro</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/beller-acusa-a-cerimedo-de-usar-su-salud-para-frenar-traslado-esta-completamente-sano/" rel="noopener noreferrer" target="_blank">Beller acusa a Cerimedo de usar su salud para frenar traslado: ‘Está completamente sano’</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/abogado-advierte-riesgo-para-la-vida-de-cerimedo-si-es-traslado-a-chonchocoro/" rel="noopener noreferrer" target="_blank">Abogado advierte riesgo para la vida de Cerimedo si es trasladado a Chonchocoro</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20260831/policia-alista-traslado-cerimedo-chonchocoro-segunda-detencion" rel="noopener noreferrer" target="_blank">Policía alista el traslado de Cerimedo a Chonchocoro por segunda detención</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/yo-admiro-a-kast-pero-nunca-trabaje-con-el-ni-con-su-equipo-cerimedo-responde-desde-palmasola-DH23176041" rel="noopener noreferrer" target="_blank">“Yo admiro a Kast, pero nunca trabajé con él ni con su equipo”, Cerimedo responde desde Palmasola</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/sin-fecha-ni-hora-para-el-traslado-de-fernando-cerimedo-que-sigue-en-la-carcel-de-palmasola-CH23170992" rel="noopener noreferrer" target="_blank">Sin fecha ni hora para el traslado de Fernando Cerimedo, que sigue en la cárcel de Palmasola</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/debe-ser-llevado-chonchocoro-abogado-de-beller-exige-traslado-de-cerimedo-la-paz" rel="noopener noreferrer" target="_blank">“Debe ser llevado a Chonchocoro”: Abogado de Beller exige traslado de Cerimedo a La Paz</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65351-en-la-policia-alistan-plan-de-traslado-de-cerimedo-a-la-carcel-de-chonchocoro-en-medio-de-discrepancias-sobre-su-salud" rel="noopener noreferrer" target="_blank">En la Policía alistan plan de traslado de Cerimedo a la cárcel de Chonchocoro en medio de discrepancias sobre su salud</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_caso-nadia-beller-ordenan-aprehender-a-maria-argentina-rojas-vinculada-a-pagos-y-reuniones-con-presuntos-sicarios.html" rel="noopener noreferrer" target="_blank">Caso Nadia Beller: ordenan aprehender a María Argentina Rojas, vinculada a pagos y reuniones con presuntos sicarios</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/aparece-un-colombiano-buscado-por-la-policia-que-confiesa-colaboracion-en-atentado-contra-beller" rel="noopener noreferrer" target="_blank">Aparece un colombiano buscado por la Policía que confiesa colaboración en atentado contra Beller</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/emiten-orden-de-aprehension-contra-exfuncionaria-de-la-aduana-por-el-caso-beller-65732" rel="noopener noreferrer" target="_blank">Emiten orden de aprehensión contra exfuncionaria de la Aduana por el caso Beller</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/beller-implica-a-exempleada-en-su-intento-de-feminicidio.html" rel="noopener noreferrer" target="_blank">Beller implica a exempleada en su intento de feminicidio</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/aparece-presunto-sicario-nadia-objetivo-era-darle-susto-senora-matar-argentino_1788230040" rel="noopener noreferrer" target="_blank">Aparece presunto sicario del caso Beller: “El objetivo era darle un susto a la señora y matar al argentino”</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/caso-cerimedo-oficialismo-pide-investigue-beller/" rel="noopener noreferrer" target="_blank">Caso Cerimedo: Oficialismo pide que se investigue a Beller</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/caso-beller-emiten-orden-aprehension-mujer/" rel="noopener noreferrer" target="_blank">Caso Beller: Emiten orden de aprehensión contra una mujer</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/beller-acusa-a-cerimedo-de-intentar-desviar-su-responsabilidad-en-el-atentado/" rel="noopener noreferrer" target="_blank">Beller acusa a Cerimedo de intentar desviar su responsabilidad en el atentado</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/08/31/desde-la-clandestinidad-colombiano-vincula-a-seis-personas-con-ataque-a-beller/" rel="noopener noreferrer" target="_blank">Desde la clandestinidad, colombiano vincula a seis personas con ataque a Beller</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260831/sospechoso-del-ataque-beller-da-detalles-del-hecho" rel="noopener noreferrer" target="_blank">Sospechoso del ataque a Beller da detalles del hecho</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/aparece-video-de-supuesto-implicado-en-ataque-a-beller-no-habia-que-matarla-habia-que-pegarle-un-susto/" rel="noopener noreferrer" target="_blank">Aparece video de supuesto implicado en ataque a Beller: “No había que matarla, había que pegarle un susto”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/beller-es-testigo-protegida-en-caso-enriquecimiento-ilicito-y-busca-ampliar-declaracion-por" rel="noopener noreferrer" target="_blank">Beller es testigo protegida en caso enriquecimiento ilícito y busca ampliar declaración por ataque armado</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65441-sospechoso-del-atentado-contra-beller-aparece-en-un-video-y-dice-que-el-objetivo-no-era-matar-a-esa-senora" rel="noopener noreferrer" target="_blank">Sospechoso del atentado contra Beller aparece en un video y dice que “el objetivo no era matar a esa señora”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8b">
+<div class="modal-backdrop" onclick="closeModal('modal_8b')"></div>
+<div aria-label="Policía investiga múltiples acribillamientos en Santa Cruz" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Policía investiga múltiples acribillamientos en Santa Cruz</div>
+<div class="modal-sum">La Policía investiga múltiples acribillamientos y asesinatos a tiros de hombres en San Ignacio de Velasco.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">8</strong> titulares</span>
+<span><strong style="color:var(--c-07)">7</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/08/31/un-hombre-muere-acribillado-en-san-ignacio-de-velasco-65727" rel="noopener noreferrer" target="_blank">Acribillan a un hombre en San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20260831/asesinan-a-tiros-a-un-hombre-en-san-ignacio.html" rel="noopener noreferrer" target="_blank">Asesinan a tiros a un hombre en San Ignacio</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/31/investigan-muerte-de-hombre-hallado-con-23-impactos-de-bala/" rel="noopener noreferrer" target="_blank">Investigan muerte de hombre hallado con 23 impactos de bala</a></span></li>
+<li><span class="m-src">LEO (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.leo.bo/2026/08/31/otro-hombre-fue-asesinado-a-tiros-en-san-ignacio-de-velasco/" rel="noopener noreferrer" target="_blank">Otro hombre fue asesinado a tiros en San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/san-ignacio-velasco-ataque-armado-deja-adolescente/" rel="noopener noreferrer" target="_blank">San Ignacio de Velasco: Acribillan a un adolescente de 16 años</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/sale-a-la-luz-el-video-del-asesinato-a-balazos-de-un-adolescente-en-una-licoreria-en-san-ignacio-de-velasco-EH23177416" rel="noopener noreferrer" target="_blank">Sale a la luz el video del asesinato a balazos de un adolescente en una licorería en San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/acribillado-en-san-ignacio-de-velasco-tenia-16-anos-y-recibio-alrededor-de-20-impactos-de-bala-AH23175849" rel="noopener noreferrer" target="_blank">Acribillado en San Ignacio de Velasco tenía 16 años y recibió alrededor de 20 impactos de bala</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65294-investigan-un-acribillamiento-en-san-ignacio-la-policia-busca-a-los-atacantes" rel="noopener noreferrer" target="_blank">Investigan un acribillamiento en San Ignacio, la Policía busca a los atacantes</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="TSE inicia agenda para reforma electoral" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-01)">ELECCIONES</div>
+<div class="modal-title">TSE inicia agenda para reforma electoral</div>
+<div class="modal-sum">El Tribunal Supremo Electoral (TSE) y los Tribunales Departamentales Electorales (TDE) inician la agenda nacional para la reforma electoral en Cochabamba el 2 de septiembre. Adicionalmente estiman un gasto de Bs 200 millones para un posible referéndum de reforma parcial de la Constitución Política del Estado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-01)">7</strong> titulares</span>
+<span><strong style="color:var(--c-01)">6</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20260831_el-tse-inicia-proceso-de-reforma-electoral.html" rel="noopener noreferrer" target="_blank">El TSE inicia proceso de reforma electoral</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/el-tse-preve-un-gasto-de-hasta-bs-200-millones-para-una-eventual-reforma-parcial-de-la-constitucion" rel="noopener noreferrer" target="_blank">El TSE prevé un gasto de hasta Bs 200 millones para una eventual reforma parcial de la Constitución</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/politica/el-tse-iniciara-en-cochabamba-el-proceso-de-reforma-electoral-este-2-de-septiembre.html" rel="noopener noreferrer" target="_blank">El TSE iniciará en Cochabamba el proceso de reforma electoral este 2 de septiembre</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/gestion/tse-inicia-reforma-electoral-cochabamba-septiembre/" rel="noopener noreferrer" target="_blank">TSE inicia reforma electoral en Cochabamba el 2 de septiembre</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tse-y-tribunales-electorales-activan-la-agenda-nacional-rumbo-a-la-reforma-electoral-con-reunion-en-cochabamba/" rel="noopener noreferrer" target="_blank">El TSE y tribunales electorales activan la agenda nacional rumbo a la Reforma Electoral con reunión en Cochabamba</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-tse-estima-que-referendum-para-la-reforma-parcial-de-la-cpe-demandaria-alrededor-de-bs-200-millones/" rel="noopener noreferrer" target="_blank">El TSE estima que referéndum para la reforma parcial de la CPE demandaría alrededor de Bs 200 millones</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/el-tse-y-los-tde-iniciaran-este-miercoles-el-trabajo-para-la-reforma-electoral" rel="noopener noreferrer" target="_blank">El TSE y los TDE iniciarán este miércoles el trabajo para la reforma electoral</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Múltiples incendios forestales azotan el país" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Múltiples incendios forestales azotan el país</div>
+<div class="modal-sum">Se reportan y combaten múltiples incendios forestales en distintas regiones del país, incluyendo el Parque Tunari en Cochabamba, donde un incendio lleva 12 horas activo, y en San Rafael y San Ignacio de Velasco, Santa Cruz, donde los focos fueron controlados.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">6</strong> titulares</span>
+<span><strong style="color:var(--c-15)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20260831_santa-cruz-sofocan-incendios-forestales-en-san-rafael-y-san-ignacio-de-velasco.html" rel="noopener noreferrer" target="_blank">Santa Cruz: Sofocan incendios forestales en San Rafael y San Ignacio de Velasco</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/regiones/inaccesibilidad-impidio-ingreso-lugar-quemado-forestal/" rel="noopener noreferrer" target="_blank">Inaccesibilidad impidió ingreso para sofocar incendio forestal</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/08/31/combaten-un-incendio-forestal-en-el-parque-tunari/" rel="noopener noreferrer" target="_blank">Combaten un incendio forestal en el parque Tunari</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/ciudades/2026/08/31/los-incendios-en-san-rafael-y-san-ignacio-fueron-controlados/" rel="noopener noreferrer" target="_blank">Los incendios en San Rafael y San Ignacio fueron controlados</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/cochabamba/20260831/hay-dos-incendios-parque-tunari" rel="noopener noreferrer" target="_blank">Hay dos incendios en el Parque Tunari</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/cochabamba/20260831/incendio-parque-tunari-ya-dura-12-horas" rel="noopener noreferrer" target="_blank">Incendio en el Parque Tunari ya dura 12 horas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Denuncian minería ilegal y avasallamiento de tierras" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-15)">MEDIO AMBIENTE</div>
+<div class="modal-title">Denuncian minería ilegal y avasallamiento de tierras</div>
+<div class="modal-sum">Comunidades y organizaciones denuncian la minería ilegal y proyectos mineros por avasallamiento e incumplimiento de consulta previa, mientras que un informe de la Fundación Solón revela más de 12.500 trámites mineros sin autorización de explotación en el país.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-15)">4</strong> titulares</span>
+<span><strong style="color:var(--c-15)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/31/comunidades-repudian-mineria-ilegal-ante-danos-de-recursos-naturales/" rel="noopener noreferrer" target="_blank">Comunidades repudian minería ilegal ante daños de recursos naturales</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/gente/gitor-se-encamina-al-cuarto-simposio-internacional-del-oro-en-busca-de-alternativas-de" rel="noopener noreferrer" target="_blank">GITOR se encamina al Cuarto Simposio Internacional del Oro en busca de alternativas de solución para la minería aurífera ilegal</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/medio-ambiente/denuncian-proyecto-minero-en-coripata-por-avasallamiento-e-incumplir-con-la-consulta" rel="noopener noreferrer" target="_blank">Denuncian a proyecto minero en Coripata por avasallamiento e incumplir con la consulta previa</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/08/31/65417-fundacion-solon-a-principios-de-2025-en-el-pais-existian-12540-tramites-mineros-que-no-otorgaban-autorizacion-para-la-explotacion" rel="noopener noreferrer" target="_blank">Fundación Solón: a principios de 2025, en el país existían 12.540 trámites mineros que no otorgaban autorización para la explotación</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8a">
+<div class="modal-backdrop" onclick="closeModal('modal_8a')"></div>
+<div aria-label="Acribillan a hombre con antecedentes narcotráfico" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Acribillan a hombre con antecedentes narcotráfico</div>
+<div class="modal-sum">Un hombre con antecedentes por narcotráfico fue acribillado en Entre Ríos, Cochabamba. Los sicarios sustrajeron las grabaciones de las cámaras de seguridad del negocio.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">4</strong> titulares</span>
+<span><strong style="color:var(--c-04)">4</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-08-31/pais/tras-el-crimen-sicarios-sustrajeron-las-grabaciones-de-las-camaras-del-negocio-donde-acribillaron-a-un-hombre-en-entre-rios.html" rel="noopener noreferrer" target="_blank">Tras el crimen, sicarios sustrajeron las grabaciones de las cámaras del negocio donde acribillaron a un hombre en Entre Ríos</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20260831/cochabamba-hombre-antecedentes-narcotrafico-es-acribillado-rios" rel="noopener noreferrer" target="_blank">Cochabamba: hombre con antecedentes por narcotráfico es acribillado en Entre Ríos</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/policial/acribillado-entre-rios-tenia-antecedentes-narcotrafico-atacantes-llevaron-grabaciones-camaras/20260831123443995502.html" rel="noopener noreferrer" target="_blank">Acribillado en Entre Ríos tenía antecedentes por narcotráfico y sus atacantes se llevaron las grabaciones de las cámaras</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/acribillado-en-entre-rios-recibio-26-disparos-de-sicarios-que-lo-atacaron-frente-a-su-esposa-EH23173142" rel="noopener noreferrer" target="_blank">Acribillado en Entre Ríos recibió 26 disparos de sicarios que lo atacaron frente a su esposa</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9a">
+<div class="modal-backdrop" onclick="closeModal('modal_9a')"></div>
+<div aria-label="Lionel Messi anuncia retiro de selección argentina" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-25)">SOCIEDAD</div>
+<div class="modal-title">Lionel Messi anuncia retiro de selección argentina</div>
+<div class="modal-sum">Lionel Messi anunció su retiro de la selección argentina, expresando que se siente "vaciado" y sin más para dar.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-25)">3</strong> titulares</span>
+<span><strong style="color:var(--c-25)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/deportes/2026/08/31/messi-se-retira-de-la-seleccion-argentina-me-vacie-ya-no-tengo-mas-para-dar-65737" rel="noopener noreferrer" target="_blank">Messi se retira de la selección argentina: “Me vacié, ya no tengo más para dar”</a></span></li>
+<li><span class="m-src">El Diario</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.eldiario.net/portal/2026/08/31/me-vacie-ya-no-tengo-mas-para-dar-messi-anuncia-su-retirada-de-la-albiceleste/" rel="noopener noreferrer" target="_blank">"Me vacié, ya no tengo más para dar": Messi anuncia su retirada de la albiceleste</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/lionel-messi-anuncia-su-retirada-de-la-selecci%C3%B3n-argentina" rel="noopener noreferrer" target="_blank">Lionel Messi anuncia su retirada de la selección argentina</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_9b">
+<div class="modal-backdrop" onclick="closeModal('modal_9b')"></div>
+<div aria-label="Exportaciones de galletas bolivianas superan 2.3 millones" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-02)">ECONOMÍA</div>
+<div class="modal-title">Exportaciones de galletas bolivianas superan 2.3 millones</div>
+<div class="modal-sum">Las exportaciones de galletas dulces bolivianas superan los $us 2.3 millones, siendo Perú su principal mercado.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-02)">3</strong> titulares</span>
+<span><strong style="color:var(--c-02)">3</strong> medios</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_9b')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/dinero-negocios/economia/exportaciones-galletas-bolivianas-impacto-economia/" rel="noopener noreferrer" target="_blank">Exportaciones de galletas bolivianas superan 2,3 millones USD</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/economia-y-empresa/2026/08/31/galletas-bolivianas-rozan-los-us-16-millones-en-exportaciones/" rel="noopener noreferrer" target="_blank">Galletas bolivianas rozan los $us 1,6 millones en exportaciones</a></span></li>
+<li><span class="m-src">Opinión Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.opinion.com.bo/articulo/pais/bolivia-exporto-mas-us-23-millones-galletas-dulces-peru-fue-principal-mercado/20260831184632995523.html" rel="noopener noreferrer" target="_blank">Bolivia exportó más de $us 2,3 millones en galletas dulces y Perú fue su principal mercado</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    const detailsParent = el.closest('details.lista-nivel-c');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlight-card');
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
