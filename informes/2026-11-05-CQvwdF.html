@@ -1,0 +1,2542 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bolimétrica – Reporte Ejecutivo 20261105</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&amp;family=Barlow:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-base:     #F0F4F8;
+    --bg-card:     #FFFFFF;
+    --bg-card-2:   #F7FAFC;
+    --bg-subtle:   #E8EFF6;
+    --border:      #D5E0EC;
+    --border-glow: #B8CCE0;
+
+    --text-primary:   #0F2137;
+    --text-secondary: #4A6480;
+    --text-muted:     #92AABF;
+    --text-accent:    #B07820;
+
+    --amber:   #C8880A;
+    --amber-d: #9E6A06;
+
+    /* Category palette — slightly deeper for light bg readability */
+    --c-hidro:     #C45A3A;
+    --c-trans:     #1A9E9E;
+    --c-carnaval:  #7752B0;
+    --c-narco:     #A82828;
+    --c-eco:       #2E8A5E;
+    --c-elec:      #3A6BBF;
+    --c-viol:      #BA3030;
+    --c-gob:       #B07820;
+    /* Extended category palette (more unique colors) */
+    --c-01: #1a4471;
+    --c-02: #27ac3de4;
+    --c-03: #C05621;
+    --c-04: #805AD5;
+    --c-05: #792155;
+    --c-06: #2C7A7B;
+    --c-07: #bb2727;
+    --c-08: #603b11;
+    --c-09: #1A202C;
+    --c-10: #2b7bc7;
+    --c-11: #133321;
+    --c-12: #DD6B20;
+    --c-13: #6B46C1;
+    --c-14: #D53F8C;
+    --c-15: #52c889;
+    --c-16: #E53E3E;
+    --c-17: #B7791F;
+    --c-18: #71757c;
+    --c-19: #6ca5ce;
+    --c-20: #68D391;
+    --c-21: #c6822ebf;
+    --c-22: #B794F4;
+    --c-23: #F687B3;
+    --c-24: #81E6D9;
+    --c-25: #d89696;
+    --c-26: #FBD38D;
+    --c-27: #CBD5E0;
+    --c-28: #90CDF4;
+    --c-29: #9AE6B4;
+    --c-30: #FEEBC8;
+
+
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Barlow', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ───────────────────────── HEADER ───────────────────────── */
+  .header {
+    background: linear-gradient(135deg, #0F2137 0%, #1A3450 60%, #1E3D60 100%);
+    border-bottom: 3px solid var(--amber);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(240,192,96,0.04) 60px,
+      rgba(240,192,96,0.04) 61px
+    );
+  }
+  .header-left { position: relative; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  .brand span { color: #F0C060; }
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 28px;
+    position: relative;
+  }
+  .meta-pill { text-align: center; }
+  .meta-val {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 30px;
+    color: #F0C060;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .meta-lbl {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 3px;
+  }
+  .meta-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    align-self: stretch;
+  }
+  .header-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+    position: relative;
+  }
+  .header-date strong {
+    display: block;
+    font-size: 14px;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+  }
+
+  /* ───────────────────────── LAYOUT ───────────────────────── */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-left: 2px solid var(--amber);
+    padding-left: 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ───────────────────────── TOP ROW ───────────────────────── */
+  .top-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* TOP 3 CARDS */
+  .top3-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .top3-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .top3-card:hover {
+    box-shadow: 0 4px 16px rgba(15,33,55,0.1);
+    border-color: var(--border-glow);
+  }
+
+  .top3-accent { width: 4px; flex-shrink: 0; }
+  .top3-rank {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--bg-subtle);
+    line-height: 1;
+  }
+  .top3-content {
+    flex: 1;
+    padding: 12px 14px;
+    border-left: 1px solid var(--border);
+  }
+  .top3-cat {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .top3-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .top3-body {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .top3-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-chip .val { font-weight: 700; font-size: 13px; }
+  .stat-chip .lbl { color: var(--text-muted); }
+
+  /* ───────── RIGHT PANEL ───────── */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .freq-table-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex: 1;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .freq-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .freq-table th {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .freq-table th:last-child { text-align: right; }
+  .freq-table td {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-bottom: 1px solid rgba(213,224,236,0.6);
+  }
+  .freq-table tr:last-child td { border-bottom: none; }
+  .freq-table tr:hover td { background: rgba(200,136,10,0.04); }
+
+  .freq-word {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .freq-bar-wrap {
+    width: 90px; height: 4px;
+    background: var(--bg-subtle);
+    border-radius: 2px; overflow: hidden;
+  }
+  .freq-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--amber-d), var(--amber));
+  }
+  .freq-count {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  .cat-bar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+  .cat-bars { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+  .cat-row { display: flex; align-items: center; gap: 8px; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cat-name { font-size: 10px; color: var(--text-secondary); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cat-track { flex: 1; height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .cat-fill { height: 100%; border-radius: 3px; }
+  .cat-n { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--text-primary); width: 18px; text-align: right; flex-shrink: 0; }
+
+  /* ───────────────────────── COVERAGE CHART ───────────────────────── */
+  .coverage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+  }
+
+  .chart-area { margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .chart-row { display: flex; align-items: center; gap: 10px; }
+  .chart-label { font-size: 10.5px; color: var(--text-secondary); width: 240px; flex-shrink: 0; text-align: right; line-height: 1.2; }
+  .chart-bar-wrap { flex: 1; height: 18px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; }
+  .chart-bar-fill {
+    height: 100%; border-radius: 3px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 6px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+    color: rgba(255,255,255,0.95);
+  }
+  .chart-medios { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); width: 64px; flex-shrink: 0; }
+
+  /* ───────────────────────── TOPICS GRID ───────────────────────── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .topic-card:hover {
+    box-shadow: 0 4px 14px rgba(15,33,55,0.1);
+    transform: translateY(-1px);
+  }
+
+  .topic-big-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    opacity: 0.10;
+    position: absolute;
+    top: 6px; right: 10px;
+  }
+  .topic-cat-badge {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .topic-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 7px;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+  }
+  .topic-body { font-size: 10.5px; color: var(--text-secondary); line-height: 1.55; }
+  .topic-footer {
+    display: flex; gap: 10px;
+    margin-top: 10px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .topic-stat { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+  .topic-stat strong { color: var(--text-primary); font-size: 11px; }
+
+  /* ───────────────────────── EMERGENTES ───────────────────────── */
+  .emergentes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .emergente-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+  }
+  .emergente-label { font-family: var(--font-mono); font-size: 8px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; }
+  .emergente-text { font-size: 11.5px; color: var(--text-primary); line-height: 1.5; }
+  .emergente-source { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+
+  /* ───────────────────────── PAGE BREAK ───────────────────────── */
+  .page-break { border-top: 1px solid var(--border); margin: 8px 0 20px; display: flex; align-items: center; gap: 12px; }
+  .page-break-label {
+    font-family: var(--font-mono); font-size: 8px; color: var(--text-muted);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap; background: var(--bg-base); padding: 0 10px; margin-top: -9px;
+  }
+
+  /* ───────────────────────── FOOTER ───────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card);
+  }
+  .footer-left { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.08em; }
+  .footer-right { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); }
+</style>
+<style>
+/* ───────── FASE 2: ESCALA, ANCHO Y MÁRGENES ───────── */
+:root {
+  --dash-box-bg: #FBF6EC;
+  --kpi-chip-bg: rgba(15, 33, 55, 0.06);
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+body.dark-mode {
+  --dash-box-bg: rgba(15, 33, 55, 0.5);
+  --kpi-chip-bg: rgba(0, 0, 0, 0.2);
+}
+.page {
+  max-width: 96% !important;
+  padding: 25px 30px !important;
+
+}
+
+.layout-2-cols { 
+  padding: 12px 12px !important; 
+  max-width: 100vw !important; 
+  box-sizing: border-box !important; 
+  width: 100% !important; 
+  overflow: hidden !important; 
+  gap: 16px !important;
+}
+
+body { font-size: 15px !important; background-color: #f4f1ea !important; }
+.top3-title { font-size: 22px !important; line-height: 1.3 !important; }
+.top3-body { font-size: 15px !important; line-height: 1.6 !important; }
+.topic-title { font-size: 18px !important; line-height: 1.3 !important; margin-bottom: 12px !important; }
+.topic-body { font-size: 14px !important; line-height: 1.6 !important; }
+.emergente-text { font-size: 15px !important; line-height: 1.6 !important; }
+.modal-title { font-size: 26px !important; }
+.modal-sum { font-size: 16px !important; }
+.modal-list li { font-size: 15px !important; }
+.section-label { font-size: 12px !important; margin-bottom: 20px !important; }
+.cat-n { font-size: 14px !important; width: 24px !important; }
+
+.freq-table th { font-size: 10px !important; padding-bottom: 12px !important; }
+.freq-word { font-size: 14px !important; }
+.freq-count { font-size: 14px !important; }
+.freq-table td { padding: 8px 6px !important; }
+
+.emergentes-grid { grid-template-columns: 1fr !important; }
+
+.sidebar-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  margin-bottom: 6px;
+}
+#themeToggle {
+  position: static !important;
+}
+
+.brief-tactico { background: var(--bg-card) !important; }
+.tarjeta-nivel-a { background: var(--bg-card) !important; }
+
+.chart-row-vertical {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+.chart-row-vertical .chart-label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  padding-bottom: 18px !important;
+}
+.chart-row-vertical .chart-bar-wrap {
+  width: 100% !important;
+}
+.chart-row-vertical .chart-medios {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 11px !important;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+.donut-svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+.donut-arc {
+  transition: stroke-width 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+.donut-arc:hover {
+  stroke-width: 20;
+  opacity: 0.85;
+}
+.donut-legend {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+}
+.donut-legend-item {
+  font-size: 11px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.donut-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.top3-content { padding: 24px 28px !important; }
+.topic-card { padding: 24px !important; }
+.emergente-card { padding: 20px 24px !important; gap: 10px !important; }
+.freq-table-card, .cat-bar-card, .coverage-card { padding: 28px 32px !important; }
+.chart-label {
+  width: 480px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  padding-right: 15px !important;
+  text-align: left !important;
+}
+.chart-label span { font-size: 14px !important; }
+.cat-name { font-size: 15px !important; font-weight: 700 !important; width: 195px !important; }
+.stat-chip .val { font-size: 18px !important; }
+
+.stat-chip .lbl { font-size: 11px !important; text-transform: uppercase; }
+
+.top3-cat {
+  font-size: 11px !important;
+  background: rgba(0,0,0,0.06) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-bottom: 12px !important;
+  font-weight: 700 !important;
+}
+
+.topic-cat-badge {
+  font-size: 10px !important;
+  padding: 3px 7px !important;
+}
+
+.topic-stat { font-size: 11px !important; }
+.topic-stat strong { font-size: 14px !important; }
+
+/* ───────── MODALES (vanilla) mejorados ───────── */
+.modal { display:none; position:fixed; inset:0; z-index:9999; }
+.modal[aria-hidden="false"] { display:flex; align-items:center; justify-content:center; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(15,33,55,0.58); }
+.modal-panel {
+  position: relative;
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(86vh, 860px);
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 60px rgba(15,33,55,0.30);
+  display:flex; flex-direction:column;
+}
+.modal-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); background: var(--bg-card-2); }
+.modal-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.modal-title { font-family: var(--font-display); font-weight: 850; font-size: 20px; line-height:1.15; margin-bottom: 10px; }
+.modal-sum { font-size: 13px; color: var(--text-secondary); line-height:1.55; }
+.modal-kpis { margin-top: 12px; display:flex; flex-wrap:wrap; gap:14px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.modal-close {
+  position:absolute; top:12px; right:12px;
+  border:1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor:pointer;
+}
+.modal-body { padding: 14px 18px 18px; overflow:auto; }
+.modal-list { list-style:none; display:flex; flex-direction:column; gap: 12px; padding-left:0; margin:0; }
+.modal-list li { line-height:1.55; font-size: 13px; }
+.m-src { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.m-sep { margin: 0 6px; color: var(--text-muted); }
+.m-tit a { color: var(--text-primary); text-decoration: underline; }
+.m-tit a:hover { color: var(--amber-d); }
+
+.section-label{ font-size: 13px !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+
+.topic-big-n{ font-weight: 900 !important; font-size: 28px !important; line-height: 1 !important; text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 2px 10px rgba(15,33,55,0.18); }
+.topic-big-n{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+.top3-rank .rank-num{ opacity: 0.98 !important; font-weight: 900 !important; text-shadow: 0 2px 10px rgba(15,33,55,0.24) !important; }
+
+.modal-panel{ width: min(980px, calc(100vw - 28px)); border-radius: 14px; }
+.modal-head{ padding: 16px 18px; }
+.modal-title{ font-size: 20px; line-height: 1.15; }
+.modal-sum{ font-size: 13px; line-height: 1.45; }
+.modal-body{ padding: 14px 18px; max-height: calc(100vh - 220px); overflow: auto; }
+.modal-list{ padding-left: 0; margin: 0; gap: 10px; }
+.modal-list li{ display: grid; grid-template-columns: 130px 1fr; column-gap: 12px; row-gap: 2px; align-items: start; font-size: 13px; line-height: 1.45; padding: 10px 0; border-bottom: 1px dashed rgba(0,0,0,.10); }
+.modal-list li:last-child{ border-bottom: 0; }
+.m-src{ font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.m-sep{ display:none; }
+.m-tit a{ word-break: break-word; text-decoration: underline; }
+
+.top3-card, .topic-card, .emergente-card { cursor: pointer !important; transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important; }
+.top3-card:hover, .topic-card:hover, .emergente-card:hover { transform: translateY(-3px) !important; box-shadow: 0 10px 25px rgba(15, 33, 55, 0.12) !important; border-color: var(--border-glow) !important; }
+
+@media (max-width: 768px){
+  .page{ padding: 12px 12px 20px; max-width: 100% !important; box-sizing: border-box !important; width: 100% !important; }
+  .layout-2-cols{ 
+    padding: 12px 12px !important; 
+    max-width: 100vw !important; 
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    overflow: hidden !important; 
+  }
+  .header{ padding: 14px 14px; flex-direction: column; align-items: center; text-align:center; gap: 10px; box-sizing: border-box !important; width: 100% !important; }
+  .header-left{ width:100%; display:flex; flex-direction:column; align-items:center; }
+  .header-meta{ width:100%; justify-content:center; gap: 14px; flex-wrap: wrap; }
+  .meta-pill{ min-width: 88px; }
+  .meta-val{ font-size: 24px; }
+  .header-date{ width:100%; text-align:center; }
+  .top-row{ grid-template-columns: 1fr; }
+  .topics-grid{ grid-template-columns: 1fr; }
+  .emergentes-grid{ grid-template-columns: 1fr; }
+  .chart-row{ flex-direction: column; align-items: stretch; gap: 6px; }
+  .chart-label{ width: auto !important; text-align: left; font-size: 15px !important; }
+  .a-header { flex-wrap: wrap; }
+  .a-kpis { white-space: normal; }
+  .chart-medios{ width: auto; }
+  .freq-table{ display:block; overflow-x:auto; }
+  .modal-panel{ width: 92% !important; max-width: 100% !important; border-radius: 12px; box-sizing: border-box !important; }
+  .freq-table-card, .cat-bar-card, .coverage-card { padding: 16px 12px !important; }
+  .chart-label { width: auto !important; font-size: 14px !important; }
+  .layout-2-cols { display: grid !important; grid-template-columns: 1fr !important; }
+  .col-main, .col-sidebar { display: contents !important; }
+
+  .col-main > div:nth-child(1) { order: 1; position: relative; } /* Resumen Ejecutivo */
+  .col-sidebar > .cat-bar-card { order: 2; }
+  .col-sidebar > .concentracion-card { order: 3; }
+  .col-main > div:nth-child(2) { order: 4; } /* Jerarquía de temas */
+  .col-sidebar > .coverage-card { order: 5; }
+  .col-sidebar > .emergentes-grid,
+  .col-sidebar > div:has(> .emergentes-grid) { order: 6; }
+  .col-sidebar > .freq-table-card { order: 7; }
+
+  .col-sidebar > .sidebar-toggle-row {
+    position: relative !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-right: 4px !important;
+    order: 0;
+  }
+}
+
+.index-row { cursor: pointer !important; transition: background 0.2s ease, padding 0.2s ease; border-radius: 6px; padding: 4px; margin: -4px; }
+.index-row:hover { background: rgba(0,0,0,0.03); }
+
+.highlight-card { animation: flashCard 1.5s ease-out !important; }
+@keyframes flashCard {
+    0%   { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); }
+    15%  { box-shadow: 0 0 0 3px var(--amber), 0 15px 30px rgba(200,136,10,0.25); transform: translateY(-3px) scale(1.01); border-color: var(--amber); }
+    100% { box-shadow: 0 1px 4px rgba(15,33,55,0.05); transform: scale(1); border-color: var(--border); }
+}
+
+.cat-wrapper { margin-bottom: 7px; }
+.cat-row { cursor: pointer !important; padding: 4px; margin: -4px; border-radius: 6px; transition: background 0.2s ease; }
+.cat-row:hover { background: rgba(0,0,0,0.03); }
+.cat-topics-list { display: none; list-style: none; padding: 8px 10px 6px 14px; margin: 6px 0 2px 8px; background: var(--bg-card-2); border-left: 2px solid var(--border); border-radius: 0 4px 4px 0; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.cat-topics-list.open { display: block; animation: slideDown 0.2s ease-out; }
+.cat-topics-list li { padding: 5px 6px; margin-bottom: 2px; cursor: pointer; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+.cat-topics-list li:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+.cat-toggle-icon { transition: transform 0.3s ease; }
+.cat-wrapper.is-open .cat-toggle-icon { transform: rotate(180deg); }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.theme-toggle-btn {
+  position: absolute; top: -5px; right: 0; z-index: 10;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary);
+  border-radius: 20px; padding: 4px 12px; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.05);
+}
+.theme-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+
+.right-panel > .section-label { margin-bottom: 4px !important; }
+
+.cat-row, .index-row { transition: background 0.2s ease, transform 0.2s ease !important; }
+.cat-row:hover, .index-row:hover { transform: translateX(6px) !important; }
+body.dark-mode .cat-row:hover, body.dark-mode .index-row:hover { background: rgba(255, 255, 255, 0.06) !important; }
+
+.ind-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.ind-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid; background: transparent; }
+
+.brief-ejecutivo { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 6px; padding: 22px 28px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,33,55,0.06); }
+.brief-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.brief-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); }
+.brief-semaforo { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; padding: 4px 12px; border-radius: 999px; }
+.brief-parrafo { font-size: 14px; line-height: 1.7; color: var(--text-primary); margin-bottom: 14px; }
+.brief-implicaciones { list-style: none; padding: 0; margin: 0 0 12px 0; display: flex; flex-direction: column; gap: 6px; }
+.brief-implicaciones li { font-size: 13px; line-height: 1.55; color: var(--text-secondary); padding-left: 14px; position: relative; }
+.brief-implicaciones li::before { content: "›"; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+.brief-narrativa { font-size: 13px; line-height: 1.55; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+.brief-narrativa-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 4px; }
+
+.emergente-reason { font-size: 13px; font-style: italic; color: var(--amber-d); line-height: 1.55; border-left: 2px solid var(--amber); padding-left: 8px; margin-top: 2px; }
+
+.brief-tactico { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; background: #162032; border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 26px; }
+.brief-alerta { padding-left: 2px; margin-bottom: 16px; }
+.semaforo-badge { font-family: var(--font-mono); font-weight: 700; color: #ffffff; padding: 3px 9px; border-radius: 4px; font-size: 12px; margin-right: 10px; }
+.alerta-texto { font-weight: 700; color: var(--text-primary); }
+.brief-panorama h4, .brief-tensiones h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: #f0c060; margin-top: 0; margin-bottom: 8px; }
+.brief-panorama p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+.brief-tensiones ul { padding-left: 16px; margin: 0; color: var(--text-secondary); }
+.brief-tensiones li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+
+.categoria-contenedor { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.categoria-titulo { font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.tarjeta-nivel-a { background: #1d2a40; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.tarjeta-nivel-a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-color: var(--border-glow); }
+.a-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+.a-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.a-kpis { display: flex; gap: 8px; white-space: nowrap; }
+.kpi-chip { font-family: var(--font-mono); font-size: 11px; background: var(--kpi-chip-bg); padding: 3px 8px; border-radius: 4px; color: var(--text-muted); }
+.a-sumilla { font-size: 14px; line-height: 1.5; color: var(--text-secondary); margin-bottom: 16px; }
+
+.a-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--dash-box-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+.dash-box strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: #f0c060; margin-bottom: 6px; }
+.dash-box p { font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+.a-dashboard .dash-box:nth-child(2) { padding-left: 14px; }
+
+.grid-nivel-b { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.tarjeta-nivel-b { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+.tarjeta-nivel-b:hover { transform: translateY(-2px); background: rgba(0,0,0,0.04); border-color: var(--border-glow); }
+body.dark-mode .tarjeta-nivel-b:hover { background: #1d2a40; }
+.b-kpis { font-family: var(--font-mono); font-size: 11px; color: #f0c060; margin-bottom: 8px; }
+.b-sumilla { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+
+.lista-nivel-c { background: rgba(0, 0, 0, 0.1); border-radius: 4px; padding: 8px 12px; }
+.lista-nivel-c summary { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); cursor: pointer; }
+.lista-nivel-c summary:hover { color: var(--text-primary); }
+.lista-nivel-c ul { margin: 8px 0 0 0; padding-left: 16px; }
+.lista-nivel-c li { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; cursor: pointer; }
+.lista-nivel-c li:hover { color: #f0c060; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .brief-tactico, .a-dashboard, .grid-nivel-b { grid-template-columns: 1fr !important; }
+}
+
+.sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-left: 2px solid var(--amber);
+  padding-left: 8px;
+  margin-bottom: 14px;
+}
+.concentracion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(15,33,55,0.06);
+}
+.concentracion-svg {
+  width: 100%;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: block;
+  margin-top: 4px;
+}
+.concentracion-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--text-secondary);
+}
+.concentracion-legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.chart-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ───────── MEJORAS PUNTO 4: INTERACTIVIDAD DONA ───────── */
+.donut-legend-item.legend-hoverable { 
+  transition: background 0.2s ease, transform 0.2s ease; 
+  padding: 5px 6px; 
+  margin: -5px -6px 3px -6px; 
+  border-radius: 6px; 
+}
+.donut-legend-item.legend-hoverable:hover { 
+  background: rgba(0,0,0,0.04); 
+  transform: translateX(4px); 
+}
+body.dark-mode .donut-legend-item.legend-hoverable:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+}
+.legend-text { font-size: 12.5px; }
+.legend-text strong { 
+  color: var(--text-primary); 
+  font-size: 13px; 
+  font-weight: 700;
+}
+/* --- MENÚ DESPLEGABLE --- */
+.menu-toggle-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); border-radius: 20px; padding: 4px 12px; height: 26px; cursor: pointer; display: flex; align-items: center; transition: all 0.25s ease; box-shadow: 0 1px 4px rgba(15,33,55,0.05); }
+.menu-toggle-btn:hover { border-color: var(--amber); box-shadow: 0 4px 10px rgba(15,33,55,0.1); transform: translateY(-2px); }
+.dropdown-menu { display: none; position: absolute; top: 32px; right: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(15,33,55,0.1); z-index: 9999; flex-direction: column; min-width: 170px; overflow: hidden; }
+.dropdown-menu.show { display: flex; }
+.dropdown-menu a { padding: 12px 16px; text-decoration: none; color: var(--text-primary); font-family: var(--font-body); font-size: 13px; border-bottom: 1px solid var(--border); transition: background 0.2s; text-align: left; }
+.dropdown-menu a:last-child { border-bottom: none; }
+.dropdown-menu a:hover { background: rgba(0,0,0,0.03); color: var(--amber-d); }
+body.dark-mode .dropdown-menu { background: var(--bg-card-2); border-color: var(--border); }
+body.dark-mode .dropdown-menu a:hover { background: rgba(255,255,255,0.05); }
+@media (max-width: 768px){ .dropdown-menu { right: -40px; } }
+
+/* --- ESTILOS DEL DESCARGO DE RESPONSABILIDAD (TARJETA CENTRADA) --- */
+.ai-disclaimer { 
+    max-width: 850px; 
+    margin: 0 auto 32px auto; 
+    padding: 20px 28px; 
+    background: var(--bg-card); 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    font-size: 12.5px; 
+    color: var(--text-secondary); 
+    line-height: 1.6; 
+    text-align: center; 
+    box-shadow: 0 1px 4px rgba(15,33,55,0.05); 
+}
+body.dark-mode .ai-disclaimer { background: var(--bg-card-2); }
+@media (max-width: 880px) { 
+    .ai-disclaimer { margin: 0 16px 32px 16px; text-align: left; } 
+}
+</style>
+<style>
+body.dark-mode {
+  --bg-base:     #0f2137;
+  --bg-card:     #152b47;
+  --bg-card-2:   #1D2A40;
+  --bg-subtle:   #374151;
+  --border:      #2A3A54;
+  --border-glow: #5C6E8A;
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-accent:    #FBBF24;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.top3-card, .freq-table-card, .cat-bar-card, .coverage-card, .topic-card, .emergente-card, .modal-panel {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.layout-2-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .layout-2-cols { grid-template-columns: 1fr; }
+}
+.col-main { display: flex; flex-direction: column; gap: 20px; }
+.col-sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+body.dark-mode .theme-toggle-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-primary);
+}
+body.dark-mode .theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--border-glow);
+}
+
+body.dark-mode .topic-big-n,
+body.dark-mode .rank-num {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.45) !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.15) !important;
+}
+</style>
+<style id="bm-paywall-css">
+/* ── Paywall visual ── */
+body:not(.bm-unlocked) [data-bm-premium] {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+}
+
+/* Overlay de invitación */
+#bm-paywall-overlay {
+    position: relative;
+    margin: -40px 0 32px 0;
+    z-index: 50;
+}
+body.bm-unlocked #bm-paywall-overlay {
+    display: none !important;
+}
+
+.bm-paywall-box {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #f0f4f8 8%, #f0f4f8 100%);
+    padding: 60px 32px 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Versión dark mode */
+body.dark-mode .bm-paywall-box {
+    background: linear-gradient(180deg, rgba(26,52,80,0) 0%, #0f2137 8%, #0f2137 100%);
+}
+
+.bm-paywall-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #d5e0ec;
+    border-radius: 8px;
+    padding: 36px 32px;
+    box-shadow: 0 8px 32px rgba(15,33,55,0.12);
+}
+body.dark-mode .bm-paywall-inner {
+    background: #1a3450;
+    border-color: rgba(200,136,10,0.3);
+}
+
+.bm-paywall-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.bm-paywall-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #0f2137;
+    margin-bottom: 8px;
+}
+body.dark-mode .bm-paywall-title { color: #ffffff; }
+
+.bm-paywall-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4a6480;
+    margin-bottom: 20px;
+}
+body.dark-mode .bm-paywall-text { color: #a8b4c4; }
+
+.bm-paywall-cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #d89610, #c8880a);
+    color: #fff;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.bm-paywall-cta:hover { filter: brightness(1.1); }
+
+.bm-paywall-code-area {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+body.dark-mode .bm-paywall-code-area { border-color: rgba(255,255,255,0.1); }
+
+.bm-paywall-code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #92aabf;
+    margin-bottom: 8px;
+}
+
+.bm-paywall-code-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bm-paywall-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border: 2px solid #d5e0ec;
+    border-radius: 4px;
+    width: 180px;
+    text-align: center;
+    color: #0f2137;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.bm-paywall-input:focus { border-color: #c8880a; }
+body.dark-mode .bm-paywall-input {
+    background: #0f2137;
+    border-color: rgba(200,136,10,0.3);
+    color: #f0c060;
+}
+
+.bm-paywall-activate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    background: #0f2137;
+    color: #f0c060;
+    border: 2px solid #0f2137;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bm-paywall-activate:hover { background: #1a3450; }
+body.dark-mode .bm-paywall-activate {
+    background: #c8880a;
+    color: #0f2137;
+    border-color: #c8880a;
+}
+
+.bm-paywall-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.bm-paywall-msg.ok { color: #27ac3d; }
+.bm-paywall-msg.err { color: #ba3030; }
+
+/* Badge de suscriptor (visible solo cuando está desbloqueado) */
+#bm-badge {
+    display: none;
+}
+body.bm-unlocked #bm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #c8880a;
+    background: rgba(200,136,10,0.08);
+    border: 1px solid rgba(200,136,10,0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 999;
+}
+
+/* ── Paywall responsive (móvil) ── */
+@media (max-width: 768px) {
+    .bm-paywall-box { padding: 40px 10px 24px; }
+    .bm-paywall-inner { padding: 24px 16px; }
+    .bm-paywall-code-row { flex-direction: column; }
+    .bm-paywall-input { width: 100%; box-sizing: border-box; }
+}
+</style>
+<meta content="Bolimétrica · 2026-11-05" property="og:title"/><meta content="Análisis diario de cobertura mediática en Bolivia." property="og:description"/><meta content="https://bolimetrica.com/informes/2026-11-05-CQvwdF.html" property="og:url"/><meta content="summary" property="twitter:card"/></head>
+<body>
+<!-- ════════════ HEADER ════════════ -->
+<header class="header">
+<div class="header-left">
+<a class="brand" href="https://bolimetrica.com" style="text-decoration: none; color: #FFFFFF;">Boli<span>métrica</span></a>
+<div class="brand-sub">Monitoreo de medios · Bolivia</div>
+</div>
+<div class="header-meta"><div class="meta-pill">
+<div class="meta-val">210</div>
+<div class="meta-lbl">Titulares</div>
+</div><div class="meta-pill">
+<div class="meta-val">13</div>
+<div class="meta-lbl">Temas</div>
+</div><div class="meta-pill">
+<div class="meta-val">8</div>
+<div class="meta-lbl">Categorías</div>
+</div><div class="meta-pill">
+<div class="meta-val">17</div>
+<div class="meta-lbl">Medios</div>
+</div></div>
+<div class="header-date"><div class="header-date">
+<strong>Publicación: 05-NOVIEMBRE-2026 | 7:00 AM</strong><br/>
+            Reporte N° B24-20261105<br/>
+            Cobertura: últimas 24 horas<br/>
+            (00:00 a 23:59 del 04/11/2026)
+          </div></div>
+</header><div class="layout-2-cols"><div class="col-main"><div><h3 class="section-label">RESUMEN EJECUTIVO</h3><div class="brief-tactico">
+<div class="brief-col-izq">
+<div class="brief-alerta" style="border-left: 4px solid #ba3030;">
+<span class="semaforo-badge" style="background:#ba3030;">🔴 ROJO</span>
+<span class="alerta-texto">La agenda mediática está dominada por temas de justicia, exilios de altas autoridades y procesos penales contra figuras políticas, generando un ambiente de alta tensión.</span>
+</div>
+<div class="brief-panorama">
+<h4>PANORAMA ESTRATÉGICO</h4>
+<p>La agenda mediática se centra en la situación judicial, marcada por el exilio del Presidente del TSJ, Romer Saucedo, y la asunción temporal de Rosmery Ruiz. La Fiscalía ha activado una orden de aprehensión y gestiona un sello rojo contra Saucedo. Paralelamente, el exvicepresidente García Linera ha salido del país en medio de investigaciones, y nuevos procesos penales se inician tras peritajes al celular de Cerimedo. En el ámbito legislativo, la Cámara de Diputados convoca a sesión para posesionar su directiva, mientras la Asamblea Legislativa programa su sesión de clausura. El Presidente Paz promueve inversiones en España, y el Viceministro Maldonado identifica autores de amenazas. Gobernadores rechazan la propuesta de coparticipación tributaria, y movimientos sociales como el magisterio y la Asamblea de la Paceñidad inician acciones contra políticas gubernamentales.</p>
+</div>
+</div>
+<div class="brief-col-der">
+<div class="brief-tensiones">
+<h4>MAPA DE TENSIONES</h4>
+<ul><li><strong>Fiscalía/Gobierno vs Romer Saucedo/García Linera:</strong> Activación de procesos penales y órdenes de aprehensión contra exautoridades que han salido del país, generando un vacío en la presidencia del TSJ.</li><li><strong>Cámara de Diputados vs Facciones internas:</strong> Convocatoria a sesión para posesionar la directiva legislativa en un contexto de denuncias y tensiones internas.</li><li><strong>Gobierno Central vs Actores Regionales y Sociales:</strong> Rechazo de gobernadores a la coparticipación tributaria y movilizaciones del magisterio y la Asamblea de la Paceñidad contra políticas educativas y tributarias.</li><li><strong>Viceministro Maldonado vs Mariaca (y vinculados):</strong> Identificación de autores de amenazas y su vinculación con figuras específicas, señalando tensiones en el ámbito de seguridad.</li></ul>
+</div>
+</div>
+</div></div><div>
+<div class="top3-stack">
+<div class="categoria-contenedor" style="border-top: 3px solid var(--c-10);">
+<h2 class="categoria-titulo" style="color: var(--c-10);">JUSTICIA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_10" onclick="openModal('modal_10')">
+<div class="a-header">
+<div class="a-title">#1 - Presidente del TSJ, Romer Saucedo, se exilia alegando peligro</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 45 Titulares</span>
+<span class="kpi-chip">🏢 13 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El presidente del TSJ, Romer Saucedo, salió de Bolivia junto a su familia y afirmó que su vida y libertad están en peligro. Su salida generó reacciones políticas: Rodríguez Veltzé y Tuto Quiroga la señalaron como reflejo de la crisis judicial, mientras Rodrigo Paz la vinculó a cuestionamientos al sistema de justicia.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La narrativa está siendo impulsada por Romer Saucedo y la oposición política, quienes denuncian una profunda crisis judicial, persecución política y la toma de la justicia por parte del poder político. El gobierno, a través del Presidente Paz y su vocero, intenta minimizar la situación, calificándola de "penosa pero alentadora a futuro" y negando investigaciones, pero su postura defensiva no logra contrarrestar la percepción de crisis institucional.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Romer Saucedo desde el exilio, con posibles nuevas declaraciones o revelaciones, y la oposición política (legisladores, expresidentes y comités cívicos) que demandan investigaciones y reformas judiciales, tienen el mayor potencial para amplificar y agravar este tema en las próximas 48 horas. La pugna política entre el Gobierno y el Órgano Judicial, exacerbada por la situación, también podría escalar rápidamente.</p>
+</div>
+</div>
+</div>
+<div id="bm-paywall-overlay">
+<div class="bm-paywall-box">
+<div class="bm-paywall-inner">
+<div class="bm-paywall-icon">🔒</div>
+<div class="bm-paywall-title">Reporte completo</div>
+<div class="bm-paywall-text">
+        El reporte completo incluye todos los temas del día, señales emergentes,
+        términos frecuentes y acceso al archivo histórico.<br/>
+        Disponible para suscriptores de Bolimétrica.
+      </div>
+<a class="bm-paywall-cta" href="https://wa.me/59177305687?text=Hola.%20Quiero%20suscribirme%20a%20Bolim%C3%A9trica." rel="noopener" target="_blank">
+        Solicitar acceso
+      </a>
+<div class="bm-paywall-code-area">
+<div class="bm-paywall-code-label">¿Ya tienes un código?</div>
+<div class="bm-paywall-code-row">
+<input autocomplete="off" class="bm-paywall-input" id="bm-code-input" maxlength="12" placeholder="BM-XXXXXX" spellcheck="false" type="text"/>
+<button class="bm-paywall-activate" onclick="bmActivar()">Activar</button>
+</div>
+<div class="bm-paywall-msg" id="bm-code-msg"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" data-bm-premium="1" id="card_14" onclick="openModal('modal_14')">
+<div class="a-header">
+<div class="a-title">#3 - Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 30 Titulares</span>
+<span class="kpi-chip">🏢 15 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El Tribunal Supremo de Justicia convocó a Sala Plena de emergencia para definir la titularidad de su presidencia tras la salida del país de Romer Saucedo. La decana Rosmery Ruiz asumió temporalmente el cargo por seis días, mientras se analiza la situación institucional.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Tribunal Supremo de Justicia (TSJ), a través de su Sala Plena y la Decana Rosmery Ruiz, está impulsando la agenda y tiene la ventaja al tomar control de la situación. Están estableciendo la continuidad institucional, designando una presidencia temporal y fijando plazos ante la ausencia de Saucedo. Saucedo, al estar ausente y ser objeto de acusaciones, se encuentra en una posición reactiva y debilitada.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El factor más crítico para la escalada en las próximas 48 horas es la respuesta de Romer Saucedo ante el plazo de seis días fijado por el TSJ para su retorno. Su decisión de regresar, emitir un comunicado, o iniciar acciones legales podría confrontar directamente la presidencia temporal. Además, las acusaciones políticas contra Saucedo (como ser parte de un "clan de narcofiscales") y cualquier declaración o acción del Gobierno podrían amplificar la crisis judicial y política.</p>
+</div>
+</div>
+</div>
+<div class="tarjeta-nivel-a" data-bm-premium="1" id="card_7a" onclick="openModal('modal_7a')">
+<div class="a-header">
+<div class="a-title">#7 - García Linera sale del país en medio de investigaciones por caso Hotel Las Américas</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 12 Titulares</span>
+<span class="kpi-chip">🏢 10 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El Gobierno confirmó que el exvicepresidente Álvaro García Linera viajó a Argentina en medio de investigaciones vinculadas al caso Hotel Las Américas. Paralelamente, se suspendieron las declaraciones de Rubén Costas y Jaime Soliz por la inasistencia de fiscales, mientras continúan las pesquisas sobre el operativo.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Gobierno de Rodrigo Paz controla la narrativa, informando activamente sobre la salida de García Linera a Argentina y las implicaciones legales. La administración actual tiene la ventaja al establecer la agenda y la percepción pública sobre el paradero y la situación legal del exvicepresidente.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La principal escalada en las próximas 48 horas provendrá de las acciones legales del Gobierno, como la posible declaración de García Linera como 'rebelde' o la emisión de una orden de aprehensión si no declara. Cualquier declaración o movimiento de García Linera desde Argentina o de Evo Morales desde el Chapare en respuesta a estas presiones también podría agravar la situación.</p>
+</div>
+</div>
+</div>
+<div class="grid-nivel-b" data-bm-premium="1">
+<div class="tarjeta-nivel-b" id="card_2" onclick="openModal('modal_2')">
+<div class="b-title">#10 - Peritaje a celular de Cerimedo revela audios; Fiscalía inicia procesos penales</div>
+<div class="b-kpis">7 Tit. | 5 Med.</div>
+<div class="b-sumilla">Un peritaje al celular de Fernando Cerimedo revela la existencia de 1.108 audios, descartando que alguno haya sido creado con Inteligencia Artificial. Ante esta información, Bilbao rechaza el contenido de un audio atribuido a Cerimedo y anuncia procesos penales en su contra, mientras la Fiscalía investiga los audios mediante una comisión.</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-04);">
+<h2 class="categoria-titulo" style="color: var(--c-04);">NARCOTRÁFICO</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_8" onclick="openModal('modal_8')">
+<div class="a-header">
+<div class="a-title">#2 - Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 44 Titulares</span>
+<span class="kpi-chip">🏢 16 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">La Fiscalía activó una orden de aprehensión contra el expresidente del TSJ, Romer Saucedo, por presuntos vínculos con narcotráfico y organización criminal, y gestiona una alerta roja de Interpol. Autoridades de Gobierno relacionaron su salida del país con el caso Mariaca y señalaron posibles vínculos entre ambos.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>La Fiscalía y el Gobierno impulsan la agenda y tienen la ventaja. Están activamente gestionando órdenes de aprehensión y el sello rojo de Interpol contra Romer Saucedo, además de vincularlo públicamente con narcotráfico, organización criminal y el caso Mariaca. Saucedo se encuentra a la defensiva, autoexiliado y con procesos abiertos en su contra.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La activación del 'sello rojo' de Interpol es el factor más inmediato que puede amplificar el tema, internacionalizando la búsqueda y potencial aprehensión de Saucedo en las próximas 48 horas. La ubicación actual de Saucedo y la respuesta de las autoridades del país donde se encuentre serán clave. Además, las implicaciones políticas de un alto funcionario judicial acusado de narcotráfico podrían generar mayor tensión y revelaciones.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-18);">
+<h2 class="categoria-titulo" style="color: var(--c-18);">RELACIONES INTERNACIONALES</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_6a" onclick="openModal('modal_6a')">
+<div class="a-header">
+<div class="a-title">#4 - Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 17 Titulares</span>
+<span class="kpi-chip">🏢 9 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Durante su visita a España, Rodrigo Paz promovió oportunidades de inversión en minería y tecnología, y afirmó que Bolivia pone fin a dos décadas de aislamiento. Además, se reunió con el titular de Repsol y anunció una próxima visita oficial de la petrolera al país para abordar temas energéticos.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Presidente Paz impulsa activamente la agenda, presentándose como el líder que rompe el aislamiento y atrae inversiones cruciales, especialmente en hidrocarburos con Repsol. Él tiene la ventaja al definir la narrativa de una 'nueva etapa' para Bolivia.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La materialización de acuerdos concretos con Repsol o la reacción de actores políticos y económicos en Bolivia ante las propuestas de leyes de inversión, hidrocarburos y minería podrían amplificar o agravar el tema en las próximas 48 horas.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-07);">
+<h2 class="categoria-titulo" style="color: var(--c-07);">VIOLENCIA Y SEGURIDAD</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_17" onclick="openModal('modal_17')">
+<div class="a-header">
+<div class="a-title">#5 - Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 15 Titulares</span>
+<span class="kpi-chip">🏢 12 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">El viceministro Maldonado informa que ha identificado a los autores de las amenazas en su contra, anunciando acciones legales y vinculando a los responsables con redes criminales atribuidas a Mariaca.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>El Viceministro Maldonado y el Gobierno controlan la narrativa, presentándose como proactivos y decisivos al identificar a los autores de las amenazas y vincularlos a Mariaca, descartando la renuncia y anunciando acciones. Tienen la ventaja al impulsar la agenda de persecución de los responsables.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>La inminente acción policial para capturar a los individuos identificados y vinculados a las redes criminales de Mariaca. Esto podría generar una confrontación directa o una respuesta por parte de dichos grupos en las próximas 48 horas.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-21);">
+<h2 class="categoria-titulo" style="color: var(--c-21);">LEGISLATIVA</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_5" onclick="openModal('modal_5')">
+<div class="a-header">
+<div class="a-title">#6 - Cámara de Diputados convoca sesión para posesionar directiva entre denuncias</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 12 Titulares</span>
+<span class="kpi-chip">🏢 11 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">En medio de denuncias por irregularidades y pedidos de reconsideración, se convoca a sesión de la Cámara de Diputados para este jueves con el fin de posesionar a la nueva directiva encabezada por Roberto Castro, cuya reelección es respaldada por una facción del PDC mientras otros piden reconteo de votos.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Roberto Castro y su facción del PDC, respaldados por la convocatoria institucional de la Cámara de Diputados, tienen la ventaja operativa. Están impulsando la agenda al asegurar la posesión de la directiva a pesar de las denuncias de irregularidades y los recursos legales presentados por la oposición. La narrativa dominante es la de un proceso que avanza, mientras la oposición se enfoca en cuestionar su legitimidad.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>Los diputados de oposición que han presentado el Amparo y denuncian irregularidades (Herbas, Claros, Pacheco, Diputada de Libre) son los actores clave. Si el Amparo no prospera o es desestimado antes de la posesión, es probable que intensifiquen sus acciones legales o parlamentarias, como el desconocimiento de la directiva, lo que podría generar una crisis de legitimidad y gobernabilidad en la Cámara de Diputados en las próximas 48 horas. El factor legal (resolución del Amparo) es el más inmediato para amplificar o agravar el tema.</p>
+</div>
+</div>
+</div>
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de LEGISLATIVA</summary>
+<ul>
+<li id="card_N002" onclick="openModal('modal_N002')">
+<strong>Asamblea Legislativa programa sesión de clausura para legislatura 2025-2026</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-03);">
+<h2 class="categoria-titulo" style="color: var(--c-03);">GOBIERNO</h2>
+<div class="categoria-body">
+<div class="tarjeta-nivel-a" id="card_4" onclick="openModal('modal_4')">
+<div class="a-header">
+<div class="a-title">#8 - Gobernadores rechazan 1% de coparticipación tributaria y exigen 5%</div>
+<div class="a-kpis">
+<span class="kpi-chip">📊 10 Titulares</span>
+<span class="kpi-chip">🏢 7 Medios</span>
+</div>
+</div>
+<div class="a-sumilla">Gobernadores y vicegobernadores se reúnen para analizar la coparticipación tributaria, rechazando la propuesta del 1% y planteando que el porcentaje de inicio debe ser del 5%, argumentando una necesidad de desconcentrar el poder.</div>
+<div class="a-dashboard">
+<div class="dash-box">
+<strong>🔄 POLARIDAD NARRATIVA</strong>
+<p>Los gobernadores impulsan la agenda, rechazando la oferta del 1% de coparticipación tributaria y exigiendo un 5% o más. Tienen la ventaja narrativa al presentarse como defensores de la descentralización y contar con el respaldo de expertos, mientras la propuesta del gobierno central es percibida como insuficiente y un retroceso.</p>
+</div>
+<div class="dash-box" style="border-left: 2px solid #ba3030;">
+<strong>🚀 POTENCIAL DE ESCALADA</strong>
+<p>El Gobernador Aguirre de Santa Cruz es el actor con mayor potencial para amplificar el conflicto en las próximas 48 horas, al haber anunciado "medidas de presión". La unidad de los gobernadores en el rechazo y la retórica sobre la "desconcentración del poder" también pueden agravar la situación si estas medidas se materializan.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-08);">
+<h2 class="categoria-titulo" style="color: var(--c-08);">MOVIMIENTOS SOCIALES</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_1" onclick="openModal('modal_1')">
+<div class="b-title">#9 - Magisterio inicia huelga y paro nacional contra descentralización educativa</div>
+<div class="b-kpis">7 Tit. | 6 Med.</div>
+<div class="b-sumilla">El Magisterio instala piquetes de huelga de hambre y anuncia un paro nacional de 48 horas para el 9 y 10 de noviembre, rechazando la descentralización educativa. El Ministerio de Educación advierte con descuentos a los maestros que acaten las medidas de presión.</div>
+</div>
+</div>
+<details class="lista-nivel-c">
+<summary>Ver 1 temas con baja cobertura de MOVIMIENTOS SOCIALES</summary>
+<ul>
+<li id="card_N001" onclick="openModal('modal_N001')">
+<strong>Asamblea de la Paceñidad rechaza Ley de alivio tributario y plantea acciones</strong> (3 titulares)
+                </li>
+</ul>
+</details>
+</div></div>
+<div class="categoria-contenedor" data-bm-premium="1" style="border-top: 3px solid var(--c-05);">
+<h2 class="categoria-titulo" style="color: var(--c-05);">POLÍTICA</h2>
+<div class="categoria-body">
+<div class="grid-nivel-b">
+<div class="tarjeta-nivel-b" id="card_3a" onclick="openModal('modal_3a')">
+<div class="b-title">#11 - Vicepresidente Lara asegura que no huirá del país ante procesos legales</div>
+<div class="b-kpis">5 Tit. | 5 Med.</div>
+<div class="b-sumilla">El Vicepresidente Edmand Lara asegura reiteradamente que no huirá del país, pese a la advertencia de posibles procesos legales en su contra, afirmando que se quedará a dar la cara.</div>
+</div>
+</div>
+</div></div></div>
+</div></div><div class="col-sidebar"><div class="sidebar-toggle-row">
+<div style="position:relative; display:inline-block; margin-right:8px;">
+<button aria-label="Menú de opciones" class="menu-toggle-btn" id="menuToggle" title="Menú">
+<span class="toggle-icon" style="display:flex; align-items:center; justify-content:center;">
+<svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
+</span>
+</button>
+<div class="dropdown-menu" id="dropdownMenu">
+<a href="https://www.bolimetrica.com/">Inicio</a>
+<a href="https://www.bolimetrica.com/informes/">Informes anteriores</a>
+<a href="https://www.bolimetrica.com/lineas/">Líneas de tiempo</a>
+</div>
+</div>
+<button aria-label="Alternar modo oscuro" class="theme-toggle-btn" id="themeToggle" title="Cambiar tema">
+<span class="toggle-icon">🌙</span>
+</button></div><div class="concentracion-card">
+<h3 class="sidebar-title">CONCENTRACIÓN DE LA AGENDA</h3>
+<div class="donut-wrap">
+<svg aria-label="Concentración de la agenda: Top 5 temas vs. resto" class="donut-svg" role="img" viewbox="0 0 100 100">
+<circle class="donut-arc" cx="50" cy="50" data-label="Presidente del TSJ, Romer Saucedo, se exilia alegando peligro" data-pct="21.4" data-val="45" fill="transparent" onclick="scrollToCard('card_10')" r="40" stroke="var(--c-10)" stroke-dasharray="53.856 197.472" stroke-dashoffset="-0.000" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 81.3, 74.9)" x="81.3" y="74.9">
+                21%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo" data-pct="21.0" data-val="44" fill="transparent" onclick="scrollToCard('card_8')" r="40" stroke="var(--c-04)" stroke-dasharray="52.659 198.668" stroke-dashoffset="-53.856" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 33.2, 86.3)" x="33.2" y="86.3">
+                21%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo" data-pct="14.3" data-val="30" fill="transparent" onclick="scrollToCard('card_14')" r="40" stroke="var(--c-10)" stroke-dasharray="35.904 215.423" stroke-dashoffset="-106.515" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 10.0, 51.2)" x="10.0" y="51.2">
+                14%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia" data-pct="8.1" data-val="17" fill="transparent" onclick="scrollToCard('card_6a')" r="40" stroke="var(--c-18)" stroke-dasharray="20.346 230.982" stroke-dashoffset="-142.419" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 18.7, 25.1)" x="18.7" y="25.1">
+                8%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca" data-pct="7.1" data-val="15" fill="transparent" onclick="scrollToCard('card_17')" r="40" stroke="var(--c-07)" stroke-dasharray="17.952 233.375" stroke-dashoffset="-162.764" stroke-width="16" style="cursor: pointer;" title="Ir al tema">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 33.7, 13.5)" x="33.7" y="13.5">
+                7%
+              </text>
+<circle class="donut-arc" cx="50" cy="50" data-label="Resto" data-pct="28.1" data-val="59" fill="transparent" r="40" stroke="var(--bg-subtle)" stroke-dasharray="70.611 180.716" stroke-dashoffset="-180.716" stroke-width="16" style="">
+</circle>
+<text dominant-baseline="central" fill="#ffffff" font-family="var(--font-mono)" font-size="6" font-weight="800" pointer-events="none" style="text-shadow: 0px 1px 3px rgba(0,0,0,0.7);" text-anchor="middle" transform="rotate(90, 75.4, 19.1)" x="75.4" y="19.1">
+                28%
+              </text>
+</svg>
+</div>
+<ul class="concentracion-legend donut-legend">
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_10')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Presidente del TSJ, Romer Saucedo, se exilia alegando peligro</strong> (45 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_8')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-04)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo</strong> (44 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_14')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-10)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo</strong> (30 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_6a')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-18)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia</strong> (17 titulares)</span>
+</li>
+<li class="donut-legend-item legend-hoverable" onclick="scrollToCard('card_17')" style="cursor: pointer;" title="Ir al tema">
+<span class="dot" style="background:var(--c-07)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca</strong> (15 titulares)</span>
+</li>
+<li class="donut-legend-item" style="">
+<span class="dot" style="background:var(--bg-subtle)"></span>
+<span class="legend-text" style="line-height: 1.35;"><strong>Resto</strong> (59 titulares)</span>
+</li>
+</ul>
+</div><div class="cat-bar-card" data-bm-premium="1">
+<div class="section-label">Cobertura por categoría</div>
+<div class="cat-bars">
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_JUSTICIA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-10)"></div>
+<div class="cat-name">JUSTICIA</div>
+<div class="cat-track"><div class="cat-fill" style="width:100%;background:var(--c-10)"></div></div>
+<div class="cat-n">94</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_JUSTICIA"><li onclick="scrollToCard('card_10'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">1.</span> Presidente del TSJ, Romer Saucedo, se exilia alegando peligro</li><li onclick="scrollToCard('card_14'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">3.</span> Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo</li><li onclick="scrollToCard('card_7a'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">7.</span> García Linera sale del país en medio de investigaciones por caso Hotel Las Américas</li><li onclick="scrollToCard('card_2'); event.stopPropagation();"><span style="color:var(--c-10); font-weight:700;">10.</span> Peritaje a celular de Cerimedo revela audios; Fiscalía inicia procesos penales</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_NARCOTR_FICO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-04)"></div>
+<div class="cat-name">NARCOTRÁFICO</div>
+<div class="cat-track"><div class="cat-fill" style="width:47%;background:var(--c-04)"></div></div>
+<div class="cat-n">44</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_NARCOTR_FICO"><li onclick="scrollToCard('card_8'); event.stopPropagation();"><span style="color:var(--c-04); font-weight:700;">2.</span> Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_RELACIONES_INTERNACIONALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-18)"></div>
+<div class="cat-name">RELACIONES INTERNACIONALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:18%;background:var(--c-18)"></div></div>
+<div class="cat-n">17</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_RELACIONES_INTERNACIONALES"><li onclick="scrollToCard('card_6a'); event.stopPropagation();"><span style="color:var(--c-18); font-weight:700;">4.</span> Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_VIOLENCIA_Y_SEGURIDAD')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-07)"></div>
+<div class="cat-name">VIOLENCIA Y SEGURIDAD</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-07)"></div></div>
+<div class="cat-n">15</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_VIOLENCIA_Y_SEGURIDAD"><li onclick="scrollToCard('card_17'); event.stopPropagation();"><span style="color:var(--c-07); font-weight:700;">5.</span> Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_LEGISLATIVA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-21)"></div>
+<div class="cat-name">LEGISLATIVA</div>
+<div class="cat-track"><div class="cat-fill" style="width:16%;background:var(--c-21)"></div></div>
+<div class="cat-n">15</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_LEGISLATIVA"><li onclick="scrollToCard('card_5'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">6.</span> Cámara de Diputados convoca sesión para posesionar directiva entre denuncias</li><li onclick="scrollToCard('card_N002'); event.stopPropagation();"><span style="color:var(--c-21); font-weight:700;">13.</span> Asamblea Legislativa programa sesión de clausura para legislatura 2025-2026</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_GOBIERNO')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-03)"></div>
+<div class="cat-name">GOBIERNO</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-03)"></div></div>
+<div class="cat-n">10</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_GOBIERNO"><li onclick="scrollToCard('card_4'); event.stopPropagation();"><span style="color:var(--c-03); font-weight:700;">8.</span> Gobernadores rechazan 1% de coparticipación tributaria y exigen 5%</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_MOVIMIENTOS_SOCIALES')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-08)"></div>
+<div class="cat-name">MOVIMIENTOS SOCIALES</div>
+<div class="cat-track"><div class="cat-fill" style="width:11%;background:var(--c-08)"></div></div>
+<div class="cat-n">10</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_MOVIMIENTOS_SOCIALES"><li onclick="scrollToCard('card_1'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">9.</span> Magisterio inicia huelga y paro nacional contra descentralización educativa</li><li onclick="scrollToCard('card_N001'); event.stopPropagation();"><span style="color:var(--c-08); font-weight:700;">12.</span> Asamblea de la Paceñidad rechaza Ley de alivio tributario y plantea acciones</li></ul>
+</div>
+<div class="cat-wrapper">
+<div class="cat-row" onclick="toggleCategory('list_POL_TICA')" title="Clic para expandir/colapsar temas">
+<div class="cat-dot" style="background:var(--c-05)"></div>
+<div class="cat-name">POLÍTICA</div>
+<div class="cat-track"><div class="cat-fill" style="width:5%;background:var(--c-05)"></div></div>
+<div class="cat-n">5</div>
+<div class="cat-toggle-icon" style="color:var(--text-muted); font-size:10px; margin-left:4px;">▼</div>
+</div>
+<ul class="cat-topics-list" id="list_POL_TICA"><li onclick="scrollToCard('card_3a'); event.stopPropagation();"><span style="color:var(--c-05); font-weight:700;">11.</span> Vicepresidente Lara asegura que no huirá del país ante procesos legales</li></ul>
+</div></div><div class="coverage-card" data-bm-premium="1">
+<div class="section-label">Cobertura por tema · Titulares totales</div>
+<div class="chart-area">
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_10')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">1.</span>
+            Presidente del TSJ, Romer Saucedo, se exilia alegando peligro
+            <span class="chart-medios">13 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:100.0%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">45</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_8')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-04); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">2.</span>
+            Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo
+            <span class="chart-medios">16 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:97.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-04))">44</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_14')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">3.</span>
+            Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo
+            <span class="chart-medios">15 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:66.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">30</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_6a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-18); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">4.</span>
+            Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia
+            <span class="chart-medios">9 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:37.8%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-18))">17</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_17')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-07); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">5.</span>
+            Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca
+            <span class="chart-medios">12 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:33.3%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-07))">15</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_7a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">6.</span>
+            García Linera sale del país en medio de investigaciones por caso Hotel Las Américas
+            <span class="chart-medios">10 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">12</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_5')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">7.</span>
+            Cámara de Diputados convoca sesión para posesionar directiva entre denuncias
+            <span class="chart-medios">11 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:26.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">12</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_4')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-03); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">8.</span>
+            Gobernadores rechazan 1% de coparticipación tributaria y exigen 5%
+            <span class="chart-medios">7 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:22.2%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-03))">10</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_2')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-10); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">9.</span>
+            Peritaje a celular de Cerimedo revela audios; Fiscalía inicia procesos penales
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:15.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-10))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_1')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">10.</span>
+            Magisterio inicia huelga y paro nacional contra descentralización educativa
+            <span class="chart-medios">6 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:15.6%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">7</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_3a')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-05); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">11.</span>
+            Vicepresidente Lara asegura que no huirá del país ante procesos legales
+            <span class="chart-medios">5 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:11.1%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-05))">5</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_N002')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-21); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">12.</span>
+            Asamblea Legislativa programa sesión de clausura para legislatura 2025-2026
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-21))">3</div>
+</div>
+</div>
+<div class="chart-row index-row chart-row-vertical" onclick="scrollToCard('card_N001')" title="Clic para ir al tema">
+<div class="chart-label">
+<span style="color:var(--c-08); font-family:var(--font-mono); font-size:13px; font-weight:800; margin-right:6px; display:inline-block; min-width:22px;">13.</span>
+            Asamblea de la Paceñidad rechaza Ley de alivio tributario y plantea acciones
+            <span class="chart-medios">3 medios</span>
+</div>
+<div class="chart-bar-wrap">
+<div class="chart-bar-fill" style="width:6.7%;background:linear-gradient(90deg, rgba(0,0,0,0.15), var(--c-08))">3</div>
+</div>
+</div></div><div class="page">
+<!-- ── COVERAGE CHART ── -->
+<!-- ── TOPICS GRID ── -->
+<!-- ── EMERGENTES ── -->
+<div class="section-label" data-bm-premium="1">SEÑALES EMERGENTES</div>
+<div class="emergentes-grid" data-bm-premium="1"><div class="emergente-card">
+<div class="emergente-text"><a href="https://www.noticiasfides.com/economia/comercializadoras-de-oro-declaran-un-tercio-del-mineral-que-compran-segun-analista-cordova" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Comercializadoras de oro declaran un tercio del mineral que compran, según analista Córdova</a></div>
+<div class="emergente-reason">Revela una posible evasión masiva de impuestos y subdeclaración en la comercialización de oro, con gran impacto económico.</div>
+<div class="emergente-source">Fuente: ANF</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://eldeber.com.bo/pais/exministro-lopez-acusa-saucedo-ser-parte-clan-narcofiscales_1793798821" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Exministro López acusa a Saucedo de ser “parte del clan de narcofiscales”</a></div>
+<div class="emergente-reason">Una acusación directa y muy grave de un exministro contra una figura pública de alto perfil, vinculándola a narcotráfico y corrupción judicial.</div>
+<div class="emergente-source">Fuente: El Deber</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://www.eldiario.net/portal/2026/04/11/autorizan-a-privados-compra-y-venta-de-electricidad-y-gas/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Autorizan a privados compra y venta de electricidad y gas</a></div>
+<div class="emergente-reason">Representa un cambio significativo en la política energética del país, abriendo el sector a actores privados y generando un impacto económico importante.</div>
+<div class="emergente-source">Fuente: El Diario</div>
+</div>
+<div class="emergente-card">
+<div class="emergente-text"><a href="https://lapatria.bo/enfoque-nacional/regiones/sequia-bolivia-municipios-desastre/" rel="noopener noreferrer" style="color:inherit;text-decoration:underline" target="_blank">Sequía en Bolivia: 58 municipios en desastre y más de 114 mil familias afectadas</a></div>
+<div class="emergente-reason">Cifra alarmante sobre una crisis ambiental y humanitaria a nivel nacional, que requiere atención urgente y sostenida por su impacto social.</div>
+<div class="emergente-source">Fuente: La Patria (Bolivia)</div>
+</div></div>
+</div><div class="freq-table-card" data-bm-premium="1">
+<div class="section-label">Términos de mayor frecuencia</div>
+<table class="freq-table">
+<thead>
+<tr><th>Término</th><th></th><th>Frec.</th></tr>
+</thead>
+<tbody><tr>
+<td class="freq-word">saucedo</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:100%"></div>
+</div>
+</td>
+<td class="freq-count">102</td>
+</tr>
+<tr>
+<td class="freq-word">mariaca</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:31%"></div>
+</div>
+</td>
+<td class="freq-count">19</td>
+</tr>
+<tr>
+<td class="freq-word">maldonado</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:27%"></div>
+</div>
+</td>
+<td class="freq-count">16</td>
+</tr>
+<tr>
+<td class="freq-word">gobierno</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:26%"></div>
+</div>
+</td>
+<td class="freq-count">15</td>
+</tr>
+<tr>
+<td class="freq-word">fiscalía</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:25%"></div>
+</div>
+</td>
+<td class="freq-count">14</td>
+</tr>
+<tr>
+<td class="freq-word">rosmery ruiz</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:22%"></div>
+</div>
+</td>
+<td class="freq-count">12</td>
+</tr>
+<tr>
+<td class="freq-word">garcía linera</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:18%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">sala plena</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:18%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">presidente del tsj</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:18%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr>
+<tr>
+<td class="freq-word">presidencia del tsj</td>
+<td>
+<div aria-hidden="true" class="freq-bar-wrap">
+<div class="freq-bar-fill" style="width:18%"></div>
+</div>
+</td>
+<td class="freq-count">9</td>
+</tr></tbody>
+</table>
+</div></div></div>
+<!-- ════════════ PAGE ════════════ -->
+<div class="ai-disclaimer">
+<strong>Aclaración:</strong> Este reporte ha sido estructurado y sintetizado con asistencia de Inteligencia Artificial. Aunque el equipo de Bolimétrica realiza una revisión humana de control de calidad antes de cada publicación, podrían presentarse imprecisiones menores en datos o nombres. Por ello, cada ficha incluye enlaces directos a los medios originales, lo que permite verificar las fuentes y profundizar en la información.
+        </div>
+<footer class="footer">
+<div class="footer-left">BOLIMÉTRICA · REPORTE DIARIO EJECUTIVO N° B24-20261105 · 2026-11-05</div>
+<div class="footer-right">· Cobertura: últimas 24 horas · 210 titulares · 13 temas · 8 categorías · 17 medios</div>
+</footer>
+<div aria-hidden="true" class="modal" id="modal_10">
+<div class="modal-backdrop" onclick="closeModal('modal_10')"></div>
+<div aria-label="Presidente del TSJ, Romer Saucedo, se exilia alegando peligro" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Presidente del TSJ, Romer Saucedo, se exilia alegando peligro</div>
+<div class="modal-sum">El presidente del TSJ, Romer Saucedo, salió de Bolivia junto a su familia y afirmó que su vida y libertad están en peligro. Su salida generó reacciones políticas: Rodríguez Veltzé y Tuto Quiroga la señalaron como reflejo de la crisis judicial, mientras Rodrigo Paz la vinculó a cuestionamientos al sistema de justicia.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">45</strong> titulares</span>
+<span><strong style="color:var(--c-10)">13</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_10')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/romer-saucedo-he-salido-del-pais-estoy-con-toda-mi-familia-en-el-exilio/" rel="noopener noreferrer" target="_blank">Romer Saucedo: ‘He salido del país, estoy con toda mi familia en el exilio’</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_paz-califica-de-penosa-pero-alentadora-a-futuro-la-salida-de-saucedo.html" rel="noopener noreferrer" target="_blank">Paz califica de «penosa, pero alentadora a futuro» la salida de Saucedo</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_saucedo-se-exilia-con-su-familia-y-acusa-al-poder-politico-de-recurrir-al-sicariato-para-silenciar-a-sus-criticos.html" rel="noopener noreferrer" target="_blank">Saucedo se exilia con su familia y acusa al poder político de recurrir al sicariato para silenciar a sus críticos</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/vocero-presidencial-asegura-que-no-existen-investigaciones-contra-el-presidente-del-tribunal-supremo-de-justicia" rel="noopener noreferrer" target="_blank">Vocero presidencial asegura que no existen investigaciones contra el presidente del Tribunal Supremo de Justicia</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/presidente-del-tribunal-supremo-de-justicia-decide-salir-al-exilio-advierte-que-el-poder-politico-tomo-la-justicia" rel="noopener noreferrer" target="_blank">Presidente del Tribunal Supremo de Justicia decide salir al exilio; advierte que el poder político tomó la justicia</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/vocero-no-hay-ninguna-investigacion-contra-saucedo-su-salida-es-del-pais-es-sorpresiva.html" rel="noopener noreferrer" target="_blank">Vocero: No hay ninguna investigación contra Saucedo, su salida es del país es “sorpresiva”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/romer-saucedo-se-declara-perseguido-y-abandona-el-pais-con-su-familia.html" rel="noopener noreferrer" target="_blank">Romer Saucedo se declara perseguido y abandona el país con su familia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/post-frustracion-boliviano-exministro-lopez-justifica-reclamo-romer-saucedo_1793845368" rel="noopener noreferrer" target="_blank">"Mi post es la frustración de un boliviano", exministro López justifica su reclamo a Rómer Saucedo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/libertad-toda-familia-corren-peligro-romer-saucedo-deja-bolivia-declara-exilio_1793790538" rel="noopener noreferrer" target="_blank">“Mi libertad y la de toda mi familia corren peligro”: Rómer Saucedo deja Bolivia y se declara en el “exilio”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/paz-sobre-la-huida-de-romer-saucedo-es-penosa-noticia-pero-es-alentador-para-el-futuro.html" rel="noopener noreferrer" target="_blank">Paz sobre la huida de Romer Saucedo: "Es penosa noticia, pero es alentador para el futuro"</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/romer-saucedo-confirma-que-salio-del-pais-estoy-con-toda-mi-familia-en-el-exilio.html" rel="noopener noreferrer" target="_blank">Romer Saucedo confirma que salió del país: “Estoy con toda mi familia en el exilio”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/%E2%80%9Cpenoso-pero-alentador%E2%80%9D-paz-sobre-la-salida-de-romer-saucedo%C2%A0" rel="noopener noreferrer" target="_blank">“Penoso pero alentador”: Paz sobre la salida de Romer Saucedo</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/decana-del-tsj-ve-%E2%80%9Cingrata%E2%80%9D-la-noticia-del-exilio-de-saucedo-%E2%80%9Cdesconozco-qu%C3%A9-tipo-de" rel="noopener noreferrer" target="_blank">Decana del TSJ ve “ingrata” la noticia del exilio de Saucedo: “desconozco qué tipo de persecución puede haber tenido”</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/presidente-del-tsj-deb%C3%ADa-volver-este-viernes-de-espa%C3%B1a-pero-ahora-se-exili%C3%B3" rel="noopener noreferrer" target="_blank">Presidente del TSJ debía volver este viernes de España, pero ahora se exilió</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/romer-saucedo-anuncia-que-sali%C3%B3-del-pa%C3%ADs-y-se-declara-exiliado-advierte-que-su-vida-corre" rel="noopener noreferrer" target="_blank">Romer Saucedo anuncia que salió del país y se declara exiliado; advierte que su vida corre peligro</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/politica/romer-saucedo-deja-bolivia-declara-exilio/" rel="noopener noreferrer" target="_blank">Rómer Saucedo deja Bolivia y se declara en el exilio</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/legisladores-cuestionan-salida-romer-saucedo-pais/" rel="noopener noreferrer" target="_blank">Legisladores cuestionan la salida de Romer Saucedo del país</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/mi-cabeza-no-sera-su-trofeo-saucedo-denuncia-que-fabricaran-casos-en-su-contra/" rel="noopener noreferrer" target="_blank">‘Mi cabeza no será su trofeo’: Saucedo denuncia que ‘fabricarán’ casos en su contra</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/presidente-del-tsj-se-declara-en-el-exilio-y-dice-su-vida-corre-peligro-por-buscar-la-independencia-judicial/" rel="noopener noreferrer" target="_blank">Presidente del TSJ se declara en el exilio y dice su vida corre peligro por buscar la independencia judicial</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-sobre-el-exilio-del-presidente-del-tsj-es-una-penosa-noticia-pero-alentadora-a-futuro/" rel="noopener noreferrer" target="_blank">Paz sobre el exilio del Presidente del TSJ: “Es una penosa noticia, pero alentadora a futuro”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/mi-libertad-y-la-vida-de-toda-mi-familia-corren-peligro-romer-saucedo-anuncia-que-esta-en-el-exilio-20261147425" rel="noopener noreferrer" target="_blank">“Mi libertad y la vida de toda mi familia corren peligro”: Romer Saucedo anuncia que está en el exilio</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/paz-defiende-buena-justicia-para-buena-democracia-tras-salida-del-presidente-del-supremo-2026114113751" rel="noopener noreferrer" target="_blank">Rodrigo Paz: "Sin buena justicia no hay buena democracia" tras exilio de Romer Saucedo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tuto-quiroga-sobre-la-salida-de-saucedo-la-crisis-democratica-se-profundiza-2026114114418" rel="noopener noreferrer" target="_blank">Tuto Quiroga sobre la salida de Saucedo: “La crisis democrática se profundiza”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/necesitamos-un-cambio-total-velasco-plantea-reformar-la-justicia-tras-la-salida-de-romer-saucedo-202611413576" rel="noopener noreferrer" target="_blank">“Necesitamos un cambio total”: Velasco plantea reformar la justicia tras la salida de Romer Saucedo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/romer-saucedo-se-autoexilia-de-bolivia-junto-su-familia" rel="noopener noreferrer" target="_blank">Romer Saucedo se autoexilia de Bolivia junto a su familia</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/saucedo-se-declara-en-exilio-con-su-familia-no-voy-renunciar-al-cargo-que-me-dio-el-voto" rel="noopener noreferrer" target="_blank">Saucedo se declara en exilio con su familia: “No voy a renunciar al cargo que me dio el voto”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75588-el-presidente-del-tsj-romer-saucedo-huye-de-bolivia-dice-que-su-vida-esta-en-riesgo-y-denuncia-que-el-poder-politico-tomo-la-justicia" rel="noopener noreferrer" target="_blank">El presidente del TSJ, Romer Saucedo, huye de Bolivia; dice que su vida está en riesgo y denuncia que el poder político tomó la justicia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75675-romer-saucedo-de-magistrado-mas-votado-para-el-tsj-a-declararse-en-el-exilio" rel="noopener noreferrer" target="_blank">Romer Saucedo: de magistrado más votado para el TSJ a declararse en el exilio</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/ante-el-autoexilio-de-saucedo-legisladores-advierten-sobre-una-pugna-politica-entre-el-gobierno-y-el-organo-judicial" rel="noopener noreferrer" target="_blank">Ante el autoexilio de Saucedo, legisladores advierten sobre una pugna política entre el Gobierno y el Órgano Judicial</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/legisladores-piden-investigar-la-toma-de-la-justicia-por-parte-del-poder-politico-como-denuncio-el-presidente-del-tsj" rel="noopener noreferrer" target="_blank">Legisladores piden investigar la toma de la justicia por parte del poder político, como denunció el presidente del TSJ</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/expresidentes-rodriguez-y-quiroga-alertan-de-la-profunda-crisis-judicial-e-institucional-tras-autoexilio-de-saucedo" rel="noopener noreferrer" target="_blank">Expresidentes Rodríguez y Quiroga alertan de la profunda crisis judicial e institucional, tras “autoexilio” de Saucedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/el-autoexilio-de-saucedo-muestra-lo-mal-que-estan-las-cosas-dice-doria-medina-68702" rel="noopener noreferrer" target="_blank">El autoexilio de Saucedo muestra "lo mal que están las cosas", dice Doria Medina</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/rodriguez-veltze-dice-que-autoexilio-de-saucedo-revela-crisis-judicial-68699" rel="noopener noreferrer" target="_blank">Rodríguez Veltzé dice que “autoexilio” de Saucedo revela crisis judicial</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/tuto-quiroga-denuncia-fracaso-institucional-tras-el-autoexilio-del-presidente-del-tsj.html" rel="noopener noreferrer" target="_blank">Tuto Quiroga denuncia “fracaso institucional” tras el autoexilio del presidente del TSJ</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/rodriguez-veltze-el-autoexilio-del-presidente-del-tsj-revela-la-profundidad-de-la-crisis-judicial.html" rel="noopener noreferrer" target="_blank">Rodríguez Veltzé: “El ‘autoexilio’ del presidente del TSJ revela la profundidad de la crisis judicial”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/comite-pro-santa-cruz-atribuye-al-mas-la-crisis-judicial/" rel="noopener noreferrer" target="_blank">Comité pro Santa Cruz atribuye al MAS la crisis judicial</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/autoexilio-revela-profundidad-de-crisis-judicial-dice-rodriguez-veltze/" rel="noopener noreferrer" target="_blank">‘Autoexilio revela profundidad de crisis judicial’, dice Rodríguez Veltzé</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/tuto-dice-que-decision-de-saucedo-y-otros-hechos-muestran-un-ano-de-fracaso-institucional" rel="noopener noreferrer" target="_blank">Tuto dice que decisión de Saucedo y otros hechos muestran un año de “fracaso institucional”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75639-expresidente-rodriguez-asegura-que-la-huida-de-romer-saucedo-revela-la-profundidad-de-la-crisis-judicial" rel="noopener noreferrer" target="_blank">Expresidente Rodríguez asegura que la huida de Romer Saucedo revela la profundidad de la crisis judicial</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/paz-dice-que-es-alentador-el-autoexilio-de-saucedo-y-asegura-que-se-va-porque-hay-acusaciones-al-sistema-judicial" rel="noopener noreferrer" target="_blank">Paz dice que es “alentador” el autoexilio de Saucedo y asegura que se va porque hay acusaciones al sistema judicial</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/paz-atribuye-salida-de-saucedo-a-acusaciones-sobre-nuestro-modelo-del-sistema-judicial.html" rel="noopener noreferrer" target="_blank">Paz atribuye salida de Saucedo a “acusaciones sobre nuestro modelo del sistema judicial”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-saucedo-va-pais-porque-hay-serie-acusaciones-nuestro-modelo-sistema-judicial_1793804896" rel="noopener noreferrer" target="_blank">Paz: Saucedo “se va del país porque hay una serie de acusaciones sobre nuestro modelo del sistema judicial”</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/paz-saucedo-se-va-porque-hay-acusaciones-sobre-nuestro-modelo-de-sistema-judicial/" rel="noopener noreferrer" target="_blank">Paz: Saucedo se va porque hay acusaciones sobre nuestro modelo de sistema judicial</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/decision-sorpresiva-dice-vocero-y-asegura-que-no-hay-investigacion-contra-saucedo/" rel="noopener noreferrer" target="_blank">‘Decisión sorpresiva’, dice vocero y asegura que no hay investigación contra Saucedo</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/paz-dice-que-saucedo-salio-del-pais-porque-hay-acusaciones-sobre-nuestro-modelo-del-sistema" rel="noopener noreferrer" target="_blank">Paz dice que Saucedo salió del país porque “hay acusaciones sobre nuestro modelo del sistema judicial”</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_14">
+<div class="modal-backdrop" onclick="closeModal('modal_14')"></div>
+<div aria-label="Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Rosmery Ruiz asume presidencia temporal del TSJ tras salida de Saucedo</div>
+<div class="modal-sum">El Tribunal Supremo de Justicia convocó a Sala Plena de emergencia para definir la titularidad de su presidencia tras la salida del país de Romer Saucedo. La decana Rosmery Ruiz asumió temporalmente el cargo por seis días, mientras se analiza la situación institucional.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">30</strong> titulares</span>
+<span><strong style="color:var(--c-10)">15</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_14')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_tsj-convoca-a-sala-plena-tras-el-exilio-de-saucedo-y-busca-definir-su-titularidad.html" rel="noopener noreferrer" target="_blank">TSJ convoca a Sala Plena tras el exilio de Saucedo y busca definir su titularidad</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/sala-plena-del-tsj-se-reune-de-emergencia-para-tratar-situacion-de-romer-saucedo.html" rel="noopener noreferrer" target="_blank">Sala Plena del TSJ se reúne de emergencia para tratar la situación de Romer Saucedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/sala-plena-del-tsj-sesionara-a-las-14-00-para-abordar-la-ausencia-de-saucedo.html" rel="noopener noreferrer" target="_blank">Sala Plena del TSJ sesionará a las 14:00 para abordar la ausencia de Saucedo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/magistrados-tsj-fueron-sorprendidos-salida-saucedo-procesos-paz_1793847973" rel="noopener noreferrer" target="_blank">Magistrados del TSJ fueron sorprendidos con salida de Saucedo y con procesos en La Paz</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/decana-del-tsj-toma-la-presidencia-temporal-y-llama-a-sala-plena-para-analizar-la-situacion-de-saucedo.html" rel="noopener noreferrer" target="_blank">Decana del TSJ toma la presidencia temporal y llama a Sala Plena para analizar la situación de Saucedo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/saucedo-niega-que-vaya-a-dejar-el-tsj-y-denuncia-un-supuesto-acuerdo-sobre-su-suplencia.html" rel="noopener noreferrer" target="_blank">Saucedo niega que vaya a dejar el TSJ y denuncia un supuesto acuerdo sobre su suplencia</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/decana-del-tsj-asume-presidencia-temporal-convoca-sala-plena-decision" rel="noopener noreferrer" target="_blank">Decana del TSJ asume la presidencia temporal y convoca a Sala Plena ante decisión de Saucedo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/vocero-afirma-que-al-gobierno-le-tomo-sorpresa-exilio-saucedo-no-ve-motivos" rel="noopener noreferrer" target="_blank">Vocero afirma que al Gobierno le "tomó por sorpresa" el exilio de Saucedo y no ve motivos para investigarlo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/lopez-acusa-saucedo-ser-parte-del-clan-narcofiscales" rel="noopener noreferrer" target="_blank">López acusa a Saucedo de ser “parte del clan de narcofiscales”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/decana-del-tsj-convoca-a-sesion-de-urgencia-de-la-sala-plena-tras-el-exilio-de-romer-saucedo/" rel="noopener noreferrer" target="_blank">Decana del TSJ convoca a sesión de urgencia de la Sala Plena tras el exilio de Romer Saucedo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/tribunal-supremo-de-justicia-instala-sala-plena-para-evaluar-situacion-tras-la-salida-de-saucedo-de-bolivia-LL24587682" rel="noopener noreferrer" target="_blank">Tribunal Supremo de Justicia instala sala plena para evaluar situación tras la salida de Saucedo de Bolivia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75621-sala-plena-del-tsj-elegira-a-su-presidente-tras-la-huida-y-exilio-de-romer-saucedo" rel="noopener noreferrer" target="_blank">Sala Plena del TSJ elegirá a su presidente tras la huida y exilio de Romer Saucedo</a></span></li>
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_rosmery-ruiz-asume-la-presidencia-del-tsj-tras-la-salida-de-saucedo.html" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia del TSJ tras la salida de Saucedo</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/decana-rosmery-ruiz-asume-la-presidencia-del-tsj-por-seis-dias-en-ausencia-de-romer-saucedo" rel="noopener noreferrer" target="_blank">Decana Rosmery Ruíz asume la presidencia del TSJ por seis días en ausencia de Romer Saucedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/el-tsj-designa-a-rosmery-ruiz-como-presidenta-temporal-y-advierte-que-esperara-seis-dias-a-saucedo-68705" rel="noopener noreferrer" target="_blank">El TSJ designa a Rosmery Ruiz como presidenta temporal y advierte que esperará seis días a Saucedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/tsj-designa-a-rosmery-ruiz-como-presidenta-en-ejercicio-ante-ausencia-de-saucedo.html" rel="noopener noreferrer" target="_blank">TSJ designa a Rosmery Ruiz como presidenta en ejercicio ante ausencia de Saucedo</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/el-organo-judicial-no-queda-descabezado-decana-asume-provisionalmente-la-presidencia-del-tsj.html" rel="noopener noreferrer" target="_blank">“El Órgano Judicial no queda descabezado”: Decana asume provisionalmente la Presidencia del TSJ</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/rosmery-ruiz-asume-presidencia-tsj-ausencia-romer-saucedo_1793823323" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia del TSJ ante la ausencia de Rómer Saucedo</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/pais/el-tsj-esperara-seis-dias-a-saucedo-y-si-no-vuelve-lo-tomara-como-abandono-de-funciones.html" rel="noopener noreferrer" target="_blank">El TSJ esperará seis días a Saucedo y si no vuelve lo tomará como abandono de funciones</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/designan-rosmery-ruiz-como-presidenta-temporal-en-ejercicio-del-tsj-ante-ausencia-de" rel="noopener noreferrer" target="_blank">Designan a Rosmery Ruiz como presidenta temporal en ejercicio del TSJ ante ausencia de Saucedo</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/actualidad/politica/rosmery-ruiz-asume-presidencia-temporal-tsj/" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia temporal del TSJ</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/rosmery-ruiz-asume-temporalmente-la-presidencia-del-tsj-por-seis-dias/" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume temporalmente la presidencia del TSJ por seis días</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/tras-salida-de-saucedo-decana-del-tsj-asume-provisionalmente-la-presidencia/" rel="noopener noreferrer" target="_blank">Tras salida de Saucedo, decana Ruiz asume provisionalmente la presidencia del TSJ</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/rosmery-ruiz-es-presidenta-temporal-ejercicio-del-tsj" rel="noopener noreferrer" target="_blank">Rosmery Ruiz es presidenta temporal en ejercicio del TSJ</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-sala-plena-del-tsj-designa-a-rosmery-ruiz-como-presidenta-temporal/" rel="noopener noreferrer" target="_blank">La sala plena del TSJ designa a Rosmery Ruiz como Presidenta temporal</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/rosmery-ruiz-asume-la-presidencia-temporal-del-tribunal-supremo-de-justicia-tras-la-salida-de-saucedo-202611415190" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia temporal del Tribunal Supremo de Justicia tras la salida de Saucedo</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/tsj-fija-un-plazo-de-seis-dias-para-el-retorno-de-romer-saucedo-y-plantea-evaluar-su-destitucion-por-abandono-de-funciones-202611417742" rel="noopener noreferrer" target="_blank">TSJ fija un plazo de seis días para el retorno de Romer Saucedo</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/tsj-esperara-seis-dias-a-saucedo-para-que-vuelva-a-sus-funciones-caso-contrario-sera-tomado-como-abandono-EL24589519" rel="noopener noreferrer" target="_blank">TSJ esperará seis días a Saucedo para que vuelva a sus funciones, caso contrario “será tomado como abandono”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/rosmery-ruiz-asume-la-presidencia-en-ejercicio-del-tribunal-supremo-de-justicia" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia en ejercicio del Tribunal Supremo de Justicia</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75696-rosmery-ruiz-asume-la-presidencia-temporal-del-tribunal-supremo-de-justicia" rel="noopener noreferrer" target="_blank">Rosmery Ruiz asume la presidencia temporal del Tribunal Supremo de Justicia</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_7a">
+<div class="modal-backdrop" onclick="closeModal('modal_7a')"></div>
+<div aria-label="García Linera sale del país en medio de investigaciones por caso Hotel Las Américas" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">García Linera sale del país en medio de investigaciones por caso Hotel Las Américas</div>
+<div class="modal-sum">El Gobierno confirmó que el exvicepresidente Álvaro García Linera viajó a Argentina en medio de investigaciones vinculadas al caso Hotel Las Américas. Paralelamente, se suspendieron las declaraciones de Rubén Costas y Jaime Soliz por la inasistencia de fiscales, mientras continúan las pesquisas sobre el operativo.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">12</strong> titulares</span>
+<span><strong style="color:var(--c-10)">10</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_7a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/11/04/gobierno-informa-que-el-exvicepresidente-alvaro-garcia-linera-viajo-a-argentina-68703" rel="noopener noreferrer" target="_blank">Gobierno informa que el exvicepresidente Álvaro García Linera viajó a Argentina</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/garcia-linera-salio-argentina-hace-dias-gobierno_1793815576" rel="noopener noreferrer" target="_blank">García Linera salió a Argentina hace unos días, según el Gobierno</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/ministro-de-gobierno-senala-que-garcia-linera-salio-hace-unos-dias-del-pais-rumbo-a-la-argentina.html" rel="noopener noreferrer" target="_blank">Ministro de Gobierno señala que García Linera salió hace unos días del país rumbo a la Argentina</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/garcia-linera-puede-ser-declarado-rebelde-dice-urioste/" rel="noopener noreferrer" target="_blank">García Linera puede ser declarado rebelde, dice Urioste</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/oviedo-garcia-linera-viajo-a-argentina-y-evo-sigue-en-el-chapare/" rel="noopener noreferrer" target="_blank">Oviedo: García Linera viajó a Argentina y Evo sigue en el Chapare</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/caso-hotel-las-americas-gobierno-confirma-que-garcia-linera-salio-del-pais-rumbo-a-la-argentina/" rel="noopener noreferrer" target="_blank">Caso Hotel Las Américas: Gobierno confirma que García Linera salió del país rumbo a la Argentina</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/oviedo-sobre-paradero-de-garcia-linera-sabemos-que-ha-salido-hace-unos-dias-atras-rumbo-a-la-argentina-DL24586603" rel="noopener noreferrer" target="_blank">Oviedo sobre paradero de García Linera: “Sabemos que ha salido hace unos días atrás rumbo a la Argentina”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75690-caso-terrorismo-el-exvicepresidente-lvaro-garcia-linera-salio-rumbo-a-argentina" rel="noopener noreferrer" target="_blank">Caso "Terrorismo": El exvicepresidente Álvaro García Linera salió rumbo a Argentina</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/inasistencia-de-fiscales-impide-declaracion-de-ruben-costas-y-jaime-soliz-por-el-caso-hotel-las-americas" rel="noopener noreferrer" target="_blank">Inasistencia de fiscales impide declaración de Rubén Costas y Jaime Soliz por el caso Hotel Las Américas</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/urioste-evo-y-alvaro-seran-aprehendidos-si-no-declaran.html" rel="noopener noreferrer" target="_blank">Urioste: Evo y Álvaro serán aprehendidos si no declaran</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/investigan-evo-garcia-linera-asalto-hotel-americas_1793788060" rel="noopener noreferrer" target="_blank">Investigan a Evo y García Linera por asalto al Hotel Las Américas</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/suspenden-declaraciones-de-soliz-y-costas-por-caso-hotel-las-americas-202611421257" rel="noopener noreferrer" target="_blank">Suspenden declaraciones de Soliz y Costas por caso Hotel Las Américas</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_2">
+<div class="modal-backdrop" onclick="closeModal('modal_2')"></div>
+<div aria-label="Peritaje a celular de Cerimedo revela audios; Fiscalía inicia procesos penales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-10)">JUSTICIA</div>
+<div class="modal-title">Peritaje a celular de Cerimedo revela audios; Fiscalía inicia procesos penales</div>
+<div class="modal-sum">Un peritaje al celular de Fernando Cerimedo revela la existencia de 1.108 audios, descartando que alguno haya sido creado con Inteligencia Artificial. Ante esta información, Bilbao rechaza el contenido de un audio atribuido a Cerimedo y anuncia procesos penales en su contra, mientras la Fiscalía investiga los audios mediante una comisión.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-10)">7</strong> titulares</span>
+<span><strong style="color:var(--c-10)">5</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_2')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/11/04/revelan-que-idif-hallo-1108-audios-en-celular-de-cerimedo-ninguno-fue-creado-con-ia-68688" rel="noopener noreferrer" target="_blank">Revelan que IDIF halló 1.108 audios en celular de Cerimedo, ninguno fue creado con IA</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/descartan-uso-de-ia-en-los-1-108-audios-de-cerimedo.html" rel="noopener noreferrer" target="_blank">Descartan uso de IA en los 1.108 audios de Cerimedo</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/bilbao-rechaza-audio-cerimedo-anuncia-proceso/" rel="noopener noreferrer" target="_blank">Bilbao rechaza audio de Cerimedo y anuncia proceso en su contra</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/bilbao-anuncia-proceso-penal-contra-cerimedo-por-calumnia/" rel="noopener noreferrer" target="_blank">Bilbao anuncia proceso penal contra Cerimedo por calumnia</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/fiscal-general-dice-que-una-comision-investiga-audios-atribuidos-a-cerimedo/" rel="noopener noreferrer" target="_blank">Fiscal general dice que una comisión investiga audios atribuidos a Cerimedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/peritaje-revela-que-celular-de-fernando-cerimedo-contiene-1-108-audios/" rel="noopener noreferrer" target="_blank">Peritaje revela que celular de Fernando Cerimedo contiene 1.108 audios</a></span></li>
+<li><span class="m-src">PAT</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.redpat.tv/detalle/celular-de-fernando-cerimedo-contiene-1-108-audios-segun-peritaje" rel="noopener noreferrer" target="_blank">Celular de Fernando Cerimedo contiene 1.108 audios según peritaje</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_8">
+<div class="modal-backdrop" onclick="closeModal('modal_8')"></div>
+<div aria-label="Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-04)">NARCOTRÁFICO</div>
+<div class="modal-title">Fiscalía activa orden de aprehensión y gestiona sello rojo contra Saucedo</div>
+<div class="modal-sum">La Fiscalía activó una orden de aprehensión contra el expresidente del TSJ, Romer Saucedo, por presuntos vínculos con narcotráfico y organización criminal, y gestiona una alerta roja de Interpol. Autoridades de Gobierno relacionaron su salida del país con el caso Mariaca y señalaron posibles vínculos entre ambos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-04)">44</strong> titulares</span>
+<span><strong style="color:var(--c-04)">16</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_8')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_fiscalia-tramita-sello-rojo-y-orden-de-aprehension-contra-romer-saucedo.html" rel="noopener noreferrer" target="_blank">Fiscalía tramita sello rojo y orden de aprehensión contra Romer Saucedo</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/la-fiscalia-general-del-estado-gestiona-sello-rojo-contra-romer-saucedo-68713" rel="noopener noreferrer" target="_blank">La Fiscalía General del Estado gestiona sello rojo contra Romer Saucedo</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fiscalia-solicita-alerta-migratoria-romer-saucedo_1793829532" rel="noopener noreferrer" target="_blank">La Fiscalía solicita alerta migratoria para Rómer Saucedo</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20261104_fiscalia-tramita-alerta-roja-de-interpol-contra-romer-saucedo.html" rel="noopener noreferrer" target="_blank">Fiscalía tramita alerta roja de Interpol contra Romer Saucedo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/fiscalia-gestiona-sello-rojo-contra-saucedo-y-tramita-ordenes-de-aprehension/" rel="noopener noreferrer" target="_blank">Fiscalía gestiona sello rojo contra Saucedo y tramita órdenes de aprehensión</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/el-fiscal-general-anuncia-que-se-activara-el-sello-rojo-contra-romer-saucedo-y-habla-de-ordenes-de-aprehension/" rel="noopener noreferrer" target="_blank">El Fiscal General anuncia que se activará el sello rojo contra Romer Saucedo y habla de órdenes de aprehensión</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-inicia-tramite-para-activar-sello-rojo-contra-saucedo-y-habla-de-mandamientos-de-aprehension-KK24591830" rel="noopener noreferrer" target="_blank">Fiscalía inicia trámite para activar sello rojo contra Saucedo y habla de mandamientos de aprehensión</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/fiscalia-inicia-gestiones-para-activar-alerta-roja-de-interpol-contra-saucedo" rel="noopener noreferrer" target="_blank">Fiscalía inicia gestiones para activar alerta roja de Interpol contra Saucedo</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75732-saucedo-en-picada-tiene-procesos-la-fiscalia-gestiona-sello-rojo-y-el-tsj-espera-que-retorne-hasta-el-lunes" rel="noopener noreferrer" target="_blank">Saucedo en picada: tiene procesos, la Fiscalía gestiona sello rojo y el TSJ espera que retorne hasta el lunes</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/fiscalia-pide-aprehender-al-presidente-del-tribunal-supremo-por-supuesto-narcotrafico-tras-su-autoexilio" rel="noopener noreferrer" target="_blank">Fiscalía pide aprehender al presidente del Tribunal Supremo por supuesto narcotráfico tras su autoexilio</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/11/04/saucedo-tiene-orden-de-captura-en-su-contra-por-organizacion-criminal-y-narcotrafico--68716" rel="noopener noreferrer" target="_blank">Saucedo tiene orden de captura en su contra por organización criminal y narcotráfico</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/fiscalia-ordeno-aprehender-saucedo-presunto-trafico-drogas-organizacion-criminal_1793832187" rel="noopener noreferrer" target="_blank">La Fiscalía ordenó aprehender a Saucedo por presunto tráfico de drogas y organización criminal</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/pais/fiscalia-ordeno-aprehension-de-saucedo-el-martes-entre-delitos-se-menciona-trafico-de-drogas.html" rel="noopener noreferrer" target="_blank">Fiscalía ordenó aprehensión de Saucedo el martes; entre delitos se menciona tráfico de drogas</a></span></li>
+<li><span class="m-src">El Potosí</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpotosi.net/nacional/20261104_ordenan-la-aprehension-de-romer-saucedo-por-n-rc-trafic-y-organizacion-cr1m-n-l.html" rel="noopener noreferrer" target="_blank">Ordenan la aprehensión de Romer Saucedo por n@rc*tráfic* y organización cr1m¡n@l</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/activan-orden-de-aprehensi%C3%B3n-contra-saucedo-por-tr%C3%A1fico-de-drogas-y-declaran-el-caso-en" rel="noopener noreferrer" target="_blank">Activan orden de aprehensión contra Saucedo por tráfico de drogas y declaran el caso en reserva</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/fiscalia-ordena-aprehender-a-saucedo-por-narcotrafico/" rel="noopener noreferrer" target="_blank">Fiscalía ordena aprehender a Saucedo por narcotráfico</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20261104/saucedo-tenia-orden-aprehension-narcotrafico" rel="noopener noreferrer" target="_blank">Saucedo tenía orden de aprehensión por narcotráfico</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/la-fiscalia-ordeno-la-aprehension-de-saucedo-horas-antes-que-anunciara-su-autoexilio-lo-acusa-de-dos-delitos/" rel="noopener noreferrer" target="_blank">La Fiscalía ordenó la aprehensión de Saucedo horas antes que anunciara su autoexilio; lo acusa de dos delitos</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/seguridad/fiscalia-emite-orden-de-aprehension-contra-saucedo-por-trafico-de-drogas-y-organizacion-criminal-IK24596943" rel="noopener noreferrer" target="_blank">Fiscalía emite orden de aprehensión contra Saucedo por tráfico de drogas y organización criminal</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75747-saucedo-huyo-un-dia-despues-de-que-se-ordenara-su-aprehension-por-presunto-trafico-de-drogas-y-organizacion-criminal" rel="noopener noreferrer" target="_blank">Saucedo huyó un día después de que se ordenara su aprehensión por presunto tráfico de drogas y organización criminal</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/seguridad/fiscal-general-informa-que-romer-saucedo-tiene-procesos-abiertos%C2%A0en-santa-cruz" rel="noopener noreferrer" target="_blank">Fiscal general informa que Romer Saucedo tiene procesos abiertos en Santa Cruz</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/justicia/fiscal-general-afirma-que-saucedo-tiene-procesos-en-santa-cruz-y-que-se-activara-sello-rojo-de-interpol" rel="noopener noreferrer" target="_blank">Fiscal general afirma que Saucedo tiene procesos en Santa Cruz y que se activará sello rojo de interpol</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/urioste-dice-que-saucedo-tiene-procesos-abiertos-vocero-indico-no-conocer-investigaciones-68692" rel="noopener noreferrer" target="_blank">Urioste dice que Saucedo tiene procesos abiertos; vocero indicó no conocer investigaciones</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/fiscal-general-afirma-que-saucedo-tiene-procesos-abiertos-le-invitaria-a-que-se-presente.html" rel="noopener noreferrer" target="_blank">Fiscal general afirma que Saucedo tiene procesos abiertos: “Le invitaría a que se presente”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/fiscal-afirma-que-saucedo-tiene-procesos-abiertos-santa-cruz-invita" rel="noopener noreferrer" target="_blank">Fiscal afirma que Saucedo tiene procesos abiertos en Santa Cruz y lo invita a presentarse</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/fiscal-revela-que-saucedo-tiene-dos-procesos-en-santa-cruz-y-el-gobierno-lo-relaciona-con-el-caso-mariaca/" rel="noopener noreferrer" target="_blank">Fiscal revela que Saucedo tiene dos procesos en Santa Cruz y el Gobierno lo relaciona con el caso Mariaca</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75684-presidente-del-tsj-romer-saucedo-tiene-al-menos-tres-procesos-fiscal-urioste-le-pide-presentarse-y-defenderse" rel="noopener noreferrer" target="_blank">Presidente del TSJ, Romer Saucedo, tiene al menos tres procesos; fiscal Urioste le pide presentarse y defenderse</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/ministro-oviedo-sobre-la-relacion-entre-mariaca-y-saucedo-eran-muy-amigos-vivian-juntos-en-sucre" rel="noopener noreferrer" target="_blank">Ministro Oviedo sobre la relación entre Mariaca y Saucedo: “Eran muy amigos, vivían juntos en Sucre”</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/oviedo-sobre-mariaca-y-saucedo-eran-muy-amigos-andaban-juntos-vivian-juntos-en-sucre-68701" rel="noopener noreferrer" target="_blank">Oviedo sobre Mariaca y Saucedo: "eran muy amigos, andaban juntos, vivían juntos en Sucre”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/gobierno-vincula-a-saucedo-con-mariaca-eran-muy-amigos-vivian-juntos-en-sucre.html" rel="noopener noreferrer" target="_blank">Gobierno vincula a Saucedo con Mariaca: “Eran muy amigos, vivían juntos en Sucre”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/oviedo-sobre-el-autoexilio-de-saucedo-probablemente-se-ha-puesto-nervioso.html" rel="noopener noreferrer" target="_blank">Oviedo sobre el autoexilio de Saucedo: “Probablemente se ha puesto nervioso”</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/pais/gobierno-vincula-a-saucedo-con-mariaca-eran-muy-amigos-muchos-complices-estan-escapando.html" rel="noopener noreferrer" target="_blank">Gobierno vincula a Saucedo con Mariaca: “eran muy amigos”, “muchos cómplices están escapando”</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/ministro-oviedo-todos-sabemos-que-saucedo-mariaca-eran-muy-amigos-andaban" rel="noopener noreferrer" target="_blank">Ministro Oviedo: Todos sabemos que Saucedo y Mariaca eran muy amigos, andaban y vivían juntos en Sucre</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/oviedo-afirma-que-mariaca-y-saucedo-eran-amigos-probablemente-por-eso-se-puso-nervioso" rel="noopener noreferrer" target="_blank">Oviedo afirma que Mariaca y Saucedo eran amigos: “Probablemente por eso se puso nervioso”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75669-gobierno-relaciona-al-magistrado-romer-saucedo-con-mariaca-y-dice-que-estaba-nervioso-por-la-investigacion" rel="noopener noreferrer" target="_blank">Gobierno relaciona al magistrado Romer Saucedo con Mariaca y dice que estaba "nervioso" por la investigación</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75714-oviedo-dice-que-saucedo-probablemente-se-puso-nervioso-debido-a-las-investigaciones-al-exfiscal-roger-mariaca" rel="noopener noreferrer" target="_blank">Oviedo dice que Saucedo probablemente se puso “nervioso” debido a las investigaciones al exfiscal Roger Mariaca</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/maldonado-la-huida-de-saucedo-tambien-tiene-relacion-con-el-caso-mariaca-68693" rel="noopener noreferrer" target="_blank">Maldonado: “La huida de Saucedo también tiene relación” con el caso Mariaca</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/gobierno-investiga-la-ruta-de-salida-del-pais-de-romer-saucedo.html" rel="noopener noreferrer" target="_blank">Gobierno investiga la ruta de salida del país de Romer Saucedo</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/diputados-pdc-vinculan-exilio-saucedo/" rel="noopener noreferrer" target="_blank">Diputados del PDC vinculan el exilio de Saucedo con el caso Mariaca</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/diputados-del-pdc-relacionan-salida-de-saucedo-con-el-caso-mariaca/" rel="noopener noreferrer" target="_blank">Diputados del PDC relacionan salida de Saucedo con el caso Mariaca</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/tras-salida-de-saucedo-viceministro-maldonado-lo-vincula-con-caso-mariaca/" rel="noopener noreferrer" target="_blank">Tras salida de Saucedo, viceministro Maldonado lo vincula con caso Mariaca</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/diputados-del-pdc-vinculan-salida-saucedo-al-caso-mariaca-posible-proceso" rel="noopener noreferrer" target="_blank">Diputados del PDC vinculan la salida de Saucedo al caso Mariaca y a un posible proceso en la Justicia</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/peter-maldonado-vincula-la-salida-de-romer-saucedo-con-caso-mariaca-y-habla-de-una-huida-202611412510" rel="noopener noreferrer" target="_blank">Peter Maldonado vincula la salida de Romer Saucedo con caso Mariaca y habla de una “huida”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/por-que-se-autoexilio-saucedo-por-la-sombra-del-caso-mariaca-y-porque-habria-perdido-la-visa" rel="noopener noreferrer" target="_blank">¿Por qué se autoexilió Saucedo? Por la sombra del caso Mariaca y porque habría perdido la visa a EEUU</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_6a">
+<div class="modal-backdrop" onclick="closeModal('modal_6a')"></div>
+<div aria-label="Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-18)">RELACIONES INTERNACIONALES</div>
+<div class="modal-title">Paz promueve inversiones en España y anuncia visita de Repsol a Bolivia</div>
+<div class="modal-sum">Durante su visita a España, Rodrigo Paz promovió oportunidades de inversión en minería y tecnología, y afirmó que Bolivia pone fin a dos décadas de aislamiento. Además, se reunió con el titular de Repsol y anunció una próxima visita oficial de la petrolera al país para abordar temas energéticos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-18)">17</strong> titulares</span>
+<span><strong style="color:var(--c-18)">9</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_6a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/economia/2026/11/04/paz-se-reune-en-espana-con-el-presidente-de-repsol-antonio-brufau-y-dice-que-la-petrolera-llegara-al-pais-en-visita-oficial-68683" rel="noopener noreferrer" target="_blank">Paz se reúne en España con el presidente de Repsol y dice que la petrolera llegará al país “en visita oficial”</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20261104/paz-se-reune-con-ejecutivos-de-repsol-y-anuncia-una-nueva-etapa-en-hidrocarburos.html" rel="noopener noreferrer" target="_blank">Paz se reúne con ejecutivos de Repsol y anuncia “una nueva etapa en hidrocarburos”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/energia-reconstruir-bolivia-presidentes-bolivia-repsol-reunen-espana_1793796140" rel="noopener noreferrer" target="_blank">“Energía para reconstruir Bolivia”: Presidentes de Bolivia y de Repsol se reúnen en España</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/politica/paz-se-reune-con-el-titular-de-repsol-y-confirma-que-la-petrolera-visitara-bolivia.html" rel="noopener noreferrer" target="_blank">Paz se reúne con el titular de Repsol y confirma que la petrolera visitará Bolivia</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/paz-se-re%C3%BAne-con-el-presidente-de-repsol-y-anuncia-visita-de-la-transnacional-en-bolivia" rel="noopener noreferrer" target="_blank">Paz se reúne con el presidente de Repsol y anuncia visita de la transnacional en Bolivia</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/en-espana-paz-se-reune-con-repsol-y-anuncia-su-proxima-visita-al-pais/" rel="noopener noreferrer" target="_blank">En España, Paz se reúne con Repsol y anuncia su próxima visita al país</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/politica/a-menos-de-dos-meses-paz-asegura-que-cerrara-el-ano-con-leyes-de-inversiones-hidrocarburos-y-mineria" rel="noopener noreferrer" target="_blank">A menos de dos meses, Paz asegura que cerrará el año con leyes de inversiones, hidrocarburos y minería</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/economia/20261104/no-queremos-solo-entregar-minerales-paz-apunta-a-la-fabricacion-de-tecnologia-en-bolivia.html" rel="noopener noreferrer" target="_blank">“No queremos solo entregar minerales”: Paz apunta a la fabricación de tecnología en Bolivia</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/paz-anuncia-en-madrid-el-fin-de-20-anos-de-aislamiento-diplomatico-y-economico-de-bolivia.html" rel="noopener noreferrer" target="_blank">Paz anuncia en Madrid el fin de 20 años de aislamiento diplomático y económico de Bolivia</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/paz-participa-encuentro-empresarial-espana-dice-fue-ano-duro-transformaciones_1793810073" rel="noopener noreferrer" target="_blank">Paz participa de un encuentro empresarial en España y dice que fue “un año muy duro, de transformaciones”</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/economia/bolivia-day-gobierno-busca-inversiones-madrid_1793789472" rel="noopener noreferrer" target="_blank">Bolivia Day: Gobierno busca más inversiones en Madrid</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/economia/paz-bolivia-empieza-a-dejar-atras-20-anos-de-aislamiento-y-apuesta-por-atraer-inversiones-para-impulsar-la-mineria.html" rel="noopener noreferrer" target="_blank">Paz: Bolivia empieza a dejar atrás 20 años de aislamiento y apuesta por atraer inversiones para impulsar la minería</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/economia/20261104/buscan-inversionistas-varias-areas-estrategicas-bolivia-day-espana" rel="noopener noreferrer" target="_blank">Buscan inversionistas para varias áreas estratégicas en “Bolivia Day” en España</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/paz-madrid-no-queremos-solo-entregar-minerales" rel="noopener noreferrer" target="_blank">Paz en Madrid: “no queremos solo entregar minerales”</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/paz-bolivia-apuesta-por-atraer-inversiones-para-impulsar-la-mineria/" rel="noopener noreferrer" target="_blank">Paz: Bolivia apuesta por atraer inversiones para impulsar la minería</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/cainco-y-bolivia-impulsan-la-atraccion-de-inversiones-en-el-xvi-encuentro-empresarial-iberoamericano-en-madrid-2026114174629" rel="noopener noreferrer" target="_blank">Cainco y Bolivia impulsan la atracción de inversiones en el XVI Encuentro Empresarial Iberoamericano en Madrid</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/inicia-la-xxx-cumbre-iberoamericana-de-madrid-bolivia-participa-junto-a-otros-nueve-paises-202611418530" rel="noopener noreferrer" target="_blank">Inicia la XXX Cumbre Iberoamericana de Madrid, Bolivia participa junto a otros nueve países</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_17">
+<div class="modal-backdrop" onclick="closeModal('modal_17')"></div>
+<div aria-label="Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-07)">VIOLENCIA Y SEGURIDAD</div>
+<div class="modal-title">Viceministro Maldonado identifica autores de amenazas y los vincula a Mariaca</div>
+<div class="modal-sum">El viceministro Maldonado informa que ha identificado a los autores de las amenazas en su contra, anunciando acciones legales y vinculando a los responsables con redes criminales atribuidas a Mariaca.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-07)">15</strong> titulares</span>
+<span><strong style="color:var(--c-07)">12</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_17')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/nacional/seguridad/viceministro-maldonado-descarta-renunciar-ante-amenazas-y-asegura-que-los-responsables-estan-identificados" rel="noopener noreferrer" target="_blank">Viceministro Maldonado descarta renunciar ante amenazas y asegura que los responsables están identificados</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/seguridad/2026/11/04/viceministro-asegura-que-estan-identificados-quienes-lo-amenazaron-y-que-seran-capturados-68694" rel="noopener noreferrer" target="_blank">Viceministro asegura que están identificados quienes lo amenazaron y que serán capturados</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/seguridad/20261104/maldonado-vincula-amenazas-en-su-contra-con-redes-criminales-atribuidas-a-mariaca.html" rel="noopener noreferrer" target="_blank">Maldonado vincula amenazas en su contra con redes criminales atribuidas a Mariaca</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-cierra-filas-favor-viceministro-amenazado-policia-esta-movilizada_1793787691" rel="noopener noreferrer" target="_blank">Gobierno cierra filas en favor del viceministro amenazado y la Policía está movilizada</a></span></li>
+<li><span class="m-src">El Día</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldia.com.bo/2026-11-04/pais/vamos-a-ir-tras-ellos-maldonado-advierte-que-tienen-identificados-a-los-autores-de-las-amenazas.html" rel="noopener noreferrer" target="_blank">“Vamos a ir tras ellos”: Maldonado advierte que tienen identificados a los autores de las amenazas</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/peter-maldonado-asegura-identifico-quienes-amenazan/" rel="noopener noreferrer" target="_blank">Viceministro Maldonado asegura que identificó a quienes lo amenazan</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/maldonado-asegura-que-identificaron-a-los-autores-de-amenazas/" rel="noopener noreferrer" target="_blank">Maldonado asegura que identificaron a los autores de amenazas</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/maldonado-vincula-amenazas-con-mariaca-y-descarta-dejar-el-cargo/" rel="noopener noreferrer" target="_blank">Maldonado vincula amenazas con Mariaca y descarta dejar el cargo</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/maldonado-los-que-me-amenazan-estan-identificados/" rel="noopener noreferrer" target="_blank">Maldonado: Los que me amenazan están identificados</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20261104/suman-amenazas-contra-maldonado-gobierno-le-brinda-todo-su-respaldo" rel="noopener noreferrer" target="_blank">Suman amenazas contra Maldonado y el Gobierno le brinda todo su respaldo</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/seguridad/20261104/maldonado-dice-que-identificaron-quienes-amenazaron" rel="noopener noreferrer" target="_blank">Maldonado dice que identificaron a quienes lo amenazaron</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/viceministro-maldonado-asegura-que-se-identifico-a-los-responsables-de-las-amenazas-en-su-contra/" rel="noopener noreferrer" target="_blank">Viceministro Maldonado asegura que se identificó a los responsables de las amenazas en su contra</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/peter-maldonado-asegura-que-identificaron-a-quienes-lo-amenazan-y-anuncia-que-iran-tras-ellos-2026114125650" rel="noopener noreferrer" target="_blank">Peter Maldonado asegura que identificaron a quienes lo amenazan y anuncia que irán tras ellos</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/maldonado-asegura-que-se-identifico-quienes-lo-amenazaron-y-los-relaciona-con-mariaca" rel="noopener noreferrer" target="_blank">Maldonado asegura que se identificó a quienes lo amenazaron y los relaciona con Mariaca</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75678-viceministro-maldonado-asegura-que-identificaron-a-los-autores-de-las-amenazas-y-van-tras-ellos" rel="noopener noreferrer" target="_blank">Viceministro Maldonado asegura que identificaron a los autores de las amenazas y van tras ellos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_5">
+<div class="modal-backdrop" onclick="closeModal('modal_5')"></div>
+<div aria-label="Cámara de Diputados convoca sesión para posesionar directiva entre denuncias" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Cámara de Diputados convoca sesión para posesionar directiva entre denuncias</div>
+<div class="modal-sum">En medio de denuncias por irregularidades y pedidos de reconsideración, se convoca a sesión de la Cámara de Diputados para este jueves con el fin de posesionar a la nueva directiva encabezada por Roberto Castro, cuya reelección es respaldada por una facción del PDC mientras otros piden reconteo de votos.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">12</strong> titulares</span>
+<span><strong style="color:var(--c-21)">11</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_5')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_amparo-de-herbas-y-claros-contra-castro.html" rel="noopener noreferrer" target="_blank">Amparo de Herbas y Claros contra Castro</a></span></li>
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/piden-reconsiderar-eleccion-de-castro-como-presidente-de-diputados-desde-el-pdc-aseguran-que-todo-fue-legal-68709" rel="noopener noreferrer" target="_blank">Piden reconsiderar elección de Castro como presidente de Diputados; desde el PDC aseguran que todo fue legal</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/no-hay-vuelta-atras-faccion-del-pdc-ratifica-respaldo-a-castro-como-presidente-de-diputados.html" rel="noopener noreferrer" target="_blank">“No hay vuelta atrás”: Facción del PDC ratifica respaldo a Castro como presidente de Diputados</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/castro-afirma-reeleccion-convoca-sesion-preparatoria-posesion_1793839015" rel="noopener noreferrer" target="_blank">Castro afirma su reelección y convoca a sesión preparatoria para su posesión</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/pacheco-pide-reconteo-votos-verificar-eleccion-castro/" rel="noopener noreferrer" target="_blank">Pacheco pide reconteo de votos para verificar elección de Castro</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/diputados-convoca-al-pleno-para-posesionar-a-la-directiva-de-castro/" rel="noopener noreferrer" target="_blank">Diputados convoca al pleno para posesionar a la directiva de Castro</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/a-pesar-del-rechazo-y-la-presentacion-de-un-amparo-la-directiva-de-diputados-sera-posesionada-el-jueves/" rel="noopener noreferrer" target="_blank">A pesar del rechazo y la presentación de un Amparo, la directiva de Diputados será posesionada el jueves</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/diputados-convocan-a-sesion-para-posesionar-a-su-nueva-directiva-2026114181850" rel="noopener noreferrer" target="_blank">Diputados convocan a sesión para posesionar a su nueva directiva</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/en-medio-de-denuncias-de-irregularidades-convocan-a-sesion-de-diputados-este-jueves-para-posesionar-a-la-directiva-OK24594219" rel="noopener noreferrer" target="_blank">En medio de denuncias de irregularidades, convocan a sesión de Diputados este jueves para “posesionar a la directiva”</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/diputada-de-libre-dice-que-desconocera-a-la-nueva-directiva-anunciada-en-diputados-no-hubo-votacion-fue-aclamacion-GK24593566" rel="noopener noreferrer" target="_blank">Diputada de Libre dice que desconocerá a la nueva directiva anunciada en Diputados: “No hubo votación, fue aclamación”</a></span></li>
+<li><span class="m-src">Urgente.bo</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.urgente.bo/noticia/pese-cuestionamientos-convocan-sesion-para-posesionar-la-directiva-de-castro" rel="noopener noreferrer" target="_blank">Pese cuestionamientos, convocan a sesión para posesionar a la directiva de Castro</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75753-diputados-para-este-jueves-esta-convocada-la-sesion-para-posesionar-la-nueva-directiva-encabezada-por-roberto-castro" rel="noopener noreferrer" target="_blank">Diputados: Para este jueves está convocada la sesión para posesionar la nueva directiva encabezada por Roberto Castro</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N002">
+<div class="modal-backdrop" onclick="closeModal('modal_N002')"></div>
+<div aria-label="Asamblea Legislativa programa sesión de clausura para legislatura 2025-2026" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-21)">LEGISLATIVA</div>
+<div class="modal-title">Asamblea Legislativa programa sesión de clausura para legislatura 2025-2026</div>
+<div class="modal-sum">La Asamblea Legislativa programó para este viernes la sesión de clausura de la legislatura 2025-2026.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-21)">3</strong> titulares</span>
+<span><strong style="color:var(--c-21)">3</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N002')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/asamblea-programa-para-este-viernes-sesion-de-clausura-de-la-legislatura-2025-2026.html" rel="noopener noreferrer" target="_blank">Asamblea programa para este viernes sesión de clausura de la legislatura 2025-2026</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/clausura-de-la-legislatura-2025-2026-es-reprogramada-para-el-viernes/" rel="noopener noreferrer" target="_blank">Clausura de la legislatura 2025-2026 es reprogramada para el viernes</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/asamblea-legislativa-programa-para-el-viernes-la-sesion-de-clausura-de-la-legislatura-2025-2026-202611471640" rel="noopener noreferrer" target="_blank">Asamblea Legislativa programa para el viernes la sesión de clausura de la legislatura 2025-2026</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_4">
+<div class="modal-backdrop" onclick="closeModal('modal_4')"></div>
+<div aria-label="Gobernadores rechazan 1% de coparticipación tributaria y exigen 5%" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-03)">GOBIERNO</div>
+<div class="modal-title">Gobernadores rechazan 1% de coparticipación tributaria y exigen 5%</div>
+<div class="modal-sum">Gobernadores y vicegobernadores se reúnen para analizar la coparticipación tributaria, rechazando la propuesta del 1% y planteando que el porcentaje de inicio debe ser del 5%, argumentando una necesidad de desconcentrar el poder.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-03)">10</strong> titulares</span>
+<span><strong style="color:var(--c-03)">7</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_4')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">El País (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://elpais.bo/nacional/20261104_gobernadores-se-reunen-para-analizar-la-coparticipacion-plantearan-el-5.html" rel="noopener noreferrer" target="_blank">Gobernadores se reúnen para analizar la coparticipación, plantearán el 5%</a></span></li>
+<li><span class="m-src">ANF</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.noticiasfides.com/economia/economista-considera-insuficiente-el-1-de-coparticipacion-a-gobernaciones-y-propone-una-formula-de-cuatro-ejes" rel="noopener noreferrer" target="_blank">Economista considera insuficiente el 1% de Coparticipación a gobernaciones y propone una fórmula de cuatro ejes</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/politica/20261104/oferta-del-1-equivale-a-cerca-de-bs-560-millones-a-cuanto-le-tocaria-a-cada-gobernacion.html" rel="noopener noreferrer" target="_blank">Oferta del 1% equivale a cerca de Bs 560 millones: ¿A cuánto le tocaría a cada gobernación?</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/vicegobernadora-crucena-anuncia-reunion-gobernadores-estan-1-coparticipacion_1793807186" rel="noopener noreferrer" target="_blank">Vicegobernadora cruceña anuncia reunión entre gobernadores que están en contra del 1% de coparticipación</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/aguirre-la-coparticipacion-tributaria-debe-iniciar-con-el-5/" rel="noopener noreferrer" target="_blank">Aguirre: La coparticipación tributaria debe iniciar con el 5%</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/tarija-propone-un-mecanismo-gradual-de-coparticipacion/" rel="noopener noreferrer" target="_blank">Tarija propone un mecanismo gradual de coparticipación</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/vicegobernadora-sobre-1-de-coparticipacion-no-se-quiere-desconcentrar-el-poder-202611485419" rel="noopener noreferrer" target="_blank">Vicegobernadora sobre 1% de coparticipación: “No se quiere desconcentrar el poder”</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/estamos-retrocediendo-gobernadora-de-tarija-rechaza-propuesta-del-1-de-coparticipacion-20261149586" rel="noopener noreferrer" target="_blank">“Estamos retrocediendo”: gobernadora de Tarija rechaza propuesta del 1% de coparticipación</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/aguirre-reclama-mas-coparticipacion-y-anuncia-medidas-de-presion-202611422411" rel="noopener noreferrer" target="_blank">Aguirre reclama más coparticipación y anuncia medidas de presión</a></span></li>
+<li><span class="m-src">Unitel</span><span class="m-sep">·</span><span class="m-tit"><a href="https://unitel.bo/noticias/politica/velasco-plantea-comenzar-con-un-5-o-6-de-coparticipacion-para-las-gobernaciones-IK24592846" rel="noopener noreferrer" target="_blank">Velasco plantea comenzar con un 5% o 6% de coparticipación para las gobernaciones</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_1">
+<div class="modal-backdrop" onclick="closeModal('modal_1')"></div>
+<div aria-label="Magisterio inicia huelga y paro nacional contra descentralización educativa" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Magisterio inicia huelga y paro nacional contra descentralización educativa</div>
+<div class="modal-sum">El Magisterio instala piquetes de huelga de hambre y anuncia un paro nacional de 48 horas para el 9 y 10 de noviembre, rechazando la descentralización educativa. El Ministerio de Educación advierte con descuentos a los maestros que acaten las medidas de presión.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">7</strong> titulares</span>
+<span><strong style="color:var(--c-08)">6</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_1')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/11/04/magisterio-instala-piquetes-de-huelga-de-hambre-y-anuncia-paro-nacional-de-48-horas-para-el-9-y-10-de-noviembre-68714" rel="noopener noreferrer" target="_blank">Magisterio instala piquetes de huelga de hambre y anuncia paro nacional de 48 horas para el 9 y 10 de noviembre</a></span></li>
+<li><span class="m-src">Correo del Sur</span><span class="m-sep">·</span><span class="m-tit"><a href="https://correodelsur.com/sociedad/20261104/educacion-advierte-descuentos-a-maestros-que-acaten-el-paro-nacional-de-48-horas.html" rel="noopener noreferrer" target="_blank">Educación advierte descuentos a maestros que acaten el paro nacional de 48 horas</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/gobierno-invita-dialogo-magisterio-urbano-rechaza-paro-anunciado-proxima-semana_1793834531" rel="noopener noreferrer" target="_blank">Gobierno invita al diálogo al Magisterio Urbano y rechaza el paro anunciado para la próxima semana</a></span></li>
+<li><span class="m-src">El Deber</span><span class="m-sep">·</span><span class="m-tit"><a href="https://eldeber.com.bo/pais/ministro-educacion-advierte-maestros-manifestantes-dia-no-trabajado-dia-no-pagado_1793804617" rel="noopener noreferrer" target="_blank">El ministro de Educación advierte a los maestros manifestantes que "día no trabajado, día no pagado"</a></span></li>
+<li><span class="m-src">La Patria (Bolivia)</span><span class="m-sep">·</span><span class="m-tit"><a href="https://lapatria.bo/enfoque-nacional/denuncia/maestros-huelga-hambre-rechazan-descentralizacion-educativa/" rel="noopener noreferrer" target="_blank">Maestros en huelga de hambre rechazan descentralización educativa</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/sociedad/2026/11/04/al-menos-14-piquetes-de-huelga-de-hambre-de-maestros-se-instalan-en-el-pais/" rel="noopener noreferrer" target="_blank">Al menos 14 piquetes de huelga de hambre de maestros se instalaron en el país</a></span></li>
+<li><span class="m-src">Los Tiempos</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.lostiempos.com/actualidad/pais/20261104/educacion-avanza-reuniones-regionales-tecnologicos-reitera-dialogo-paro-del" rel="noopener noreferrer" target="_blank">Educación avanza en reuniones regionales sobre tecnológicos y reitera diálogo ante el paro del magisterio</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_N001">
+<div class="modal-backdrop" onclick="closeModal('modal_N001')"></div>
+<div aria-label="Asamblea de la Paceñidad rechaza Ley de alivio tributario y plantea acciones" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-08)">MOVIMIENTOS SOCIALES</div>
+<div class="modal-title">Asamblea de la Paceñidad rechaza Ley de alivio tributario y plantea acciones</div>
+<div class="modal-sum">La Asamblea de la Paceñidad se reunió para analizar y rechazar la Ley del alivio tributario, planteando acciones constitucionales.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-08)">3</strong> titulares</span>
+<span><strong style="color:var(--c-08)">3</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_N001')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/sociedad/2026/11/04/la-asamblea-de-la-pacenidad-se-reune-para-analizar-el-impacto-del-alivio-tributario-68704" rel="noopener noreferrer" target="_blank">La Asamblea de la Paceñidad se reúne para analizar el impacto del alivio tributario</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/asamblea-de-la-pacenidad-rechaza-la-ley-del-alivio-tributario-y-plantea-acciones-constitucionales/" rel="noopener noreferrer" target="_blank">Asamblea de la Paceñidad rechaza la Ley del alivio tributario y plantea acciones constitucionales</a></span></li>
+<li><span class="m-src">Red Uno de Bolivia</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.reduno.com.bo/noticias/comienza-la-asamblea-de-la-pacenidad-analizan-ley-de-alivio-tributario-202611418303" rel="noopener noreferrer" target="_blank">Comienza la Asamblea de la Paceñidad: analizan Ley de Alivio Tributario</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal" data-bm-premium="1" id="modal_3a">
+<div class="modal-backdrop" onclick="closeModal('modal_3a')"></div>
+<div aria-label="Vicepresidente Lara asegura que no huirá del país ante procesos legales" aria-modal="true" class="modal-panel" role="dialog">
+<div class="modal-head">
+<div class="modal-cat" style="color:var(--c-05)">POLÍTICA</div>
+<div class="modal-title">Vicepresidente Lara asegura que no huirá del país ante procesos legales</div>
+<div class="modal-sum">El Vicepresidente Edmand Lara asegura reiteradamente que no huirá del país, pese a la advertencia de posibles procesos legales en su contra, afirmando que se quedará a dar la cara.</div>
+<div class="modal-kpis">
+<span><strong style="color:var(--c-05)">5</strong> titulares</span>
+<span><strong style="color:var(--c-05)">5</strong> medios</span>
+<span>cobertura: 04/11/2026</span>
+</div>
+<button class="modal-close" onclick="closeModal('modal_3a')">Cerrar</button>
+</div>
+<div class="modal-body">
+<ul class="modal-list">
+<li><span class="m-src">Brujula Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://brujuladigital.net/politica/2026/11/04/lara-advierte-de-posibles-procesos-en-su-contra-y-asegura-que-no-huira-del-pais-68719" rel="noopener noreferrer" target="_blank">Lara advierte de posibles procesos en su contra y asegura que no huirá del país</a></span></li>
+<li><span class="m-src">erbol</span><span class="m-sep">·</span><span class="m-tit"><a href="https://erbol.com.bo/nacional/lara-asegura-que-no-huir%C3%A1-del-pa%C3%ADs-pese-posibles-procesos-en-su-contra%C2%A0" rel="noopener noreferrer" target="_blank">Lara asegura que no huirá del país pese a posibles procesos en su contra</a></span></li>
+<li><span class="m-src">La Razón</span><span class="m-sep">·</span><span class="m-tit"><a href="https://larazon.bo/nacional/2026/11/04/lara-afirma-que-no-dejara-el-pais-pese-a-posibles-procesos-en-su-contra/" rel="noopener noreferrer" target="_blank">Lara afirma que no dejará el país pese a posibles procesos en su contra</a></span></li>
+<li><span class="m-src">Oxígeno Digital</span><span class="m-sep">·</span><span class="m-tit"><a href="https://oxigeno.bo/lara-cree-se-armaran-procesos-en-su-contra-y-afirma-no-escapara-del-pais-me-quedare-dando-la-cara/" rel="noopener noreferrer" target="_blank">Lara cree se armarán procesos en su contra y afirma no escapará del país: “Me quedaré dando la cara”</a></span></li>
+<li><span class="m-src">Visión 360</span><span class="m-sep">·</span><span class="m-tit"><a href="https://www.vision360.bo/noticias/2026/11/04/75741-lara-asegura-que-no-huira-del-pais-como-saucedo-aunque-le-armen-procesos" rel="noopener noreferrer" target="_blank">Lara asegura que no huirá del país como Saucedo, aunque le armen procesos</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+function openModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.querySelectorAll(".modal[aria-hidden='false']").forEach(m=>{
+      m.setAttribute("aria-hidden","true");
+    });
+    document.body.style.overflow = "";
+  }
+});
+
+function scrollToCard(cardId){
+  const el = document.getElementById(cardId);
+  if(el){
+    const detailsParent = el.closest('details.lista-nivel-c');
+    if (detailsParent && !detailsParent.open) {
+      detailsParent.open = true;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlight-card');
+    setTimeout(() => { el.classList.remove('highlight-card'); }, 1500);
+  }
+}
+
+function toggleCategory(listId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const wrapper = list.closest('.cat-wrapper');
+
+  if (list.classList.contains('open')) {
+    list.classList.remove('open');
+    if(wrapper) wrapper.classList.remove('is-open');
+  } else {
+    list.classList.add('open');
+    if(wrapper) wrapper.classList.add('is-open');
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuBtn = document.getElementById("menuToggle");
+  const dropMenu = document.getElementById("dropdownMenu");
+  if (menuBtn && dropMenu) {
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropMenu.classList.toggle("show");
+    });
+    document.addEventListener("click", (e) => {
+      if (!dropMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        dropMenu.classList.remove("show");
+      }
+    });
+  }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("themeToggle");
+  if (!btn) return;
+
+  const icon = btn.querySelector(".toggle-icon") || btn;
+  const body = document.body;
+
+  if (localStorage.getItem("bolimetrica_theme") === "dark") {
+    body.classList.add("dark-mode");
+    icon.textContent = "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+
+    icon.textContent = isDark ? "☀️" : "🌙";
+
+    localStorage.setItem("bolimetrica_theme", isDark ? "dark" : "light");
+  });
+});
+</script>
+<div id="bm-badge">✦ Suscriptor</div>
+<script id="bm-paywall-js">
+(function() {
+
+  var CODES_URL = "https://www.bolimetrica.com/codigos_validos.json";
+
+  async function sha256(text) {
+    var enc = new TextEncoder().encode(text.trim().toUpperCase());
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function cargarCodigos() {
+    try {
+      var r = await fetch(CODES_URL + "?t=" + Date.now());
+      return await r.json();
+    } catch(e) { return []; }
+  }
+
+  function checkStored() {
+    try {
+      var stored = localStorage.getItem('bm_code');
+      var storedExp = localStorage.getItem('bm_expires');
+      if (stored && storedExp) {
+        var now = new Date().toISOString().slice(0,10);
+        if (now <= storedExp) {
+          document.body.classList.add('bm-unlocked');
+          return true;
+        } else {
+          localStorage.removeItem('bm_code');
+          localStorage.removeItem('bm_expires');
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  window.bmActivar = async function() {
+    var input = document.getElementById('bm-code-input');
+    var msg   = document.getElementById('bm-code-msg');
+    if (!input || !msg) return;
+
+    var code = input.value.trim().toUpperCase();
+    if (!code) {
+      msg.textContent = 'Ingresa un código';
+      msg.className = 'bm-paywall-msg err';
+      return;
+    }
+
+    msg.textContent = '...';
+    msg.className = 'bm-paywall-msg';
+
+    var hash  = await sha256(code);
+    var now   = new Date().toISOString().slice(0,10);
+    var CODES = await cargarCodigos();
+    var match = CODES.find(function(c) { return c.hash === hash && now <= c.expires; });
+
+    if (match) {
+      try {
+        localStorage.setItem('bm_code', hash);
+        localStorage.setItem('bm_expires', match.expires);
+      } catch(e) {}
+      document.body.classList.add('bm-unlocked');
+      msg.textContent = '✓ Código activado';
+      msg.className = 'bm-paywall-msg ok';
+    } else {
+      msg.textContent = 'Código inválido o expirado';
+      msg.className = 'bm-paywall-msg err';
+      input.value = '';
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('bm-code-input');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') bmActivar();
+      });
+    }
+  });
+
+  checkStored();
+})();
+</script>
+<script async="" data-goatcounter="https://andrelans.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
